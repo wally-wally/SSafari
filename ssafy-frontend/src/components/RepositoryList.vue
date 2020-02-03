@@ -1,5 +1,6 @@
 <template>
   <v-layout column px-4>
+	  {{ this.githubid }}
     <v-flex v-for="i in this.showReposCount" :key="i">
       <v-divider v-if="i === 1"></v-divider>
       <Repository :repos="repositories[i - 1]"></Repository>
@@ -14,13 +15,14 @@
 
 <script>
 import Repository from '@/components/Repository'
-import GitlabService from '@/services/GitlabService'
+import GithubService from '@/services/GithubService'
 
 export default {
 	name: 'RepositoryList',
 	props: {
 		limits: {type: Number},
-		loadMore: {type: Boolean, default: false}
+		loadMore: {type: Boolean, default: false},
+		githubid: {type: String}
 	},
 	data() {
 		return {
@@ -34,12 +36,11 @@ export default {
 		Repository
 	},
 	mounted() {
-		// this.getGitlabRepos('Kimheejoo')
-		this.getGitlabRepos('wally-wally')
+		this.getGithubRepos(this.githubid)
 	},
 	methods: {
-		async getGitlabRepos(userName) {
-			const response = await GitlabService.getRepos(userName)
+		async getGithubRepos(userName) {
+			const response = await GithubService.getRepos(userName)
 			if(response.status !== 200) {
 				return
 			}

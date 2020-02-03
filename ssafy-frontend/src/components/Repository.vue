@@ -3,8 +3,8 @@
     <v-layout>
 
       <v-flex xs8>
-        <h2 class="font-weight-regular title">{{repos.path_with_namespace}}</h2>
-        <p class="subheading mb-1 grey--text text--darken-1 font-weight-light">{{repos.namespace.name}}</p>
+        <h2 class="font-weight-regular title">{{repos.name}}</h2>
+        <p class="subheading mb-1 grey--text text--darken-1 font-weight-light">{{repos.description}}</p>
       </v-flex>
 
     </v-layout>
@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import GitlabService from '@/services/GitlabService'
+import GithubService from '@/services/GithubService'
 
 export default {
 	name: 'Repository',
@@ -25,12 +25,8 @@ export default {
 		}
 	},
   mounted() {
-		this.drawStatGraph()
   },
 	methods: {
-		async drawStatGraph() {
-			this.commits = await GitlabService.getCommits(this.repos.id)
-		}
 	}
 }
 </script>
