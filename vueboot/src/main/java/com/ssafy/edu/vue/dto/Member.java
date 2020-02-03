@@ -17,7 +17,7 @@ public class Member implements Serializable {
 	private String signupdate;
 	private int delflag;
 	private int auth;
-	
+	private String githubid;
 	private boolean signup;
 	private String message;
 	
@@ -106,6 +106,20 @@ public class Member implements Serializable {
 
 
 
+	public Member(int memberid, String email, String name, String username, String signupdate, int auth,
+			String githubid) {
+		super();
+		this.memberid = memberid;
+		this.email = email;
+		this.name = name;
+		this.username = username;
+		this.signupdate = signupdate;
+		this.auth = auth;
+		this.githubid = githubid;
+	}
+
+
+
 	public Member(boolean signup, String message) {
 		super();
 		this.signup = signup;
@@ -187,6 +201,18 @@ public class Member implements Serializable {
 	public void setAuth(int auth) {
 		this.auth = auth;
 	}
+
+	public String getGithubid() {
+		return githubid;
+	}
+
+
+
+	public void setGithubid(String githubid) {
+		this.githubid = githubid;
+	}
+
+
 
 	public boolean isSignup() {
 		return signup;
