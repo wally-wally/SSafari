@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ssafy.portfolio">
+
+	<select id="getPortfolios"
+		resultType="com.ssafy.edu.vue.dto.Portfolio">
+		SELECT P.PORTFOLIOID PORTFOLIOID, P.TITLE TITLE, P.BODY BODY, P.IMG IMG, P.CREATED_AT CREATED_AT, P.MEMBERID MEMBERID, M.USERNAME USERNAME, P.CAPACITY, P.APPLICANT, P.STARTDATE, P.ENDDATE, P.PRICE, P.LOCATION, COMMENTCOUNT
+		FROM MEMBERS M,PORTFOLIOS P
+		LEFT OUTER JOIN (SELECT COUNT(PORTFOLIOID) COMMENTCOUNT, PORTFOLIOID FROM COMMENTPORTFOLIO GROUP BY PORTFOLIOID) C
+        ON P.PORTFOLIOID=C.PORTFOLIOID
+        WHERE P.MEMBERID = M.MEMBERID
+		ORDER BY P.PORTFOLIOID DESC
+	</select>
+
+	<select id="getPortfolioList"
+		parameterType="java.lang.Integer"
+		resultType="com.ssafy.edu.vue.dto.Portfolio">
+		SELECT P.PORTFOLIOID PORTFOLIOID, P.TITLE TITLE, P.BODY BODY, P.IMG IMG, P.CREATED_AT CREATED_AT, P.MEMBERID MEMBERID, M.USERNAME USERNAME, P.CAPACITY, P.APPLICANT, P.STARTDATE, P.ENDDATE, P.PRICE, P.LOCATION
+		FROM PORTFOLIOS P, MEMBERS M
+		WHERE P.MEMBERID = M.MEMBERID AND P.MEMBERID=#{memberid} 
+		ORDER BY P.PORTFOLIOID DESC
+	</select>
+
+	<select id="getPortfolio" parameterType="java.lang.Integer"
+		resultType="com.ssafy.edu.vue.dto.Portfolio">
+		SELECT P.PORTFOLIOID PORTFOLIOID, P.TITLE TITLE, P.BODY BODY, P.IMG IMG, P.CREATED_AT CREATED_AT, P.MEMBERID MEMBERID, M.USERNAME USERNAME, P.CAPACITY, P.APPLICANT, P.STARTDATE, P.ENDDATE, P.PRICE, P.LOCATION
+		FROM PORTFOLIOS P, MEMBERS M
+		WHERE P.MEMBERID = M.MEMBERID AND P.PORTFOLIOID = #{portfolioid}
+	</select>
+
+	<insert id="addPortfolio"
+		parameterType="com.ssafy.edu.vue.dto.Portfolio">
+		INSERT INTO
+		PORTFOLIOS(TITLE, BODY, IMG, CREATED_AT, MEMBERID, CAPACITY, STARTDATE, ENDDATE, PRICE, LOCATION)
+		VALUES(#{title},#{body},#{img},now(), #{memberid}, #{capacity}, #{startdate}, #{enddate}, #{price}, #{location})
+	</insert>
+	
+	<update id="updatePortfolio"
+		parameterType="com.ssafy.edu.vue.dto.Portfolio">
+		UPDATE PORTFOLIOS SET
+		TITLE=#{title},
+		BODY=#{body},
+		IMG=#{img},
+		CAPACITY=#{capacity},
+		STARTDATE=#{startdate},
+		ENDDATE=#{enddate},
+		PRICE=#{price},
+		LOCATION=#{location}
+		CREATED_AT=now()
+		WHERE
+		PORTFOLIOID=#{portfolioid}
+	</update>
+
+	<delete id="deletePortfolio" parameterType="java.lang.Integer">
+		DELETE FROM PORTFOLIOS WHERE
+		PORTFOLIOID
+		= #{portfolioid}
+	</delete>
+
+	<select id="getCommentPortfolio"
+		parameterType="java.lang.Integer"
+		resultType="com.ssafy.edu.vue.dto.Commentportfolio">
+		SELECT C.CPORTFOLIOID CPORTFOLIOID,C.PORTFOLIOID PORTFOLIOID, C.MEMBERID MEMBERID, C.WDATE WDATE, C.CONTENT CONTENT, M.USERNAME USERNAME  FROM COMMENTPORTFOLIO C, MEMBERS M WHERE C.PORTFOLIOID=#{portfolioid} AND C.MEMBERID=M.MEMBERID ORDER BY C.CPORTFOLIOID
+		
+	</select>
+	
+	<insert id="addCommentPortfolio"
+		parameterType="com.ssafy.edu.vue.dto.Commentportfolio">
+		INSERT INTO
+		COMMENTPORTFOLIO(PORTFOLIOID, MEMBERID, WDATE, CONTENT)
+		VALUES(#{portfolioid},#{memberid},now(), #{content})
+	</insert>
+	
+	<update id="updateCommentPortfolio"
+		parameterType="com.ssafy.edu.vue.dto.Commentportfolio">
+		UPDATE COMMENTPORTFOLIO SET
+		CONTENT=#{content},
+		WDATE=now()
+		WHERE CPORTFOLIOID=#{cportfolioid}
+	</update>
+
+	<delete id="deleteCommentPortfolio" parameterType="java.lang.Integer">
+		DELETE FROM COMMENTPORTFOLIO WHERE
+		CPORTFOLIOID = #{cportfolioid}
+	</delete>
+	
+	<insert id="registerSugang"
+		parameterType="com.ssafy.edu.vue.dto.Sugang">
+		INSERT INTO
+		SUGANG(PORTFOLIOID, MEMBERID)
+		VALUES(#{portfolioid},#{memberid})
+	</insert>
+	
+	<delete id="deleteSugang" parameterType="com.ssafy.edu.vue.dto.Sugang">
+		DELETE FROM SUGANG WHERE
+		PORTFOLIOID = #{portfolioid} AND MEMBERID = #{memberid}
+	</delete>
+	
+	<select id="isApplicant" parameterType="com.ssafy.edu.vue.dto.Sugang" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM SUGANG
+		WHERE PORTFOLIOID = #{portfolioid} AND MEMBERID = #{memberid}
+		</select>
+
+	<select id="getSugangMember"
+		parameterType="java.lang.Integer"
+		resultType="com.ssafy.edu.vue.dto.Sugang">
+		SELECT PORTFOLIOID, MEMBERID FROM SUGANG WHERE PORTFOLIOID=#{portfolioid};
+	</select>
+	
+	<update id="addSugangMember" parameterType="java.lang.Integer">
+		UPDATE PORTFOLIOS SET APPLICANT = APPLICANT + 1 WHERE PORTFOLIOID=#{portfolioid};
+	</update>
+	
+	<update id="subSugangMember" >
+		UPDATE PORTFOLIOS SET APPLICANT = APPLICANT - 1 WHERE PORTFOLIOID=#{portfolioid};
+	</update>
+	
+	<select id="getMemberPortfolio" parameterType="java.lang.Integer" resultType="com.ssafy.edu.vue.dto.Portfolio">
+		SELECT * FROM PORTFOLIOS WHERE PORTFOLIOID IN (SELECT PORTFOLIOID FROM SUGANG WHERE MEMBERID = #{memberid});
+	</select>
+</mapper>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>iTeacher</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css">
+  <link
+    href="https://fonts.googleapis.com/css?family=Black+And+White+Picture|Black+Han+Sans|Cute+Font|Do+Hyeon|Dokdo|East+Sea+Dokdo|Gaegu|Gamja+Flower|Gothic+A1|Gugi|Hi+Melody|Jua|Kirang+Haerang|Nanum+Brush+Script|Nanum+Gothic|Nanum+Gothic+Coding|Nanum+Myeongjo|Nanum+Pen+Script|Noto+Sans+KR|Noto+Serif+KR|Poor+Story|Single+Day|Song+Myung|Stylish|Sunflower:300|Yeon+Sung&display=swap"
+    rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Cantarell|Chivo|Gudea|Inria+Serif|Julius+Sans+One|M+PLUS+Rounded+1c|Press+Start+2P|Quicksand|Sarabun&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/636468347f.js" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+</head>
+
+<body>
+  <noscript>
+    <strong>We're sorry but ssafy doesn't work properly without JavaScript enabled. Please enable it to
+      continue.</strong>
+  </noscript>
+  <div id="app"></div>
+  <!-- built files will be auto injected -->
+</body>
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.6.2/firebase-app.js"></script>
+<script src="/__/firebase/init.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.6.2/firebase-analytics.js"></script>
+
+<script>
+  // Your web app's Firebase configuration
+  let firebaseConfig = {
+    apiKey: "AIzaSyBkEItaer2XZDULdFbXm9N_iFUVFxxpgU0",
+    authDomain: "sub-pjt-1-1week.firebaseapp.com",
+    databaseURL: "https://sub-pjt-1-1week.firebaseio.com",
+    projectId: "sub-pjt-1-1week",
+    storageBucket: "sub-pjt-1-1week.appspot.com",
+    messagingSenderId: "401835460651",
+    appId: "1:401835460651:web:3e9f2da646b909d9efc26e",
+    measurementId: "G-RQ250QFZS6"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+
+  let section = document.querySelector('#homepage-imgbanner')
+    window.addEventListener('scroll', function() {
+      let value = window.scrollY
+      section.style.clipPath = 'circle(' + value + 'px at center)'
+    })
+
+  // sidebar icon variable
+  let mainIcon = document.querySelector('#main-icon')
+  let teamIcon = document.querySelector('#team-icon')
+  let portfolioIcon = document.querySelector('#portfolio-icon')
+  let postIcon = document.querySelector('#post-icon')
+
+  let colorSet = ['#f7b157', 'lightgray']
+
+  mainIcon.addEventListener('click', function() {
+    mainIcon.style.color = colorSet[0]
+    teamIcon.style.color = portfolioIcon.style.color = postIcon.style.color = colorSet[1]
+  })
+  teamIcon.addEventListener('click', function() {
+    teamIcon.style.color = colorSet[0]
+    mainIcon.style.color = portfolioIcon.style.color = postIcon.style.color = colorSet[1]
+  })
+  portfolioIcon.addEventListener('click', function() {
+    portfolioIcon.style.color = colorSet[0]
+    mainIcon.style.color = teamIcon.style.color = postIcon.style.color = colorSet[1]
+  })
+  postIcon.addEventListener('click', function() {
+    postIcon.style.color = colorSet[0]
+    mainIcon.style.color = teamIcon.style.color = portfolioIcon.style.color = colorSet[1]
+  })
+</script>
+
+</html>

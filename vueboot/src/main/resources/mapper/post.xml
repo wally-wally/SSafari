@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ssafy.post">
+
+	<select id="getPosts"
+		resultType="com.ssafy.edu.vue.dto.Post">
+		SELECT P.POSTID POSTID, P.TITLE TITLE, P.BODY BODY, P.CREATED_AT CREATED_AT, P.MEMBERID MEMBERID, M.USERNAME USERNAME 
+		FROM POSTS P, MEMBERS M 
+		WHERE P.MEMBERID=M.MEMBERID 
+		ORDER BY POSTID	DESC
+	</select>
+
+	<select id="getPostList"
+		parameterType="java.lang.Integer"
+		resultType="com.ssafy.edu.vue.dto.Post">
+		SELECT P.POSTID POSTID, P.TITLE TITLE, P.BODY BODY, P.CREATED_AT CREATED_AT, P.MEMBERID MEMBERID, M.USERNAME USERNAME 
+		FROM POSTS P, MEMBERS M 
+		WHERE P.MEMBERID=M.MEMBERID AND P.MEMBERID=#{memberid} 
+		ORDER BY POSTID	DESC
+	</select>
+
+	<select id="getPost" parameterType="java.lang.Integer"
+		resultType="com.ssafy.edu.vue.dto.Post">
+		SELECT P.POSTID POSTID, P.TITLE TITLE, P.BODY BODY, P.CREATED_AT CREATED_AT, P.MEMBERID MEMBERID, M.USERNAME USERNAME 
+		FROM POSTS P, MEMBERS M 
+		WHERE P.MEMBERID=M.MEMBERID AND POSTID = #{postid}
+	</select>
+
+	<insert id="addPost"
+		parameterType="com.ssafy.edu.vue.dto.Post">
+		INSERT INTO
+		POSTS(TITLE, BODY, CREATED_AT, MEMBERID)
+		VALUES(#{title},#{body},now(), #{memberid})
+	</insert>
+	
+	<update id="updatePost"
+		parameterType="com.ssafy.edu.vue.dto.Post">
+		UPDATE POSTS SET
+		TITLE=#{title},
+		BODY=#{body},
+		CREATED_AT=now()
+		WHERE
+		POSTID=#{postid}
+	</update>
+
+	<delete id="deletePost" parameterType="java.lang.Integer">
+		DELETE FROM POSTS WHERE
+		POSTID
+		= #{postid}
+	</delete>
+	
+	
+	<select id="getCommentPost"
+		parameterType="java.lang.Integer"
+		resultType="com.ssafy.edu.vue.dto.Commentpost">
+		SELECT C.CPOSTID CPOSTID, C.POSTID POSTID, C.MEMBERID MEMBERID, M.USERNAME USERNAME, C.WDATE WDATE, C.CONTENT CONTENT  
+FROM COMMENTPOST C, MEMBERS M 
+WHERE C.POSTID=#{postid} AND M.MEMBERID=C.MEMBERID ORDER BY C.CPOSTID
+	</select>
+	
+	<insert id="addCommentPost"
+		parameterType="com.ssafy.edu.vue.dto.Commentpost">
+		INSERT INTO
+		COMMENTPOST(POSTID, MEMBERID, WDATE, CONTENT)
+		VALUES(#{postid},#{memberid},now(), #{content})
+	</insert>
+	
+	<update id="updateCommentPost"
+		parameterType="com.ssafy.edu.vue.dto.Commentpost">
+		UPDATE COMMENTPOST SET
+		CONTENT=#{content},
+		WDATE=now()
+		WHERE
+		CPOSTID=#{cpostid}
+	</update>
+
+	<delete id="deleteCommentPost" parameterType="java.lang.Integer">
+		DELETE FROM COMMENTPOST WHERE
+		CPOSTID
+		= #{cpostid}
+	</delete>
+	
+</mapper>
