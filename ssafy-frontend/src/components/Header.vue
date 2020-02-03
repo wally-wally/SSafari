@@ -100,30 +100,11 @@
 
   </v-navigation-drawer>
 
-  <v-dialog v-model="loginDialog" max-width="950px">
-    <!-- <v-card>
-      <v-card-title class="login-headline">LOGIN</v-card-title>
-      <v-card-text>
-        <v-form ref="form" v-model="valid" lazy-validation @submit.prevent="login">
-          <v-text-field v-model="credentials.email" :rules="emailRules" label="E-mail" required></v-text-field>
-          <v-text-field v-model="credentials.password" type="password" label="Password" required></v-text-field>
-        <v-btn type="submit" class="mr-4">LOGIN</v-btn>
-        <br>
-          <small v-if="this.loginfailcount">{{this.loginfailcount}} 번 로그인 실패 하였습니다</small>
-        </v-form>
-        <br>
-        <v-btn round color="#df4a31" dark v-on:click="loginWithGoogle" style="width:100%;"> Google 로그인</v-btn>
-        <br><br>
-        <v-btn round color="#E2E532" dark style="width:100%;"> Kakao 로그인</v-btn>
-        <br><br><hr><br>
-        <v-btn round color="#9A54E5" dark style="width:100%;" @click="loginDialog = false" to="/signup">회원가입</v-btn>
-      </v-card-text>
-      <v-divider></v-divider>
-      <v-card-actions>
-        <v-btn color="blue darken-1" text @click="loginDialog = false">Close</v-btn>
-      </v-card-actions>
-    </v-card> -->
+  <v-dialog v-if="mobile()" v-model="loginDialog" max-width="900px">
     <LoginSignup v-on:update="changeLoginDialog"/>
+  </v-dialog>
+  <v-dialog v-else v-model="loginDialog" max-width="500px">
+    <LoginSignupMobile v-on:update="changeLoginDialog"/>
   </v-dialog>
 </v-layout>
 </template>
@@ -134,11 +115,13 @@ import axios from 'axios'
 import FirebaseService from '@/services/FirebaseService'
 import { mapState, mapActions, mapMutations } from 'vuex'
 import LoginSignup from '@/components/LoginSignup.vue'
+import LoginSignupMobile from '@/components/LoginSignupMobile.vue'
 
 export default {
   name: 'Header',
   components: {
-    LoginSignup
+    LoginSignup,
+    LoginSignupMobile
   },
   data() {
     return {

@@ -1,6 +1,6 @@
 <template>
-    <v-card class="cont">
-      <div class="form sign-in">
+    <v-card class="contMobile">
+      <div v-if="signFlag" class="formMobile">
         <h2>Welcome to iTeacher!</h2>
         <v-form ref="form" v-model="valid" lazy-validation @submit.prevent="login">
           <label class="label">
@@ -9,7 +9,7 @@
           <label class="label">
             <v-text-field v-model="credentials.password" type="password" label="Password" required></v-text-field>
           </label>
-          <p class="forgot-pass">Forgot password?</p>
+          <p class="forgot-pass" @click="changeSignInUp" style="text-decoration:underline; cursor:pointer">Sign up?</p>
           <button type="submit" class="submit button">Sign In</button>
         </v-form>
         <button type="button" class="fb-btn button"><span>login as</span> Facebook</button>
@@ -17,23 +17,9 @@
           <button type="submit" class="close button" @click="close">close</button>
         </v-card-actions>
       </div>
-
-      <div class="sub-cont">
-        <div class="img">
-          <div class="img__text m--up">
-            <h2>New here?</h2>
-            <p>Sign up and discover our great lectures provided by special teachers!</p>
-          </div>
-          <div class="img__text m--in">
-            <h2>One of us?</h2>
-            <p>If you already has an account, just sign in. We've missed you!</p>
-          </div>
-          <div class="img__btn" @click="imgBtnClick">
-            <span class="m--up">Sign Up</span>
-            <span class="m--in">Sign In</span>
-          </div>
-        </div>
-        <div class="form sign-up">
+        
+    <div v-else class="contMobile">
+        <div class="formMobile sign-in">
           <h2>Time to learn! Join iTeacher</h2>
           <form @submit.prevent="signup" class="login-form" style="display: inline;">
             <label class="subLabel">
@@ -50,6 +36,7 @@
             <label class="subLabel">
               <v-text-field v-model="signUpUser.username" type="text" label="Nickname" required class="my-0"></v-text-field>
             </label>
+            <p class="forgot-pass" @click="changeSignInUp" style="text-decoration:underline; cursor:pointer">Sign in?</p>
             <button type="submit" class="submit button">Sign Up</button>
           </form>
         <button type="button" class="fb-btn button">Join with <span>facebook</span></button>
@@ -65,10 +52,13 @@
 import axios from 'axios'
 import {mapGetters} from 'vuex'
 import router from '../router'
+
 export default {
-    name: 'LoginSignup',
+    name: 'LoginSignupMobile',
     data() {
         return {
+            signFlag: '',
+            signInUp: '',
             credentials: {},
             emailRules: [
               v => !!v || 'E-mail is required',
@@ -81,14 +71,26 @@ export default {
             errormessage : {username: [], password: []}
         }
     },
+    mounted() {
+        this.signFlag = true
+        this.signInUp = 'Sign In'
+    },
     methods: {
+        changeSignInUp() {
+            this.signFlag = !this.signFlag
+            if(this.signInUp === 'Sign In'){
+                this.signInUp = 'Sign Up'
+            }else{
+                this.signInUp = 'Sign In'
+            }
+        },
         close() {
           this.credentials = {}
           this.signUpUser = {}
           this.$emit('update')
         },
         imgBtnClick() {
-          document.querySelector('.cont').classList.toggle('s--signup');
+          document.querySelector('.contMobile').classList.toggle('s--signup');
         },
         login() {
           axios.post('http://192.168.31.110:8197/ssafyvue/api/login',this.credentials)
@@ -126,7 +128,7 @@ export default {
                     if(response.status === 200){
                       this.$emit('update');
                       this.signUpUser = {}
-                      document.querySelector('.cont').classList.remove('s--signup');
+                      document.querySelector('.contMobile').classList.remove('s--signup');
                     }
                     // router.push({name:'home'})
                 })
@@ -158,11 +160,6 @@ export default {
   padding: 0;
 }
 
-body {
-  font-family: 'Open Sans', Helvetica, Arial, sans-serif;
-  background: #ededed;
-}
-
 .input, .button {
   border: none;
   outline: none;
@@ -176,18 +173,18 @@ body {
   text-align: center;
 }
 
-.cont {
+.contMobile {
   overflow: hidden;
   position: relative;
-  width: 900px;
+  width: 500px;
   height: 550px;
   margin: auto;
   background: #fff;
 }
 
-.form {
+.formMobile {
   position: relative;
-  width: 640px;
+  width: 450px;
   height: 100%;
   -webkit-transition: -webkit-transform 1.2s ease-in-out;
   transition: -webkit-transform 1.2s ease-in-out;
@@ -380,17 +377,6 @@ h2 {
   font-size: 12px;
   color: #cfcfcf;
   text-transform: uppercase;
-}
-
-.input {
-  display: block;
-  width: 100%;
-  margin-top: 5px;
-  padding-bottom: 5px;
-  font-size: 16px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
-  text-align: center;
-  background-color: white;
 }
 
 .forgot-pass {
