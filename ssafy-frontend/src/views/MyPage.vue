@@ -9,6 +9,11 @@
       <h1>MY PORTFOLIO</h1>
     </div>
     <MyPortfolioList/>
+    <v-divider/>
+    <div class="mypage-title">
+      <h1>MY Repository</h1>
+    </div>
+    <RepositoryList :githubid="mydata.githubid" />
   </v-container>
 </template>
 
@@ -16,15 +21,15 @@
 import axios from 'axios'
 import MyPortfolioList from '../components/portfolio/MyPortfolioList'
 import MyPostList from '../components/post/MyPostList'
-
+import RepositoryList from '../components/RepositoryList'
 export default {
     name : "MyPage",
-    components : {MyPortfolioList,MyPostList},
+    components : {MyPortfolioList,MyPostList,RepositoryList},
     date() {
       return {
         showpost: true,
         showportfolio : true, 
-        mydata: ''
+        mydata: '',     
       }
     },
     methods: {
@@ -35,15 +40,17 @@ export default {
         this.showportfolio = !this.showportfolio
       },
       getmyinfo() {
-        axios.get(`http://192.168.31.110:8197/ssafyvue/api/member/${this.$session.get('data')['memberid']}`)
+        axios.get(`http://192.168.31.110:8197/ssafyvue/api/member/${this.$store.state.memberid}`)
         .then(response=>{
-          console.log(response.data)
           this.mydata = response.data
+          console.log(this.mydata)
+        }).catch(error => {
+          console.log(error)
         })
       }
     },
     mounted() {
-      this.getmyinfo() 
+      this.getmyinfo()
     }
 }
 </script>
