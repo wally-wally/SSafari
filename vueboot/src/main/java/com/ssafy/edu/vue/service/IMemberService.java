@@ -22,5 +22,9 @@ public interface IMemberService {
 
 	int checkUsername(String username);
 
+	int checkUsers();
+
+	void updateMemberAuth(Member member);
+
 
 }

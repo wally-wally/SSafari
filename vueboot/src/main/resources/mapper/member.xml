@@ -11,7 +11,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="getMemberList" resultType="com.ssafy.edu.vue.dto.Member">
-		SELECT MEMBERID, EMAIL, NAME, USERNAME, SIGNUPDATE, AUTH FROM MEMBERS ORDER BY MEMBERID
+		SELECT MEMBERID, EMAIL, NAME, USERNAME, SIGNUPDATE, AUTH FROM MEMBERS WHERE DELFLAG=0 ORDER BY MEMBERID
 	</select>
 	
 	<select id="getMember" resultType="com.ssafy.edu.vue.dto.Member" parameterType="java.lang.Integer">
@@ -47,4 +47,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="checkUsername" resultType="java.lang.Integer" parameterType="java.lang.String">
 		SELECT COUNT(*) FROM MEMBERS WHERE USERNAME=#{username}
 	</select>
+	
+	<select id="checkUsers" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM MEMBERS WHERE DELFLAG=0
+	</select>
+	
+	<update id="updateMemberAuth" parameterType="com.ssafy.edu.vue.dto.Member">
+		UPDATE MEMBERS SET
+		AUTH=#{auth}
+		WHERE
+		MEMBERID=#{memberid}
+	</update>
 </mapper>
