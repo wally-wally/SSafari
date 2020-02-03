@@ -100,10 +100,10 @@
 
   </v-navigation-drawer>
 
-  <v-dialog v-if="mobile()" v-model="loginDialog" max-width="900px">
+  <v-dialog v-if="mobile() && loginDialog" v-model="loginDialog" max-width="900px">
     <LoginSignup v-on:update="changeLoginDialog"/>
   </v-dialog>
-  <v-dialog v-else v-model="loginDialog" max-width="500px">
+  <v-dialog v-if="!mobile() && loginDialog" v-model="loginDialog" max-width="500px">
     <LoginSignupMobile v-on:update="changeLoginDialog"/>
   </v-dialog>
 </v-layout>
