@@ -55,7 +55,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getCommentPost"
 		parameterType="java.lang.Integer"
 		resultType="com.ssafy.edu.vue.dto.Commentpost">
-		SELECT C.CPOSTID CPOSTID, C.POSTID POSTID, C.MEMBERID MEMBERID, M.USERNAME USERNAME, C.WDATE WDATE, C.CONTENT CONTENT  
+		SELECT C.CPOSTID CPOSTID, C.POSTID POSTID, 
+		C.MEMBERID MEMBERID, IF(C.ANONYM=1, '익명', M.USERNAME) AS USERNAME, 
+		C.WDATE WDATE, C.CONTENT CONTENT, C.ANONYM ANONYM
 FROM COMMENTPOST C, MEMBERS M 
 WHERE C.POSTID=#{postid} AND M.MEMBERID=C.MEMBERID ORDER BY C.CPOSTID
 	</select>
@@ -63,15 +65,16 @@ WHERE C.POSTID=#{postid} AND M.MEMBERID=C.MEMBERID ORDER BY C.CPOSTID
 	<insert id="addCommentPost"
 		parameterType="com.ssafy.edu.vue.dto.Commentpost">
 		INSERT INTO
-		COMMENTPOST(POSTID, MEMBERID, WDATE, CONTENT)
-		VALUES(#{postid},#{memberid},now(), #{content})
+		COMMENTPOST(POSTID, MEMBERID, WDATE, CONTENT, ANONYM)
+		VALUES(#{postid},#{memberid},now(), #{content}, #{anonym})
 	</insert>
 	
 	<update id="updateCommentPost"
 		parameterType="com.ssafy.edu.vue.dto.Commentpost">
 		UPDATE COMMENTPOST SET
 		CONTENT=#{content},
-		WDATE=now()
+		WDATE=now(),
+		ANONYM=#{anonym}
 		WHERE
 		CPOSTID=#{cpostid}
 	</update>
