@@ -125,8 +125,8 @@ public class MemberController {
 		return new ResponseEntity<BoolResult>(nr, HttpStatus.OK);
 	}
 	
-	@ApiOperation(value = "member 회원정보 수정", response = BoolResult.class)
-	@RequestMapping(value = "/member", method = RequestMethod.PUT)
+	@ApiOperation(value = "member 회원 권한 수정", response = BoolResult.class)
+	@RequestMapping(value = "/memberAuth", method = RequestMethod.PUT)
 	public ResponseEntity<BoolResult> updateMemberAuth(@RequestBody Member member) throws Exception {
 		logger.info("1-------------updateMemberAuth-----------------------------" + new Date());
 		memberservice.updateMemberAuth(member);

@@ -130,7 +130,6 @@ public class PortfolioController {
 		logger.info("1-------------updateCommentPortfolio-----------------------------" + new Date());
 		portfolioservice.updateCommentPortfolio(commentportfolio);
 		List<Commentportfolio> portfolios = portfolioservice.getCommentPortfolio(commentportfolio.getPortfolioid());
-		logger.info("2-------------" + portfolios);
 		return new ResponseEntity<List<Commentportfolio>>(portfolios, HttpStatus.OK);
 	}
 	
