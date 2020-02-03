@@ -48,4 +48,12 @@ public class MemberDaoImpl {
 		return sqlSession.selectOne(ns+"checkUsername", username);
 	}
 
+	public int checkUsers() {
+		return sqlSession.selectOne(ns+"checkUsers");
+	}
+
+	public void updateMemberAuth(Member member) {
+		sqlSession.update(ns+"updateMemberAuth", member);
+	}
+
 }

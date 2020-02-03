@@ -113,4 +113,26 @@ public class MemberController {
    		nr.setState("succ");
 		return new ResponseEntity<BoolResult>(nr, HttpStatus.OK);
 	}
+	
+	@ApiOperation(value = "가입 회원 수 출력", response = BoolResult.class)
+	@RequestMapping(value = "/member", method = RequestMethod.GET)
+	public ResponseEntity<BoolResult> checkUsers() throws Exception {
+		logger.info("1-------------checkUsers-----------------------------" + new Date());
+		int email = memberservice.checkUsers();
+		BoolResult nr=new BoolResult();
+   		nr.setName("checkUsers");
+   		nr.setState("succ");
+		return new ResponseEntity<BoolResult>(nr, HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "member 회원정보 수정", response = BoolResult.class)
+	@RequestMapping(value = "/member", method = RequestMethod.PUT)
+	public ResponseEntity<BoolResult> updateMemberAuth(@RequestBody Member member) throws Exception {
+		logger.info("1-------------updateMemberAuth-----------------------------" + new Date());
+		memberservice.updateMemberAuth(member);
+		BoolResult nr=new BoolResult();
+   		nr.setName("updateMemberAuth");
+   		nr.setState("succ");
+		return new ResponseEntity<BoolResult>(nr, HttpStatus.OK);
+	}
 }

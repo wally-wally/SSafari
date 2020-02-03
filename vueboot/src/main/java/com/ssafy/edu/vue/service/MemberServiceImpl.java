@@ -64,6 +64,18 @@ public class MemberServiceImpl implements IMemberService {
 		return memberdao.checkUsername(username);
 	}
 
+	@Override
+	@Transactional(readOnly=true)
+	public int checkUsers() {
+		return memberdao.checkUsers();
+	}
+
+	@Override
+	@Transactional
+	public void updateMemberAuth(Member member) {
+		memberdao.updateMemberAuth(member);
+	}
+
 
 
 }
