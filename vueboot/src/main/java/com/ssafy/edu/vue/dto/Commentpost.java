@@ -15,6 +15,7 @@ public class Commentpost implements Serializable {
 	private String wdate;
 	private String content;
 	private String username;
+	private int anonym;
 
 	public Commentpost() {
 		super();
@@ -54,6 +55,34 @@ public class Commentpost implements Serializable {
 		this.memberid = memberid;
 		this.content = content;
 	}
+	
+	public Commentpost(int postid, int memberid, String content, int anonym) {
+		super();
+		this.postid = postid;
+		this.memberid = memberid;
+		this.content = content;
+		this.anonym = anonym;
+	}
+
+	public Commentpost(int cpostid, int postid, int memberid, String wdate, String content, String username,
+			int anonym) {
+		super();
+		this.cpostid = cpostid;
+		this.postid = postid;
+		this.memberid = memberid;
+		this.wdate = wdate;
+		this.content = content;
+		this.username = username;
+		this.anonym = anonym;
+	}
+	
+
+	public Commentpost(int cpostid, String content, int anonym) {
+		super();
+		this.cpostid = cpostid;
+		this.content = content;
+		this.anonym = anonym;
+	}
 
 	@Override
 	public String toString() {
@@ -69,13 +98,6 @@ public class Commentpost implements Serializable {
 		this.cpostid = cpostid;
 	}
 
-	public int getpostid() {
-		return postid;
-	}
-
-	public void setpostid(int postid) {
-		this.postid = postid;
-	}
 
 	public int getMemberid() {
 		return memberid;
@@ -107,6 +129,23 @@ public class Commentpost implements Serializable {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+	
+
+	public int getpostid() {
+		return postid;
+	}
+
+	public void setpostid(int postid) {
+		this.postid = postid;
+	}
+
+	public int getAnonym() {
+		return anonym;
+	}
+
+	public void setAnonym(int anonym) {
+		this.anonym = anonym;
 	}
 
 	public static long getSerialversionuid() {

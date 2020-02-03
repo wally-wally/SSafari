@@ -15,7 +15,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="getMember" resultType="com.ssafy.edu.vue.dto.Member" parameterType="java.lang.Integer">
-		SELECT MEMBERID, EMAIL, NAME, USERNAME, SIGNUPDATE, AUTH FROM MEMBERS WHERE MEMBERID=#{memberid}
+		SELECT MEMBERID, EMAIL, NAME, USERNAME, SIGNUPDATE, AUTH, GITHUBID FROM MEMBERS WHERE MEMBERID=#{memberid}
 	</select>
 	
 	<delete id="deleteMember" parameterType="java.lang.Integer">

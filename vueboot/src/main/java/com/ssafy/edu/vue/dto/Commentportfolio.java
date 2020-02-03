@@ -15,10 +15,39 @@ public class Commentportfolio implements Serializable {
 	private String wdate;
 	private String content;
 	private String username;
+	private int anonym;
 
 	public Commentportfolio() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+
+	public Commentportfolio(int cportfolioid, int portfolioid, int memberid, String wdate, String content,
+			String username, int anonym) {
+		super();
+		this.cportfolioid = cportfolioid;
+		this.portfolioid = portfolioid;
+		this.memberid = memberid;
+		this.wdate = wdate;
+		this.content = content;
+		this.username = username;
+		this.anonym = anonym;
+	}
+
+	public Commentportfolio(int portfolioid, int memberid, String content, int anonym) {
+		super();
+		this.portfolioid = portfolioid;
+		this.memberid = memberid;
+		this.content = content;
+		this.anonym = anonym;
+	}
+	
+
+	public Commentportfolio(int cportfolioid, String content, int anonym) {
+		super();
+		this.cportfolioid = cportfolioid;
+		this.content = content;
+		this.anonym = anonym;
 	}
 
 	public Commentportfolio(int cportfolioid, int portfolioid, int memberid, String wdate, String content) {
@@ -108,6 +137,14 @@ public class Commentportfolio implements Serializable {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	public int getAnonym() {
+		return anonym;
+	}
+
+	public void setAnonym(int anonym) {
+		this.anonym = anonym;
 	}
 
 	public static long getSerialversionuid() {

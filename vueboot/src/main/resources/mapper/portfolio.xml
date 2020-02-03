@@ -62,22 +62,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getCommentPortfolio"
 		parameterType="java.lang.Integer"
 		resultType="com.ssafy.edu.vue.dto.Commentportfolio">
-		SELECT C.CPORTFOLIOID CPORTFOLIOID,C.PORTFOLIOID PORTFOLIOID, C.MEMBERID MEMBERID, C.WDATE WDATE, C.CONTENT CONTENT, M.USERNAME USERNAME  FROM COMMENTPORTFOLIO C, MEMBERS M WHERE C.PORTFOLIOID=#{portfolioid} AND C.MEMBERID=M.MEMBERID ORDER BY C.CPORTFOLIOID
+		SELECT C.CPORTFOLIOID CPORTFOLIOID,C.PORTFOLIOID PORTFOLIOID, 
+		C.MEMBERID MEMBERID, C.WDATE WDATE, C.CONTENT CONTENT, 
+		IF(C.ANONYM=1, '익명', M.USERNAME) AS USERNAME, C.ANONYM ANONYM
+		FROM COMMENTPORTFOLIO C, MEMBERS M 
+		WHERE C.PORTFOLIOID=#{portfolioid} AND C.MEMBERID=M.MEMBERID 
+		ORDER BY C.CPORTFOLIOID
 		
 	</select>
 	
 	<insert id="addCommentPortfolio"
 		parameterType="com.ssafy.edu.vue.dto.Commentportfolio">
 		INSERT INTO
-		COMMENTPORTFOLIO(PORTFOLIOID, MEMBERID, WDATE, CONTENT)
-		VALUES(#{portfolioid},#{memberid},now(), #{content})
+		COMMENTPORTFOLIO(PORTFOLIOID, MEMBERID, WDATE, CONTENT, ANONYM)
+		VALUES(#{portfolioid},#{memberid},now(), #{content}, #{anonym})
 	</insert>
 	
 	<update id="updateCommentPortfolio"
 		parameterType="com.ssafy.edu.vue.dto.Commentportfolio">
 		UPDATE COMMENTPORTFOLIO SET
 		CONTENT=#{content},
-		WDATE=now()
+		WDATE=now(),
+		ANONYM=#{anonym}
 		WHERE CPORTFOLIOID=#{cportfolioid}
 	</update>
 
