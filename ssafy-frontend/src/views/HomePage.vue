@@ -18,17 +18,20 @@
             </div>
           </div>
           <div class="team-intro-images">
-            <img src="https://user-images.githubusercontent.com/52685250/73331867-93cf5980-42a8-11ea-9376-334bfa5fffe3.jpg" id="team-img">
-            <img src="https://user-images.githubusercontent.com/52685250/73331868-93cf5980-42a8-11ea-8272-cb55019dbd5c.jpg" id="team-img">
-            <img src="https://user-images.githubusercontent.com/52685250/73331869-93cf5980-42a8-11ea-9169-cc7b4f9aab49.jpg" id="team-img">
+            <img data-aos="fade-up" src="https://user-images.githubusercontent.com/52685250/73331867-93cf5980-42a8-11ea-9376-334bfa5fffe3.jpg" id="team-img">
+            <img data-aos="fade-up" data-aos-delay="200" src="https://user-images.githubusercontent.com/52685250/73331868-93cf5980-42a8-11ea-8272-cb55019dbd5c.jpg" id="team-img">
+            <img data-aos="fade-up" data-aos-delay="400" src="https://user-images.githubusercontent.com/52685250/73331869-93cf5980-42a8-11ea-9169-cc7b4f9aab49.jpg" id="team-img">
+          </div>
+          <div data-aos="fade-up" data-aos-delay="600" class="feature-on-text">
+            We featured on
           </div>
           <div class="language-icon" style="margin: 20px 10%;">
-            <img data-aos="fade-up" data-aos-delay="600" src="../assets/langicon/html-5.png" id="lang-icon">
-            <img data-aos="fade-up" data-aos-delay="600" src="../assets/langicon/css.png" id="lang-icon">
-            <img data-aos="fade-up" data-aos-delay="600" src="../assets/langicon/javascript.png" id="lang-icon">
-            <img data-aos="fade-up" data-aos-delay="600" src="../assets/langicon/cpp.png" id="lang-icon">
-            <img data-aos="fade-up" data-aos-delay="600" src="../assets/langicon/python.png" id="lang-icon">
-            <img data-aos="fade-up" data-aos-delay="600" src="../assets/langicon/react.png" id="lang-icon">
+            <img data-aos="fade-up" data-aos-delay="800" src="../assets/langicon/html-5.png" id="lang-icon">
+            <img data-aos="fade-up" data-aos-delay="800" src="../assets/langicon/css.png" id="lang-icon">
+            <img data-aos="fade-up" data-aos-delay="800" src="../assets/langicon/javascript.png" id="lang-icon">
+            <img data-aos="fade-up" data-aos-delay="800" src="../assets/langicon/cpp.png" id="lang-icon">
+            <img data-aos="fade-up" data-aos-delay="800" src="../assets/langicon/python.png" id="lang-icon">
+            <img data-aos="fade-up" data-aos-delay="800" src="../assets/langicon/react.png" id="lang-icon">
           </div>
         </div>
       </v-img>
@@ -87,8 +90,6 @@ export default {
 		PostList,
 		RepositoryList
 	},
-  computed: {
-  },
 	methods: {
 		getImgBackgroundUrl(img) {
 			return require('../../public/img/background/' + img)
@@ -105,7 +106,7 @@ export default {
     fnMove(seq){
       var offset = $("#" + seq).offset();
       $('html, body').animate({scrollTop : offset.top - 64}, 400);
-    },
+    }
 	},
 }
 </script>

@@ -9,6 +9,13 @@
   letter-spacing: 2px;
   animation: title 3s 1;
 }
+
+@media (max-width: 700px) {
+  .scroll-alert {
+    font-size: 2.5em;
+  }
+}
+
 #homepage-imgbanner {
   position: fixed;
   top: 0;
@@ -131,13 +138,32 @@ hr {
   margin: 0 10%;
 }
 
+.feature-on-text {
+  font-size: 2.2rem;
+  font-family: 'Quicksand', sans-serif;
+  text-shadow: 3px 3px 3px lightgrey;
+  padding-top: 5px;
+}
+
+@media (max-width: 599px) {
+  .feature-on-text {
+    font-size: 1.7rem;
+    padding: 0;
+  }
+  
+  .language-icon {
+    padding: 0;
+    margin: 0 5%;
+  }
+}
+
 #team-img,
 #lang-icon {
   text-align: center;
 }
 
 #lang-icon {
-  margin: 10px 25px 0;
+  margin: 0 25px;
 }
 
 @media (min-width: 1201px) {
@@ -160,7 +186,7 @@ hr {
 
 @media (max-width: 800px) {
   #team-img {
-    width: 100%;
+    width: 90%;
   }
   #lang-icon {
     width: 7%;
