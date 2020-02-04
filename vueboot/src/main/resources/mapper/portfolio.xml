@@ -107,7 +107,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="isApplicant" parameterType="com.ssafy.edu.vue.dto.Sugang" resultType="java.lang.Integer">
 		SELECT COUNT(*) FROM SUGANG
 		WHERE PORTFOLIOID = #{portfolioid} AND MEMBERID = #{memberid}
-		</select>
+	</select>
 
 	<select id="getSugangMember"
 		parameterType="java.lang.Integer"

@@ -18,8 +18,11 @@ public class Member implements Serializable {
 	private int delflag;
 	private int auth;
 	private String githubid;
+	private int locationid;
+	private int unit;
 	private boolean signup;
 	private String message;
+	
 	
 
 	public Member() {
@@ -122,6 +125,28 @@ public class Member implements Serializable {
 
 	public Member(boolean signup, String message) {
 		super();
+		this.signup = signup;
+		this.message = message;
+	}
+	
+	
+
+
+
+	public Member(int memberid, String email, String password, String name, String username, String signupdate,
+			int delflag, int auth, String githubid, int locationid, int unit, boolean signup, String message) {
+		super();
+		this.memberid = memberid;
+		this.email = email;
+		this.password = password;
+		this.name = name;
+		this.username = username;
+		this.signupdate = signupdate;
+		this.delflag = delflag;
+		this.auth = auth;
+		this.githubid = githubid;
+		this.locationid = locationid;
+		this.unit = unit;
 		this.signup = signup;
 		this.message = message;
 	}
@@ -234,6 +259,30 @@ public class Member implements Serializable {
 
 	public void setMessage(String message) {
 		this.message = message;
+	}
+
+
+
+	public int getLocationid() {
+		return locationid;
+	}
+
+
+
+	public void setLocationid(int locationid) {
+		this.locationid = locationid;
+	}
+
+
+
+	public int getUnit() {
+		return unit;
+	}
+
+
+
+	public void setUnit(int unit) {
+		this.unit = unit;
 	}
 
 

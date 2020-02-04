@@ -103,4 +103,19 @@ WHERE C.POSTID=#{postid} AND M.MEMBERID=C.MEMBERID ORDER BY C.CPOSTID
 		ORDER BY POSTID	DESC AND P.BOARDID=#{boardid} AND P.LOCATIONID=#{locationid}
 	</select>
 	
+	<insert id="addLikePost" parameterType="com.ssafy.edu.vue.dto.Likepost">
+		INSERT INTO
+		LIKEPOST(POSTID, MEMBERID)
+		VALUES(#{postid},#{memberid})
+	</insert>
+	
+	<delete id="deleteLikePost" parameterType="com.ssafy.edu.vue.dto.Likepost">
+		DELETE FROM COMMENTPOST WHERE POSTID = #{postid} AND MEMBERID=#{memberid}
+	</delete>
+	
+	<select id="getLikeCounts" parameterType="com.ssafy.edu.vue.dto.Likepost" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM LIKEPOST
+		WHERE POSTID = #{postid}
+	</select>
+	
 </mapper>

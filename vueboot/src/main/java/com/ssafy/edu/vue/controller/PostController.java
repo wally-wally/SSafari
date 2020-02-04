@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.edu.vue.dto.Commentpost;
+import com.ssafy.edu.vue.dto.Likepost;
 import com.ssafy.edu.vue.dto.LocationFiltering;
 import com.ssafy.edu.vue.dto.Portfolio;
 import com.ssafy.edu.vue.dto.Post;
@@ -166,6 +167,39 @@ public class PostController {
 		postservice.deleteCommentPost(commentpost.getCpostid());
 		List<Commentpost> posts = postservice.getCommentPost(commentpost.getpostid());
 		return new ResponseEntity<List<Commentpost>>(posts, HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "post Like 추가 (like count up)", response = List.class)
+	@RequestMapping(value = "/likepost", method = RequestMethod.POST)
+	public ResponseEntity<BoolResult> addLikePost(@RequestBody Likepost likepost) throws Exception {
+		logger.info("1-------------addLikePost-----------------------------" + new Date());
+		postservice.addLikePost(likepost);
+		BoolResult nr=new BoolResult();
+   		nr.setName("addLikePost");
+   		nr.setState("succ");
+		return new ResponseEntity<BoolResult>(nr, HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "post Like 삭제 (like count down)", response = List.class)
+	@RequestMapping(value = "/likepost", method = RequestMethod.DELETE)
+	public ResponseEntity<BoolResult> deleteLikePost(@RequestBody Likepost likepost) throws Exception {
+		logger.info("1-------------deleteLikePost-----------------------------" + new Date());
+		postservice.deleteLikePost(likepost);
+		BoolResult nr=new BoolResult();
+   		nr.setName("deleteLikePost");
+   		nr.setState("succ");
+		return new ResponseEntity<BoolResult>(nr, HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "post 좋아요 수 출력", response = BoolResult.class)
+	@RequestMapping(value = "/member", method = RequestMethod.GET)
+	public ResponseEntity<BoolResult> getLikeCounts(@PathVariable int postid) throws Exception {
+		logger.info("1-------------getLikeCounts-----------------------------" + new Date());
+		int email = postservice.getLikeCounts(postid);
+		BoolResult nr=new BoolResult();
+   		nr.setName("getLikeCounts");
+   		nr.setState("succ");
+		return new ResponseEntity<BoolResult>(nr, HttpStatus.OK);
 	}
 	
 }
