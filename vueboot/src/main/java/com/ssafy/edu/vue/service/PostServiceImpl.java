@@ -77,5 +77,10 @@ public class PostServiceImpl implements IPostService {
 		postdao.deleteCommentPost(cpostid);
 	}
 
+	@Override
+	@Transactional(readOnly=true)
+	public List<Post> getCategoryPosts(int boardid) {
+		return postdao.getCategoryPosts(boardid);
+	}
 
 }

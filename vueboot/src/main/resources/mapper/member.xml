@@ -19,9 +19,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<delete id="deleteMember" parameterType="java.lang.Integer">
-		DELETE FROM MEMBERS WHERE MEMBERID=#{memberid}
+		UPDATE MEMBERS SET DELFLAG=1 WHERE MEMBERID=#{memberid}
 	</delete>
-	
 	
 	<insert id="addMember" parameterType="com.ssafy.edu.vue.dto.Member">
 		INSERT INTO
