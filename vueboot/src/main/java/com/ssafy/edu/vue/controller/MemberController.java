@@ -75,16 +75,17 @@ public class MemberController {
 	
 	@ApiOperation(value = "member 로그인", response = List.class)
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public ResponseEntity<Member> login(@RequestBody Member member, HttpServletResponse res) throws Exception {
+	public ResponseEntity<Map<String, Object>> login(@RequestBody Member member) throws Exception {
 		Map<String, Object> resultMap = new HashMap<>();
 		logger.info("1-------------login-----------------------------" + new Date());	
 		Member login=memberservice.checkLogin(member);
 		if (login == null) {
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
 		}
-		String token = jwtService.signin(member);
+		
+		String token = jwtService.signin(login);
 
-		res.setHeader("Authorization", token);
+		//res.setHeader("Authorization", token);
 		logger.info("2---login----"+token);
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", "token");
@@ -92,7 +93,7 @@ public class MemberController {
 		resultMap.put("data", login);
 		resultMap.put("access-token", token);
 		//jwtService.get("d",((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest());
-		return new ResponseEntity<Member>(login, headers, HttpStatus.OK);
+		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
 	}
 	
 	
