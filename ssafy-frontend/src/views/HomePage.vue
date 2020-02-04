@@ -74,14 +74,12 @@
 
   </div>
 </template>
-
 <script>
 import ImgBanner from '../components/ImgBanner'
 import PortfolioListMain from '../components/portfolio/PortfolioListMain'
 import PostList from '../components/post/PostList'
 import RepositoryList from '../components/RepositoryList'
 import '../assets/css/HomePage.css'
-
 export default {
 	name: 'HomePage',
 	components: {
@@ -89,7 +87,15 @@ export default {
 		PortfolioListMain,
 		PostList,
 		RepositoryList
-	},
+  },
+  created () {
+    window.addEventListener('scroll', this.sideBarColorChange)
+    window.addEventListener('resize', this.sideBarColorChange)
+  },
+  destroyed () {
+    window.removeEventListener('scroll', this.sideBarColorChange)
+    window.removeEventListener('resize', this.sideBarColorChange)
+  },
 	methods: {
 		getImgBackgroundUrl(img) {
 			return require('../../public/img/background/' + img)
@@ -106,6 +112,33 @@ export default {
     fnMove(seq){
       var offset = $("#" + seq).offset();
       $('html, body').animate({scrollTop : offset.top - 64}, 400);
+    },
+    sideBarColorChange:function() {
+      // screen height variable
+      let value = window.scrollY
+      section.style.clipPath = 'circle(' + value + 'px at center)'
+      let viewportHeight = document.documentElement.clientHeight
+      let HeaderHeight = document.querySelector('Header').style.height.split('px')[0]
+      let sectionUpperHalfHeight = (viewportHeight - HeaderHeight) / 2
+
+      // section top value
+      let teamIntroSectionTop = document.querySelector('.team-intro-image').getBoundingClientRect().top
+      let portfolioSectionTop = document.querySelector('.portfolio-image').getBoundingClientRect().top
+      let postSectionTop = document.querySelector('.post-image').getBoundingClientRect().top
+
+      if (postSectionTop - HeaderHeight <= sectionUpperHalfHeight) {
+        postIcon.style.color = colorSet[0]
+        mainIcon.style.color = teamIcon.style.color = portfolioIcon.style.color = colorSet[1]
+      } else if (portfolioSectionTop - HeaderHeight <= sectionUpperHalfHeight) {
+        portfolioIcon.style.color = colorSet[0]
+        mainIcon.style.color = teamIcon.style.color = postIcon.style.color = colorSet[1]
+      } else if (teamIntroSectionTop - HeaderHeight <= sectionUpperHalfHeight) {
+        teamIcon.style.color = colorSet[0]
+        mainIcon.style.color = portfolioIcon.style.color = postIcon.style.color = colorSet[1]
+      } else {
+        mainIcon.style.color = colorSet[0]
+        teamIcon.style.color = portfolioIcon.style.color = postIcon.style.color = colorSet[1]
+      }
     }
 	},
 }

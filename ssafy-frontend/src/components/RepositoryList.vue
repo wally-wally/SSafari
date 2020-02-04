@@ -1,6 +1,5 @@
 <template>
   <v-layout column px-4>
-	  {{ this.githubid }}
     <v-flex v-for="i in this.showReposCount" :key="i">
       <v-divider v-if="i === 1"></v-divider>
       <Repository :repos="repositories[i - 1]"></Repository>
@@ -44,6 +43,7 @@ export default {
 			if(response.status !== 200) {
 				return
 			}
+			console.log(response)
 			this.repositories = response.data
 		},
 		loadMoreRepos() {

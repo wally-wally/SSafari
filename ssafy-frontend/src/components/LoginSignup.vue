@@ -93,18 +93,17 @@ export default {
         login() {
           axios.post('http://192.168.31.110:8197/ssafyvue/api/login',this.credentials)
             .then(response => {
-            const data = response.data
-            if (data) {
-            this.$session.start()
-            this.$session.set('data', data)
-
-            // vuex actions 호출 -> dispatch
-            this.$store.commit('loginSuccess', response.data)
-            this.loginDialog = false
-            this.credentials = {}
-
-            this.$emit('update');
-          }
+              console.log(response)
+              const token = response.data['access-token']
+            if (token) {
+              this.$session.start()
+              this.$session.set('token', token)
+              // vuex actions 호출 -> dispatch
+              this.$store.dispatch('login', token)
+              this.loginDialog = false
+              this.credentials = {}
+              this.$emit('update');
+            }
           else{
             this.loginfail()
           }

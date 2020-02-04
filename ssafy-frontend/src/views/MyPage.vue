@@ -11,7 +11,7 @@
     <MyPortfolioList/>
     <v-divider/>
     <div class="mypage-title">
-      <h1>MY Repository</h1>
+      <h1>{{this.mydata.githubid}} 's Github</h1>
     </div>
     <RepositoryList :githubid="mydata.githubid" />
   </v-container>
