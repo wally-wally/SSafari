@@ -27,5 +27,7 @@ public interface IPostService {
 	void updateCommentPost(Commentpost commentpost);
 
 	void deleteCommentPost(int cpostid);
+
+	List<Post> getCategoryPosts(int boardid);
 	
 }
