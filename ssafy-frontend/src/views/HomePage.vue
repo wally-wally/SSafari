@@ -3,47 +3,13 @@
     <div class="scroll-alert">Learn to share!<br>Share to Learn!</div>
     <section id="homepage-imgbanner"></section>
     <div class="container-fluid">
-      <v-img 
-              
-              class="team-intro-image"
-              id="team"
-              aspect-ratio="2.15">
-        <div class="team-introduction">
-          <div class="team-intro-text">
-            <div class="intro-text-1">
-              <span class="teaminfo-link" @click="goTeamInfo">A5</span> Team
-            </div>
-            <div class="intro-text-2">
-              Introduction
-            </div>
-          </div>
-          <div class="team-intro-images">
-            <img data-aos="fade-up" src="https://user-images.githubusercontent.com/52685250/73331867-93cf5980-42a8-11ea-9376-334bfa5fffe3.jpg" id="team-img">
-            <img data-aos="fade-up" data-aos-delay="200" src="https://user-images.githubusercontent.com/52685250/73331868-93cf5980-42a8-11ea-8272-cb55019dbd5c.jpg" id="team-img">
-            <img data-aos="fade-up" data-aos-delay="400" src="https://user-images.githubusercontent.com/52685250/73331869-93cf5980-42a8-11ea-9169-cc7b4f9aab49.jpg" id="team-img">
-          </div>
-          <div data-aos="fade-up" data-aos-delay="600" class="feature-on-text">
-            We featured on
-          </div>
-          <div class="language-icon" style="margin: 20px 10%;">
-            <img data-aos="fade-up" data-aos-delay="800" src="../assets/langicon/html-5.png" id="lang-icon">
-            <img data-aos="fade-up" data-aos-delay="800" src="../assets/langicon/css.png" id="lang-icon">
-            <img data-aos="fade-up" data-aos-delay="800" src="../assets/langicon/javascript.png" id="lang-icon">
-            <img data-aos="fade-up" data-aos-delay="800" src="../assets/langicon/cpp.png" id="lang-icon">
-            <img data-aos="fade-up" data-aos-delay="800" src="../assets/langicon/python.png" id="lang-icon">
-            <img data-aos="fade-up" data-aos-delay="800" src="../assets/langicon/react.png" id="lang-icon">
-          </div>
-        </div>
-      </v-img>
-
-
       <v-img class="portfolio-image"
              id="portfolio"
              aspect-ratio="2.15">
         <div class="portfolio-contents">
-          <div class="portfolio-title">Portfolio</div>
+          <div class="portfolio-title">스터디 모임</div>
           <div class="button-box">
-            <div class="addButton" @click="goAddPortfolio">new portfolio</div>
+            <div class="addButton" @click="goAddPortfolio">스터더 참여/모집하기</div>
           </div>
           <div data-aos="fade-up" class="portfolio-carousel">
             <PortfolioListMain></PortfolioListMain>
