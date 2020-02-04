@@ -79,14 +79,14 @@ export default {
     background-color:white;
     margin-top:2rem;
 }
-input, textarea {
+/* input, textarea {
     background: #fff;
     border: none;
     -webkit-box-shadow: 0px 1px 4px 2px rgba(0,0,0,0.16);
     -moz-box-shadow: 0px 1px 4px 2px rgba(0,0,0,0.16);
     box-shadow: 0px 1px 4px 2px rgba(0,0,0,0.16);
     border-radius: 15px;
-} 
+}  */
 footer button.btn {
     display: flex;
     padding-left: 20px;

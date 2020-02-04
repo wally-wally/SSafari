@@ -1,5 +1,5 @@
 <template>
-<v-layout>
+<div>
   <v-app-bar v-if="mobile()" app color="white lighten-4" tile>
     <div class="d-flex align-center">
       <a href="/" style="text-decoration: none; color: #f7b157;">
@@ -106,7 +106,7 @@
   <v-dialog v-if="!mobile() && loginDialog" v-model="loginDialog" max-width="500px">
     <LoginSignupMobile v-on:update="changeLoginDialog"/>
   </v-dialog>
-</v-layout>
+</div>
 </template>
 
 <script>
