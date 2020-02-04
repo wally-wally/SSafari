@@ -10,7 +10,9 @@ import com.ssafy.edu.vue.controller.JwtInterceptor;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
     private static final String[] EXCLUDE_PATHS = {
-            "/member/**",
+    		"/api/",
+            "/api/member/**",
+            "/api/login",
             "/error/**"
     };
 
@@ -20,7 +22,7 @@ public class WebConfig implements WebMvcConfigurer {
 //    @Override
 //    public void addInterceptors(InterceptorRegistry registry) {
 //		registry.addInterceptor(jwtInterceptor)
-//						.addPathPatterns("/**")
+//						.addPathPatterns("/api/**")
 //						.excludePathPatterns(EXCLUDE_PATHS);
 //    }
 }

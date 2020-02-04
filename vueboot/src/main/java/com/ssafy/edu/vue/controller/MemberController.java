@@ -88,7 +88,7 @@ public class MemberController {
 		//res.setHeader("Authorization", token);
 		logger.info("2---login----"+token);
 		HttpHeaders headers = new HttpHeaders();
-		headers.add("Authorization", "token");
+		headers.set("Authorization", token);
 		resultMap.put("status", true);
 		resultMap.put("data", login);
 		resultMap.put("access-token", token);
