@@ -6,7 +6,9 @@
         <div class="qna__q" style="display: flex; justify-content:space-between;">
           <div class="post-list-title" style="margin-right: 15px;">{{title}}</div>
           <div style="font-size: 0.8em; min-width:130px;">
-            <span>{{date.slice(2)}}|{{username}}</span>
+            <span>{{date.slice(2, 16)}} | {{username}}</span>
+            <span class="pl-3"><i class="far fa-heart" style="color: crimson;">100</i></span> <!-- 추후 '100'을 {{ like }}로 수정 -->
+            <span class="pl-1"><i class="far fa-comments" style="color: skyblue;">100</i></span>
           </div>
         </div>
         <div class="qna__a">{{body}}</div>
@@ -15,7 +17,11 @@
       <div class="qna animate2">
         <div class="qna__q" style="display: block;">
           <div class="post-list-title">{{title}}</div>
-          <div><span>{{date.slice(2)}}|{{username}}</span></div>
+          <div>
+            <span>{{date.slice(2, 16)}} | {{username}}</span>
+            <span class="pl-3"><i class="far fa-heart" style="color: crimson;">100</i></span> <!-- 추후 '100'을 {{ like }}로 수정 -->
+            <span class="pl-1"><i class="far fa-comments" style="color: skyblue;">100</i></span>
+          </div>
         </div>
         <div class="qna__a">{{body}}</div>
       </div>
@@ -39,6 +45,9 @@
         type: String
       },
       memberid: {
+        type: Number
+      },
+      like: {
         type: Number
       }
     },
@@ -66,6 +75,7 @@
 
   .post-wrapper {
     margin-bottom: 15px;
+    padding: 0 10px;
   }
 
   .faq-section__qnas .qna {
