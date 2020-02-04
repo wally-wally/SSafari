@@ -7,7 +7,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- </select> -->
 
 	<select id="checkLogin" resultType="com.ssafy.edu.vue.dto.Member" parameterType="com.ssafy.edu.vue.dto.Member">
-		SELECT EMAIL, NAME, USERNAME, MEMBERID, AUTH FROM MEMBERS WHERE EMAIL=#{email} AND PASSWORD=#{password}
+		SELECT MEMBERID, EMAIL, NAME, USERNAME, SIGNUPDATE, AUTH, GITHUBID FROM MEMBERS WHERE EMAIL=#{email} AND PASSWORD=#{password}
 	</select>
 	
 	<select id="getMemberList" resultType="com.ssafy.edu.vue.dto.Member">

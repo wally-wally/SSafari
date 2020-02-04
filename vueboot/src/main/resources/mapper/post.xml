@@ -85,7 +85,7 @@ WHERE C.POSTID=#{postid} AND M.MEMBERID=C.MEMBERID ORDER BY C.CPOSTID
 		= #{cpostid}
 	</delete>
 	
-	<select id="getPostList"
+	<select id="getCategoryPosts"
 		parameterType="java.lang.Integer"
 		resultType="com.ssafy.edu.vue.dto.Post">
 		SELECT P.POSTID POSTID, P.TITLE TITLE, P.BODY BODY, P.CREATED_AT CREATED_AT, P.MEMBERID MEMBERID, P.ANONYMOUS ANONYMOUS, M.USERNAME USERNAME 
