@@ -1,7 +1,7 @@
 <template>
     <v-card class="cont">
       <div class="form sign-in">
-        <h2>Welcome to iTeacher!</h2>
+        <h2>Welcome to iTeacher!!</h2>
         <v-form ref="form" v-model="valid" lazy-validation @submit.prevent="login">
           <label class="label">
             <v-text-field v-model="credentials.email" :rules="emailRules" label="E-mail" required></v-text-field>
@@ -91,7 +91,7 @@ export default {
           document.querySelector('.cont').classList.toggle('s--signup');
         },
         login() {
-          axios.post('http://192.168.31.110:8197/ssafyvue/api/login',this.credentials)
+          axios.post('http://192.168.31.110:8197/ssafyvue/api/login', this.credentials)
             .then(response => {
             const data = response.data
             if (data) {
@@ -110,12 +110,12 @@ export default {
           }
         })
         .catch(error => {
-          console.log(error)
+          console.log(123, error)
           this.loginfail()
         })
       this.credentials = []
     },
-        loginfail() {
+    loginfail() {
       this.loginfailcount ++
     },
         signup() {

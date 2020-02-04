@@ -3,50 +3,52 @@
   <v-row justify="center">
     <v-col cols="12" sm="8">
       <v-card>
-        <v-card-title class="blue darken-1">
-          <span class="headline white--text">{{ portfolio.title }} <h6>{{ portfolio.created_at }} | {{ portfolio.username}}</h6></span>
+        <v-card-title class="darken-1">
+					<div>
+						<div>
+          		<v-avatar class="mr-5 mb-2">
+								<img src="../../public/img/profile.png" alt="profile">
+    					</v-avatar><span>{{ portfolio.username}}</span>
+						</div>
+						<div>
+					  	<span class="headline">{{ portfolio.title }} <h6>{{ portfolio.created_at }} </h6>
+								<v-btn class="mr-1" v-if="currentMemberId === portfolio.memberid" small color="green" :to="{ name: 'PortfolioUpdate', params: { id: id, title: portfolio.title, content: portfolio.body, imgSrc: portfolio.img, memberId: portfolio.memberid }}">수정</v-btn>
+								<v-btn v-if="currentMemberId === portfolio.memberid || currentMemberAuth === 1" small color="error" @click="deletePortfolio">삭제</v-btn>
+							</span>
+						</div>
+					</div>
           <v-spacer></v-spacer>
-          <div class="my-2 mx-2">
-            <v-btn v-if="currentMemberId === portfolio.memberid" small color="green" :to="{ name: 'PortfolioUpdate', params: { id: id, title: portfolio.title, content: portfolio.body, imgSrc: portfolio.img, memberId: portfolio.memberid }}">수정</v-btn>
-          </div>
-          <div class="my-2">
-            <v-btn v-if="currentMemberId === portfolio.memberid || currentMemberAuth === 1" small color="error" @click="deletePortfolio">삭제</v-btn>
-          </div>
         </v-card-title>
                 <v-img
           :src="portfolio.img"
           height="400px"
         ></v-img>
         <v-list>
-          <v-divider inset></v-divider>
           <v-list-item>
-            <v-list-item-action>
-							<v-list-item-title>내용</v-list-item-title>
-            </v-list-item-action>
             <v-list-item-content>
               {{ portfolio.body }}
             </v-list-item-content>
           </v-list-item>
-        <v-divider width="500px;"></v-divider>
+					<v-divider v-if="currentMemberId !== portfolio.memberid"></v-divider>
+          <v-row v-if="currentMemberId !== portfolio.memberid" justify="center" class="mt-2">
+    				<div class="mr-4 mt-1">
+      				(현재/전체) {{portfolio.applicant }}명 / {{ portfolio.capacity}}명
+    				</div>
+    				<v-btn v-if="portfolio.applicant < portfolio.capacity & !myapplicate" @click="application" color="primary">강의 신청하기</v-btn>
+    				<v-btn v-else-if="myapplicate" @click="application" color="red darken-1"> 수강 취소</v-btn>
+    				<v-btn v-else color="warning">신청 마감되었습니다</v-btn>
+    			</v-row>
+      	<v-divider></v-divider>
+        	<v-row justify="center">
+    				<v-col cols="12" sm="12">
+      				<boardcomment :postid="this.id" boardtype="portfolio" :comments="comments"/>
+    				</v-col>
+  				</v-row>
         </v-list>
       </v-card>
     </v-col>
   </v-row>
-  <v-row v-if="currentMemberId !== portfolio.memberid" justify="center">
-    <div class="mr-4">
-      {{portfolio.applicant }} 명 / {{ portfolio.capacity}} 명 
-    </div>
-    <v-btn v-if="portfolio.applicant < portfolio.capacity & !myapplicate" @click="application" color="primary">강의 신청하기</v-btn>
-    <v-btn v-else-if="myapplicate" @click="application" color="red darken-1">수강 취소</v-btn>
-    <v-btn v-else color="warning">신청 마감되었습니다</v-btn>
-    </v-row>
-  <v-row justify="center">
-    <v-col cols="12" sm="8">
-      <boardcomment :postid="this.id" boardtype="portfolio" :comments="comments"/>
-    </v-col>
-  </v-row>
   </v-container>
-
 </template>
 
 <script>
