@@ -94,6 +94,8 @@ export default {
           axios.post('http://192.168.31.110:8197/ssafyvue/api/login',this.credentials)
             .then(response => {
             const data = response.data
+            console.log(response.headers)
+
             if (data) {
             this.$session.start()
             this.$session.set('data', data)
