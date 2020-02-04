@@ -3,13 +3,32 @@
 		<div class="team-introduction-title-tag">
 			<span>We are the Team A5</span>
 		</div>
-  <v-row justify="center">
-		<ProfileCard data-aos="zoom-in-up" data-aos-once="true" :imgSrc="sy.imgSrc" :name="sy.name" :position="sy.position" :intro="sy.intro" :skills="sy.skills" :gitUrl="sy.gitUrl" :email="sy.email"/>
-		<ProfileCard data-aos="zoom-in-up" data-aos-once="true" :imgSrc="ah.imgSrc" :name="ah.name" :position="ah.position" :intro="ah.intro" :skills="ah.skills" :gitUrl="ah.gitUrl" :email="ah.email"/>
-		<ProfileCard data-aos="zoom-in-up" data-aos-once="true" :imgSrc="hj.imgSrc" :name="hj.name" :position="hj.position" :intro="hj.intro" :skills="hj.skills" :gitUrl="hj.gitUrl" :email="hj.email"/>
-		<ProfileCard data-aos="zoom-in-up" data-aos-once="true" :imgSrc="gh.imgSrc" :name="gh.name" :position="gh.position" :intro="gh.intro" :skills="gh.skills" :gitUrl="gh.gitUrl" :email="gh.email"/>
-		<ProfileCard data-aos="zoom-in-up" data-aos-once="true" :imgSrc="kr.imgSrc" :name="kr.name" :position="kr.position" :intro="kr.intro" :skills="kr.skills" :gitUrl="kr.gitUrl" :email="kr.email"/>
-  </v-row>
+  		<v-row justify="center">
+			  <ProfileCard data-aos="zoom-in-up" data-aos-once="true" :imgSrc="sy.imgSrc" :name="sy.name" :position="sy.position" :intro="sy.intro" :skills="sy.skills" :gitUrl="sy.gitUrl" :email="sy.email"/>
+			  <ProfileCard data-aos="zoom-in-up" data-aos-once="true" :imgSrc="ah.imgSrc" :name="ah.name" :position="ah.position" :intro="ah.intro" :skills="ah.skills" :gitUrl="ah.gitUrl" :email="ah.email"/>
+			  <ProfileCard data-aos="zoom-in-up" data-aos-once="true" :imgSrc="hj.imgSrc" :name="hj.name" :position="hj.position" :intro="hj.intro" :skills="hj.skills" :gitUrl="hj.gitUrl" :email="hj.email"/>
+			  <ProfileCard data-aos="zoom-in-up" data-aos-once="true" :imgSrc="gh.imgSrc" :name="gh.name" :position="gh.position" :intro="gh.intro" :skills="gh.skills" :gitUrl="gh.gitUrl" :email="gh.email"/>
+		    <ProfileCard data-aos="zoom-in-up" data-aos-once="true" :imgSrc="kr.imgSrc" :name="kr.name" :position="kr.position" :intro="kr.intro" :skills="kr.skills" :gitUrl="kr.gitUrl" :email="kr.email"/>
+      </v-row>
+      <v-divider></v-divider>
+  		<v-img class="team-intro-image" id="team" aspect-ratio="5.15">
+        <div class="team-intro-images">
+          <img data-aos="fade-up" src="https://user-images.githubusercontent.com/52685250/73331867-93cf5980-42a8-11ea-9376-334bfa5fffe3.jpg" id="team-img">
+          <img data-aos="fade-up" data-aos-delay="200" src="https://user-images.githubusercontent.com/52685250/73331868-93cf5980-42a8-11ea-8272-cb55019dbd5c.jpg" id="team-img">
+          <img data-aos="fade-up" data-aos-delay="400" src="https://user-images.githubusercontent.com/52685250/73331869-93cf5980-42a8-11ea-9169-cc7b4f9aab49.jpg" id="team-img">
+        </div>
+          <!-- <div data-aos="fade-up" data-aos-delay="600" class="feature-on-text">
+            We featured on
+          </div>
+          <div class="language-icon" style="margin: 20px 10%;">
+            <img data-aos="fade-up" data-aos-delay="800" src="../assets/langicon/html-5.png" id="lang-icon">
+            <img data-aos="fade-up" data-aos-delay="800" src="../assets/langicon/css.png" id="lang-icon">
+            <img data-aos="fade-up" data-aos-delay="800" src="../assets/langicon/javascript.png" id="lang-icon">
+            <img data-aos="fade-up" data-aos-delay="800" src="../assets/langicon/cpp.png" id="lang-icon">
+            <img data-aos="fade-up" data-aos-delay="800" src="../assets/langicon/python.png" id="lang-icon">
+            <img data-aos="fade-up" data-aos-delay="800" src="../assets/langicon/react.png" id="lang-icon">
+          </div> -->
+      </v-img>
 	</div>
 </template>
 
