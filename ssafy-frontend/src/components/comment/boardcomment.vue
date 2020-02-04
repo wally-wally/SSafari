@@ -10,7 +10,7 @@
         <v-form @submit.prevent="Createcomment">
           <div class="form-group d-flex justify-content-center">
             <textarea rows="3" v-model="new_comment" class="commentinput" v-bind:readonly="!isLogin" v-bind:placeholder="check"></textarea>
-                <v-btn large type="submit" color="secondary" class="btn btn-info align-self-end mx-2">등록</v-btn>
+                <v-btn large type="submit" color="secondary" class="btn btn-info align-self-end mx-2 mb-1">등록</v-btn>
 			</div>
         </v-form>
     </v-container>
@@ -61,7 +61,7 @@ export default {
             if(!this.$store.state.isLogin) {
                 this.check="로그인 후 작성해주세요."  
             }else {
-                this.check="댓글 입력"
+                this.check="댓글을 입력하세요."
             }
         },
     },
