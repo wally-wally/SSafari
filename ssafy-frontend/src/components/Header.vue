@@ -5,9 +5,8 @@
       <a href="/" style="text-decoration: none; color: #f7b157;">
         <v-toolbar-title style="font-size: 16px; padding-right: 10px;">iTeacher</v-toolbar-title>
       </a> &nbsp; &nbsp;
-      {{this.$store.getters.username}}
       <span v-if="!this.isLogin" class="d-flex align-center">Welcome, Guest</span>
-      <span v-else class="d-flex align-center">Welcome, {{ this.$store.getters.token }}</span>
+      <span v-else class="d-flex align-center">Welcome, </span>
     </div>
 
     <v-spacer></v-spacer>
@@ -37,7 +36,7 @@
       <v-list-item class="pb-3">
         <v-list-item-content>
           <v-list-item-title v-if="this.isLogin">Welcome, Guest</v-list-item-title>
-          <v-list-item-title v-else>Welcome, {{ this.$store.state.token }}</v-list-item-title>
+          <v-list-item-title v-else>Welcome,</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
 
