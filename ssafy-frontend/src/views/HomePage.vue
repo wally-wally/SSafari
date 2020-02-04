@@ -56,11 +56,11 @@
              aspect-ratio="2.15">
         <div class="post-contents">
           <div class="post-title">Post</div>
-          <div class="button-box">
+          <!-- <div class="button-box">
             <div class="addButton" @click="goAddPost">new post</div>
-          </div>
+          </div> -->
           <div data-aos="fade-up" class="post-contents">
-            <PostList></PostList>
+            <PostListMain></PostListMain>
           </div>
         </div>
       </v-img>
@@ -77,7 +77,7 @@
 <script>
 import ImgBanner from '../components/ImgBanner'
 import PortfolioListMain from '../components/portfolio/PortfolioListMain'
-import PostList from '../components/post/PostList'
+import PostListMain from '../components/post/PostListMain'
 import RepositoryList from '../components/RepositoryList'
 import '../assets/css/HomePage.css'
 export default {
@@ -85,7 +85,7 @@ export default {
 	components: {
 		ImgBanner,
 		PortfolioListMain,
-		PostList,
+		PostListMain,
 		RepositoryList
   },
   created () {
