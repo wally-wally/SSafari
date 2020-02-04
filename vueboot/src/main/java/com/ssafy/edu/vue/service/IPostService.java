@@ -3,6 +3,7 @@ package com.ssafy.edu.vue.service;
 import java.util.List;
 
 import com.ssafy.edu.vue.dto.Commentpost;
+import com.ssafy.edu.vue.dto.LocationFiltering;
 import com.ssafy.edu.vue.dto.Post;
 
 
@@ -29,5 +30,7 @@ public interface IPostService {
 	void deleteCommentPost(int cpostid);
 
 	List<Post> getCategoryPosts(int boardid);
+
+	List<Post> getLocationPosts(LocationFiltering locationfiltering);
 	
 }

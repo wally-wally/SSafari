@@ -17,6 +17,7 @@ public class Post implements Serializable {
 	private String username;
 	private int boardid;
 	private int anonymous;
+	private int locationid;
 
 	public Post() {
 		super();
@@ -141,6 +142,23 @@ public class Post implements Serializable {
 
 
 
+	public Post(int postid, String title, String body, String created_at, int memberid, String username, int boardid,
+			int anonymous, int locationid) {
+		super();
+		this.postid = postid;
+		this.title = title;
+		this.body = body;
+		this.created_at = created_at;
+		this.memberid = memberid;
+		this.username = username;
+		this.boardid = boardid;
+		this.anonymous = anonymous;
+		this.locationid = locationid;
+	}
+
+
+
+
 	@Override
 	public String toString() {
 		return "Post [postid=" + postid + ", title=" + title + ", body=" + body + ", created_at=" + created_at + "]";
@@ -236,6 +254,20 @@ public class Post implements Serializable {
 
 	public void setAnonymous(int anonymous) {
 		this.anonymous = anonymous;
+	}
+
+
+
+
+	public int getLocationid() {
+		return locationid;
+	}
+
+
+
+
+	public void setLocationid(int locationid) {
+		this.locationid = locationid;
 	}
 
 	

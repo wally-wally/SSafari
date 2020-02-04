@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.edu.vue.dto.Commentpost;
+import com.ssafy.edu.vue.dto.LocationFiltering;
 import com.ssafy.edu.vue.dto.Portfolio;
 import com.ssafy.edu.vue.dto.Post;
 import com.ssafy.edu.vue.help.BoolResult;
@@ -52,6 +53,22 @@ public class PostController {
 	public ResponseEntity<List<Post>> getCategoryPosts(@PathVariable int boardid) throws Exception {
 		logger.info("1-------------getCategoryPosts-----------------------------" + new Date());
 		List<Post> posts = postservice.getCategoryPosts(boardid);
+		if (posts == null) {
+			return new ResponseEntity(HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<List<Post>>(posts, HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "post category 중 지역별 전체 보기", response = List.class)
+	@RequestMapping(value = "/postslocation", method = RequestMethod.GET)
+	public ResponseEntity<List<Post>> getLocationPosts(@RequestBody LocationFiltering locationfiltering) throws Exception {
+		logger.info("1-------------getLocationPosts-----------------------------" + new Date());
+		List<Post> posts;
+		if(locationfiltering.getLocationid()==0) {
+			posts = postservice.getCategoryPosts(locationfiltering.getBoardid());
+		}else {
+			posts = postservice.getLocationPosts(locationfiltering);
+		}
 		if (posts == null) {
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
 		}

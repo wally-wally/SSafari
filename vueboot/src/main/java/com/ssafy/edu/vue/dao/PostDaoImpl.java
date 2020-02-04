@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.ssafy.edu.vue.dto.Commentpost;
+import com.ssafy.edu.vue.dto.LocationFiltering;
 import com.ssafy.edu.vue.dto.Post;
 
 @Repository
@@ -58,6 +59,10 @@ public class PostDaoImpl {
 
 	public List<Post> getCategoryPosts(int boardid) {
 		return sqlSession.selectList(ns+"getCategoryPosts",boardid);
+	}
+
+	public List<Post> getLocationPosts(LocationFiltering locationfiltering) {
+		return sqlSession.selectList(ns+"getLocationPosts",locationfiltering);
 	}
 
 }

@@ -94,4 +94,13 @@ WHERE C.POSTID=#{postid} AND M.MEMBERID=C.MEMBERID ORDER BY C.CPOSTID
 		ORDER BY POSTID	DESC
 	</select>
 	
+	<select id="getLocationPosts"
+		parameterType="com.ssafy.edu.vue.dto.LocationFiltering"
+		resultType="com.ssafy.edu.vue.dto.Post">
+		SELECT P.POSTID POSTID, P.TITLE TITLE, P.BODY BODY, P.CREATED_AT CREATED_AT, P.MEMBERID MEMBERID, P.ANONYMOUS ANONYMOUS, M.USERNAME USERNAME 
+		FROM POSTS P, MEMBERS M 
+		WHERE P.MEMBERID=M.MEMBERID 
+		ORDER BY POSTID	DESC AND P.BOARDID=#{boardid} AND P.LOCATIONID=#{locationid}
+	</select>
+	
 </mapper>
