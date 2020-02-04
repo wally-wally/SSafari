@@ -15,7 +15,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="getMember" resultType="com.ssafy.edu.vue.dto.Member" parameterType="java.lang.Integer">
-		SELECT MEMBERID, EMAIL, NAME, USERNAME, SIGNUPDATE, AUTH, GITHUBID FROM MEMBERS WHERE MEMBERID=#{memberid}
+		SELECT MEMBERID, EMAIL, NAME, USERNAME, SIGNUPDATE, AUTH, GITHUBID, LOCATIONID, UNIT FROM MEMBERS WHERE MEMBERID=#{memberid}
 	</select>
 	
 	<delete id="deleteMember" parameterType="java.lang.Integer">
@@ -24,7 +24,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<insert id="addMember" parameterType="com.ssafy.edu.vue.dto.Member">
 		INSERT INTO
-		MEMBERS(EMAIL, PASSWORD, NAME, USERNAME, SIGNUPDATE)
+		MEMBERS(EMAIL, PASSWORD, NAME, USERNAME, SIGNUPDATE, GITHUBID, LOCATIONID, UNIT)
 		VALUES(#{email},#{password},#{name},#{username},now())
 	</insert>
 	
