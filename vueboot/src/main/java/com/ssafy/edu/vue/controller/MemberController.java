@@ -133,7 +133,7 @@ public class MemberController {
 	}
 	
 	@ApiOperation(value = "member 회원 탈퇴", response = BoolResult.class)
-	@RequestMapping(value = "/member/{memberid}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/member/{memberid}", method = RequestMethod.PUT)
 	public ResponseEntity<BoolResult> deleteMember(@PathVariable int memberid) throws Exception {
 		logger.info("1-------------deleteMember-----------------------------" + new Date());
 		memberservice.deleteMember(memberid);

@@ -47,6 +47,17 @@ public class PostController {
 		return new ResponseEntity<List<Post>>(posts, HttpStatus.OK);
 	}
 	
+	@ApiOperation(value = "post category별 전체 보기", response = List.class)
+	@RequestMapping(value = "/posts/{boardid}", method = RequestMethod.GET)
+	public ResponseEntity<List<Post>> getCategoryPosts(@PathVariable int boardid) throws Exception {
+		logger.info("1-------------getCategoryPosts-----------------------------" + new Date());
+		List<Post> posts = postservice.getCategoryPosts(boardid);
+		if (posts == null) {
+			return new ResponseEntity(HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<List<Post>>(posts, HttpStatus.OK);
+	}
+	
 	@ApiOperation(value = "post 멤버별 전체 보기", response = List.class)
 	@RequestMapping(value = "/postlist/{memberid}", method = RequestMethod.GET)
 	public ResponseEntity<List<Post>> getPostList(@PathVariable int memberid) throws Exception {

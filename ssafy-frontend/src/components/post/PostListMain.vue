@@ -1,5 +1,5 @@
 <template>
-  <v-layout mt-5 row wrap>
+  <v-layout mt-5 row wrap style="margin: 0 10%">
     <v-flex v-for="i in this.showPostsCount"  :key="i" style="width: 100%;"> <!-- col-12 sm6 md3 -->
       <router-link :to="`/post/${posts[i - 1].postid}`">
 	  <Post 

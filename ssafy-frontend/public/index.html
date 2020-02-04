@@ -34,66 +34,13 @@
 <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#available-libraries -->
 <script src="https://www.gstatic.com/firebasejs/7.6.2/firebase-analytics.js"></script>
-
 <script>
-  // Your web app's Firebase configuration
-  let firebaseConfig = {
-    apiKey: "AIzaSyBkEItaer2XZDULdFbXm9N_iFUVFxxpgU0",
-    authDomain: "sub-pjt-1-1week.firebaseapp.com",
-    databaseURL: "https://sub-pjt-1-1week.firebaseio.com",
-    projectId: "sub-pjt-1-1week",
-    storageBucket: "sub-pjt-1-1week.appspot.com",
-    messagingSenderId: "401835460651",
-    appId: "1:401835460651:web:3e9f2da646b909d9efc26e",
-    measurementId: "G-RQ250QFZS6"
-  };
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-  firebase.analytics();
+let section = document.querySelector('#homepage-imgbanner')
+let mainIcon = document.querySelector('#main-icon')
+let teamIcon = document.querySelector('#team-icon')
+let portfolioIcon = document.querySelector('#portfolio-icon')
+let postIcon = document.querySelector('#post-icon')
 
-  let section = document.querySelector('#homepage-imgbanner')
-    window.addEventListener('scroll', function() {
-      let value = window.scrollY
-      section.style.clipPath = 'circle(' + value + 'px at center)'
-    })
-
-  // sidebar icon variable
-  let mainIcon = document.querySelector('#main-icon')
-  let teamIcon = document.querySelector('#team-icon')
-  let portfolioIcon = document.querySelector('#portfolio-icon')
-  let postIcon = document.querySelector('#post-icon')
-
-  let colorSet = ['#f7b157', 'lightgray']
-  
-  sideBarColorChange = function() {
-    // screen height variable
-    let viewportHeight = document.documentElement.clientHeight
-    let HeaderHeight = document.querySelector('Header').style.height.split('px')[0]
-    let sectionUpperHalfHeight = (viewportHeight - HeaderHeight) / 2
-
-    // section top value
-    let teamIntroSectionTop = document.querySelector('.team-intro-image').getBoundingClientRect().top
-    let portfolioSectionTop = document.querySelector('.portfolio-image').getBoundingClientRect().top
-    let postSectionTop = document.querySelector('.post-image').getBoundingClientRect().top
-
-    if (postSectionTop - HeaderHeight <= sectionUpperHalfHeight) {
-      postIcon.style.color = colorSet[0]
-      mainIcon.style.color = teamIcon.style.color = portfolioIcon.style.color = colorSet[1]
-    } else if (portfolioSectionTop - HeaderHeight <= sectionUpperHalfHeight) {
-      portfolioIcon.style.color = colorSet[0]
-      mainIcon.style.color = teamIcon.style.color = postIcon.style.color = colorSet[1]
-    } else if (teamIntroSectionTop - HeaderHeight <= sectionUpperHalfHeight) {
-      teamIcon.style.color = colorSet[0]
-      mainIcon.style.color = portfolioIcon.style.color = postIcon.style.color = colorSet[1]
-    } else {
-      mainIcon.style.color = colorSet[0]
-      teamIcon.style.color = portfolioIcon.style.color = postIcon.style.color = colorSet[1]
-    }
-  }
-  
-  // 창을 scroll 하거나 resize 될 때 모두 적용
-  window.addEventListener('scroll', sideBarColorChange)
-  window.addEventListener('resize', sideBarColorChange)
+let colorSet = ['#f7b157', 'lightgray']
 </script>
-
 </html>

@@ -1,12 +1,13 @@
 <template>
-<v-layout>
+<div>
   <v-app-bar v-if="mobile()" app color="white lighten-4" tile>
     <div class="d-flex align-center">
       <a href="/" style="text-decoration: none; color: #f7b157;">
         <v-toolbar-title style="font-size: 16px; padding-right: 10px;">iTeacher</v-toolbar-title>
       </a> &nbsp; &nbsp;
-      <span v-if="userName === ''" class="d-flex align-center">Welcome, Guest</span>
-      <span v-else class="d-flex align-center">Welcome, {{ this.$store.state.userName }}</span>
+      {{this.$store.getters.username}}
+      <span v-if="!this.isLogin" class="d-flex align-center">Welcome, Guest</span>
+      <span v-else class="d-flex align-center">Welcome, {{ this.$store.getters.token }}</span>
     </div>
 
     <v-spacer></v-spacer>
@@ -35,8 +36,8 @@
 
       <v-list-item class="pb-3">
         <v-list-item-content>
-          <v-list-item-title v-if="userName === ''">Welcome, Guest</v-list-item-title>
-          <v-list-item-title v-else>Welcome, {{ this.$store.state.userName }}</v-list-item-title>
+          <v-list-item-title v-if="this.isLogin">Welcome, Guest</v-list-item-title>
+          <v-list-item-title v-else>Welcome, {{ this.$store.state.token }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
 
@@ -100,20 +101,18 @@
 
   </v-navigation-drawer>
 
-  <v-dialog v-if="mobile()" v-model="loginDialog" max-width="900px">
+  <v-dialog v-if="mobile() && loginDialog" v-model="loginDialog" max-width="900px">
     <LoginSignup v-on:update="changeLoginDialog"/>
   </v-dialog>
-  <v-dialog v-else v-model="loginDialog" max-width="500px">
+  <v-dialog v-if="!mobile() && loginDialog" v-model="loginDialog" max-width="500px">
     <LoginSignupMobile v-on:update="changeLoginDialog"/>
   </v-dialog>
-</v-layout>
+</div>
 </template>
 
 <script>
 import router from 'vue-router'
 import axios from 'axios'
-import FirebaseService from '@/services/FirebaseService'
-import { mapState, mapActions, mapMutations } from 'vuex'
 import LoginSignup from '@/components/LoginSignup.vue'
 import LoginSignupMobile from '@/components/LoginSignupMobile.vue'
 
@@ -125,63 +124,29 @@ export default {
   },
   data() {
     return {
-      loginfailcount : 0,
       drawer: null,
       collapseOnScroll: true,
       loginDialog: false,
-      valid: true,
-      credentials: {},
-      emailRules: [
-        v => !!v || 'E-mail is required',
-        v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
-      ],
     };
   },
   computed: {
-    ...mapState(['isLogin', 'isLoginError']),
-    userName: function() {
-      return this.$store.state.userName
+    isLogin: function() {
+      if (this.$store.state.token){
+        return true
+      }
+      return false
     }
   },
   methods: {
     changeLoginDialog() {
       this.loginDialog = false
     },
-    login() {
-      axios.post('http://192.168.31.110:8197/ssafyvue/api/login',this.credentials)
-        .then(response => {
-          const data = response.data
-          if (data) {
-            this.$session.start()
-            this.$session.set('data', data)
-
-            // vuex actions 호출 -> dispatch
-            this.$store.commit('loginSuccess', response.data)
-            this.loginDialog = false
-          }
-          else{
-            this.loginfail()
-          }
-        })
-        .catch(error => {
-          console.log("아"+error)
-          this.loginfail()
-        })
-      this.credentials = []
-    },
-    loginfail() {
-      this.loginfailcount ++
-    },
-    ...mapActions(['loginSuccess', 'logout']),
     mobile() {
       if (this.$vuetify.breakpoint.name === "xs") {
         return false;
       }
       return true;
     },
-    loginWithGoogle() {
-
-    }
   }
 };
 </script>

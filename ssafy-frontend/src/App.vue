@@ -22,8 +22,8 @@ export default {
     };
   },
   mounted(){
-    if (this.$session.get('data')){
-      this.$store.commit('loginSuccess', this.$session.get('data'))
+    if (this.$session.get('token')){
+      this.$store.dispatch('login',this.$session.get('token'))
     }
   }
 };
