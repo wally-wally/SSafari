@@ -101,7 +101,6 @@ export default {
             this.$session.set('data', data)
 
             // vuex actions 호출 -> dispatch
-            this.$store.commit('loginSuccess', response.data)
             this.loginDialog = false
             this.credentials = {}
 
