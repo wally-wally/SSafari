@@ -10,7 +10,7 @@
       style="color: #f7b157;"
     >
       <v-card-text class="py-2 white--text text-center">
-        2020-01-30 Completed, <strong>Daejeon Team A5, <span @click="goGitlab()" class="A5-Gitlab">Gitlab</span></strong>
+        2020-02-21 Completed, <strong>Daejeon Team A5, <span @click="goGitlab()" class="A5-Gitlab">Gitlab</span></strong>
       </v-card-text>
     </v-card>
   </v-footer>

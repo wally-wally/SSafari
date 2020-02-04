@@ -3,18 +3,18 @@
   <v-app-bar v-if="mobile()" app color="white lighten-4" tile>
     <div class="d-flex align-center">
       <a href="/" style="text-decoration: none; color: #f7b157;">
-        <v-toolbar-title style="font-size: 16px; padding-right: 10px;">iTeacher</v-toolbar-title>
+        <v-toolbar-title style="font-size: 16px; padding-right: 10px;">SSavry Time</v-toolbar-title>
       </a> &nbsp; &nbsp;
       <span v-if="!this.isLogin" class="d-flex align-center">Welcome, Guest</span>
       <span v-else class="d-flex align-center">Welcome, </span>
     </div>
 
     <v-spacer></v-spacer>
-    <v-btn v-if="mobile() && isLogin" color="white" depressed tile to="/mypage">MYPAGE</v-btn>
-    <v-btn v-if="mobile()" color="white" depressed tile to="/post">POST</v-btn>
-    <v-btn v-if="mobile()" color="white" depressed tile to="/portfolio">PORTFOLIO</v-btn>
-    <v-btn v-if="mobile() && !isLogin" color="white" @click.stop="loginDialog = true" depressed tile>LOGIN</v-btn>
-    <v-btn v-if="mobile() && isLogin" color="white" depressed tile @click="$store.dispatch('logout')">LOGOUT</v-btn>
+    <v-btn v-if="mobile() && isLogin" color="white" depressed tile to="/mypage">내 페이지</v-btn>
+    <v-btn v-if="mobile()" color="white" depressed tile to="/post">게시판</v-btn>
+    <v-btn v-if="mobile()" color="white" depressed tile to="/portfolio">스터디 모임</v-btn>
+    <v-btn v-if="mobile() && !isLogin" color="white" @click.stop="loginDialog = true" depressed tile>로그인</v-btn>
+    <v-btn v-if="mobile() && isLogin" color="white" depressed tile @click="$store.dispatch('logout')">로그아웃</v-btn>
     <v-app-bar-nav-icon v-if="!mobile()" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
   
   </v-app-bar>
