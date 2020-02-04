@@ -1,12 +1,19 @@
 package com.ssafy.edu.vue.controller;
 
+import java.nio.charset.Charset;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,11 +21,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.ssafy.edu.vue.dto.CheckSignUp;
 import com.ssafy.edu.vue.dto.Member;
 import com.ssafy.edu.vue.dto.Portfolio;
 import com.ssafy.edu.vue.help.BoolResult;
+import com.ssafy.edu.vue.service.IJwtService;
 import com.ssafy.edu.vue.service.IMemberService;
 
 import io.swagger.annotations.Api;
@@ -36,6 +46,9 @@ public class MemberController {
 	@Autowired
 	private IMemberService memberservice;
 	
+	@Autowired
+    private IJwtService jwtService;
+	
 	@ApiOperation(value = "member 전체 목록 보기", response = List.class)
 	@RequestMapping(value = "/memberList", method = RequestMethod.GET)
 	public ResponseEntity<List<Member>> getMemberList() throws Exception {
@@ -52,18 +65,34 @@ public class MemberController {
 	public ResponseEntity<Member> getMember(@PathVariable int memberid) throws Exception {
 		logger.info("1-------------getMember-----------------------------" + new Date());
 		Member member = memberservice.getMember(memberid);
+
 		if (member == null) {
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
 		}
 		return new ResponseEntity<Member>(member, HttpStatus.OK);
 	}
+
 	
 	@ApiOperation(value = "member 로그인", response = List.class)
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public ResponseEntity<Member> login(@RequestBody Member member) throws Exception {
+	public ResponseEntity<Member> login(@RequestBody Member member, HttpServletResponse res) throws Exception {
+		Map<String, Object> resultMap = new HashMap<>();
 		logger.info("1-------------login-----------------------------" + new Date());	
 		Member login=memberservice.checkLogin(member);
-		return new ResponseEntity<Member>(login, HttpStatus.OK);
+		if (login == null) {
+			return new ResponseEntity(HttpStatus.NO_CONTENT);
+		}
+		String token = jwtService.signin(member);
+
+		res.setHeader("Authorization", token);
+		logger.info("2---login----"+token);
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Authorization", "token");
+		resultMap.put("status", true);
+		resultMap.put("data", login);
+		resultMap.put("access-token", token);
+		//jwtService.get("d",((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest());
+		return new ResponseEntity<Member>(login, headers, HttpStatus.OK);
 	}
 	
 	
