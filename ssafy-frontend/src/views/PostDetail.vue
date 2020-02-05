@@ -60,8 +60,8 @@ export default {
     mounted() {
         this.getPost()
         this.getPostComment()
-        this.currentMemberId = this.$session.get('data')['memberid']
-        this.currentMemberAuth = this.$session.get('data')['auth']
+        this.currentMemberId = this.$store.state.memberid
+        this.currentMemberAuth = this.$store.getters.user.auth
     },
     methods: {
         getPost() {

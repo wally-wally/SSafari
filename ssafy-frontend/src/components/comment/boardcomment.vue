@@ -44,7 +44,7 @@ export default {
     methods : {
         Createcomment () {
             const data = {
-                'memberid' : this.$session.get('data')['memberid'],
+                'memberid' : this.$store.state.memberid,
                 'content' : this.new_comment,
             }
             data[`${this.boardtype}id`] = this.postid
