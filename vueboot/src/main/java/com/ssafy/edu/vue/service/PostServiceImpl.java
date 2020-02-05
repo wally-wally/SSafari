@@ -106,4 +106,10 @@ public class PostServiceImpl implements IPostService {
 		return postdao.getLikeCounts(postid);
 	}
 
+	@Override
+	@Transactional
+	public int getCommentCounts(int postid) {
+		return postdao.getCommentCounts(postid);
+	}
+
 }

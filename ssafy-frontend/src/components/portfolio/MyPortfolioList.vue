@@ -46,7 +46,7 @@ export default {
 	},
 	methods: {
 		getPortfolios() {
-			axios.get(`api/portfoliolist/${this.$session.get('data')['memberid']}`)
+			axios.get(`api/portfoliolist/${ this.$store.getters.user.memberid }`)
 				.then(response => {
 					console.log(response.data)
 					this.portfolios = response.data

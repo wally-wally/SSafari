@@ -5,14 +5,13 @@
       <a href="/" style="text-decoration: none; color: #f7b157;">
         <v-toolbar-title style="font-size: 16px; padding-right: 10px;">SSavry Time</v-toolbar-title>
       </a> &nbsp; &nbsp;
-      {{ isLogin }}
-      <span v-if="!this.isLogin" class="d-flex align-center">Welcome, Guest</span>
-      <span v-else class="d-flex align-center">Welcome, {{ this.$store.getters.username }}</span>
+      <span v-if="!isLogin" class="d-flex align-center">Welcome, Guest</span>
+      <span v-else class="d-flex align-center">Welcome, {{$store.state.username}}</span>
     </div>
 
     <v-spacer></v-spacer>
     <v-btn v-if="mobile()" color="white" depressed tile to="/teamintro">팀 소개</v-btn>
-    <v-btn v-if="mobile()" color="white" depressed tile to="/post">게시판</v-btn>
+    <v-btn v-if="mobile()" color="white" depressed tile to="/board">게시판</v-btn>
     <v-btn v-if="mobile()" color="white" depressed tile to="/portfolio">스터디 모임</v-btn>
     <v-btn v-if="mobile() && isLogin" color="white" depressed tile to="/mypage">내 페이지</v-btn>
     <v-btn v-if="mobile() && !isLogin" color="white" @click.stop="loginDialog = true" depressed tile>로그인</v-btn>
@@ -38,7 +37,7 @@
       <v-list-item class="pb-3">
         <v-list-item-content>
           <v-list-item-title v-if="isLogin">Welcome, Guest</v-list-item-title>
-          <v-list-item-title v-else>Welcome,</v-list-item-title>
+          <v-list-item-title v-else>Welcome, {{$store.state.username}}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
 
@@ -53,7 +52,7 @@
         </v-list-item-content>
       </v-list-item>
 
-      <v-list-item to="/post">
+      <v-list-item to="/board">
         <v-list-item-icon>
           <v-icon>event</v-icon>
         </v-list-item-icon>
@@ -89,7 +88,7 @@
         </v-list-item-content>
       </v-list-item>
 
-      <v-list-item v-if="isLogin" @click="$store.dispatch('logout')">
+      <v-list-item v-if="isLogin" @click="$store.commit('logout')">
         <v-list-item-icon>
           <v-icon>info</v-icon>
         </v-list-item-icon>

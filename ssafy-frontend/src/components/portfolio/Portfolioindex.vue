@@ -1,11 +1,11 @@
 <template>
     <div>
         <div class="portfolio-header" style="padding: 0 2%;">
-            <span class="portfolio-count">{{ portfolioCnt }}개의 Portfolio 게시글</span>
+            <span class="portfolio-count">{{ portfolioCnt }}개의 스터디모집 게시글</span>
             <span class="portfolio-btn">
                 <router-link to="portfolio/create">
                     <v-flex xs12 text-xs-center round my-5>
-                    <v-btn color="#f7b157" dark >Portfolio 작성</v-btn>
+                    <v-btn color="#f7b157" dark >스터디 모집하기</v-btn>
                     </v-flex>
                 </router-link>
             </span>

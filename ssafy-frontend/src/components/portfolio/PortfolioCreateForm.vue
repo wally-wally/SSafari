@@ -2,7 +2,7 @@
     <v-flex justify-center>
         <div v-if="currentMemberId !== null">
             <div id="create-form-title">
-                <span id="form-title">강의 등록 페이지</span>
+                <span id="form-title">스터디 등록 페이지</span>
             </div>
             <hr class="title-headline">
             <div class="title-top">
@@ -11,9 +11,9 @@
                 <textarea v-model="title" id="title-form"></textarea>
                 <!-- </div> -->
             </div>
-            <label for="capacity">수강 인원 : </label>
+            <label for="capacity">스터디 모집 인원 : </label>
             <input v-model="capacity" id="capacity" type="text">명<br>
-            <label for="location">강의 지역 : </label>
+            <label for="location">스터디 지역 : </label>
             <input v-model="location" class="my-3" id="location" type="text">
             
     <v-row >
@@ -29,7 +29,7 @@
             <template v-slot:activator="{ on }">
             <v-text-field
                 v-model="startdate"
-                label="강의 시작일을 입력해 주세요"
+                label="스터디 시작일을 입력해 주세요"
                 prepend-icon="event"
                 readonly
                 v-on="on"
@@ -50,7 +50,7 @@
             <template v-slot:activator="{ on }">
             <v-text-field
                 v-model="enddate"
-                label="강의 종료일을 입력해 주세요"
+                label="스터디 종료일을 입력해 주세요"
                 prepend-icon="event"
                 readonly
                 v-on="on"
@@ -68,9 +68,9 @@
             <v-btn class="mr-5" color="#f7b157" @click="create">작성</v-btn>
             <v-btn color="error" @click="goBack()">취소</v-btn>
         </div>
-        <div v-else>
-            <h1 style="text-align:center; color:red">접근 권한이 없습니다!</h1>
-            <v-btn :to="{ name: 'home'}" style="margin:0 auto; display:block; width: 300px;" class="red"><h3>Home으로 이동</h3></v-btn>
+        <div v-else class="mt-10">
+            <h1 style="text-align:center; color:red">접근 권한이 없습니다</h1>
+            <v-btn :to="{ name: 'home'}" style="margin:0 auto; display:block; width: 300px;" class="red white--text"><h3>Home으로 이동</h3></v-btn>
         </div>
     </v-flex>
 </template>
@@ -114,7 +114,7 @@ export default {
         });
     },
     mounted() {
-        this.currentMemberId = this.$session.get('data')['memberid']
+        this.currentMemberId = this.$store.state.memberid
     },
     methods : {
         goBack() {
@@ -136,7 +136,7 @@ export default {
                 var portfolioData = {
                     title: this.title,
                     body: this.content,
-                    memberid: this.$session.get('data')['memberid'],
+                    memberid: this.$store.state.memberid,
                     img: imgLink,
                     capacity : this.capacity,
                     location : this.location,

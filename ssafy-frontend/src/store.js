@@ -8,9 +8,16 @@ Vue.use(VueSession)
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-    state : {
+    state : {         
+        category : {
+            'free' : '1',
+            'job' : '4',
+            'jmt' : '3',
+        },
         token: null,
         isLogin : false,
+        memberid : null,
+        username : null,
     },
 // mutations : state를 변화시키기 위한 메서드(함수)
  mutations : {
@@ -18,11 +25,18 @@ export default new Vuex.Store({
     // 이후 인자는 payload(즉, 매개변수)
     login(state, token) {
         state.token = token
+        state.memberid = jwtDecode(state.token)['access-Token'].memberid
+        state.username = jwtDecode(state.token)['access-Token'].username
         state.isLogin = true
     },
     logout(state){
-        state.token = null
-        state.isLogin = false
+        const result = confirm('로그아웃 하시겠습니까')
+        if (result) {
+            state.token = null
+            state.memberid = null
+            state.username = null
+            state.isLogin = false
+        }
     }
 },
  actions : {
@@ -38,7 +52,7 @@ export default new Vuex.Store({
     }
 },
  getters : {
-        tokenval(state) {
+        user(state) {
             return jwtDecode(state.token)['access-Token']
         },
         options(state) {
@@ -47,21 +61,6 @@ export default new Vuex.Store({
                     Authorization : `JWT ${state.token}`,
                 }
             }
-        },
-        memberid(state) {
-            return jwtDecode(state.token)['access-Token'].memberid
-        },
-        name(state) {
-            return jwtDecode(state.token)['access-Token'].name
-        },
-        username(state) {
-            return jwtDecode(state.token)['access-token'].username
-        },
-        auth(state){
-            return jwtDecode(state.token)['access-token'].auth
-        },
-        githubid(state){
-            return jwtDecode(state.token)['access-token'].githubid
         }
     }
 })

@@ -78,4 +78,8 @@ public class PostDaoImpl {
 		return sqlSession.selectOne(ns+"getLikeCounts", postid);
 	}
 
+	public int getCommentCounts(int postid) {
+		return sqlSession.selectOne(ns+"getCommentCounts", postid);
+	}
+
 }

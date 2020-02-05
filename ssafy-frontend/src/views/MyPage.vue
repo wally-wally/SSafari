@@ -1,5 +1,7 @@
 <template>
   <v-container>
+    <div>
+    </div>
     <div class="mypage-title">
       <h1>MY POST</h1>
     </div>
@@ -11,9 +13,9 @@
     <MyPortfolioList/>
     <v-divider/>
     <div class="mypage-title">
-      <h1>{{this.mydata.githubid}} 's Github</h1>
+      <h1>{{this.$store.getters.user.githubid}} 's Github</h1>
     </div>
-    <RepositoryList :githubid="mydata.githubid" />
+    <RepositoryList :githubid="this.$store.getters.user.githubid" />
   </v-container>
 </template>
 
@@ -29,7 +31,7 @@ export default {
       return {
         showpost: true,
         showportfolio : true, 
-        mydata: '',     
+        mydata : Object
       }
     },
     methods: {
@@ -40,12 +42,11 @@ export default {
         this.showportfolio = !this.showportfolio
       },
       getmyinfo() {
-        axios.get(`api/member/${this.$store.state.memberid}`)
+        axios.get(`api/member/8`)
         .then(response=>{
           this.mydata = response.data
           console.log(this.mydata)
         }).catch(error => {
-          console.log(error)
         })
       }
     },

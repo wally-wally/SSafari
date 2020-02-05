@@ -231,14 +231,14 @@ public class Post implements Serializable {
 
 
 
-	public int getcategoryid() {
+	public int getCategoryid() {
 		return categoryid;
 	}
 
 
 
 
-	public void setcategoryid(int categoryid) {
+	public void setCategoryid(int categoryid) {
 		this.categoryid = categoryid;
 	}
 
