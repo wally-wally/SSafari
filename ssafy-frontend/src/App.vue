@@ -23,7 +23,8 @@ export default {
   },
   mounted(){
     if (this.$session.get('token')){
-      this.$store.dispatch('login',this.$session.get('token'))
+      const token = this.$session.get('token')
+      this.$store.dispatch('login', token)
     }
   }
 };

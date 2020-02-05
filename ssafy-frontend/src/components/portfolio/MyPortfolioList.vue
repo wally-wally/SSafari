@@ -46,7 +46,7 @@ export default {
 	},
 	methods: {
 		getPortfolios() {
-			axios.get(`http://192.168.31.110:8197/ssafyvue/api/portfoliolist/${this.$session.get('data')['memberid']}`)
+			axios.get(`api/portfoliolist/${this.$session.get('data')['memberid']}`)
 				.then(response => {
 					console.log(response.data)
 					this.portfolios = response.data

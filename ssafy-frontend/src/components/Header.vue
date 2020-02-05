@@ -5,8 +5,9 @@
       <a href="/" style="text-decoration: none; color: #f7b157;">
         <v-toolbar-title style="font-size: 16px; padding-right: 10px;">iTeacher</v-toolbar-title>
       </a> &nbsp; &nbsp;
+      {{ isLogin }}
       <span v-if="!this.isLogin" class="d-flex align-center">Welcome, Guest</span>
-      <span v-else class="d-flex align-center">Welcome, </span>
+      <span v-else class="d-flex align-center">Welcome, {{ this.$store.getters.username }}</span>
     </div>
 
     <v-spacer></v-spacer>
@@ -35,7 +36,7 @@
 
       <v-list-item class="pb-3">
         <v-list-item-content>
-          <v-list-item-title v-if="this.isLogin">Welcome, Guest</v-list-item-title>
+          <v-list-item-title v-if="isLogin">Welcome, Guest</v-list-item-title>
           <v-list-item-title v-else>Welcome,</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
@@ -114,6 +115,7 @@ import router from 'vue-router'
 import axios from 'axios'
 import LoginSignup from '@/components/LoginSignup.vue'
 import LoginSignupMobile from '@/components/LoginSignupMobile.vue'
+import { mapState} from 'vuex'
 
 export default {
   name: 'Header',
@@ -128,13 +130,8 @@ export default {
       loginDialog: false,
     };
   },
-  computed: {
-    isLogin: function() {
-      if (this.$store.state.token){
-        return true
-      }
-      return false
-    }
+  computed : {
+		...mapState(['isLogin'])
   },
   methods: {
     changeLoginDialog() {
@@ -146,6 +143,6 @@ export default {
       }
       return true;
     },
-  }
+  },
 };
 </script>

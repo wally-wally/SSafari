@@ -40,7 +40,7 @@ export default {
         this.showportfolio = !this.showportfolio
       },
       getmyinfo() {
-        axios.get(`http://192.168.31.110:8197/ssafyvue/api/member/${this.$store.state.memberid}`)
+        axios.get(`api/member/${this.$store.state.memberid}`)
         .then(response=>{
           this.mydata = response.data
           console.log(this.mydata)

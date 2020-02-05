@@ -93,7 +93,7 @@ export default {
           document.querySelector('.contMobile').classList.toggle('s--signup');
         },
         login() {
-          axios.post('http://192.168.31.110:8197/ssafyvue/api/login',this.credentials)
+          axios.post('api/login',this.credentials)
             .then(response => {
             const data = response.data
             if (data) {
@@ -120,7 +120,7 @@ export default {
       this.loginfailcount ++
     },
         signup() {
-            axios.post('http://192.168.31.110:8197/ssafyvue/api/member', this.signUpUser)
+            axios.post('api/member', this.signUpUser)
                 .then((response) => {
                     console.log(response)
                     this.errormessage = {username: [], password: []}

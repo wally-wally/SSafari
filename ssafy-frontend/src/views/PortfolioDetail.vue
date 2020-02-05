@@ -79,7 +79,7 @@ export default {
     },
     methods: {
       checkmyapplicate() {
-        axios.get(`http://192.168.31.110:8197/ssafyvue/api/sugang?portfolioid=${this.portfolio.portfolioid}&memberid=${this.currentMemberId}`)
+        axios.get(`api/sugang?portfolioid=${this.portfolio.portfolioid}&memberid=${this.currentMemberId}`)
         .then(response => {
           this.myapplicate = response.data
           console.log('듣고있나요', this.myapplicate)
@@ -87,7 +87,7 @@ export default {
       },
       getPortfolio() {
         console.log(this.id)
-          axios.get(`http://192.168.31.110:8197/ssafyvue/api/portfolio/${this.id}`)
+          axios.get(`api/portfolio/${this.id}`)
               .then( response => {
                 console.log(response.data)
                   this.portfolio = response.data
@@ -95,13 +95,13 @@ export default {
         })
       },
       getPortfolioComment() {
-        axios.get(`http://192.168.31.110:8197/ssafyvue/api/commentportfolio/${this.id}`)
+        axios.get(`api/commentportfolio/${this.id}`)
           .then(response => {
             this.comments = response.data
         })  
       },
       deletePortfolio() {
-          axios.delete(`http://192.168.31.110:8197/ssafyvue/api/portfolio/${this.id}`)
+          axios.delete(`api/portfolio/${this.id}`)
             .then(response => {
               console.log(response.status)
               if(response.status == 200){
@@ -118,7 +118,7 @@ export default {
             console.log('수강')
             this.portfolio.applicant += 1
             this.myapplicate = true
-            axios.post(`http://192.168.31.110:8197/ssafyvue/api/sugang`,data)
+            axios.post(`api/sugang`,data)
             .then(response=> {
               console.log(response.data)
             }).catch(error => {
@@ -128,7 +128,7 @@ export default {
             console.log('수강취소')
             this.myapplicate = false
             this.portfolio.applicant -= 1
-            axios.delete(`http://192.168.31.110:8197/ssafyvue/api/sugang`,{'data':data})
+            axios.delete(`api/sugang`,{'data':data})
             .then(response=> {
               console.log(response.data)
             }).catch(error => {

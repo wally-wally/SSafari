@@ -82,7 +82,7 @@ export default {
                     body: this.contentData,
                     memberid: this.$session.get('data')['memberid']
                 }
-                axios.put('http://192.168.31.110:8197/ssafyvue/api/post', postData)
+                axios.put('api/post', postData)
                     .then(response => {
                         console.log(response.status)
                         if(response.status === 200){
@@ -99,7 +99,7 @@ export default {
                     img: this.imgSrc
                 }
                 if(this.imgFile === null){
-                    axios.put('http://192.168.31.110:8197/ssafyvue/api/portfolio', portfolioData)
+                    axios.put('api/portfolio', portfolioData)
                         .then(response => {
                             if(response.status === 200){
                                 this.$router.push(`/portfolio/${this.id}`)
@@ -114,7 +114,7 @@ export default {
                         .then(response=>{
                         var imgLink = response.data.data.link
                         portfolioData['img'] = imgLink
-                        axios.put('http://192.168.31.110:8197/ssafyvue/api/portfolio', portfolioData)
+                        axios.put('api/portfolio', portfolioData)
                             .then(response => {
                                 if(response.status === 200){
                                     this.$router.push('/portfolio')

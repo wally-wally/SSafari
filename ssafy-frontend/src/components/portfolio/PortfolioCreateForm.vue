@@ -145,7 +145,7 @@ export default {
                 }
                 console.log(portfolioData)
 
-                axios.post('http://192.168.31.110:8197/ssafyvue/api/portfolio', portfolioData)
+                axios.post('api/portfolio', portfolioData)
                     .then(response => {
                         if(response.status === 200){
                             this.$router.push('/portfolio')

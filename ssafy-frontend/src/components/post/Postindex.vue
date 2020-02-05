@@ -117,7 +117,7 @@
                     body: this.content,
                     memberid: this.$session.get('data')['memberid']
                 }
-                axios.post('http://192.168.31.110:8197/ssafyvue/api/post', postData)
+                axios.post('api/post', postData)
                     .then(response => {
                         if(response.status === 200){
                             this.$router.push('/post')
