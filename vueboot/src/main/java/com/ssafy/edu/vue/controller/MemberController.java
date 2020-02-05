@@ -25,6 +25,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.ssafy.edu.vue.dto.CheckSignUp;
+import com.ssafy.edu.vue.dto.Facebook;
 import com.ssafy.edu.vue.dto.Member;
 import com.ssafy.edu.vue.dto.Portfolio;
 import com.ssafy.edu.vue.help.BoolResult;
@@ -50,7 +51,7 @@ public class MemberController {
     private IJwtService jwtService;
 	
 	@ApiOperation(value = "member 전체 목록 보기", response = List.class)
-	@RequestMapping(value = "/memberList", method = RequestMethod.GET)
+	@RequestMapping(value = "/memberlist", method = RequestMethod.GET)
 	public ResponseEntity<List<Member>> getMemberList() throws Exception {
 		logger.info("1-------------getMemberList-----------------------------" + new Date());
 		List<Member> members = memberservice.getMemberList();
@@ -146,13 +147,11 @@ public class MemberController {
 	
 	@ApiOperation(value = "가입 회원 수 출력", response = BoolResult.class)
 	@RequestMapping(value = "/member", method = RequestMethod.GET)
-	public ResponseEntity<BoolResult> checkUsers() throws Exception {
+	public ResponseEntity<Integer> checkUsers() throws Exception {
 		logger.info("1-------------checkUsers-----------------------------" + new Date());
-		int email = memberservice.checkUsers();
-		BoolResult nr=new BoolResult();
-   		nr.setName("checkUsers");
-   		nr.setState("succ");
-		return new ResponseEntity<BoolResult>(nr, HttpStatus.OK);
+		int cnt = memberservice.checkUsers();
+		
+		return new ResponseEntity<Integer>(cnt, HttpStatus.OK);
 	}
 	
 	@ApiOperation(value = "member 회원 권한 수정", response = BoolResult.class)
@@ -182,5 +181,31 @@ public class MemberController {
 		int cnt = memberservice.checkUsername(username);
 
 		return new ResponseEntity<Integer>(cnt, HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "member facebook 로그인", response = BoolResult.class)
+	@RequestMapping(value = "/member/facebook", method = RequestMethod.POST)
+	public ResponseEntity<Map<String, Object>> facebookLogin(@RequestBody Facebook member) throws Exception {
+		logger.info("1-------------facebookLogin-----------------------------" + new Date());	
+		int email=memberservice.checkEmail(member.getEmail());
+		logger.info("2-------------checkEmail-----------------------------  " + email);	
+		if (email == 0) {
+			memberservice.addMember(new Member(member.getEmail(), member.getId(), member.getName(), member.getName()));
+			logger.info("3-------------addMember-----------------------------");	
+		}
+		
+		Map<String, Object> resultMap = new HashMap<>();
+		HttpHeaders headers = new HttpHeaders();
+		
+		Member login=memberservice.checkLogin(new Member(member.getEmail(),member.getId()));
+		logger.info("4-------------checkLogin-----------------------------  "+login);	
+		String token = jwtService.signin(login);
+		
+		headers.set("access-token", token);
+		resultMap.put("status", true);
+		resultMap.put("data", login);
+		resultMap.put("access-token", token);
+		
+		return new ResponseEntity<Map<String, Object>>(resultMap,headers, HttpStatus.OK);
 	}
 }
