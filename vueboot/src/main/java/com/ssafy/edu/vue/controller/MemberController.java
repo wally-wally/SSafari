@@ -86,14 +86,12 @@ public class MemberController {
 		
 		String token = jwtService.signin(login);
 
-		//res.setHeader("Authorization", token);
-		logger.info("2---login----"+token);
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("access-token", token);
+		
 		resultMap.put("status", true);
 		resultMap.put("data", login);
-		resultMap.put("access-token", token);
-		//jwtService.get("d",((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest());
+		
 		return new ResponseEntity<Map<String, Object>>(resultMap,headers, HttpStatus.OK);
 	}
 	
@@ -188,23 +186,19 @@ public class MemberController {
 	public ResponseEntity<Map<String, Object>> facebookLogin(@RequestBody Facebook member) throws Exception {
 		logger.info("1-------------facebookLogin-----------------------------" + new Date());	
 		int email=memberservice.checkEmail(member.getEmail());
-		logger.info("2-------------checkEmail-----------------------------  " + email);	
 		if (email == 0) {
 			memberservice.addMember(new Member(member.getEmail(), member.getId(), member.getName(), member.getName()));
-			logger.info("3-------------addMember-----------------------------");	
 		}
 		
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpHeaders headers = new HttpHeaders();
 		
 		Member login=memberservice.checkLogin(new Member(member.getEmail(),member.getId()));
-		logger.info("4-------------checkLogin-----------------------------  "+login);	
 		String token = jwtService.signin(login);
 		
 		headers.set("access-token", token);
 		resultMap.put("status", true);
 		resultMap.put("data", login);
-		resultMap.put("access-token", token);
 		
 		return new ResponseEntity<Map<String, Object>>(resultMap,headers, HttpStatus.OK);
 	}
