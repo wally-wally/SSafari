@@ -5,6 +5,7 @@
                 <div class="region-checkbox">
                     <v-container id="dropdown-region">
                         <v-select
+                            v-model="region"
                             :items="regions"
                             label="Choose Region"
                             color="#f7b157"
@@ -49,7 +50,7 @@
             </div>
             <v-layout>
                 <v-flex>
-                    <PostList :category="this.$route.name" @showPostCount="onPostCount" :limits="5" :load-more="true"></PostList>
+                    <PostList :region="region" :category="this.$route.name" @showPostCount="onPostCount" :limits="5" :load-more="true"></PostList>
                 </v-flex>
             </v-layout>
         </div>
