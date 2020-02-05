@@ -15,7 +15,7 @@ public class Post implements Serializable {
 	private String created_at;
 	private int memberid;
 	private String username;
-	private int boardid;
+	private int categoryid;
 	private int anonymous;
 	private int locationid;
 
@@ -126,7 +126,7 @@ public class Post implements Serializable {
 	
 	
 
-	public Post(int postid, String title, String body, String created_at, int memberid, String username, int boardid,
+	public Post(int postid, String title, String body, String created_at, int memberid, String username, int categoryid,
 			int anonymous) {
 		super();
 		this.postid = postid;
@@ -135,14 +135,14 @@ public class Post implements Serializable {
 		this.created_at = created_at;
 		this.memberid = memberid;
 		this.username = username;
-		this.boardid = boardid;
+		this.categoryid = categoryid;
 		this.anonymous = anonymous;
 	}
 
 
 
 
-	public Post(int postid, String title, String body, String created_at, int memberid, String username, int boardid,
+	public Post(int postid, String title, String body, String created_at, int memberid, String username, int categoryid,
 			int anonymous, int locationid) {
 		super();
 		this.postid = postid;
@@ -151,7 +151,7 @@ public class Post implements Serializable {
 		this.created_at = created_at;
 		this.memberid = memberid;
 		this.username = username;
-		this.boardid = boardid;
+		this.categoryid = categoryid;
 		this.anonymous = anonymous;
 		this.locationid = locationid;
 	}
@@ -231,15 +231,15 @@ public class Post implements Serializable {
 
 
 
-	public int getBoardid() {
-		return boardid;
+	public int getcategoryid() {
+		return categoryid;
 	}
 
 
 
 
-	public void setBoardid(int boardid) {
-		this.boardid = boardid;
+	public void setcategoryid(int categoryid) {
+		this.categoryid = categoryid;
 	}
 
 

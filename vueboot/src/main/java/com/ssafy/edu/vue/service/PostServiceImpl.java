@@ -81,8 +81,8 @@ public class PostServiceImpl implements IPostService {
 
 	@Override
 	@Transactional(readOnly=true)
-	public List<Post> getCategoryPosts(int boardid) {
-		return postdao.getCategoryPosts(boardid);
+	public List<Post> getCategoryPosts(int categoryid) {
+		return postdao.getCategoryPosts(categoryid);
 	}
 
 	@Override

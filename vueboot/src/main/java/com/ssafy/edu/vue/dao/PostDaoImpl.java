@@ -58,8 +58,8 @@ public class PostDaoImpl {
 		sqlSession.delete(ns+"deleteCommentPost",cpostid);
 	}
 
-	public List<Post> getCategoryPosts(int boardid) {
-		return sqlSession.selectList(ns+"getCategoryPosts",boardid);
+	public List<Post> getCategoryPosts(int categoryid) {
+		return sqlSession.selectList(ns+"getCategoryPosts",categoryid);
 	}
 
 	public List<Post> getLocationPosts(LocationFiltering locationfiltering) {
