@@ -11,6 +11,7 @@ export default new Vuex.Store({
     state : {
         token: null,
         isLogin : false,
+        memberid : null
     },
 // mutations : state를 변화시키기 위한 메서드(함수)
  mutations : {
@@ -38,7 +39,8 @@ export default new Vuex.Store({
     }
 },
  getters : {
-        tokenval(state) {
+        user(state) {
+            state.memberid = jwtDecode(state.token)['access-Token'].memberid
             return jwtDecode(state.token)['access-Token']
         },
         options(state) {
@@ -47,21 +49,6 @@ export default new Vuex.Store({
                     Authorization : `JWT ${state.token}`,
                 }
             }
-        },
-        memberid(state) {
-            return jwtDecode(state.token)['access-Token'].memberid
-        },
-        name(state) {
-            return jwtDecode(state.token)['access-Token'].name
-        },
-        username(state) {
-            return jwtDecode(state.token)['access-token'].username
-        },
-        auth(state){
-            return jwtDecode(state.token)['access-token'].auth
-        },
-        githubid(state){
-            return jwtDecode(state.token)['access-token'].githubid
         }
     }
 })

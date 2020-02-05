@@ -63,7 +63,7 @@ export default {
     mounted() {
         this.titleData = this.title
         this.contentData = this.content
-        this.currentMemberId = this.$session.get('data')['memberid']
+        this.currentMemberId = this.$store.state.memberid
     },
     methods: {
         goBack() {
@@ -80,7 +80,7 @@ export default {
                     postid: this.id,
                     title: this.titleData,
                     body: this.contentData,
-                    memberid: this.$session.get('data')['memberid']
+                    memberid: this.$store.state.memberid
                 }
                 axios.put('api/post', postData)
                     .then(response => {
