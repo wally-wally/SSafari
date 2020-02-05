@@ -213,4 +213,7 @@ public class PostController {
 		return new ResponseEntity<BoolResult>(nr, HttpStatus.OK);
 	}
 	
+	// 좋아요 많은 순서대로 다섯개 post list
+	
+	
 }

@@ -122,9 +122,4 @@ WHERE C.POSTID=#{postid} AND M.MEMBERID=C.MEMBERID ORDER BY C.CPOSTID
 		SELECT COUNT(*) FROM COMMENTPOST
 		WHERE POSTID = #{postid}
 	</select>
-	
-	<select id="" resultType="com.ssafy.edu.vue.dto.post">
-		SELECT 
-	</select>
-	
 </mapper>
