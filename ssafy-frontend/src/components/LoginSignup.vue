@@ -1,60 +1,62 @@
 <template>
     <v-card class="cont">
       <div class="form sign-in">
-        <h2>Welcome to iTeacher!!</h2>
+        <h2>로그인</h2>
         <v-form ref="form" v-model="valid" lazy-validation @submit.prevent="login">
           <label class="label">
-            <v-text-field v-model="credentials.email" :rules="emailRules" label="E-mail" required></v-text-field>
+            <v-text-field v-model="credentials.email" :rules="emailRules" label="이메일" required></v-text-field>
           </label>
           <label class="label">
-            <v-text-field v-model="credentials.password" type="password" label="Password" required></v-text-field>
+            <v-text-field v-model="credentials.password" type="password" label="비밀번호" required></v-text-field>
           </label>
-          <p class="forgot-pass">Forgot password?</p>
-          <button type="submit" class="submit button">Sign In</button>
+          <p class="forgot-pass">패스워드를 잊으셨나요?</p>
+          <button type="submit" class="submit button">로그인</button>
         </v-form>
-        <button type="button" class="fb-btn button"><span>login as</span> Facebook</button>
+        <button type="button" class="fb-btn button">facebook<span>으로 로그인</span></button>
         <v-card-actions>
-          <button type="submit" class="close button" @click="close">close</button>
+          <button type="submit" class="close button" @click="close">닫기</button>
         </v-card-actions>
       </div>
 
       <div class="sub-cont">
         <div class="img">
           <div class="img__text m--up">
-            <h2>New here?</h2>
-            <p>Sign up and discover our great lectures provided by special teachers!</p>
+            <h2>처음이신가요?</h2>
+            <p>계정이 없으신가요?<br>
+              SSavry Time에 가입해 
+              SSafy인들과 커뮤니케이션 해보세요!</p>
           </div>
           <div class="img__text m--in">
-            <h2>One of us?</h2>
-            <p>If you already has an account, just sign in. We've missed you!</p>
+            <h2>계정이 있나요?</h2>
+            <p>로그인해주세요!</p>
           </div>
           <div class="img__btn" @click="imgBtnClick">
-            <span class="m--up">Sign Up</span>
-            <span class="m--in">Sign In</span>
+            <span class="m--up">회원가입</span>
+            <span class="m--in">로그인</span>
           </div>
         </div>
         <div class="form sign-up">
-          <h2>Time to learn! Join iTeacher</h2>
+          <h2>회원가입</h2>
           <form @submit.prevent="signup" class="login-form" style="display: inline;">
             <label class="subLabel">
-              <v-text-field v-model="signUpUser.email" label="E-mail" required class="my-0"></v-text-field>
+              <v-text-field v-model="signUpUser.email" label="이메일" required class="my-0"></v-text-field>
             </label>
             <p class='font-weight-bold' style='color:#D32F2F;' v-for="error in errormessage.username" :key="error">{{ error }}</p>
             <label class="subLabel">
-              <v-text-field v-model="signUpUser.password" type="password" label="Password" required class="my-0"></v-text-field>
+              <v-text-field v-model="signUpUser.password" type="password" label="비밀번호" required class="my-0"></v-text-field>
             </label>
             <p class='font-weight-bold' style='color:#D32F2F;' v-for="error in errormessage.password" :key="error">{{ error }}</p>
             <label class="subLabel">
-              <v-text-field v-model="signUpUser.name" type="text" label="Name" required class="my-0"></v-text-field>
+              <v-text-field v-model="signUpUser.name" type="text" label="이름" required class="my-0"></v-text-field>
             </label>
             <label class="subLabel">
-              <v-text-field v-model="signUpUser.username" type="text" label="Nickname" required class="my-0"></v-text-field>
+              <v-text-field v-model="signUpUser.username" type="text" label="닉네임" required class="my-0"></v-text-field>
             </label>
-            <button type="submit" class="submit button">Sign Up</button>
+            <button type="submit" class="submit button">회원가입</button>
           </form>
-        <button type="button" class="fb-btn button">Join with <span>facebook</span></button>
+        <button type="button" class="fb-btn button">facebook<span>으로 가입하기</span></button>
         <v-card-actions>
-          <button type="submit" class="close button" @click="close">close</button>
+          <button type="submit" class="close button" @click="close">닫기</button>
         </v-card-actions>
       </div>
     </div>
