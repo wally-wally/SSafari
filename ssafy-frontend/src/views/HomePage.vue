@@ -9,7 +9,7 @@
         <div class="portfolio-contents">
           <div class="portfolio-title">스터디 모임</div>
           <div class="button-box">
-            <div class="addButton" @click="goAddPortfolio">스터더 참여/모집하기</div>
+            <div class="addButton" @click="goAddPortfolio">스터디 모집하기</div>
           </div>
           <div data-aos="fade-up" class="portfolio-carousel">
             <PortfolioListMain></PortfolioListMain>
@@ -21,7 +21,7 @@
              id="post"
              aspect-ratio="2.15">
         <div class="post-contents">
-          <div class="post-title">Post</div>
+          <div class="post-title">게시판</div>
           <!-- <div class="button-box">
             <div class="addButton" @click="goAddPost">new post</div>
           </div> -->
@@ -33,7 +33,6 @@
     </div>
     <div id="mysidenav" class="sidenav">
       <i @click="fnMove('main')" class="fas fa-circle" id="main-icon" style="color: #f7b157;"></i><br>
-      <i @click="fnMove('team')" class="fas fa-circle" id="team-icon" style="color: lightgray;"></i><br>
       <i @click="fnMove('portfolio')" class="fas fa-circle" id="portfolio-icon" style="color: lightgray;"></i><br>
       <i @click="fnMove('post')" class="fas fa-circle" id="post-icon" style="color: lightgray;"></i><br>
     </div>
@@ -65,9 +64,6 @@ export default {
 	methods: {
 		getImgBackgroundUrl(img) {
 			return require('../../public/img/background/' + img)
-    },
-    goTeamInfo: function() {
-      this.$router.push('/teamintro')
     },
     goAddPortfolio: function() {
       this.$router.push('portfolio/create')
