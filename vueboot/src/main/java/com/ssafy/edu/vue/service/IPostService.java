@@ -39,5 +39,7 @@ public interface IPostService {
 	void deleteLikePost(Likepost likepost);
 
 	int getLikeCounts(int postid);
+
+	int getCommentCounts(int postid);
 	
 }
