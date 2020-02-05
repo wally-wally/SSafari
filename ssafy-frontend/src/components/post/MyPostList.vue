@@ -45,7 +45,7 @@ export default {
 	},
 	methods: {
 		getPosts() {
-			axios.get(`api/postlist/${this.$session.get('data')['memberid']}`)
+			axios.get(`api/postlist/${ this.$store.getters.user.memberid }`)
 				.then( response => {
 					this.posts = response.data
 					this.showPostsCount = (this.posts.length >= 6) ? 6 : this.posts.length  

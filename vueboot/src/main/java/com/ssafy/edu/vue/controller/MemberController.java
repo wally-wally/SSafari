@@ -25,6 +25,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.ssafy.edu.vue.dto.CheckSignUp;
+import com.ssafy.edu.vue.dto.Facebook;
 import com.ssafy.edu.vue.dto.Member;
 import com.ssafy.edu.vue.dto.Portfolio;
 import com.ssafy.edu.vue.help.BoolResult;
@@ -35,7 +36,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 //http://localhost:8197/humans/swagger-ui.html
-@CrossOrigin(origins = { "*" }, maxAge = 6000)
+@CrossOrigin(origins = { "*" }, maxAge = 6000,exposedHeaders="access-token")
 @RestController
 @RequestMapping("/api")
 @Api(value = "SSAFY", description = "A5 Resouces Management 2020")
@@ -50,7 +51,7 @@ public class MemberController {
     private IJwtService jwtService;
 	
 	@ApiOperation(value = "member 전체 목록 보기", response = List.class)
-	@RequestMapping(value = "/memberList", method = RequestMethod.GET)
+	@RequestMapping(value = "/memberlist", method = RequestMethod.GET)
 	public ResponseEntity<List<Member>> getMemberList() throws Exception {
 		logger.info("1-------------getMemberList-----------------------------" + new Date());
 		List<Member> members = memberservice.getMemberList();
@@ -85,15 +86,13 @@ public class MemberController {
 		
 		String token = jwtService.signin(login);
 
-		//res.setHeader("Authorization", token);
-		logger.info("2---login----"+token);
 		HttpHeaders headers = new HttpHeaders();
-		headers.set("Authorization", token);
+		headers.set("access-token", token);
+		
 		resultMap.put("status", true);
 		resultMap.put("data", login);
-		resultMap.put("access-token", token);
-		//jwtService.get("d",((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest());
-		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+		
+		return new ResponseEntity<Map<String, Object>>(resultMap,headers, HttpStatus.OK);
 	}
 	
 	
@@ -146,13 +145,11 @@ public class MemberController {
 	
 	@ApiOperation(value = "가입 회원 수 출력", response = BoolResult.class)
 	@RequestMapping(value = "/member", method = RequestMethod.GET)
-	public ResponseEntity<BoolResult> checkUsers() throws Exception {
+	public ResponseEntity<Integer> checkUsers() throws Exception {
 		logger.info("1-------------checkUsers-----------------------------" + new Date());
-		int email = memberservice.checkUsers();
-		BoolResult nr=new BoolResult();
-   		nr.setName("checkUsers");
-   		nr.setState("succ");
-		return new ResponseEntity<BoolResult>(nr, HttpStatus.OK);
+		int cnt = memberservice.checkUsers();
+		
+		return new ResponseEntity<Integer>(cnt, HttpStatus.OK);
 	}
 	
 	@ApiOperation(value = "member 회원 권한 수정", response = BoolResult.class)
@@ -164,5 +161,45 @@ public class MemberController {
    		nr.setName("updateMemberAuth");
    		nr.setState("succ");
 		return new ResponseEntity<BoolResult>(nr, HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "member 회원가입 email 중복 검사", response = BoolResult.class)
+	@RequestMapping(value = "/member/email", method = RequestMethod.POST)
+	public ResponseEntity<Integer> emailCheck(@RequestBody String email) throws Exception {
+		logger.info("1-------------emailCheck-----------------------------" + new Date());
+		int cnt = memberservice.checkEmail(email);
+
+		return new ResponseEntity<Integer>(cnt, HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "member 회원가입 username 중복 검사", response = BoolResult.class)
+	@RequestMapping(value = "/member/username", method = RequestMethod.POST)
+	public ResponseEntity<Integer> usernameCheck(@RequestBody String username) throws Exception {
+		logger.info("1-------------emailCheck-----------------------------" + new Date());
+		int cnt = memberservice.checkUsername(username);
+
+		return new ResponseEntity<Integer>(cnt, HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "member facebook 로그인", response = BoolResult.class)
+	@RequestMapping(value = "/member/facebook", method = RequestMethod.POST)
+	public ResponseEntity<Map<String, Object>> facebookLogin(@RequestBody Facebook member) throws Exception {
+		logger.info("1-------------facebookLogin-----------------------------" + new Date());	
+		int email=memberservice.checkEmail(member.getEmail());
+		if (email == 0) {
+			memberservice.addMember(new Member(member.getEmail(), member.getId(), member.getName(), member.getName()));
+		}
+		
+		Map<String, Object> resultMap = new HashMap<>();
+		HttpHeaders headers = new HttpHeaders();
+		
+		Member login=memberservice.checkLogin(new Member(member.getEmail(),member.getId()));
+		String token = jwtService.signin(login);
+		
+		headers.set("access-token", token);
+		resultMap.put("status", true);
+		resultMap.put("data", login);
+		
+		return new ResponseEntity<Map<String, Object>>(resultMap,headers, HttpStatus.OK);
 	}
 }

@@ -1,11 +1,18 @@
 <template>
   <div class="subheader-top">
     <div class="notice-kind">
-      <span class="free-notice"><i class="fas fa-chalkboard"></i></span>
-      <span class="love-notice"><i class="fas fa-heart"></i></span>
+      <router-link to="/board/free/">
+        <span class="free-notice"><i class="fas fa-chalkboard"></i></span>
+      </router-link>
+      <router-link to="/board/job/">
       <span class="job-notice"><i class="fas fa-user-tie"></i></span>
+      </router-link>
+      <router-link to= "/board/codereview/">
       <span class="code-notice"><i class="fas fa-code"></i></span>
+      </router-link>
+      <router-link to= "/board/jmt/">
       <span class="restaurant-notice"><i class="fas fa-utensils"></i></span>
+      </router-link>
     </div>
   </div>
 </template>

@@ -56,7 +56,7 @@ export default {
         });
     },
     mounted() {
-        this.currentMemberId = this.$session.get('data')['memberid']
+        this.currentMemberId = this.$store.state.memberid
     },
     methods : {
         goBack() {
@@ -71,7 +71,7 @@ export default {
             var postData = {
                 title: this.title,
                 body: this.content,
-                memberid: this.$session.get('data')['memberid']
+                memberid: this.$store.state.memberid
             }
             axios.post('api/post', postData)
                 .then(response => {

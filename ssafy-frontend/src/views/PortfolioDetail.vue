@@ -72,8 +72,8 @@ export default {
         id: { type: String },
     },
     mounted() {
-        this.currentMemberId = this.$session.get('data')['memberid']
-        this.currentMemberAuth = this.$session.get('data')['auth']
+        this.currentMemberId =  this.$store.state.memberid
+        this.currentMemberAuth = this.$store.getters.auth
         this.getPortfolio()
         this.getPortfolioComment()
     },
