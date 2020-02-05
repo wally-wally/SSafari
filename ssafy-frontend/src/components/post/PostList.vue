@@ -45,7 +45,7 @@ export default {
 	},
 	methods: {
 		getPosts() {
-			axios.get('http://192.168.31.110:8197/ssafyvue/api/posts')
+			axios.get('api/posts')
 				.then( response => {
 					this.posts = response.data
 					this.showPostsCount = (this.posts.length >= 5) ? 5 : this.posts.length  

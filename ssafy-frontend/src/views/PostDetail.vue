@@ -65,19 +65,19 @@ export default {
     },
     methods: {
         getPost() {
-            axios.get(`http://192.168.31.110:8197/ssafyvue/api/post/${this.id}`)
+            axios.get(`api/post/${this.id}`)
                 .then(response => { 
                     this.post = response.data
           })
         },
         getPostComment() {
-          axios.get(`http://192.168.31.110:8197/ssafyvue/api/commentpost/${this.id}`)
+          axios.get(`api/commentpost/${this.id}`)
             .then(response => {
               this.comments = response.data
             })
         },
         deletePost() {
-          axios.delete(`http://192.168.31.110:8197/ssafyvue/api/post/${this.id}`)
+          axios.delete(`api/post/${this.id}`)
             .then(response => {
               if(response.status == 200){
                 router.push({ path: '/post' })

@@ -45,7 +45,7 @@ export default {
         commentdelete() {
             const result = confirm("정말 삭제하시겠습니까");
             if (result) {
-                axios.delete(`http://192.168.31.110:8197/ssafyvue/api/comment${this.board}`,{data:this.comment})
+                axios.delete(`api/comment${this.board}`,{data:this.comment})
                 .then(response => {
                     console.log(response.data)
                     this.$router.go(this.$router.currentRoute)
@@ -56,7 +56,7 @@ export default {
         },
         commentput() {
             this.comment['content'] = this.new_comment
-            axios.put(`http://192.168.31.110:8197/ssafyvue/api/comment${this.board}`,this.comment)
+            axios.put(`api/comment${this.board}`,this.comment)
             .then(response => {
                 this.comment.content = this.new_comment
                 this.commentupdate()

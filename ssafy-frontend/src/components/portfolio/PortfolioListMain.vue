@@ -107,7 +107,7 @@ export default {
   },
 	methods: {
 		getPortfolios() {
-			axios.get('http://192.168.31.110:8197/ssafyvue/api/portfolios')
+			axios.get('api/portfolios')
 				.then(response => {
           this.portfolios = response.data
           this.showPortfoliosCount = response.data.length

@@ -48,7 +48,7 @@ export default {
                 'content' : this.new_comment,
             }
             data[`${this.boardtype}id`] = this.postid
-            axios.post(`http://192.168.31.110:8197/ssafyvue/api/comment${this.boardtype}`,data)
+            axios.post(`api/comment${this.boardtype}`,data)
                 .then(response => {
                     console.log(response.data)
                     this.comments = response.data
