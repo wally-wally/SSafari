@@ -50,10 +50,10 @@ public class PostController {
 	}
 	
 	@ApiOperation(value = "post category별 전체 보기", response = List.class)
-	@RequestMapping(value = "/posts/{boardid}", method = RequestMethod.GET)
-	public ResponseEntity<List<Post>> getCategoryPosts(@PathVariable int boardid) throws Exception {
+	@RequestMapping(value = "/posts/{categoryid}", method = RequestMethod.GET)
+	public ResponseEntity<List<Post>> getCategoryPosts(@PathVariable int categoryid) throws Exception {
 		logger.info("1-------------getCategoryPosts-----------------------------" + new Date());
-		List<Post> posts = postservice.getCategoryPosts(boardid);
+		List<Post> posts = postservice.getCategoryPosts(categoryid);
 		if (posts == null) {
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
 		}
@@ -192,7 +192,7 @@ public class PostController {
 	}
 	
 	@ApiOperation(value = "post 좋아요 수 출력", response = BoolResult.class)
-	@RequestMapping(value = "/member", method = RequestMethod.GET)
+	@RequestMapping(value = "/likepost", method = RequestMethod.GET)
 	public ResponseEntity<BoolResult> getLikeCounts(@PathVariable int postid) throws Exception {
 		logger.info("1-------------getLikeCounts-----------------------------" + new Date());
 		int email = postservice.getLikeCounts(postid);

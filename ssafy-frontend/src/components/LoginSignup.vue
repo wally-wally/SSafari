@@ -95,7 +95,6 @@ export default {
         login() {
           axios.post('api/login', this.credentials)
             .then(response => {
-              console.log(response)
               const token = response.data['access-token']
             if (token) {
               this.$session.start()
