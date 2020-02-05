@@ -95,7 +95,7 @@ export default {
                     portfolioid: this.id,
                     title: this.titleData,
                     body: this.contentData,
-                    memberid: this.$session.get('data')['memberid'],
+                    memberid: this.$store.state.memberid,
                     img: this.imgSrc
                 }
                 if(this.imgFile === null){

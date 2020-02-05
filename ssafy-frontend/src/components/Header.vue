@@ -5,8 +5,8 @@
       <a href="/" style="text-decoration: none; color: #f7b157;">
         <v-toolbar-title style="font-size: 16px; padding-right: 10px;">SSavry Time</v-toolbar-title>
       </a> &nbsp; &nbsp;
-      <span v-if="!this.isLogin" class="d-flex align-center">Welcome, Guest</span>
-      <span v-else class="d-flex align-center">Welcome, {{ this.$store.getters.user.username }}</span>
+      <span v-if="!isLogin" class="d-flex align-center">Welcome, Guest</span>
+      <span v-else class="d-flex align-center">Welcome, {{$store.state.username}}</span>
     </div>
 
     <v-spacer></v-spacer>
@@ -37,7 +37,7 @@
       <v-list-item class="pb-3">
         <v-list-item-content>
           <v-list-item-title v-if="isLogin">Welcome, Guest</v-list-item-title>
-          <v-list-item-title v-else>Welcome, {{ this.$store.getters.user.username }}</v-list-item-title>
+          <v-list-item-title v-else>Welcome, {{$store.state.username}}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
 
@@ -88,7 +88,7 @@
         </v-list-item-content>
       </v-list-item>
 
-      <v-list-item v-if="isLogin" @click="$store.dispatch('logout')">
+      <v-list-item v-if="isLogin" @click="$store.commit('logout')">
         <v-list-item-icon>
           <v-icon>info</v-icon>
         </v-list-item-icon>

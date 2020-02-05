@@ -11,7 +11,8 @@ export default new Vuex.Store({
     state : {
         token: null,
         isLogin : false,
-        memberid : null
+        memberid : null,
+        username : null,
     },
 // mutations : state를 변화시키기 위한 메서드(함수)
  mutations : {
@@ -19,11 +20,18 @@ export default new Vuex.Store({
     // 이후 인자는 payload(즉, 매개변수)
     login(state, token) {
         state.token = token
+        state.memberid = jwtDecode(state.token)['access-Token'].memberid
+        state.username = jwtDecode(state.token)['access-Token'].username
         state.isLogin = true
     },
     logout(state){
-        state.token = null
-        state.isLogin = false
+        const result = confirm('로그아웃 하시겠습니까')
+        if (result) {
+            state.token = null
+            state.memberid = null
+            state.username = null
+            state.isLogin = false
+        }
     }
 },
  actions : {
@@ -40,7 +48,6 @@ export default new Vuex.Store({
 },
  getters : {
         user(state) {
-            state.memberid = jwtDecode(state.token)['access-Token'].memberid
             return jwtDecode(state.token)['access-Token']
         },
         options(state) {
