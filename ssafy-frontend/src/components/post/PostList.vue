@@ -27,7 +27,8 @@ export default {
 		column: {type: Number, default: 1},
 		limits: {type: Number, default: 5},
 		loadMore: {type: Boolean, default: false},
-		category : {type: String, default : null}
+		category : {type: String, default : null},
+		region: {type: String, default: 'All'}
 	},
 	data() {
 		return { 
@@ -41,7 +42,9 @@ export default {
 		Post
 	},
 	mounted(){
-		getPost()
+		this.getPosts(),
+		this,getLikeCounts(),
+		this.getCommentsCounts()
 	},
 	watch: {
 		category: {
@@ -50,6 +53,28 @@ export default {
 			}
 		}
 	},
+	// methods: {
+	// 	getPosts() {
+	// 		axios.get('http://192.168.31.110:8197/ssafyvue/api/posts')
+	// 			.then( response => {
+	// 				this.posts = response.data
+	// 				this.showPostsCount = (this.posts.length >= 5) ? 5 : this.posts.length  
+	// 				this.$emit('showPostCount', this.posts.length)
+	// 			})
+	// 	},
+	// 	getLikeCounts() {
+	// 		axios.get('http://192.168.31.110:8197/ssafyvue/api/likecounts')
+	// 			.then( response => {
+	// 				console.log(response.data)
+	// 			})
+	// 	},
+	// 	getCommentsCounts() {
+	// 		axios.get('http://192.168.31.110:8197/ssafyvue/api/commentcounts')
+	// 			.then( response => {
+	// 				console.log(response.data)
+	// 			})
+	// 	},
+	// },
 	methods: {
 		getPosts() {
 			if (this.category){
@@ -82,6 +107,30 @@ export default {
 			this.showPostsCount = adjustCount2
 			this.hidePostsIcon = adjustCount2 === 5 ? false : true
 			this.morePostsIcon = true
+		}
+	},
+	watch: {
+		region: {
+			handler() {
+				axios.get('api/posts')
+					.then( response => {
+						this.posts = [] // posts 리스트 초기화 작업
+						let regionNumber = { 'Seoul': 0, 'Daejeon': 1, 'Gawngju': 2, 'Gumi': 3 }
+						if (this.region !== 'All') {
+							let regionPostData = []
+							for (let i = 0; i < response.data.length; i++) {
+								if (response.data[i]['locationid'] == regionNumber[this.region]) {
+									regionPostData.push(response.data[i])
+								}
+							}
+							this.posts = regionPostData
+						} else {
+							this.posts = response.data
+						}
+						this.showPostsCount = (this.posts.length >= 5) ? 5 : this.posts.length  
+						this.$emit('showPostCount', this.posts.length)
+					})
+			}
 		}
 	}
 }
