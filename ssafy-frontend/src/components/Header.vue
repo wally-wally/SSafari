@@ -11,7 +11,7 @@
 
     <v-spacer></v-spacer>
     <v-btn v-if="mobile()" color="white" depressed tile to="/teamintro">팀 소개</v-btn>
-    <v-btn v-if="mobile()" color="white" depressed tile to="/post">게시판</v-btn>
+    <v-btn v-if="mobile()" color="white" depressed tile to="/board">게시판</v-btn>
     <v-btn v-if="mobile()" color="white" depressed tile to="/portfolio">스터디 모임</v-btn>
     <v-btn v-if="mobile() && isLogin" color="white" depressed tile to="/mypage">내 페이지</v-btn>
     <v-btn v-if="mobile() && !isLogin" color="white" @click.stop="loginDialog = true" depressed tile>로그인</v-btn>
@@ -52,7 +52,7 @@
         </v-list-item-content>
       </v-list-item>
 
-      <v-list-item to="/post">
+      <v-list-item to="/board">
         <v-list-item-icon>
           <v-icon>event</v-icon>
         </v-list-item-icon>

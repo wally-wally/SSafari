@@ -8,7 +8,12 @@ Vue.use(VueSession)
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-    state : {
+    state : {         
+        category : {
+            'free' : '1',
+            'job' : '4',
+            'jmt' : '3',
+        },
         token: null,
         isLogin : false,
         memberid : null,

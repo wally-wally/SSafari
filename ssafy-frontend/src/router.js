@@ -1,9 +1,14 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import HomePage from './views/HomePage.vue'
-import PostPage from './views/PostPage.vue'
-import PostDetail from './views/PostDetail.vue'
-import Postindex from './components/post/Postindex.vue'
+import BoardPage from './views/BoardPage.vue'
+import PostDetail from './components/post/PostDetail.vue'
+import FreeBoard from './components/post/FreeBoard.vue'
+import CodeBoard from './components/post/CodeBoard.vue'
+import JobBoard from './components/post/JobBoard.vue'
+import jmtBoard from './components/post/jmtBoard.vue'
+
+import Boardindex from './components/post/Boardindex.vue'
 import Portfolioindex from './components/portfolio/Portfolioindex.vue'
 import PortfolioPage from './views/PortfolioPage.vue'
 import PortfolioDetail from './views/PortfolioDetail.vue'
@@ -35,19 +40,22 @@ export default new Router({
 			component: HomePage
 		},
 		{
-			path: '/post',
-			name: 'post',
-			component: PostPage,
+			path: '/board',
+			name: 'board',
+			component: BoardPage,
 			children : [
-				{path : '', component : Postindex},
-				{path:'create' , component : PostCreateForm}
+				{path : '', component : Boardindex},
+				{path:'create' ,
+				 component : PostCreateForm
+				},
+				{ path : 'free', name:"free" , component : Boardindex },
+				{ path : 'codereview', name:"code", component : CodeBoard },
+				{path : 'job' , name: "job", component : Boardindex },
+				{path : 'jmt' , name: "jmt" ,component : Boardindex},
+				{path : ':id', component : PostDetail ,props:true}
+				// {path: ':category',component : Postindex, props: true },
+				// {path: ':category/:id', component: PostDetail,props: true}
 			]
-		},
-		{
-			path: '/post/:id',
-			name: 'postDetail',
-			component: PostDetail,
-			props: true
 		},
 		{
 			path: '/post/:id/update',

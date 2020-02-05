@@ -49,7 +49,7 @@
             </div>
             <v-layout>
                 <v-flex>
-                    <PostList @showPostCount="onPostCount" :limits="5" :load-more="true"></PostList>
+                    <PostList category="1" @showPostCount="onPostCount" :limits="5" :load-more="true"></PostList>
                 </v-flex>
             </v-layout>
         </div>
@@ -113,6 +113,9 @@
         name: 'Postindex',
         components: {
             PostList,
+        },
+        props: {
+            category: { type: String },
         },
         data() {
             return {

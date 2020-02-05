@@ -13,14 +13,12 @@
 </template>
 
 <script>
-import ImgBanner from '../components/ImgBanner'
 import SubPostHeader from '../components/SubPostHeader'
 
 
 export default {
 	name: 'PostPage',
 	components: {
-    ImgBanner,
     SubPostHeader
 	}
 }
