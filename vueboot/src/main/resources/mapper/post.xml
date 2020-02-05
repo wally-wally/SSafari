@@ -6,7 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<select id="getPosts"
 		resultType="com.ssafy.edu.vue.dto.Post">
-		SELECT P.POSTID POSTID, P.TITLE TITLE, P.BODY BODY, P.CREATED_AT CREATED_AT, P.MEMBERID MEMBERID, M.USERNAME USERNAME 
+		SELECT P.POSTID POSTID, P.TITLE TITLE, P.BODY BODY, P.CREATED_AT CREATED_AT, P.MEMBERID MEMBERID, IF(P.ANONYMOUS=1, '익명', M.USERNAME) AS USERNAME 
 		FROM POSTS P, MEMBERS M 
 		WHERE P.MEMBERID=M.MEMBERID 
 		ORDER BY POSTID	DESC
@@ -23,7 +23,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<select id="getPost" parameterType="java.lang.Integer"
 		resultType="com.ssafy.edu.vue.dto.Post">
-		SELECT P.POSTID POSTID, P.TITLE TITLE, P.BODY BODY, P.CREATED_AT CREATED_AT, P.MEMBERID MEMBERID, M.USERNAME USERNAME 
+		SELECT P.POSTID POSTID, P.TITLE TITLE, P.BODY BODY, P.CREATED_AT CREATED_AT, P.MEMBERID MEMBERID, IF(P.ANONYMOUS=1, '익명', M.USERNAME) AS USERNAME 
 		FROM POSTS P, MEMBERS M 
 		WHERE P.MEMBERID=M.MEMBERID AND POSTID = #{postid}
 	</select>
@@ -31,8 +31,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="addPost"
 		parameterType="com.ssafy.edu.vue.dto.Post">
 		INSERT INTO
-		POSTS(TITLE, BODY, CREATED_AT, MEMBERID)
-		VALUES(#{title},#{body},now(), #{memberid})
+		POSTS(TITLE, BODY, CREATED_AT, MEMBERID, CATEGORYID, ANONYMOUS, LOCATIONID)
+		VALUES(#{title},#{body},now(), #{memberid}, #{categoryid}, #{anonymous}, #{locationid})
 	</insert>
 	
 	<update id="updatePost"

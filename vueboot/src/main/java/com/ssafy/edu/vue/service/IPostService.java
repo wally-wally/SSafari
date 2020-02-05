@@ -30,7 +30,7 @@ public interface IPostService {
 
 	void deleteCommentPost(int cpostid);
 
-	List<Post> getCategoryPosts(int boardid);
+	List<Post> getCategoryPosts(int categoryid);
 
 	List<Post> getLocationPosts(LocationFiltering locationfiltering);
 
