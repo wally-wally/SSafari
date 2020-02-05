@@ -113,9 +113,18 @@ WHERE C.POSTID=#{postid} AND M.MEMBERID=C.MEMBERID ORDER BY C.CPOSTID
 		DELETE FROM COMMENTPOST WHERE POSTID = #{postid} AND MEMBERID=#{memberid}
 	</delete>
 	
-	<select id="getLikeCounts" parameterType="com.ssafy.edu.vue.dto.Likepost" resultType="java.lang.Integer">
+	<select id="getLikeCounts" parameterType="java.lang.Integer" resultType="java.lang.Integer">
 		SELECT COUNT(*) FROM LIKEPOST
 		WHERE POSTID = #{postid}
+	</select>
+	
+	<select id="getCommentCounts" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM COMMENTPOST
+		WHERE POSTID = #{postid}
+	</select>
+	
+	<select id="" resultType="com.ssafy.edu.vue.dto.post">
+		SELECT 
 	</select>
 	
 </mapper>
