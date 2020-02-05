@@ -7,7 +7,7 @@
           <div>
             <div>
               <v-avatar class="mr-5 mb-2">
-						    <img src="../../public/img/profile.png" alt="profile">
+						    <img src="../../../public/img/profile.png" alt="profile">
     			    </v-avatar>
               <span>{{ post.username }}</span>
             </div>
@@ -67,6 +67,7 @@ export default {
         getPost() {
             axios.get(`api/post/${this.id}`)
                 .then(response => { 
+                  console.log(response.data)
                     this.post = response.data
           })
         },
