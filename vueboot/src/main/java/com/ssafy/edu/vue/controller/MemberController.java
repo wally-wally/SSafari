@@ -165,4 +165,22 @@ public class MemberController {
    		nr.setState("succ");
 		return new ResponseEntity<BoolResult>(nr, HttpStatus.OK);
 	}
+	
+	@ApiOperation(value = "member 회원가입 email 중복 검사", response = BoolResult.class)
+	@RequestMapping(value = "/member/email", method = RequestMethod.POST)
+	public ResponseEntity<Integer> emailCheck(@RequestBody String email) throws Exception {
+		logger.info("1-------------emailCheck-----------------------------" + new Date());
+		int cnt = memberservice.checkEmail(email);
+
+		return new ResponseEntity<Integer>(cnt, HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "member 회원가입 username 중복 검사", response = BoolResult.class)
+	@RequestMapping(value = "/member/username", method = RequestMethod.POST)
+	public ResponseEntity<Integer> usernameCheck(@RequestBody String username) throws Exception {
+		logger.info("1-------------emailCheck-----------------------------" + new Date());
+		int cnt = memberservice.checkUsername(username);
+
+		return new ResponseEntity<Integer>(cnt, HttpStatus.OK);
+	}
 }
