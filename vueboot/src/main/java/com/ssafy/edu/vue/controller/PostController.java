@@ -192,7 +192,7 @@ public class PostController {
 	}
 	
 	@ApiOperation(value = "post 좋아요 수 출력", response = BoolResult.class)
-	@RequestMapping(value = "/member", method = RequestMethod.GET)
+	@RequestMapping(value = "/likepost", method = RequestMethod.GET)
 	public ResponseEntity<BoolResult> getLikeCounts(@PathVariable int postid) throws Exception {
 		logger.info("1-------------getLikeCounts-----------------------------" + new Date());
 		int email = postservice.getLikeCounts(postid);

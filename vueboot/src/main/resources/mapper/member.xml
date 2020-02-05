@@ -24,7 +24,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<insert id="addMember" parameterType="com.ssafy.edu.vue.dto.Member">
 		INSERT INTO
-		MEMBERS(EMAIL, PASSWORD, NAME, USERNAME, SIGNUPDATE, GITHUBID, LOCATIONID, UNIT)
+		MEMBERS(EMAIL, PASSWORD, NAME, USERNAME, SIGNUPDATE)
 		VALUES(#{email},#{password},#{name},#{username},now())
 	</insert>
 	

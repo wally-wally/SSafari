@@ -35,7 +35,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 //http://localhost:8197/humans/swagger-ui.html
-@CrossOrigin(origins = { "*" }, maxAge = 6000)
+@CrossOrigin(origins = { "*" }, maxAge = 6000,exposedHeaders="access-token")
 @RestController
 @RequestMapping("/api")
 @Api(value = "SSAFY", description = "A5 Resouces Management 2020")
@@ -88,12 +88,12 @@ public class MemberController {
 		//res.setHeader("Authorization", token);
 		logger.info("2---login----"+token);
 		HttpHeaders headers = new HttpHeaders();
-		headers.set("Authorization", token);
+		headers.set("access-token", token);
 		resultMap.put("status", true);
 		resultMap.put("data", login);
 		resultMap.put("access-token", token);
 		//jwtService.get("d",((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest());
-		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+		return new ResponseEntity<Map<String, Object>>(resultMap,headers, HttpStatus.OK);
 	}
 	
 	
