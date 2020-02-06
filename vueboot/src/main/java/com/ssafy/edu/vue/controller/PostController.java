@@ -3,6 +3,8 @@ package com.ssafy.edu.vue.controller;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ssafy.edu.vue.dto.Commentpost;
 import com.ssafy.edu.vue.dto.Likepost;
 import com.ssafy.edu.vue.dto.LocationFiltering;
+import com.ssafy.edu.vue.dto.Member;
 import com.ssafy.edu.vue.dto.Portfolio;
 import com.ssafy.edu.vue.dto.Post;
 import com.ssafy.edu.vue.help.BoolResult;
@@ -40,9 +43,14 @@ public class PostController {
 	
 	@ApiOperation(value = "post 전체 보기", response = List.class)
 	@RequestMapping(value = "/posts", method = RequestMethod.GET)
-	public ResponseEntity<List<Post>> getPosts() throws Exception {
-		logger.info("1-------------getPortfolios-----------------------------" + new Date());
-		List<Post> posts = postservice.getPosts();
+	public ResponseEntity<List<Post>> getPosts(HttpServletRequest rs) throws Exception {
+		logger.info("1-------------getPosts-----------------------------" + new Date());
+		int memberid = 0;
+		if(rs.getAttribute("loginMember")!=null) {
+			Member member = (Member) rs.getAttribute("loginMember");
+			memberid = member.getMemberid();
+		}
+		List<Post> posts = postservice.getPosts(memberid);
 		if (posts == null) {
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
 		}
@@ -89,7 +97,7 @@ public class PostController {
 	
 	@ApiOperation(value = "post 상세 보기", response = List.class)
 	@RequestMapping(value = "/post/{postid}", method = RequestMethod.GET)
-	public ResponseEntity<Post> getPost(@PathVariable int postid) throws Exception {
+	public ResponseEntity<Post> getPost(@PathVariable int postid,HttpServletRequest rs) throws Exception {
 		logger.info("1-------------getPost-----------------------------" + new Date());
 		Post post = postservice.getPost(postid);
 		if (post == null) {
@@ -193,24 +201,20 @@ public class PostController {
 	
 	@ApiOperation(value = "post 좋아요 수 출력", response = BoolResult.class)
 	@RequestMapping(value = "/likecounts", method = RequestMethod.GET)
-	public ResponseEntity<BoolResult> getLikeCounts(@PathVariable int postid) throws Exception {
+	public ResponseEntity<Integer> getLikeCounts(@PathVariable int postid) throws Exception {
 		logger.info("1-------------getLikeCounts-----------------------------" + new Date());
-		int email = postservice.getLikeCounts(postid);
-		BoolResult nr=new BoolResult();
-   		nr.setName("getLikeCounts");
-   		nr.setState("succ");
-		return new ResponseEntity<BoolResult>(nr, HttpStatus.OK);
+		int cnt = postservice.getLikeCounts(postid);
+
+		return new ResponseEntity<Integer>(cnt, HttpStatus.OK);
 	}
 	
 	@ApiOperation(value = "post 댓글 수 출력", response = BoolResult.class)
 	@RequestMapping(value = "/commentcounts", method = RequestMethod.GET)
-	public ResponseEntity<BoolResult> getCommentCounts(@PathVariable int postid) throws Exception {
+	public ResponseEntity<Integer> getCommentCounts(@PathVariable int postid) throws Exception {
 		logger.info("1-------------getCommentCounts-----------------------------" + new Date());
-		int email = postservice.getCommentCounts(postid);
-		BoolResult nr=new BoolResult();
-   		nr.setName("getCommentCounts");
-   		nr.setState("succ");
-		return new ResponseEntity<BoolResult>(nr, HttpStatus.OK);
+		int cnt = postservice.getCommentCounts(postid);
+
+		return new ResponseEntity<Integer>(cnt, HttpStatus.OK);
 	}
 	
 	// 좋아요 많은 순서대로 다섯개 post list

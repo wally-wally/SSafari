@@ -58,6 +58,19 @@ public class Post implements Serializable {
 
 
 
+	public Post(String title, String body, int memberid, int categoryid, int anonymous, int locationid) {
+		super();
+		this.title = title;
+		this.body = body;
+		this.memberid = memberid;
+		this.categoryid = categoryid;
+		this.anonymous = anonymous;
+		this.locationid = locationid;
+	}
+
+
+
+
 	public Post(int postid, String title, String body, String created_at, int memberid) {
 		super();
 		this.postid = postid;

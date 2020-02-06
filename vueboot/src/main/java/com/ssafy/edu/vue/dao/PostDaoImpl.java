@@ -38,8 +38,8 @@ public class PostDaoImpl {
 		sqlSession.delete(ns+"deletePost",postid);
 	}
 
-	public List<Post> getPosts() {
-		return sqlSession.selectList(ns+"getPosts");
+	public List<Post> getPosts(int memberid) {
+		return sqlSession.selectList(ns+"getPosts",memberid);
 	}
 
 	public List<Commentpost> getCommentPost(int postid) {

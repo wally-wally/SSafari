@@ -20,7 +20,7 @@ public interface IPostService {
 	
 	void deletePost(int postid);
 
-	List<Post> getPosts();
+	List<Post> getPosts(int memberid);
 
 	List<Commentpost> getCommentPost(int postid);
 
