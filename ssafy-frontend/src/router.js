@@ -7,7 +7,7 @@ import FreeBoard from './components/post/FreeBoard.vue'
 import CodeBoard from './components/post/CodeBoard.vue'
 import JobBoard from './components/post/JobBoard.vue'
 import jmtBoard from './components/post/jmtBoard.vue'
-
+import CodeCreate from  './components/CodeCreate.vue'
 import Boardindex from './components/post/Boardindex.vue'
 import Portfolioindex from './components/portfolio/Portfolioindex.vue'
 import PortfolioPage from './views/PortfolioPage.vue'
@@ -49,7 +49,8 @@ export default new Router({
 				 component : PostCreateForm
 				},
 				{ path : 'free', name:"free" , component : Boardindex },
-				{ path : 'codereview', name:"code", component : CodeBoard },
+				{ path : 'codereview', name:"code", component : CodeBoard,},
+				{ path : 'codereview/create', name: "codecreate", component : CodeCreate},
 				{path : 'job' , name: "job", component : Boardindex },
 				{path : 'jmt' , name: "jmt" ,component : Boardindex},
 				{path : ':id', component : PostDetail ,props:true}
