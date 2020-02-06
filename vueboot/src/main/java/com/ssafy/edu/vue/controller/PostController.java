@@ -23,6 +23,7 @@ import com.ssafy.edu.vue.dto.LocationFiltering;
 import com.ssafy.edu.vue.dto.Member;
 import com.ssafy.edu.vue.dto.Portfolio;
 import com.ssafy.edu.vue.dto.Post;
+import com.ssafy.edu.vue.dto.Postinfo;
 import com.ssafy.edu.vue.help.BoolResult;
 import com.ssafy.edu.vue.service.IPostService;
 
@@ -141,9 +142,9 @@ public class PostController {
 	
 	@ApiOperation(value = "post Comment 전체 보기", response = List.class)
 	@RequestMapping(value = "/commentpost/{postid}", method = RequestMethod.GET)
-	public ResponseEntity<List<Commentpost>> getCommentPost(@PathVariable int postid) throws Exception {
+	public ResponseEntity<List<Commentpost>> getCommentPost(@RequestBody Postinfo postinfo) throws Exception {
 		logger.info("1-------------getCommentPost-----------------------------" + new Date());
-		List<Commentpost> posts = postservice.getCommentPost(postid);
+		List<Commentpost> posts = postservice.getCommentPost(postinfo);
 		if (posts == null) {
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
 		}
@@ -155,7 +156,8 @@ public class PostController {
 	public ResponseEntity<List<Commentpost>> addCommentPost(@RequestBody Commentpost commentpost) throws Exception {
 		logger.info("1-------------addCommentPost-----------------------------" + new Date());
 		postservice.addCommentPost(commentpost);
-   		List<Commentpost> posts = postservice.getCommentPost(commentpost.getpostid());
+		Postinfo postinfo = new Postinfo(commentpost.getCategoryid(),commentpost.getpostid());
+   		List<Commentpost> posts = postservice.getCommentPost(postinfo);
 		return new ResponseEntity<List<Commentpost>>(posts, HttpStatus.OK);
 	}
 	
@@ -164,7 +166,8 @@ public class PostController {
 	public ResponseEntity<List<Commentpost>> updateCommentPost(@RequestBody Commentpost commentpost) throws Exception {
 		logger.info("1-------------updateCommentPost-----------------------------" + new Date());
 		postservice.updateCommentPost(commentpost);
-		List<Commentpost> posts = postservice.getCommentPost(commentpost.getpostid());
+		Postinfo postinfo = new Postinfo(commentpost.getCategoryid(),commentpost.getpostid());
+   		List<Commentpost> posts = postservice.getCommentPost(postinfo);
 		return new ResponseEntity<List<Commentpost>>(posts, HttpStatus.OK);
 	}
 	
@@ -173,7 +176,8 @@ public class PostController {
 	public ResponseEntity<List<Commentpost>> deleteCommentPost(@RequestBody Commentpost commentpost) throws Exception {
 		logger.info("1-------------deleteCommentPost-----------------------------" + new Date());
 		postservice.deleteCommentPost(commentpost.getCpostid());
-		List<Commentpost> posts = postservice.getCommentPost(commentpost.getpostid());
+		Postinfo postinfo = new Postinfo(commentpost.getCategoryid(),commentpost.getpostid());
+   		List<Commentpost> posts = postservice.getCommentPost(postinfo);
 		return new ResponseEntity<List<Commentpost>>(posts, HttpStatus.OK);
 	}
 	
@@ -201,20 +205,18 @@ public class PostController {
 	
 	@ApiOperation(value = "post 좋아요 수 출력", response = BoolResult.class)
 	@RequestMapping(value = "/likecounts", method = RequestMethod.GET)
-	public ResponseEntity<Integer> getLikeCounts(@PathVariable int postid) throws Exception {
+	public ResponseEntity<Integer> getLikeCounts(@RequestBody Likepost likepost) throws Exception {
 		logger.info("1-------------getLikeCounts-----------------------------" + new Date());
-		int cnt = postservice.getLikeCounts(postid);
-
-		return new ResponseEntity<Integer>(cnt, HttpStatus.OK);
+		int counts = postservice.getLikeCounts(likepost);
+		return new ResponseEntity<Integer>(counts, HttpStatus.OK);
 	}
 	
 	@ApiOperation(value = "post 댓글 수 출력", response = BoolResult.class)
 	@RequestMapping(value = "/commentcounts", method = RequestMethod.GET)
-	public ResponseEntity<Integer> getCommentCounts(@PathVariable int postid) throws Exception {
+	public ResponseEntity<Integer> getCommentCounts(@RequestBody Likepost likepost) throws Exception {
 		logger.info("1-------------getCommentCounts-----------------------------" + new Date());
-		int cnt = postservice.getCommentCounts(postid);
-
-		return new ResponseEntity<Integer>(cnt, HttpStatus.OK);
+		int counts = postservice.getCommentCounts(likepost);
+		return new ResponseEntity<Integer>(counts, HttpStatus.OK);
 	}
 	
 	// 좋아요 많은 순서대로 다섯개 post list
