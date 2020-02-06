@@ -58,7 +58,7 @@ export default new Vuex.Store({
         options(state) {
             return {
                 headers : {
-                    Authorization : `JWT ${state.token}`,
+                    Authorization : state.token,
                 }
             }
         }
