@@ -1,23 +1,40 @@
 <template>
-<div>
-<div class="map_wrap">
+<v-flex justify-center>
+	<h1 style="text-align:center">카페/식당을 검색해 주세요</h1>
+	<div class="map_wrap">
     <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
     <div id="menu_wrap" class="bg_white">
-        <div class="option">
-            <div>
-                <!-- <form onsubmit="searchPlaces(); return false;"> -->
-                    카페 or 식당	 : <input type="text" v-model="keyword" id="keyword" size="15"> 
-                    <button type="submit" @click="createMap()">검색하기</button>
-                <!-- </form> -->
-            </div>
+      <div class="option">
+        <div>
+          <!-- <form onsubmit="searchPlaces(); return false;"> -->
+          카페 or 식당	 : <input type="text" v-model="keyword" id="keyword" size="15"> 
+          <button type="submit" @click="createMap()">검색하기</button>
+          <!-- </form> -->
         </div>
-        <hr>
-        <ul id="placesList"></ul>
-        <div id="pagination"></div>
+      </div>
+      <hr>
+      <ul id="placesList"></ul>
+      <div id="pagination"></div>
     </div>
-</div>
-<h1>{{ selected_loc }}</h1>
-</div>
+	</div>
+	<div class="center" justify-center>
+  	<div class="title-top mt-5">
+    	<!-- <div class="title-form"> -->
+    	<div class="create-title">Title</div>
+    	<textarea v-model="title" class="title-form"></textarea>
+  	</div>
+		<div class="title-top">
+			<div class="create-title">location</div>
+    	<textarea v-model="location" class="title-form" disabled></textarea>
+		</div>
+		<div class="title-top">
+			<div class="create-title">Content</div>
+			<textarea v-model="content" id="create-content" name="content"></textarea>
+		</div>
+		<!-- <v-btn class="mr-5" color="#f7b157" @click="create">작성</v-btn> -->
+    <!-- <v-btn color="error" @click="goBack()">취소</v-btn> -->
+	</div>
+</v-flex>
 </template>
 
 <script>
@@ -36,7 +53,11 @@ export default {
 				ps: '',
 				infowindow: '',
 				mapOptions: '',
-				selected_loc: '',
+				dataArray: '',
+				index: '',
+				title: '',
+				location: '',
+				content: '',
 			}
 		},
 		mounted() {
@@ -49,12 +70,11 @@ export default {
 		},
 		methods: {
 				createMap() {
-						console.log(111111, this.keyword)
 						this.markers = [];
 						this.mapContainer = document.getElementById('map') // 지도를 표시할 div 
     				this.mapOption = {
         				center: new kakao.maps.LatLng(this.daejeon[0], this.daejeon[1]), // 지도의 중심좌표
-        				level: 5 // 지도의 확대 레벨
+        				level: 3 // 지도의 확대 레벨
 						};
 						// 지도를 생성합니다    
 						this.map = new kakao.maps.Map(this.mapContainer, this.mapOption); 
@@ -86,6 +106,8 @@ export default {
 								}
         				// 정상적으로 검색이 완료됐으면
 								// 검색 목록과 마커를 표출합니다
+								this.dataArray = data
+								console.log(this.data)
         				this.displayPlaces(data);
 
         				// 페이지 번호를 표출합니다
@@ -166,7 +188,13 @@ export default {
                 '</div>';           
 
     				el.innerHTML = itemStr;
-    				el.className = 'item';
+						el.className = 'item';
+
+						el.addEventListener('click', () => {
+								this.index = index
+								this.location = this.dataArray[this.index].place_name
+								
+						});				
 
     				return el;
 				},
@@ -182,10 +210,17 @@ export default {
         		markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imgOptions),
             		marker = new kakao.maps.Marker({
             		position: position, // 마커의 위치
-            		image: markerImage 
-        		});
+								image: markerImage,
+								clickable: true,
+						});
 
-    				marker.setMap(this.map); // 지도 위에 마커를 표출합니다
+						// 인포윈도우를 생성합니다
+						kakao.maps.event.addListener(marker, 'click', () => {
+								this.index = idx
+								this.location = this.dataArray[this.index].place_name
+						});						
+						
+						marker.setMap(this.map); // 지도 위에 마커를 표출합니다
     				this.markers.push(marker);  // 배열에 생성된 마커를 추가합니다
 
     				return marker;
@@ -248,8 +283,8 @@ export default {
 <style>
 .map_wrap, .map_wrap * {margin:0;padding:0;font-family:'Malgun Gothic',dotum,'돋움',sans-serif;font-size:12px;}
 .map_wrap a, .map_wrap a:hover, .map_wrap a:active{color:#000;text-decoration: none;}
-.map_wrap {position:relative;width:100%;height:500px;}
-#menu_wrap {position:absolute;top:0;left:0;bottom:0;width:400px;margin:10px 0 30px 10px;padding:5px;overflow-y:auto;background:rgba(255, 255, 255, 0.7);z-index: 1;font-size:12px;border-radius: 10px;}
+.map_wrap {margin: auto;position:relative;width:70%;height:500px;}
+#menu_wrap {position:absolute;top:0;left:0;bottom:0;width:45%;margin:10px 0 30px 10px;padding:5px;overflow-y:auto;background:rgba(255, 255, 255, 0.7);z-index: 1;font-size:12px;border-radius: 10px;}
 .bg_white {background:#fff;}
 #menu_wrap hr {display: block; height: 1px;border: 0; border-top: 2px solid #5F5F5F;margin:3px 0;}
 #menu_wrap .option{text-align: center;}
@@ -282,4 +317,41 @@ export default {
 #pagination {margin:10px auto;text-align: center;}
 #pagination a {display:inline-block;margin-right:10px;}
 #pagination .on {font-weight: bold; cursor: default;color:#777;}
+.title-top {
+    display: flex;
+    margin-bottom: 20px;
+}
+.create-title {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    width: 15%;
+}
+.title-form {
+    border: 1px solid black;
+    width: 100%;
+    height: 30px;
+    resize: none;
+    box-shadow: 5px 5px 7px grey;
+}
+#content-form {
+    border: 1px solid black;
+    width: 100%;
+    height: 30px;
+    resize: none;
+    box-shadow: 5px 5px 7px grey;
+}
+#create-content {
+    width: 100%;
+    height: 300px;
+    resize: none;
+    border: 1px solid black;
+    box-shadow: 5px 5px 7px grey;
+    margin-bottom: 20px;
+}
+.center {
+  margin: auto;
+  width: 50%;
+  padding: 10px;
+}
 </style>
