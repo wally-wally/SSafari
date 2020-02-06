@@ -82,21 +82,6 @@ public class Commentpost implements Serializable {
 		this.username = username;
 		this.anonym = anonym;
 	}
-	
-	
-
-	public Commentpost(int cpostid, int categoryid, int postid, int memberid, String wdate, String content,
-			String username, int anonym) {
-		super();
-		this.cpostid = cpostid;
-		this.categoryid = categoryid;
-		this.postid = postid;
-		this.memberid = memberid;
-		this.wdate = wdate;
-		this.content = content;
-		this.username = username;
-		this.anonym = anonym;
-	}
 
 	public Commentpost(int cpostid, String content, int anonym) {
 		super();
