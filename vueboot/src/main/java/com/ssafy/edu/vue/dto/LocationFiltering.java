@@ -8,7 +8,7 @@ public class LocationFiltering implements Serializable {
 	 * 
 	 */
 
-	private int boardid;
+	private int categoryid;
 	private int locationid;
 
 	public LocationFiltering() {
@@ -16,23 +16,23 @@ public class LocationFiltering implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public LocationFiltering(int boardid, int locationid) {
+	public LocationFiltering(int categoryid, int locationid) {
 		super();
-		this.boardid = boardid;
+		this.categoryid = categoryid;
 		this.locationid = locationid;
 	}
 
 	@Override
 	public String toString() {
-		return "LocationFiltering [boardid=" + boardid + ", locationid=" + locationid + "]";
+		return "LocationFiltering [categoryid=" + categoryid + ", locationid=" + locationid + "]";
 	}
 
 	public int getBoardid() {
-		return boardid;
+		return categoryid;
 	}
 
-	public void setBoardid(int boardid) {
-		this.boardid = boardid;
+	public void setBoardid(int categoryid) {
+		this.categoryid = categoryid;
 	}
 
 	public int getLocationid() {

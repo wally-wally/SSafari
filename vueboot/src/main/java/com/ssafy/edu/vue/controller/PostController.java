@@ -50,10 +50,10 @@ public class PostController {
 	}
 	
 	@ApiOperation(value = "post category별 전체 보기", response = List.class)
-	@RequestMapping(value = "/posts/{boardid}", method = RequestMethod.GET)
-	public ResponseEntity<List<Post>> getCategoryPosts(@PathVariable int boardid) throws Exception {
+	@RequestMapping(value = "/posts/{categoryid}", method = RequestMethod.GET)
+	public ResponseEntity<List<Post>> getCategoryPosts(@PathVariable int categoryid) throws Exception {
 		logger.info("1-------------getCategoryPosts-----------------------------" + new Date());
-		List<Post> posts = postservice.getCategoryPosts(boardid);
+		List<Post> posts = postservice.getCategoryPosts(categoryid);
 		if (posts == null) {
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
 		}
@@ -192,7 +192,7 @@ public class PostController {
 	}
 	
 	@ApiOperation(value = "post 좋아요 수 출력", response = BoolResult.class)
-	@RequestMapping(value = "/member", method = RequestMethod.GET)
+	@RequestMapping(value = "/likecounts", method = RequestMethod.GET)
 	public ResponseEntity<BoolResult> getLikeCounts(@PathVariable int postid) throws Exception {
 		logger.info("1-------------getLikeCounts-----------------------------" + new Date());
 		int email = postservice.getLikeCounts(postid);
@@ -201,5 +201,19 @@ public class PostController {
    		nr.setState("succ");
 		return new ResponseEntity<BoolResult>(nr, HttpStatus.OK);
 	}
+	
+	@ApiOperation(value = "post 댓글 수 출력", response = BoolResult.class)
+	@RequestMapping(value = "/commentcounts", method = RequestMethod.GET)
+	public ResponseEntity<BoolResult> getCommentCounts(@PathVariable int postid) throws Exception {
+		logger.info("1-------------getCommentCounts-----------------------------" + new Date());
+		int email = postservice.getCommentCounts(postid);
+		BoolResult nr=new BoolResult();
+   		nr.setName("getCommentCounts");
+   		nr.setState("succ");
+		return new ResponseEntity<BoolResult>(nr, HttpStatus.OK);
+	}
+	
+	// 좋아요 많은 순서대로 다섯개 post list
+	
 	
 }

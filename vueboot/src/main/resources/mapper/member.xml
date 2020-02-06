@@ -7,7 +7,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- </select> -->
 
 	<select id="checkLogin" resultType="com.ssafy.edu.vue.dto.Member" parameterType="com.ssafy.edu.vue.dto.Member">
-		SELECT MEMBERID, EMAIL, NAME, USERNAME, SIGNUPDATE, AUTH, GITHUBID FROM MEMBERS WHERE EMAIL=#{email} AND PASSWORD=#{password}
+		SELECT MEMBERID, EMAIL, NAME, USERNAME, SIGNUPDATE, AUTH, GITHUBID FROM MEMBERS WHERE EMAIL=#{email} AND PASSWORD=hex(aes_encrypt(#{password}, 'key'))
 	</select>
 	
 	<select id="getMemberList" resultType="com.ssafy.edu.vue.dto.Member">
@@ -24,15 +24,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<insert id="addMember" parameterType="com.ssafy.edu.vue.dto.Member">
 		INSERT INTO
-		MEMBERS(EMAIL, PASSWORD, NAME, USERNAME, SIGNUPDATE, GITHUBID, LOCATIONID, UNIT)
-		VALUES(#{email},#{password},#{name},#{username},now())
+		MEMBERS(EMAIL, PASSWORD, NAME, USERNAME, SIGNUPDATE)
+		VALUES(#{email},hex(aes_encrypt(#{password}, 'key')),#{name},#{username},now())
 	</insert>
 	
 	<update id="updateMember"
 		parameterType="com.ssafy.edu.vue.dto.Member">
 		UPDATE MEMBERS SET
 		EMAIL=#{email},
-		PASSWORD=#{password},
+		PASSWORD=hex(aes_encrypt(#{password}, 'key')),
 		NAME=#{name},
 		USERNAME=#{username}
 		WHERE
