@@ -2,7 +2,7 @@ package com.ssafy.edu.vue.dto;
 
 import java.io.Serializable;
 
-public class Codereview implements Serializable {
+public class Code implements Serializable {
 	private int id;
 	private String title;
 	private String body;
@@ -10,11 +10,11 @@ public class Codereview implements Serializable {
 	private int memberid;
 	private String lang;
 	private int anonymous;
-	public Codereview() {
+	public Code() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Codereview(int id, String title, String body, String created_at, int memberid, String lang, int anonymous) {
+	public Code(int id, String title, String body, String created_at, int memberid, String lang, int anonymous) {
 		super();
 		this.id = id;
 		this.title = title;

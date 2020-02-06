@@ -14,5 +14,6 @@
 		<mapper resource="mapper/post.xml" />
 		<mapper resource="mapper/portfolio.xml" />
 		<mapper resource="mapper/member.xml" />
+		<mapper resource="mapper/code.xml" />
 	</mappers>
 </configuration>
