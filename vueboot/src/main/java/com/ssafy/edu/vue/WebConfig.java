@@ -11,20 +11,19 @@ import com.ssafy.edu.vue.controller.JwtInterceptor;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
     private static final String[] EXCLUDE_PATHS = {
-    		"/api/",
-            "/api/member/**",
+    		"/api/member/facebook",
+    		"/api/member/username",
+            "/api/member/email",
             "/api/login",
-            "/error/**"
     };
 
     @Autowired
     private JwtInterceptor jwtInterceptor;
 
     @Override
-    @CrossOrigin(allowedHeaders="access-token")
     public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(jwtInterceptor)
-						.addPathPatterns("/api/**");
-//						.excludePathPatterns(EXCLUDE_PATHS);
+						.addPathPatterns("/api/**")
+						.excludePathPatterns(EXCLUDE_PATHS);
     }
 }

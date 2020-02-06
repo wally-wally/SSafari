@@ -24,7 +24,10 @@ public class Post implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Post(int postid, String title, String body, String created_at, int memberid, String username) {
+	
+
+	public Post(int postid, String title, String body, String created_at, int memberid, String username, int categoryid,
+			int anonymous, int locationid) {
 		super();
 		this.postid = postid;
 		this.title = title;
@@ -32,7 +35,12 @@ public class Post implements Serializable {
 		this.created_at = created_at;
 		this.memberid = memberid;
 		this.username = username;
+		this.categoryid = categoryid;
+		this.anonymous = anonymous;
+		this.locationid = locationid;
 	}
+
+
 
 	public Post(String title, String body, int memberid, int categoryid, int anonymous, int locationid) {
 		super();
@@ -51,17 +59,6 @@ public class Post implements Serializable {
 		this.body = body;
 	}
 
-	public Post(int postid, String title, String body, String created_at, int memberid, String username,
-			int anonymous) {
-		super();
-		this.postid = postid;
-		this.title = title;
-		this.body = body;
-		this.created_at = created_at;
-		this.memberid = memberid;
-		this.username = username;
-		this.anonymous = anonymous;
-	}
 	
 	public int getPostid() {
 		return postid;
