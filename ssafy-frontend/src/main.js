@@ -4,6 +4,8 @@ import 'vuetify/dist/vuetify.min.css'
 import VueSimplemde from 'vue-simplemde'
 import 'simplemde/dist/simplemde.min.css'
 import 'font-awesome/css/font-awesome.min.css'
+import VueCodemirror from 'vue-codemirror'
+import 'codemirror/lib/codemirror.css'
 
 import App from './App.vue'
 import router from './router'
@@ -22,7 +24,10 @@ axios.defaults.baseURL = 'http://192.168.31.110:8197/ssafyvue/'
 // axios.defaults.headers.common['Authorization'] = 'something'
 // GET 요청에 추가할 헤더 설정
 axios.defaults.headers.get['Accepts'] = 'application/json'
-
+Vue.use(VueCodemirror, /* { 
+  options: { theme: 'base16-dark', ... },
+  events: ['scroll', ...]
+} */)
 Vue.use(VueSimplemde)
 Vue.use(Vuetify)
 Vue.use(Vueperslides)

@@ -2,54 +2,13 @@
     <div class="d-flex post-index">
         <div class="main-post-section">
             <div class="post-header">
-                <div class="region-checkbox">
-                    <v-container id="dropdown-region">
-                        <v-select
-                            :items="regions"
-                            label="Choose Region"
-                            color="#f7b157"
-                            target="#dropdown-region"
-                            >
-                            <!-- v-model="region" -->
-                        </v-select>
-                    </v-container>
-                </div>
+                <h1>Code Review</h1>
+                <router-link to="create"><button>코드 작성하러가기</button></router-link>
                 <div class="post-count">{{ postCnt }}</div>
-            </div>
-            <div v-if="currentMemberId !== null" class="create-post">
-                <div v-if="this.showCreatePost === 0" class="init d-flex justify-space-between" @click="hideInitPostForm">
-                    <div class="write-phrase d-inline">이 곳에 새 글을 작성하세요.</div>
-                    <div class="write-icon d-inline"><i class="fas fa-pencil-alt"></i></div>
-                </div>
-                <form v-else class="create-post-form">
-                    <p><input v-model="title" name="post-form-title" placeholder="제목을 작성하세요." class="post-form-title"></p>
-                    <p>
-                        <textarea v-model="content" name="post-form-contents" class="post-form-contents"
-                          placeholder="이 곳에 내용을 작성하세요."></textarea>
-                    </p>
-                    <div class="post-form-footer d-flex">
-                        <div class="post-form-footer-att-ann d-flex col-10">
-                            <div class="post-footer-attach d-inline col-8">
-                                <v-file-input :rules="rules" v-model="imgFile" label="File input" class="post-attach-file" outlined dense accept="image/png, image/jpeg, image/bmp"></v-file-input>
-                            </div>
-                            <div class="post-footer-annoymous d-inline col-4">
-                                <v-checkbox v-model="annoymousStatus" label="익명" value="익명" class="annoyCheck"></v-checkbox>
-                            </div>
-                        </div>
-                        <div class="post-form-submit d-inline col-2">
-                            <v-btn class="submit-button" color="primary" @click="create">작성</v-btn>
-                        </div> 
-                    </div>
-                </form>
-            </div>
-            <div v-else>
-                <div class="init d-flex justify-space-between">
-                    <div class="write-phrase d-inline">글을 작성하려면 로그인을 먼저 하세요.</div>
-                </div>
             </div>
             <v-layout>
                 <v-flex>
-                    <PostList category="1" @showPostCount="onPostCount" :limits="5" :load-more="true"></PostList>
+                    <!-- <PostList category="1" @showPostCount="onPostCount" :limits="5" :load-more="true"></PostList> -->
                 </v-flex>
             </v-layout>
         </div>
