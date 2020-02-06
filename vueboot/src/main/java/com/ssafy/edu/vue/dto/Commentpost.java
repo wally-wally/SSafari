@@ -113,13 +113,7 @@ public class Commentpost implements Serializable {
 		this.categoryid = categoryid;
 	}
 
-	public int getPostid() {
-		return postid;
-	}
 
-	public void setPostid(int postid) {
-		this.postid = postid;
-	}
 
 	public int getMemberid() {
 		return memberid;
