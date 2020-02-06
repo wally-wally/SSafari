@@ -12,7 +12,7 @@
           <p class="forgot-pass">패스워드를 잊으셨나요?</p>
           <button type="submit" class="submit button">로그인</button>
         </v-form>
-        <button type="button" class="fb-btn button">facebook<span>으로 로그인</span></button>
+        <VFacebookLogin class="button" style="margin:0 auto; display:block;" :app-id="apiKey" @login="FBlogin"></VFacebookLogin>
         <v-card-actions>
           <button type="submit" class="close button" @click="close">닫기</button>
         </v-card-actions>
@@ -38,23 +38,22 @@
         <div class="form sign-up">
           <h2>회원가입</h2>
           <form @submit.prevent="signup" class="login-form" style="display: inline;">
-            <label class="subLabel">
-              <v-text-field v-model="signUpUser.email" label="이메일" required class="my-0"></v-text-field>
+            <label class="label">
+              <v-text-field v-model="signUpUser.email" :rules="emailRules" label="이메일" required class=""></v-text-field>
             </label>
             <p class='font-weight-bold' style='color:#D32F2F;' v-for="error in errormessage.username" :key="error">{{ error }}</p>
-            <label class="subLabel">
-              <v-text-field v-model="signUpUser.password" type="password" label="비밀번호" required class="my-0"></v-text-field>
+            <label class="label">
+              <v-text-field v-model="signUpUser.password" :rules="minRules" type="password" label="비밀번호" required class=""></v-text-field>
             </label>
             <p class='font-weight-bold' style='color:#D32F2F;' v-for="error in errormessage.password" :key="error">{{ error }}</p>
-            <label class="subLabel">
-              <v-text-field v-model="signUpUser.name" type="text" label="이름" required class="my-0"></v-text-field>
+            <label class="label">
+              <v-text-field v-model="signUpUser.name" type="text" label="이름" required class=""></v-text-field>
             </label>
-            <label class="subLabel">
-              <v-text-field v-model="signUpUser.username" type="text" label="닉네임" required class="my-0"></v-text-field>
+            <label class="label">
+              <v-text-field v-model="signUpUser.username" type="text" label="닉네임" required class=""></v-text-field>
             </label>
             <button type="submit" class="submit button">회원가입</button>
           </form>
-        <button type="button" class="fb-btn button">facebook<span>으로 가입하기</span></button>
         <v-card-actions>
           <button type="submit" class="close button" @click="close">닫기</button>
         </v-card-actions>
@@ -67,11 +66,20 @@
 import axios from 'axios'
 import {mapGetters} from 'vuex'
 import router from '../router'
+import VFacebookLogin from 'vue-facebook-login-component'
+import LoginSignup from '@/components/LoginSignup.vue'
+
+
 export default {
     name: 'LoginSignup',
+    components: {
+      VFacebookLogin
+    },
     data() {
         return {
+            apiKey: '506786963606539',
             credentials: {},
+            minRules: [v => v.length >= 8 || 'Min 8 characters'],
             emailRules: [
               v => !!v || 'E-mail is required',
               v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
@@ -80,10 +88,37 @@ export default {
             loginfailcount : 0,
             loginDialog: false,
             signUpUser: {},
-            errormessage : {username: [], password: []}
+            errormessage : {username: [], password: []},
         }
     },
     methods: {
+        FBlogin(response) {
+          FB.login(response => {
+            if (response.authResponse) {
+              FB.api('/me', {fields: 'email, name'}, response => {
+                var FBcredentials = {
+                  email: response.email,
+                  id: response.id,
+                  name: response.name
+                }
+                axios.post('api/member/facebook', FBcredentials)
+                  .then(response => {
+                    var token = response.headers['access-token']
+                    if (token) {
+                      this.$session.start()
+                      this.$session.set('token', token)
+                      this.$store.dispatch('login', token)
+                      this.loginDialog = false
+                      this.credentials = {}
+                      this.$emit('update');
+                    }
+                  })
+              })
+          } else {
+            console.log('User cancelled login or did not fully authorize.');
+            }
+          })
+        },
         close() {
           this.credentials = {}
           this.signUpUser = {}
@@ -93,30 +128,30 @@ export default {
           document.querySelector('.cont').classList.toggle('s--signup');
         },
         login() {
+          console.log(this.credentials)
           axios.post('api/login', this.credentials)
             .then(response => {
               console.log(response)
-              const token = response.data['access-token']
-            if (token) {
-              this.$session.start()
-              this.$session.set('token', token)
-              // vuex actions 호출 -> dispatch
-              this.$store.dispatch('login', token)
-              this.loginDialog = false
-              this.credentials = {}
-              this.$emit('update');
-            }
-          else{
-            this.loginfail()
-          }
-        })
-        .catch(error => {
-          console.log(123, error)
-          this.loginfail()
-        })
-      this.credentials = []
-    },
-    loginfail() {
+              const token = response.headers['access-token']
+              if (token) {
+                this.$session.start()
+                this.$session.set('token', token)
+                // vuex actions 호출 -> dispatch
+                this.$store.dispatch('login', token)
+                this.loginDialog = false
+                this.credentials = {}
+                this.$emit('update');
+              }
+              else{
+                this.loginfail()
+              }
+              })
+          .catch(error => {
+              this.loginfail()
+            })
+            this.credentials = {}
+          },
+        loginfail() {
       this.loginfailcount ++
     },
         signup() {
@@ -151,7 +186,6 @@ export default {
   }
 }
 </script>
-
 <style>
 *, *:before, *:after {
   box-sizing: border-box;
@@ -402,13 +436,13 @@ h2 {
 }
 
 .submit {
-  margin-top: 40px;
-  margin-bottom: 20px;
+  margin-top: 20px;
+  margin-bottom: 10px;
   background: #d4af7a;
   text-transform: uppercase;
 }
 .close {
-  margin-top: 40px;
+  margin-top: 20px;
   margin-bottom: 20px;
   background: #F51B00;
   text-transform: uppercase;
