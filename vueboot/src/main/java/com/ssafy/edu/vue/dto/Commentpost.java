@@ -83,20 +83,7 @@ public class Commentpost implements Serializable {
 		this.anonym = anonym;
 	}
 	
-	
 
-	public Commentpost(int cpostid, int categoryid, int postid, int memberid, String wdate, String content,
-			String username, int anonym) {
-		super();
-		this.cpostid = cpostid;
-		this.categoryid = categoryid;
-		this.postid = postid;
-		this.memberid = memberid;
-		this.wdate = wdate;
-		this.content = content;
-		this.username = username;
-		this.anonym = anonym;
-	}
 
 	public Commentpost(int cpostid, String content, int anonym) {
 		super();
@@ -128,13 +115,7 @@ public class Commentpost implements Serializable {
 		this.categoryid = categoryid;
 	}
 
-	public int getPostid() {
-		return postid;
-	}
 
-	public void setPostid(int postid) {
-		this.postid = postid;
-	}
 
 	public int getMemberid() {
 		return memberid;
