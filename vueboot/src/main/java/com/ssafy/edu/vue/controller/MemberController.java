@@ -88,7 +88,7 @@ public class MemberController {
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("access-token", token);
-		
+		System.out.println(token);
 		resultMap.put("status", true);
 		resultMap.put("data", login);
 		
@@ -194,8 +194,9 @@ public class MemberController {
 		HttpHeaders headers = new HttpHeaders();
 		
 		Member login=memberservice.checkLogin(new Member(member.getEmail(),member.getId()));
+		logger.info("2-------------facebookLogin-----------------------------" + login);	
 		String token = jwtService.signin(login);
-		
+		logger.info("3-------------token-----------------------------" + token);
 		headers.set("access-token", token);
 		resultMap.put("status", true);
 		resultMap.put("data", login);

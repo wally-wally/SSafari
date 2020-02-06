@@ -85,20 +85,32 @@ public class JwtServiceImpl implements IJwtService{
 	}
 	
 	@Override
-	public Map<String, Object> get(String key, HttpServletRequest req) {
-		HttpServletRequest request = req;
-		String jwt = request.getHeader("Authorization");
+	public Member get(HttpServletRequest req) {
+		String jwt = req.getHeader("access-token");
 		Jws<Claims> claims = null;
 		try {
 			claims = Jwts.parser()
 						 .setSigningKey(SALT.getBytes("UTF-8"))
-						 .parseClaimsJws("eyJ0eXAiOiJKV1QiLCJyZWdEYXRlIjoxNTgwNzg0MTA3NTgyLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1ODA4MDIxMDcsInN1YiI6IuuhnOq3uOyduO2GoO2BsCIsImFjY2Vzcy1Ub2tlbiI6eyJtZW1iZXJpZCI6MCwiZW1haWwiOiJkZWxpZ2h0X2pvb0BuYXZlci5jb20iLCJwYXNzd29yZCI6IjEyMzQiLCJuYW1lIjpudWxsLCJ1c2VybmFtZSI6bnVsbCwic2lnbnVwZGF0ZSI6bnVsbCwiZGVsZmxhZyI6MCwiYXV0aCI6MCwiZ2l0aHViaWQiOm51bGwsInNpZ251cCI6ZmFsc2UsIm1lc3NhZ2UiOm51bGx9fQ.cGDEO1eXIRxphAM9H4n8XoZGIOHcyk4tdstUvFw_pyQ");
+						 .parseClaimsJws(jwt);
 		} catch (Exception e) {
-			throw new UnauthorizedException();
+			System.out.println("로그인 X");
+			return null;
+			//throw new UnauthorizedException();
 		}
 		@SuppressWarnings("unchecked")
 		Map<String, Object> value = (LinkedHashMap<String, Object>)claims.getBody().get("access-Token");
-		System.out.println("dkdkdkdkd"+value);
-		return value;
+		Member member = new Member(
+				Integer.parseInt(value.get("memberid").toString()),
+				value.get("email").toString(),
+				null,
+				value.get("name").toString(),
+				value.get("username").toString(),
+				value.get("signupdate").toString(),
+				Integer.parseInt(value.get("auth").toString()),
+				value.get("githubid").toString(),
+				Integer.parseInt(value.get("locationid").toString()),
+				Integer.parseInt(value.get("unit").toString()));
+		
+		return member;
 	}
 }
