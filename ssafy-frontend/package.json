@@ -9,11 +9,13 @@
   "dependencies": {
     "aos": "^3.0.0-beta.6",
     "axios": "^0.19.2",
+    "codemirror": "^5.51.0",
     "core-js": "^3.6.4",
     "firebase": "^7.7.0",
     "jwt-decode": "^2.2.0",
     "register-service-worker": "^1.6.2",
     "vue": "^2.6.11",
+    "vue-codemirror": "^4.0.6",
     "vue-router": "^3.1.5",
     "vue-session": "^1.0.0",
     "vue-simplemde": "^1.0.4",
