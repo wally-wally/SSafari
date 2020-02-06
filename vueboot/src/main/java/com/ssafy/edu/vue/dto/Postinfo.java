@@ -2,31 +2,25 @@ package com.ssafy.edu.vue.dto;
 
 import java.io.Serializable;
 
-public class Likepost implements Serializable {
+public class Postinfo implements Serializable {
 	private int categoryid;
 	private int postid;
-	private int memberid;
-	public Likepost() {
+	public Postinfo() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
-	public Likepost(int categoryid, int postid, int memberid) {
+	public Postinfo(int categoryid, int postid) {
 		super();
 		this.categoryid = categoryid;
 		this.postid = postid;
-		this.memberid = memberid;
 	}
-	
 	@Override
 	public String toString() {
-		return "Likepost [categoryid=" + categoryid + ", postid=" + postid + ", memberid=" + memberid + "]";
+		return "Postinfo [categoryid=" + categoryid + ", postid=" + postid + "]";
 	}
-	
 	public int getCategoryid() {
 		return categoryid;
 	}
-
 	public void setCategoryid(int categoryid) {
 		this.categoryid = categoryid;
 	}
@@ -35,11 +29,5 @@ public class Likepost implements Serializable {
 	}
 	public void setPostid(int postid) {
 		this.postid = postid;
-	}
-	public int getMemberid() {
-		return memberid;
-	}
-	public void setMemberid(int memberid) {
-		this.memberid = memberid;
 	}
 }

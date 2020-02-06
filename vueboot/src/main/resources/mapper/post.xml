@@ -53,20 +53,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	
 	<select id="getCommentPost"
-		parameterType="java.lang.Integer"
+		parameterType="com.ssafy.edu.vue.dto.Postinfo"
 		resultType="com.ssafy.edu.vue.dto.Commentpost">
 		SELECT C.CPOSTID CPOSTID, C.POSTID POSTID, 
 		C.MEMBERID MEMBERID, IF(C.ANONYM=1, '익명', M.USERNAME) AS USERNAME, 
 		C.WDATE WDATE, C.CONTENT CONTENT, C.ANONYM ANONYM
 FROM COMMENTPOST C, MEMBERS M 
-WHERE C.POSTID=#{postid} AND M.MEMBERID=C.MEMBERID ORDER BY C.CPOSTID
+WHERE C.CATEGORYID=#{categoryid} AND C.POSTID=#{postid} AND M.MEMBERID=C.MEMBERID ORDER BY C.CPOSTID
 	</select>
 	
 	<insert id="addCommentPost"
 		parameterType="com.ssafy.edu.vue.dto.Commentpost">
 		INSERT INTO
-		COMMENTPOST(POSTID, MEMBERID, WDATE, CONTENT, ANONYM)
-		VALUES(#{postid},#{memberid},now(), #{content}, #{anonym})
+		COMMENTPOST(CATEGORYID, POSTID, MEMBERID, WDATE, CONTENT, ANONYM)
+		VALUES(#{categoryid},#{postid},#{memberid},now(), #{content}, #{anonym})
 	</insert>
 	
 	<update id="updateCommentPost"
@@ -106,20 +106,20 @@ WHERE C.POSTID=#{postid} AND M.MEMBERID=C.MEMBERID ORDER BY C.CPOSTID
 	<insert id="addLikePost" parameterType="com.ssafy.edu.vue.dto.Likepost">
 		INSERT INTO
 		LIKEPOST(POSTID, MEMBERID)
-		VALUES(#{postid},#{memberid})
+		VALUES(#{categoryid},#{postid},#{memberid})
 	</insert>
 	
 	<delete id="deleteLikePost" parameterType="com.ssafy.edu.vue.dto.Likepost">
-		DELETE FROM COMMENTPOST WHERE POSTID = #{postid} AND MEMBERID=#{memberid}
+		DELETE FROM COMMENTPOST WHERE CATEGORYID=#{categoryid} AND POSTID = #{postid} AND MEMBERID=#{memberid}
 	</delete>
 	
-	<select id="getLikeCounts" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+	<select id="getLikeCounts" parameterType="com.ssafy.edu.vue.dto.Likepost" resultType="java.lang.Integer">
 		SELECT COUNT(*) FROM LIKEPOST
-		WHERE POSTID = #{postid}
+		WHERE CATEGORYID=#{categoryid} AND POSTID = #{postid}
 	</select>
 	
-	<select id="getCommentCounts" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+	<select id="getCommentCounts" parameterType="com.ssafy.edu.vue.dto.Likepost" resultType="java.lang.Integer">
 		SELECT COUNT(*) FROM COMMENTPOST
-		WHERE POSTID = #{postid}
+		WHERE CATEGORYID=#{categoryid} AND POSTID = #{postid}
 	</select>
 </mapper>
