@@ -10,6 +10,7 @@ import com.ssafy.edu.vue.dto.Commentpost;
 import com.ssafy.edu.vue.dto.Likepost;
 import com.ssafy.edu.vue.dto.LocationFiltering;
 import com.ssafy.edu.vue.dto.Post;
+import com.ssafy.edu.vue.dto.Postinfo;
 
 @Repository
 public class PostDaoImpl {
@@ -42,8 +43,8 @@ public class PostDaoImpl {
 		return sqlSession.selectList(ns+"getPosts");
 	}
 
-	public List<Commentpost> getCommentPost(int postid) {
-		return sqlSession.selectList(ns+"getCommentPost",postid);
+	public List<Commentpost> getCommentPost(Postinfo postinfo) {
+		return sqlSession.selectList(ns+"getCommentPost",postinfo);
 	}
 
 	public void addCommentPost(Commentpost commentpost) {
@@ -74,12 +75,12 @@ public class PostDaoImpl {
 		sqlSession.delete(ns+"deleteLikePost",likepost);
 	}
 
-	public int getLikeCounts(int postid) {
-		return sqlSession.selectOne(ns+"getLikeCounts", postid);
+	public int getLikeCounts(Likepost likepost) {
+		return sqlSession.selectOne(ns+"getLikeCounts", likepost);
 	}
 
-	public int getCommentCounts(int postid) {
-		return sqlSession.selectOne(ns+"getCommentCounts", postid);
+	public int getCommentCounts(Likepost likepost) {
+		return sqlSession.selectOne(ns+"getCommentCounts", likepost);
 	}
 
 }

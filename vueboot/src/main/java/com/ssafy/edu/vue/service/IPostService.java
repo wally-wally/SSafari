@@ -6,6 +6,7 @@ import com.ssafy.edu.vue.dto.Commentpost;
 import com.ssafy.edu.vue.dto.Likepost;
 import com.ssafy.edu.vue.dto.LocationFiltering;
 import com.ssafy.edu.vue.dto.Post;
+import com.ssafy.edu.vue.dto.Postinfo;
 
 
 public interface IPostService {
@@ -22,7 +23,7 @@ public interface IPostService {
 
 	List<Post> getPosts();
 
-	List<Commentpost> getCommentPost(int postid);
+	List<Commentpost> getCommentPost(Postinfo postinfo);
 
 	void addCommentPost(Commentpost commentpost);
 
@@ -38,8 +39,8 @@ public interface IPostService {
 
 	void deleteLikePost(Likepost likepost);
 
-	int getLikeCounts(int postid);
+	int getLikeCounts(Likepost likepost);
 
-	int getCommentCounts(int postid);
+	int getCommentCounts(Likepost likepost);
 	
 }

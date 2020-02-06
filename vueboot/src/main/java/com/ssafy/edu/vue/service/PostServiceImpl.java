@@ -11,6 +11,7 @@ import com.ssafy.edu.vue.dto.Commentpost;
 import com.ssafy.edu.vue.dto.Likepost;
 import com.ssafy.edu.vue.dto.LocationFiltering;
 import com.ssafy.edu.vue.dto.Post;
+import com.ssafy.edu.vue.dto.Postinfo;
 
 
 @Service
@@ -57,8 +58,8 @@ public class PostServiceImpl implements IPostService {
 
 	@Override
 	@Transactional(readOnly=true)
-	public List<Commentpost> getCommentPost(int postid) {
-		return postdao.getCommentPost(postid);
+	public List<Commentpost> getCommentPost(Postinfo postinfo) {
+		return postdao.getCommentPost(postinfo);
 	}
 
 	@Override
@@ -102,14 +103,16 @@ public class PostServiceImpl implements IPostService {
 	}
 
 	@Override
-	public int getLikeCounts(int postid) {
-		return postdao.getLikeCounts(postid);
+	@Transactional
+	public int getLikeCounts(Likepost likepost) {
+		return postdao.getLikeCounts(likepost);
 	}
 
 	@Override
 	@Transactional
-	public int getCommentCounts(int postid) {
-		return postdao.getCommentCounts(postid);
+	public int getCommentCounts(Likepost likepost) {
+		return postdao.getCommentCounts(likepost);
+
 	}
 
 }
