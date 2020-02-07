@@ -9,6 +9,7 @@ public class Code implements Serializable {
 	private String code;
 	private String created_at;
 	private int memberid;
+	private String username;
 	private String lang;
 	private int anonymous;
 	public Code() {
@@ -27,6 +28,19 @@ public class Code implements Serializable {
 		this.memberid = memberid;
 		this.lang = lang;
 		this.anonymous = anonymous;
+	}
+
+	public Code(int id, String title, String body, String code, String created_at, int memberid, String username,
+			String lang) {
+		super();
+		this.id = id;
+		this.title = title;
+		this.body = body;
+		this.code = code;
+		this.created_at = created_at;
+		this.memberid = memberid;
+		this.username = username;
+		this.lang = lang;
 	}
 
 	public int getId() {
@@ -77,6 +91,14 @@ public class Code implements Serializable {
 	public void setAnonymous(int anonymous) {
 		this.anonymous = anonymous;
 	}
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
 	@Override
 	public String toString() {
 		return "Codereview [id=" + id + ", title=" + title + ", body=" + body + ", created_at=" + created_at
