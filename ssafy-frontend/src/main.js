@@ -17,13 +17,13 @@ import 'vueperslides/dist/vueperslides.css'
 import AOS from 'aos';
 import 'aos/dist/aos.css'
 import axios from 'axios'
+
 Vue.config.productionTip = false
 
 axios.defaults.baseURL = 'http://192.168.31.110:8197/ssafyvue/'
 // 모든 요청에 추가할 헤더 설정
 // axios.defaults.headers.common['Authorization'] = 'something'
 // GET 요청에 추가할 헤더 설정
-axios.defaults.headers.get['Accepts'] = 'application/json'
 Vue.use(VueCodemirror, /* { 
   options: { theme: 'base16-dark', ... },
   events: ['scroll', ...]

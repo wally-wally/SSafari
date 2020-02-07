@@ -65,9 +65,9 @@
 <script>
 import axios from 'axios'
 import {mapGetters} from 'vuex'
-import router from '../router'
+import router from '../../router'
 import VFacebookLogin from 'vue-facebook-login-component'
-import LoginSignup from '@/components/LoginSignup.vue'
+import LoginSignup from '@/components/login/LoginSignup.vue'
 
 
 export default {

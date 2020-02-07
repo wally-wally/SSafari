@@ -1,0 +1,33 @@
+.github-subinfo > div {
+  padding: 5px 5px 20px 5px;
+}
+
+.github-name {
+  font-size: 2rem;
+  font-family: 'Gudea';
+}
+
+.github-subinfo-1 > p {
+  font-size: 1.3em;
+  font-family: 'Sarabun';
+  margin-bottom: 3px;
+}
+
+.github-subinfo-1 i {
+  padding-right: 10px;
+}
+
+.github-subinfo-2 > div {
+  margin-right: 40px;
+}
+
+.github-subinfo-2 > div > div:first-child {
+  font-size: 1.2em;
+  font-family: 'Quicksand';
+  font-weight: bold;
+}
+
+.github-subinfo-2 > div > div:last-child {
+  font-size: 1.5em;
+  font-family: 'Sarabun', sans-serif;
+}

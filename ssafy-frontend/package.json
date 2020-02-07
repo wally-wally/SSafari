@@ -16,12 +16,9 @@
     "jwt-decode": "^2.2.0",
     "register-service-worker": "^1.6.2",
     "vue": "^2.6.11",
-<<<<<<< HEAD
+    "vue-codemirror": "^4.0.6",
     "vue-facebook-login-component": "^1.4.0",
     "vue-kakao-login": "^1.0.5",
-=======
-    "vue-codemirror": "^4.0.6",
->>>>>>> codereview
     "vue-router": "^3.1.5",
     "vue-session": "^1.0.0",
     "vue-simplemde": "^1.0.4",
