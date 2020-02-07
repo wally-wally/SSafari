@@ -24,6 +24,8 @@ import UpdateForm from './components/etc/UpdateForm.vue'
 import MyPage from  './views/MyPage.vue'
 import store from './store'
 
+import RestaurantCreateForm from '@/components/RestaurantCreateForm.vue'
+
 Vue.use(Router)
 
 const rejectAuthUser = (to, from, next) => {
@@ -94,5 +96,10 @@ export default new Router({
 			name : 'MyPage',
 			component: MyPage
 		},
+		{
+			path: '/RestaurantCreateForm',
+			name: 'RestaurantCreateForm',
+			component: RestaurantCreateForm
+		}
   ]
 })
