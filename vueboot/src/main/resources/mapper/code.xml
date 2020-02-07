@@ -23,7 +23,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="addCode"
 		parameterType="com.ssafy.edu.vue.dto.Code">
 		INSERT INTO
-		CODEREVIEW(TITLE, BODY, C.CODE CODE, CREATED_AT, LANG, MEMBERID, ANONYMOUS)
+		CODEREVIEW(TITLE, BODY, CODE, CREATED_AT, LANG, MEMBERID, ANONYMOUS)
 		VALUES(#{title}, #{body}, now(), #{lang}, #{memberid}, #{anonymous})
 	</insert>
 	
