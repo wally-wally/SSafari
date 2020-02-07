@@ -24,7 +24,8 @@ import UpdateForm from './components/etc/UpdateForm.vue'
 import MyPage from  './views/MyPage.vue'
 import store from './store'
 
-import RestaurantCreateForm from '@/components/RestaurantCreateForm.vue'
+import RestaurantCreateForm from '@/components/restaurant/RestaurantCreateForm.vue'
+import RestaurantDetail from '@/components/restaurant/RestaurantDetail.vue'
 
 Vue.use(Router)
 
@@ -101,6 +102,11 @@ export default new Router({
 			path: '/RestaurantCreateForm',
 			name: 'RestaurantCreateForm',
 			component: RestaurantCreateForm
-		}
+		},
+		{
+			path: '/RestaurantDetail',
+			name: 'RestaurantDetail',
+			component: RestaurantDetail
+		},		
   ]
 })
