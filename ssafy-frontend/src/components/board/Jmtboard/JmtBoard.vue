@@ -23,7 +23,7 @@
 			<v-layout>
 				<v-flex>
 					<div v-for="restaurant in restaurants" :key="restaurant.id">
-						<router-link :to="`jmt/${restaurant.id}`">
+						<router-link :to="`${restaurant.id}`">
 							<v-card class="mb-3">
 								<v-card-title>
 									{{restaurant.name }} <h6>{{restaurant.location}}</h6>
