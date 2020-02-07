@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ssafy.jmt">
+
+	<select id="getJmts" parameterType="java.lang.Integer"
+		resultType="com.ssafy.edu.vue.dto.Jmt">
+		SELECT J.ID ID, J.NAME NAME, J.LOCATION LOCATION, J.BODY BODY, J.CREATED_AT CREATED_AT, J.MEMBERID MEMBERID, 
+		IF(J.ANONYMOUS=1 AND M.MEMBERID!=#{memberid}, '익명', M.USERNAME) AS USERNAME 
+		FROM JMT J, MEMBERS M 
+		WHERE J.MEMBERID=M.MEMBERID 
+		ORDER BY ID	DESC
+	</select>
+
+	<select id="getJmt" parameterType="com.ssafy.edu.vue.dto.Jmt"
+		resultType="com.ssafy.edu.vue.dto.Jmt">
+		SELECT J.ID ID, J.NAME NAME, J.LOCATION LOCATION, J.BODY BODY, J.CREATED_AT CREATED_AT, J.MEMBERID MEMBERID, 
+		IF(J.ANONYMOUS=1 AND M.MEMBERID!=#{memberid}, '익명', M.USERNAME) AS USERNAME 
+		FROM JMT J, MEMBERS M 
+		WHERE J.MEMBERID=M.MEMBERID AND J.ID = #{id}
+	</select>
+
+	<insert id="addJmt"
+		parameterType="com.ssafy.edu.vue.dto.Jmt">
+		INSERT INTO
+		JMT(NAME, LOCATION, BODY, CREATED_AT, MEMBERID, ANONYMOUS)
+		VALUES(#{name},#{location},#{body},now(), #{memberid}, #{anonymous})
+	</insert>
+	
+	<update id="updateJmt"
+		parameterType="com.ssafy.edu.vue.dto.Jmt">
+		UPDATE JMT SET
+		NAME=#{name},
+		LOCATION=#{location},
+		BODY=#{body},
+		ANONYMOUS=#{anonymous}
+		WHERE ID=#{id}
+	</update>
+
+	<delete id="deleteJmt" parameterType="java.lang.Integer">
+		DELETE FROM JMT WHERE ID=#{id}
+	</delete>
+</mapper>

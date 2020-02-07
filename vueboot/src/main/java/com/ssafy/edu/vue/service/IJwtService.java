@@ -16,6 +16,6 @@ public interface IJwtService {
 
 //	Map<String, Object> get(String key);
 
-	Map<String, Object> get(String key, HttpServletRequest req);
+	Member get(HttpServletRequest req);
 
 }

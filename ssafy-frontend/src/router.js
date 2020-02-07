@@ -1,22 +1,26 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import HomePage from './views/HomePage.vue'
-import BoardPage from './views/BoardPage.vue'
-import PostDetail from './components/post/PostDetail.vue'
-import FreeBoard from './components/post/FreeBoard.vue'
-import CodeBoard from './components/post/CodeBoard.vue'
-import JobBoard from './components/post/JobBoard.vue'
-import jmtBoard from './components/post/jmtBoard.vue'
-
-import Boardindex from './components/post/Boardindex.vue'
-import Portfolioindex from './components/portfolio/Portfolioindex.vue'
-import PortfolioPage from './views/PortfolioPage.vue'
-import PortfolioDetail from './views/PortfolioDetail.vue'
-
-import PortfolioCreateForm from './components/portfolio/PortfolioCreateForm.vue'
-import PostCreateForm from './components/post/PostCreateForm.vue'
-import UpdateForm from './components/UpdateForm.vue'
 import TeamIntro from './views/TeamIntro.vue'
+
+// Board(게시판) import 구문
+import BoardPage from './views/BoardPage.vue'
+
+import AllBoard from './components/board/AllBoard.vue'
+import BoardDetail from './components/board/boardCommonForm/BoardDetail.vue'
+import FreeBoard from './components/board/FreeBoard.vue'
+import CodeBoard from './components/board/codeboard/CodeBoard.vue'
+import JobBoard from './components/board//JobBoard.vue'
+import JmtBoard from './components/board/Jmtboard/JmtBoard.vue'
+import CodeDetail from './components/board/codeboard/CodeDetail.vue'
+// StudyGroup(스터디 모임) import 구문
+import StudyGroupPage from './views/StudyGroupPage.vue'
+import StudyGroupindex from './components/studygroup/StudyGroupindex.vue'
+import StudyGroupDetail from './components/studygroup/StudyGroupDetail.vue'
+import CodeCreate from  './components/CodeCreate.vue'
+
+import StudyGroupCreateForm from './components/studygroup/StudyGroupCreateForm.vue'
+import UpdateForm from './components/etc/UpdateForm.vue'
 import MyPage from  './views/MyPage.vue'
 import store from './store'
 
@@ -47,43 +51,40 @@ export default new Router({
 			name: 'board',
 			component: BoardPage,
 			children : [
-				{path : '', component : Boardindex},
-				{path:'create' ,
-				 component : PostCreateForm
-				},
-				{ path : 'free', name:"free" , component : Boardindex },
-				{ path : 'codereview', name:"code", component : CodeBoard },
-				{path : 'job' , name: "job", component : Boardindex },
-				{path : 'jmt' , name: "jmt" ,component : Boardindex },
-				{path : ':id', component : PostDetail ,props:true}
-				// {path: ':category',component : Postindex, props: true },
-				// {path: ':category/:id', component: PostDetail,props: true}
+				{ path : '', component : AllBoard },
+				{ path : 'free', name: "free" , component : FreeBoard },
+				{ path : 'codereview', name:"code", component : CodeBoard,},
+				{ path : 'codereview/create', name: "codecreate", component : CodeCreate},
+				{ path : 'codereview/:id', name : "codedetail", component : CodeDetail , props : true},
+				{ path : 'job' , name: "job", component : JobBoard },
+				{ path : 'jmt' , name: "jmt" ,component : JmtBoard },
+				{ path : ':id', component : BoardDetail , props : true }
 			]
 		},
 		{
-			path: '/post/:id/update',
-			name: 'PostUpdate',
+			path: '/board/:id/update',
+			name: 'BoardUpdate',
 			component: UpdateForm,
 			props: true
 		},
 		{
-			path: '/portfolio',
-			name: 'portfolio',
-			component: PortfolioPage,	
+			path: '/studygroup',
+			name: 'Studygroup',
+			component: StudyGroupPage,	
 			children : [
-				{path : '', component : Portfolioindex},
-				{path:'create' , component : PortfolioCreateForm}
+				{ path : '', component : StudyGroupindex },
+				{ path:'create' , component : StudyGroupCreateForm }
 			]
 		},
 		{
-			path: '/portfolio/:id',
-			name: 'portfolioDetail',
-			component: PortfolioDetail,
+			path: '/studygroup/:id',
+			name: 'StudygroupDetail',
+			component: StudyGroupDetail,
 			props: true
 		},
 		{
-			path: '/portfolio/:id/update',
-			name: 'PortfolioUpdate',
+			path: '/studygroup/:id/update',
+			name: 'StudyGroupUpdate',
 			component: UpdateForm,
 			props: true
 		},

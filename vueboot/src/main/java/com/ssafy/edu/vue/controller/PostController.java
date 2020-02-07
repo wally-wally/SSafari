@@ -3,6 +3,8 @@ package com.ssafy.edu.vue.controller;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +17,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.edu.vue.dto.CategoryPost;
 import com.ssafy.edu.vue.dto.Commentpost;
 import com.ssafy.edu.vue.dto.Likepost;
 import com.ssafy.edu.vue.dto.LocationFiltering;
+import com.ssafy.edu.vue.dto.Member;
 import com.ssafy.edu.vue.dto.Portfolio;
 import com.ssafy.edu.vue.dto.Post;
 import com.ssafy.edu.vue.dto.Postinfo;
@@ -41,9 +45,14 @@ public class PostController {
 	
 	@ApiOperation(value = "post 전체 보기", response = List.class)
 	@RequestMapping(value = "/posts", method = RequestMethod.GET)
-	public ResponseEntity<List<Post>> getPosts() throws Exception {
-		logger.info("1-------------getPortfolios-----------------------------" + new Date());
-		List<Post> posts = postservice.getPosts();
+	public ResponseEntity<List<Post>> getPosts(HttpServletRequest rs) throws Exception {
+		logger.info("1-------------getPosts-----------------------------" + new Date());
+		int memberid = 0;
+		if(rs.getAttribute("loginMember")!=null) {
+			Member member = (Member) rs.getAttribute("loginMember");
+			memberid = member.getMemberid();
+		}
+		List<Post> posts = postservice.getPosts(memberid);
 		if (posts == null) {
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
 		}
@@ -52,9 +61,14 @@ public class PostController {
 	
 	@ApiOperation(value = "post category별 전체 보기", response = List.class)
 	@RequestMapping(value = "/posts/{categoryid}", method = RequestMethod.GET)
-	public ResponseEntity<List<Post>> getCategoryPosts(@PathVariable int categoryid) throws Exception {
+	public ResponseEntity<List<Post>> getCategoryPosts(@PathVariable int categoryid, HttpServletRequest rs) throws Exception {
 		logger.info("1-------------getCategoryPosts-----------------------------" + new Date());
-		List<Post> posts = postservice.getCategoryPosts(categoryid);
+		int memberid = 0;
+		if(rs.getAttribute("loginMember")!=null) {
+			Member member = (Member) rs.getAttribute("loginMember");
+			memberid = member.getMemberid();
+		}
+		List<Post> posts = postservice.getCategoryPosts(new CategoryPost(categoryid, memberid));
 		if (posts == null) {
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
 		}
@@ -63,12 +77,18 @@ public class PostController {
 	
 	@ApiOperation(value = "post category 중 지역별 전체 보기", response = List.class)
 	@RequestMapping(value = "/postslocation", method = RequestMethod.GET)
-	public ResponseEntity<List<Post>> getLocationPosts(@RequestBody LocationFiltering locationfiltering) throws Exception {
+	public ResponseEntity<List<Post>> getLocationPosts(@RequestBody LocationFiltering locationfiltering, HttpServletRequest rs) throws Exception {
 		logger.info("1-------------getLocationPosts-----------------------------" + new Date());
 		List<Post> posts;
+		int memberid = 0;
+		if(rs.getAttribute("loginMember")!=null) {
+			Member member = (Member) rs.getAttribute("loginMember");
+			memberid = member.getMemberid();
+		}
 		if(locationfiltering.getLocationid()==0) {
-			posts = postservice.getCategoryPosts(locationfiltering.getBoardid());
+			posts = postservice.getCategoryPosts(new CategoryPost(locationfiltering.getCategoryid(),memberid));
 		}else {
+			locationfiltering.setMemberid(memberid);
 			posts = postservice.getLocationPosts(locationfiltering);
 		}
 		if (posts == null) {
@@ -90,7 +110,7 @@ public class PostController {
 	
 	@ApiOperation(value = "post 상세 보기", response = List.class)
 	@RequestMapping(value = "/post/{postid}", method = RequestMethod.GET)
-	public ResponseEntity<Post> getPost(@PathVariable int postid) throws Exception {
+	public ResponseEntity<Post> getPost(@PathVariable int postid,HttpServletRequest rs) throws Exception {
 		logger.info("1-------------getPost-----------------------------" + new Date());
 		Post post = postservice.getPost(postid);
 		if (post == null) {
@@ -134,8 +154,14 @@ public class PostController {
 	
 	@ApiOperation(value = "post Comment 전체 보기", response = List.class)
 	@RequestMapping(value = "/commentpost/{postid}", method = RequestMethod.GET)
-	public ResponseEntity<List<Commentpost>> getCommentPost(@RequestBody Postinfo postinfo) throws Exception {
+	public ResponseEntity<List<Commentpost>> getCommentPost(@RequestBody Postinfo postinfo, HttpServletRequest rs) throws Exception {
 		logger.info("1-------------getCommentPost-----------------------------" + new Date());
+		int memberid = 0;
+		if(rs.getAttribute("loginMember")!=null) {
+			Member member = (Member) rs.getAttribute("loginMember");
+			memberid = member.getMemberid();
+		}
+		postinfo.setMemberid(memberid);
 		List<Commentpost> posts = postservice.getCommentPost(postinfo);
 		if (posts == null) {
 			return new ResponseEntity(HttpStatus.NO_CONTENT);

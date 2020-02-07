@@ -23,26 +23,29 @@ public class Commentpost implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Commentpost(int cpostid, int postid, int memberid, String wdate, String content) {
+	public Commentpost(int cpostid, int categoryid, int postid, int memberid, String wdate, String content) {
 		super();
 		this.cpostid = cpostid;
+		this.categoryid = categoryid;
 		this.postid = postid;
 		this.memberid = memberid;
 		this.wdate = wdate;
 		this.content = content;
 	}
 
-	public Commentpost(int postid, int memberid, String wdate, String content) {
+	public Commentpost(int postid, int categoryid, int memberid, String wdate, String content) {
 		super();
 		this.postid = postid;
+		this.categoryid = categoryid;		
 		this.memberid = memberid;
 		this.wdate = wdate;
 		this.content = content;
 	}
 	
-	public Commentpost(int cpostid, int postid, int memberid, String wdate, String content, String username) {
+	public Commentpost(int cpostid, int categoryid, int postid, int memberid, String wdate, String content, String username) {
 		super();
 		this.cpostid = cpostid;
+		this.categoryid = categoryid;
 		this.postid = postid;
 		this.memberid = memberid;
 		this.wdate = wdate;
@@ -50,37 +53,25 @@ public class Commentpost implements Serializable {
 		this.username = username;
 	}
 
-	public Commentpost(int postid, int memberid, String content) {
+	public Commentpost(int postid, int categoryid, int memberid, String content) {
 		super();
 		this.postid = postid;
+		this.categoryid = categoryid;
 		this.memberid = memberid;
 		this.content = content;
 	}
 	
-	public Commentpost(int postid, int memberid, String content, int anonym) {
+	public Commentpost(int postid, int categoryid, int memberid, String content, int anonym) {
 		super();
 		this.postid = postid;
+		this.categoryid = categoryid;
 		this.memberid = memberid;
 		this.content = content;
 		this.anonym = anonym;
 	}
 
-	public Commentpost(int cpostid, int postid, int memberid, String wdate, String content, String username,
+	public Commentpost(int cpostid, int categoryid, int postid, int memberid, String wdate, String content, String username,
 			int anonym) {
-		super();
-		this.cpostid = cpostid;
-		this.postid = postid;
-		this.memberid = memberid;
-		this.wdate = wdate;
-		this.content = content;
-		this.username = username;
-		this.anonym = anonym;
-	}
-	
-	
-
-	public Commentpost(int cpostid, int categoryid, int postid, int memberid, String wdate, String content,
-			String username, int anonym) {
 		super();
 		this.cpostid = cpostid;
 		this.categoryid = categoryid;
@@ -122,13 +113,7 @@ public class Commentpost implements Serializable {
 		this.categoryid = categoryid;
 	}
 
-	public int getPostid() {
-		return postid;
-	}
 
-	public void setPostid(int postid) {
-		this.postid = postid;
-	}
 
 	public int getMemberid() {
 		return memberid;

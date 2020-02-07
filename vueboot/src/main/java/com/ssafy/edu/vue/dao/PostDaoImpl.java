@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.ssafy.edu.vue.dto.CategoryPost;
 import com.ssafy.edu.vue.dto.Commentpost;
 import com.ssafy.edu.vue.dto.Likepost;
 import com.ssafy.edu.vue.dto.LocationFiltering;
@@ -39,8 +40,8 @@ public class PostDaoImpl {
 		sqlSession.delete(ns+"deletePost",postid);
 	}
 
-	public List<Post> getPosts() {
-		return sqlSession.selectList(ns+"getPosts");
+	public List<Post> getPosts(int memberid) {
+		return sqlSession.selectList(ns+"getPosts",memberid);
 	}
 
 	public List<Commentpost> getCommentPost(Postinfo postinfo) {
@@ -59,8 +60,8 @@ public class PostDaoImpl {
 		sqlSession.delete(ns+"deleteCommentPost",cpostid);
 	}
 
-	public List<Post> getCategoryPosts(int categoryid) {
-		return sqlSession.selectList(ns+"getCategoryPosts",categoryid);
+	public List<Post> getCategoryPosts(CategoryPost categorypost) {
+		return sqlSession.selectList(ns+"getCategoryPosts",categorypost);
 	}
 
 	public List<Post> getLocationPosts(LocationFiltering locationfiltering) {
