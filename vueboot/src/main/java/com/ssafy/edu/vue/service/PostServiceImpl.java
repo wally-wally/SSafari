@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ssafy.edu.vue.dao.PostDaoImpl;
 import com.ssafy.edu.vue.dto.Category;
+import com.ssafy.edu.vue.dto.CategoryPost;
 import com.ssafy.edu.vue.dto.Commentpost;
 import com.ssafy.edu.vue.dto.Likepost;
 import com.ssafy.edu.vue.dto.LocationFiltering;
@@ -83,8 +84,8 @@ public class PostServiceImpl implements IPostService {
 
 	@Override
 	@Transactional(readOnly=true)
-	public List<Post> getCategoryPosts(int categoryid) {
-		return postdao.getCategoryPosts(categoryid);
+	public List<Post> getCategoryPosts(CategoryPost categorypost) {
+		return postdao.getCategoryPosts(categorypost);
 	}
 
 	@Override

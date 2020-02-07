@@ -17,23 +17,12 @@
           <img data-aos="fade-up" data-aos-delay="200" src="https://user-images.githubusercontent.com/52685250/73331868-93cf5980-42a8-11ea-8272-cb55019dbd5c.jpg" id="team-img">
           <img data-aos="fade-up" data-aos-delay="400" src="https://user-images.githubusercontent.com/52685250/73331869-93cf5980-42a8-11ea-9169-cc7b4f9aab49.jpg" id="team-img">
         </div>
-          <!-- <div data-aos="fade-up" data-aos-delay="600" class="feature-on-text">
-            We featured on
-          </div>
-          <div class="language-icon" style="margin: 20px 10%;">
-            <img data-aos="fade-up" data-aos-delay="800" src="../assets/langicon/html-5.png" id="lang-icon">
-            <img data-aos="fade-up" data-aos-delay="800" src="../assets/langicon/css.png" id="lang-icon">
-            <img data-aos="fade-up" data-aos-delay="800" src="../assets/langicon/javascript.png" id="lang-icon">
-            <img data-aos="fade-up" data-aos-delay="800" src="../assets/langicon/cpp.png" id="lang-icon">
-            <img data-aos="fade-up" data-aos-delay="800" src="../assets/langicon/python.png" id="lang-icon">
-            <img data-aos="fade-up" data-aos-delay="800" src="../assets/langicon/react.png" id="lang-icon">
-          </div> -->
       </v-img>
 	</div>
 </template>
 
 <script>
-import ProfileCard from '@/components/ProfileCard.vue'
+import ProfileCard from '@/components/teamintro/ProfileCard.vue'
 
 export default {
 		name: "TeamIntro",

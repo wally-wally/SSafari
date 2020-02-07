@@ -36,7 +36,7 @@ public class JwtServiceImpl implements IJwtService{
 		String jwt = Jwts.builder()
 						 .setHeaderParam("typ", "JWT")
 						 .setHeaderParam("regDate", System.currentTimeMillis())
-						 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 5 * 60 * 60 ))
+						 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 ))
 						 .setSubject("로그인토큰")
 						 .claim("access-Token", data)
 						 .signWith(SignatureAlgorithm.HS256, this.generateKey())
@@ -93,12 +93,15 @@ public class JwtServiceImpl implements IJwtService{
 						 .setSigningKey(SALT.getBytes("UTF-8"))
 						 .parseClaimsJws(jwt);
 		} catch (Exception e) {
-			System.out.println("로그인 X");
 			return null;
 			//throw new UnauthorizedException();
 		}
 		@SuppressWarnings("unchecked")
 		Map<String, Object> value = (LinkedHashMap<String, Object>)claims.getBody().get("access-Token");
+		String github = null;
+		if(value.get("githubid")!=null) {
+			github = value.get("githubid").toString();
+		}
 		Member member = new Member(
 				Integer.parseInt(value.get("memberid").toString()),
 				value.get("email").toString(),
@@ -107,7 +110,7 @@ public class JwtServiceImpl implements IJwtService{
 				value.get("username").toString(),
 				value.get("signupdate").toString(),
 				Integer.parseInt(value.get("auth").toString()),
-				value.get("githubid").toString(),
+				github,
 				Integer.parseInt(value.get("locationid").toString()),
 				Integer.parseInt(value.get("unit").toString()));
 		

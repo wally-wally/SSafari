@@ -1,16 +1,25 @@
 <template>
-<v-container>
-  <v-select
-    label="CodeType"
-    :items="items"
-    item-text="text"
-    item-value="val"
-    v-model="type"
-  ></v-select>
-  <v-label> 제목 : 
-  <v-text-field v-model="title"></v-text-field>
-  </v-label>
-  <div style="height:50px" id="codetype"></div>
+<v-container >
+  <v-row align="center">
+    <v-col cols="3">
+      <v-select
+        label="CodeType"
+        :items="items"
+        item-text="text"
+        item-value="val"
+        v-model="type"
+      ></v-select>
+    </v-col>
+    <v-spacer />
+    <v-col cols="1">
+      <label col-1> 제목 : 
+      </label>
+    </v-col>
+    <v-col cols="6">
+      <v-text-field col-8 v-model="title"></v-text-field>
+    </v-col>
+  </v-row>
+  <textarea style="border:1px solid black" v-model="body" id="" cols="100%" rows="10"></textarea>
   <codemirror ref="myCm"
               :value="code"
               :options="cmOptions"
@@ -18,6 +27,9 @@
               @focus="onCmFocus"
               @input="onCmCodeChange">
   </codemirror>
+  <v-checkbox v-model="anonymousStatus" label="익명" value="익명" class="annoyCheck"/>
+
+  <hr>
   <button @click="codecreate">작성하기</button>
 </v-container>
 
@@ -39,6 +51,9 @@ export default {
   },
   data () {
     return {
+      body : '',
+      anonymousStatus : false,
+      codes : [],
       title : '',
       items : [
         { text : 'Python', val : 'text/x-python'},
@@ -52,7 +67,7 @@ export default {
         tabSize: 4,
         mode: 'text/x-python',
         // mode: '',
-        theme: 'base16-dark',
+        // theme: 'base16-dark',
         lineNumbers: true,
         line: true,
       }
@@ -75,20 +90,19 @@ export default {
       const formData = new FormData()
       const data = {
         'title' : this.title,
-        'body' : this.code,
-        'type' : this.type
+        'body' : this.body,
+        'code' : this.code,
+        'lang' : this.type,
+        'anonymous' : this.anonymousStatus,
+        'memberid' : this.$store.state.memberid,
       }
-      console.log(data)
+      // axios.get('/api/code',data)
+      // .then(response =>{
+      //   console.log(response)
+      // }).catch(error => {
+      //   console.log(error)
+      // })
     },
-    getcodes() {
-      axios.get('api/codes')
-      .then(response => {
-        console.log(response.data)
-      })
-    }
-  },
-  mounted(){
-    this.getcodes()
   },
   computed: {
     codemirror() {
@@ -97,8 +111,6 @@ export default {
   },
   watch: {
     type: function(type) {
-      const val= document.querySelector('#codetype')
-      val.innerHTML = type
       this.cmOptions.mode = type
     },
   }

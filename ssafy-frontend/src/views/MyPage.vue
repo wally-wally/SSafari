@@ -1,37 +1,41 @@
 <template>
-  <v-container>
-    <div>
-    </div>
+  <div style="margin: 0 5%;">
     <div class="mypage-title">
-      <h1>MY POST</h1>
+      <h1>MY BOARD</h1>
     </div>
-    <MyPostList/>
+    <MyBoardList/>
     <v-divider/>
     <div class="mypage-title">
-      <h1>MY PORTFOLIO</h1>
+      <h1>MY STUDY GROUP</h1>
     </div>
-    <MyPortfolioList/>
+    <MyStudyGroupList/>
     <v-divider/>
     <div class="mypage-title">
-      <h1>{{this.$store.getters.user.githubid}} 's Github</h1>
+      <h1>{{this.githubid}} 's Github</h1>
     </div>
-    <RepositoryList :githubid="this.$store.getters.user.githubid" />
-  </v-container>
+    <GithubInfo :githubid="githubid"></GithubInfo>
+  </div>
 </template>
 
 <script>
 import axios from 'axios'
-import MyPortfolioList from '../components/portfolio/MyPortfolioList'
-import MyPostList from '../components/post/MyPostList'
-import RepositoryList from '../components/RepositoryList'
+import MyStudyGroupList from '../components/studygroup/MyStudyGroupList'
+import MyBoardList from '../components/board/MyPageBoard/MyBoardList'
+import GithubInfo from '../components/github/GithubInfo'
+
 export default {
     name : "MyPage",
-    components : {MyPortfolioList,MyPostList,RepositoryList},
-    date() {
+    components : {
+      MyStudyGroupList,
+      MyBoardList,
+      GithubInfo
+    },
+    data() {
       return {
         showpost: true,
         showportfolio : true, 
-        mydata : Object
+        mydata : Object,
+        githubid: ''
       }
     },
     methods: {
@@ -42,12 +46,18 @@ export default {
         this.showportfolio = !this.showportfolio
       },
       getmyinfo() {
-        axios.get(`api/member/8`)
+        // axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
+        // axios.defaults.headers["Access-Control-Allow-Origin"] = "*"
+        // axios.defaults.headers["Access-Control-Allow-Methods"] = "GET,HEAD,OPTIONS,POST,PUT"
+        // axios.defaults.headers["Access-Control-Allow-Headers"] = "Authorization, Content-Type, If-Match, If-Modified-Since, If-None-Match, If-Unmodified-Since, X-GitHub-OTP, X-Requested-With"
+        // axios.defaults.headers["Access-Control-Expose-Headers"] = "ETag, Link, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval"
+        axios.get(`api/member/${this.$store.getters.user.memberid}`)
         .then(response=>{
-          this.mydata = response.data
-          console.log(this.mydata)
-        }).catch(error => {
-        })
+          this.githubid = response.data.githubid
+          // console.log(response)
+          })
+        .catch(error => {
+          })
       }
     },
     mounted() {

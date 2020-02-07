@@ -9,8 +9,8 @@
 </template>
 
 <script>
-import Header from '@/components/Header'
-import Footer from '@/components/Footer'
+import Header from '@/components/main/Header'
+import Footer from '@/components/main/Footer'
 export default {
   name: "App",
   components: {
@@ -33,7 +33,17 @@ export default {
 *:focus {
     outline: none;
 }
-  a {
-    text-decoration:none;
-  }
+a {
+  text-decoration:none;
+}
+.v-application a{
+  text-decoration:none;
+}
+.router-link-active {
+  text-decoration:none;
+}
+.router-link-exact-active {
+  text-decoration:none;
+
+}
 </style>
