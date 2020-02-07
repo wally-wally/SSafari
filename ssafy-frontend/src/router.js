@@ -24,8 +24,8 @@ import UpdateForm from './components/etc/UpdateForm.vue'
 import MyPage from  './views/MyPage.vue'
 import store from './store'
 
-import RestaurantCreateForm from '@/components/restaurant/RestaurantCreateForm.vue'
-import RestaurantDetail from '@/components/restaurant/RestaurantDetail.vue'
+import RestaurantCreateForm from '@/components/board/Jmtboard/RestaurantCreateForm.vue'
+import RestaurantDetail from '@/components/board/Jmtboard/RestaurantDetail.vue'
 
 Vue.use(Router)
 
@@ -58,6 +58,8 @@ export default new Router({
 				{ path : 'codereview/:id', name : "codedetail", component : CodeDetail , props : true},
 				{ path : 'job' , name: "job", component : JobBoard },
 				{ path : 'jmt' , name: "jmt" ,component : JmtBoard },
+				{ path : 'jmt/create', name: 'jmtcreate', component: RestaurantCreateForm},
+				{ path : 'jmt/:id', name : "jmtdetail", component : RestaurantDetail , props : true},
 				{ path : ':id', component : BoardDetail , props : true }
 			]
 		},
@@ -98,15 +100,5 @@ export default new Router({
 			name : 'MyPage',
 			component: MyPage
 		},
-		{
-			path: '/RestaurantCreateForm',
-			name: 'RestaurantCreateForm',
-			component: RestaurantCreateForm
-		},
-		{
-			path: '/RestaurantDetail',
-			name: 'RestaurantDetail',
-			component: RestaurantDetail
-		},		
   ]
 })

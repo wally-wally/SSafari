@@ -19,6 +19,10 @@
 	</div>
 	<div class="center" justify-center>
 		<div class="title-top">
+			<div class="create-title">Name</div>
+    	<textarea v-model="name" class="title-form" disabled></textarea>
+		</div>
+		<div class="title-top">
 			<div class="create-title">location</div>
     	<textarea v-model="location" class="title-form" disabled></textarea>
 		</div>
@@ -57,6 +61,8 @@ export default {
 				mapOptions: '',
 				dataArray: '',
 				index: '',
+				name: '지도에서 선택해 주세요!',
+				locationid: '',
 				location: '지도에서 선택해 주세요!',
 				content: '',
 				anonymousStatus: false,
@@ -72,6 +78,7 @@ export default {
 		},
 		methods: {
 				create() {
+					console.log(123, this.dataArray[this.index])
 					if(this.index === ''){
 						alert('지도에서 카페/식당을 입력해주세요.')
 					} else {
@@ -79,7 +86,8 @@ export default {
 							name: this.dataArray[this.index].place_name,
 							location: this.dataArray[this.index].address_name,
 							body: this.content,
-							anonymous: (this.anonymousStatus === "true") ? 1 : 0
+							anonymous: (this.anonymousStatus === "true") ? 1 : 0,
+							locationid: this.locationid
 						}
 						axios.post('api/jmt', credentials, { headers: {'access-token': this.$store.state.token }})
 							.then(response => {
@@ -121,7 +129,6 @@ export default {
 				placesSearchCB(data, status, pagination) {
     				if (status === kakao.maps.services.Status.OK) {
 							data = data.filter(item => item.category_group_code === 'CE7' || item.category_group_code === 'FD6')
-								console.log(data)
 								if(data.length === 0){
 									alert('검색 결과가 존재하지 않습니다!!!');
 									return;
@@ -214,8 +221,29 @@ export default {
 
 						el.addEventListener('click', () => {
 								this.index = index
-								this.location = this.dataArray[this.index].place_name
-								
+								this.name = this.dataArray[this.index].place_name
+								var res = this.dataArray[this.index].address_name.split(" ")
+								if(res[0] === "대전"){
+									this.locationid = 2
+									this.location = "대전"
+								}else if(res[0] === "광주"){
+									this.locationid = 4
+									this.location = "광주"
+								}else if(res[0] === "서울"){
+									this.locationid = 1
+									this.location = "서울"
+								}else if(res[0] === "경북"){
+									if(res[1] === "구미시"){
+										this.locationid = 3
+										this.location = "구미"
+									}else{
+										this.locationid = 5
+										this.location = "기타"
+									}
+								}else{
+									this.locationid = 5
+									this.location = "기타"
+								}								
 						});				
 
     				return el;
@@ -239,7 +267,29 @@ export default {
 						// 인포윈도우를 생성합니다
 						kakao.maps.event.addListener(marker, 'click', () => {
 								this.index = idx
-								this.location = this.dataArray[this.index].place_name
+								this.name = this.dataArray[this.index].place_name
+								var res = this.dataArray[this.index].address_name.split(" ")
+								if(res[0] === "대전"){
+									this.locationid = 2
+									this.location = "대전"
+								}else if(res[0] === "광주"){
+									this.locationid = 4
+									this.location = "광주"
+								}else if(res[0] === "서울"){
+									this.locationid = 1
+									this.location = "서울"
+								}else if(res[0] === "경북"){
+									if(res[1] === "구미시"){
+										this.locationid = 3
+										this.location = "구미"
+									}else{
+										this.locationid = 5
+										this.location = "기타"
+									}
+								}else{
+									this.locationid = 5
+									this.location = "기타"
+								}
 						});						
 						
 						marker.setMap(this.map); // 지도 위에 마커를 표출합니다
