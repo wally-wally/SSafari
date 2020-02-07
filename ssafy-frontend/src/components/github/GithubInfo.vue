@@ -1,8 +1,8 @@
 <template>
 	<!-- <div class="github-info"> -->
-		<div class="github-info-card d-flex">
+		<div class="github-info-card">
 			<div class="github-img">
-        <img :src="this.profileImgUrl" alt="github-avatar-img">
+        <img class="github-img" :src="this.profileImgUrl" alt="github-avatar-img">
       </div>
 				<GithubDetail :githubInformation="githubInformation"></GithubDetail>
 		</div>
@@ -81,6 +81,11 @@ export default {
 	.github-info-card {
 		margin: 10px;
 		border: 1px solid black;
+		overflow: hidden;
+	}
+
+	.github-img {
+		float: left;
 	}
 
 	.github-img > img {

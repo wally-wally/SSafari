@@ -1,5 +1,5 @@
 <template>
-  <div class="github-subinfo">
+  <div class="github-subinfo d-inline">
     <div class="github-name">
       {{ githubInformation.name }}
     </div>
