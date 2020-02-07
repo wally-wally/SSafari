@@ -11,8 +11,10 @@
                       <div v-for="code in codes" :key="code.id">
                           <router-link :to="`${code.id}`">
                             <v-card class="mb-3">
+                                <v-card-actions>
+                                    {{code.username}}
+                                </v-card-actions>
                                 <v-card-title>
-                                {{code.memberid}}
                                 {{code.title}}
                                 </v-card-title>
                             <v-card-subtitle>

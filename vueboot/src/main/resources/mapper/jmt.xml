@@ -7,7 +7,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getJmts" parameterType="java.lang.Integer"
 		resultType="com.ssafy.edu.vue.dto.Jmt">
 		SELECT J.ID ID, J.NAME NAME, J.LOCATION LOCATION, J.BODY BODY, J.CREATED_AT CREATED_AT, J.MEMBERID MEMBERID, 
-		IF(J.ANONYMOUS=1 AND M.MEMBERID!=#{memberid}, '익명', M.USERNAME) AS USERNAME 
+		IF(J.ANONYMOUS=1 AND M.MEMBERID!=#{memberid}, '익명', M.USERNAME) AS USERNAME, J.LOCATIONID LOCATIONID
 		FROM JMT J, MEMBERS M 
 		WHERE J.MEMBERID=M.MEMBERID 
 		ORDER BY ID	DESC
@@ -16,7 +16,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getJmt" parameterType="com.ssafy.edu.vue.dto.Jmt"
 		resultType="com.ssafy.edu.vue.dto.Jmt">
 		SELECT J.ID ID, J.NAME NAME, J.LOCATION LOCATION, J.BODY BODY, J.CREATED_AT CREATED_AT, J.MEMBERID MEMBERID, 
-		IF(J.ANONYMOUS=1 AND M.MEMBERID!=#{memberid}, '익명', M.USERNAME) AS USERNAME 
+		IF(J.ANONYMOUS=1 AND M.MEMBERID!=#{memberid}, '익명', M.USERNAME) AS USERNAME, J.LOCATIONID LOCATIONID
 		FROM JMT J, MEMBERS M 
 		WHERE J.MEMBERID=M.MEMBERID AND J.ID = #{id}
 	</select>
@@ -24,8 +24,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="addJmt"
 		parameterType="com.ssafy.edu.vue.dto.Jmt">
 		INSERT INTO
-		JMT(NAME, LOCATION, BODY, CREATED_AT, MEMBERID, ANONYMOUS)
-		VALUES(#{name},#{location},#{body},now(), #{memberid}, #{anonymous})
+		JMT(NAME, LOCATION, BODY, CREATED_AT, MEMBERID, ANONYMOUS, LOCATIONID)
+		VALUES(#{name},#{location},#{body},now(), #{memberid}, #{anonymous}, #{locationid})
 	</insert>
 	
 	<update id="updateJmt"
@@ -34,7 +34,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		NAME=#{name},
 		LOCATION=#{location},
 		BODY=#{body},
-		ANONYMOUS=#{anonymous}
+		ANONYMOUS=#{anonymous},
+		LOCATIONID=#{locationid}
 		WHERE ID=#{id}
 	</update>
 
