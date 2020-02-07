@@ -6,7 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<select id="getCodes" parameterType="java.lang.Integer"
 		resultType="com.ssafy.edu.vue.dto.Code">
-		SELECT C.ID ID, C.TITLE TITLE, C.BODY BODY, C.CREATED_AT CREATED_AT, C.LANG LANG, C.MEMBERID MEMBERID, 
+		SELECT C.ID ID, C.TITLE TITLE, C.BODY BODY, C.CODE CODE, C.CREATED_AT CREATED_AT, C.LANG LANG, C.MEMBERID MEMBERID, 
 		IF(C.ANONYMOUS=1 AND M.MEMBERID!=#{memberid}, '익명', M.USERNAME) AS USERNAME 
 		FROM CODEREVIEW C, MEMBERS M 
 		WHERE C.MEMBERID=M.MEMBERID 
@@ -15,23 +15,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<select id="getCode" parameterType="java.lang.Integer"
 		resultType="com.ssafy.edu.vue.dto.Code">
-		SELECT C.ID ID, C.TITLE TITLE, C.BODY BODY, C.CREATED_AT CREATED_AT, C.LANG LANG, C.MEMBERID MEMBERID, IF(C.ANONYMOUS=1, '익명', M.USERNAME) AS USERNAME 
+		SELECT C.ID ID, C.TITLE TITLE, C.BODY BODY, C.CODE CODE, C.CREATED_AT CREATED_AT, C.LANG LANG, C.MEMBERID MEMBERID, IF(C.ANONYMOUS=1, '익명', M.USERNAME) AS USERNAME 
 		FROM CODEREVIEW C, MEMBERS M 
-		WHERE C.MEMBERID=M.MEMBERID AND ID = #{id}
+		WHERE C.MEMBERID=M.MEMBERID AND ID=#{id}
 	</select>
 
 	<insert id="addCode"
 		parameterType="com.ssafy.edu.vue.dto.Code">
 		INSERT INTO
-		CODEREVIEW(TITLE, BODY, CREATED_AT, LANG, MEMBERID, ANONYMOUS)
-		VALUES(#{title},#{body},now(), #{lang}, #{memberid}, #{anonymous})
+		CODEREVIEW(TITLE, BODY, C.CODE CODE, CREATED_AT, LANG, MEMBERID, ANONYMOUS)
+		VALUES(#{title}, #{body}, now(), #{lang}, #{memberid}, #{anonymous})
 	</insert>
 	
 	<update id="updateCode"
 		parameterType="com.ssafy.edu.vue.dto.Code">
 		UPDATE CODEREVIEW SET
 		TITLE=#{title},
-		BODY=#{body}
+		BODY=#{body},
+		CODE=#{code}
 		WHERE ID=#{id}
 	</update>
 

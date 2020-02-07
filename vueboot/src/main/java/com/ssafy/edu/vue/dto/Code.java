@@ -6,6 +6,7 @@ public class Code implements Serializable {
 	private int id;
 	private String title;
 	private String body;
+	private String code;
 	private String created_at;
 	private int memberid;
 	private String lang;
@@ -14,16 +15,20 @@ public class Code implements Serializable {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Code(int id, String title, String body, String created_at, int memberid, String lang, int anonymous) {
+	
+	public Code(int id, String title, String body, String code, String created_at, int memberid, String lang,
+			int anonymous) {
 		super();
 		this.id = id;
 		this.title = title;
 		this.body = body;
+		this.code = code;
 		this.created_at = created_at;
 		this.memberid = memberid;
 		this.lang = lang;
 		this.anonymous = anonymous;
 	}
+
 	public int getId() {
 		return id;
 	}
@@ -41,6 +46,12 @@ public class Code implements Serializable {
 	}
 	public void setBody(String body) {
 		this.body = body;
+	}
+	public String getCode() {
+		return code;
+	}
+	public void setCode(String code) {
+		this.code = code;
 	}
 	public String getCreated_at() {
 		return created_at;
