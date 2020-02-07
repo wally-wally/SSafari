@@ -20,7 +20,8 @@ import TeamIntro from './views/TeamIntro.vue'
 import MyPage from  './views/MyPage.vue'
 import store from './store'
 
-import RestaurantCreateForm from '@/components/RestaurantCreateForm.vue'
+import RestaurantCreateForm from '@/components/restaurant/RestaurantCreateForm.vue'
+import RestaurantDetail from '@/components/restaurant/RestaurantDetail.vue'
 
 Vue.use(Router)
 
@@ -53,7 +54,7 @@ export default new Router({
 				{ path : 'free', name:"free" , component : Boardindex },
 				{ path : 'codereview', name:"code", component : CodeBoard },
 				{path : 'job' , name: "job", component : Boardindex },
-				{path : 'jmt' , name: "jmt" ,component : Boardindex},
+				{path : 'jmt' , name: "jmt" ,component : Boardindex },
 				{path : ':id', component : PostDetail ,props:true}
 				// {path: ':category',component : Postindex, props: true },
 				// {path: ':category/:id', component: PostDetail,props: true}
@@ -100,6 +101,11 @@ export default new Router({
 			path: '/RestaurantCreateForm',
 			name: 'RestaurantCreateForm',
 			component: RestaurantCreateForm
-		}
+		},
+		{
+			path: '/RestaurantDetail',
+			name: 'RestaurantDetail',
+			component: RestaurantDetail
+		},		
   ]
 })

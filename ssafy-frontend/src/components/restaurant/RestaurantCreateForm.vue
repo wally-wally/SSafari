@@ -7,22 +7,17 @@
       <div class="option">
         <div>
           <!-- <form onsubmit="searchPlaces(); return false;"> -->
-          카페 or 식당	 : <input type="text" v-model="keyword" id="keyword" size="15"> 
-          <button type="submit" @click="createMap()">검색하기</button>
+          카페 or 식당<v-text-field v-model="keyword" class="title-form" id="keyword" @keyup.enter.native="createMap"></v-text-field>
+					<br>
+          <button class="button" style="background-color:red" type="submit" @click="createMap">검색하기</button>
           <!-- </form> -->
         </div>
       </div>
-      <hr>
       <ul id="placesList"></ul>
       <div id="pagination"></div>
     </div>
 	</div>
 	<div class="center" justify-center>
-  	<div class="title-top mt-5">
-    	<!-- <div class="title-form"> -->
-    	<div class="create-title">Title</div>
-    	<textarea v-model="title" class="title-form"></textarea>
-  	</div>
 		<div class="title-top">
 			<div class="create-title">location</div>
     	<textarea v-model="location" class="title-form" disabled></textarea>
@@ -31,13 +26,20 @@
 			<div class="create-title">Content</div>
 			<textarea v-model="content" id="create-content" name="content"></textarea>
 		</div>
-		<!-- <v-btn class="mr-5" color="#f7b157" @click="create">작성</v-btn> -->
-    <!-- <v-btn color="error" @click="goBack()">취소</v-btn> -->
+		<div>
+			<div class="post-footer-annoymous d-inline col-4">
+      	<v-checkbox v-model="anonymousStatus" label="익명" value="true" class="anonyCheck"></v-checkbox>
+    	</div>
+		</div>
+		<v-btn class="mr-5" color="#f7b157" @click="create">작성</v-btn>
+    <v-btn color="error" @click="goBack">취소</v-btn>
 	</div>
 </v-flex>
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
 		name: 'RestaurantCreateForm',
 		components: {
@@ -55,9 +57,9 @@ export default {
 				mapOptions: '',
 				dataArray: '',
 				index: '',
-				title: '',
-				location: '',
+				location: '지도에서 선택해 주세요!',
 				content: '',
+				anonymousStatus: false,
 			}
 		},
 		mounted() {
@@ -69,6 +71,26 @@ export default {
 				// this.map = new daum.maps.Map(this.mapContainer, this.mapOptions);
 		},
 		methods: {
+				create() {
+					if(this.index === ''){
+						alert('지도에서 카페/식당을 입력해주세요.')
+					} else {
+						var credentials = {
+							name: this.dataArray[this.index].place_name,
+							location: this.dataArray[this.index].address_name,
+							body: this.content,
+							anonymous: (this.anonymousStatus === "true") ? 1 : 0
+						}
+						axios.post('api/jmt', credentials, { headers: {'access-token': this.$store.state.token }})
+							.then(response => {
+								this.$router.push('/board/jmt')
+							})
+					}
+				},
+				goBack() {
+            const formTitle = document.querySelector('#form-title')
+            this.$router.push('/board/jmt')
+        },
 				createMap() {
 						this.markers = [];
 						this.mapContainer = document.getElementById('map') // 지도를 표시할 div 
@@ -289,7 +311,7 @@ export default {
 #menu_wrap hr {display: block; height: 1px;border: 0; border-top: 2px solid #5F5F5F;margin:3px 0;}
 #menu_wrap .option{text-align: center;}
 #menu_wrap .option p {margin:10px 0;}  
-#menu_wrap .option button {margin-left:5px;}
+#menu_wrap .option {margin-left:5px;}
 #placesList li {list-style: none;}
 #placesList .item {position:relative;border-bottom:1px solid #888;overflow: hidden;cursor: pointer;min-height: 65px;}
 #placesList .item span {display: block;margin-top:4px;}
@@ -353,5 +375,19 @@ export default {
   margin: auto;
   width: 50%;
   padding: 10px;
+}
+.button {
+  display: block;
+  margin: 0 auto;
+  width: 260px;
+  height: 36px;
+  border-radius: 30px;
+  color: #fff;
+  font-size: 15px;
+  cursor: pointer;
+  background-color: white;
+}
+.inputs{
+  background-color :#d1d1d1; 
 }
 </style>
