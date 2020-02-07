@@ -52,7 +52,12 @@ export default new Vuex.Store({
     }
 },
  getters : {
+        githubid(state) {
+            return jwtDecode(state.token)['access-Token'].githubid
+        },
         user(state) {
+            console.log('---------------')
+            console.log(jwtDecode(state.token))
             return jwtDecode(state.token)['access-Token']
         },
         options(state) {
