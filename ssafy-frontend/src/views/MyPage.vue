@@ -1,32 +1,30 @@
 <template>
-  <v-container>
-    <div>
-    </div>
+  <div style="margin: 0 5%;">
     <div class="mypage-title">
-      <h1>MY POST</h1>
+      <h1>MY BOARD</h1>
     </div>
-    <MyPostList/>
+    <MyBoardList/>
     <v-divider/>
     <div class="mypage-title">
-      <h1>MY PORTFOLIO</h1>
+      <h1>MY STUDY GROUP</h1>
     </div>
-    <MyPortfolioList/>
+    <MyStudyGroupList/>
     <v-divider/>
     <div class="mypage-title">
       <h1>{{this.$store.getters.user.githubid}} 's Github</h1>
     </div>
     <RepositoryList :githubid="this.$store.getters.user.githubid" />
-  </v-container>
+  </div>
 </template>
 
 <script>
 import axios from 'axios'
-import MyPortfolioList from '../components/portfolio/MyPortfolioList'
-import MyPostList from '../components/post/MyPostList'
-import RepositoryList from '../components/RepositoryList'
+import MyStudyGroupList from '../components/studygroup/MyStudyGroupList'
+import MyBoardList from '../components/board/MyPageBoard/MyBoardList'
+import RepositoryList from '../components/repository/RepositoryList'
 export default {
     name : "MyPage",
-    components : {MyPortfolioList,MyPostList,RepositoryList},
+    components : {MyStudyGroupList,MyBoardList,RepositoryList},
     date() {
       return {
         showpost: true,

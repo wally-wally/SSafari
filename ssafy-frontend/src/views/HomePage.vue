@@ -9,10 +9,10 @@
         <div class="portfolio-contents">
           <div class="portfolio-title">스터디 모임</div>
           <div class="button-box">
-            <div class="addButton" @click="goAddPortfolio">스터디 모집하기</div>
+            <div class="addButton" @click="goAddStudyGroup">스터디 모집하기</div>
           </div>
           <div data-aos="fade-up" class="portfolio-carousel">
-            <PortfolioListMain></PortfolioListMain>
+            <StudyGroupListMain></StudyGroupListMain>
           </div>
         </div>
       </v-img>
@@ -22,11 +22,11 @@
              aspect-ratio="2.15">
         <div class="post-contents">
           <div class="post-title">게시판</div>
-          <!-- <div class="button-box">
-            <div class="addButton" @click="goAddPost">new post</div>
-          </div> -->
           <div data-aos="fade-up" class="post-contents">
-            <PostListMain></PostListMain>
+            <!-- <BoardListMain></BoardListMain> -->
+            <div style="margin: 0 5%;">
+              <AllBoard></AllBoard>
+            </div>
           </div>
         </div>
       </v-img>
@@ -40,18 +40,20 @@
   </div>
 </template>
 <script>
-import ImgBanner from '../components/ImgBanner'
-import PortfolioListMain from '../components/portfolio/PortfolioListMain'
-import PostListMain from '../components/post/PostListMain'
-import RepositoryList from '../components/RepositoryList'
+import ImgBanner from '../components/etc/ImgBanner'
+import StudyGroupListMain from '../components/studygroup/StudyGroupListMain'
+import BoardListMain from '../components/board/boardCommonForm/BoardListMain'
+import RepositoryList from '../components/repository/RepositoryList'
+import AllBoard from '../components/board/AllBoard'
 import '../assets/css/HomePage.css'
 export default {
 	name: 'HomePage',
 	components: {
 		ImgBanner,
-		PortfolioListMain,
-		PostListMain,
-		RepositoryList
+		StudyGroupListMain,
+		BoardListMain,
+    RepositoryList,
+    AllBoard
   },
   created () {
     window.addEventListener('scroll', this.sideBarColorChange)
@@ -65,8 +67,8 @@ export default {
 		getImgBackgroundUrl(img) {
 			return require('../../public/img/background/' + img)
     },
-    goAddPortfolio: function() {
-      this.$router.push('portfolio/create')
+    goAddStudyGroup: function() {
+      this.$router.push('studygroup/create')
     },
     goAddPost: function() {
       this.$router.push('post/create')
@@ -84,22 +86,18 @@ export default {
       let sectionUpperHalfHeight = (viewportHeight - HeaderHeight) / 2
 
       // section top value
-      let teamIntroSectionTop = document.querySelector('.team-intro-image').getBoundingClientRect().top
       let portfolioSectionTop = document.querySelector('.portfolio-image').getBoundingClientRect().top
       let postSectionTop = document.querySelector('.post-image').getBoundingClientRect().top
 
       if (postSectionTop - HeaderHeight <= sectionUpperHalfHeight) {
         postIcon.style.color = colorSet[0]
-        mainIcon.style.color = teamIcon.style.color = portfolioIcon.style.color = colorSet[1]
+        mainIcon.style.color = portfolioIcon.style.color = colorSet[1]
       } else if (portfolioSectionTop - HeaderHeight <= sectionUpperHalfHeight) {
         portfolioIcon.style.color = colorSet[0]
-        mainIcon.style.color = teamIcon.style.color = postIcon.style.color = colorSet[1]
-      } else if (teamIntroSectionTop - HeaderHeight <= sectionUpperHalfHeight) {
-        teamIcon.style.color = colorSet[0]
-        mainIcon.style.color = portfolioIcon.style.color = postIcon.style.color = colorSet[1]
+        mainIcon.style.color = postIcon.style.color = colorSet[1]
       } else {
         mainIcon.style.color = colorSet[0]
-        teamIcon.style.color = portfolioIcon.style.color = postIcon.style.color = colorSet[1]
+        portfolioIcon.style.color = postIcon.style.color = colorSet[1]
       }
     }
 	},
