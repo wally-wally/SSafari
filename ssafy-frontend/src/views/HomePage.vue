@@ -43,7 +43,6 @@
 import ImgBanner from '../components/etc/ImgBanner'
 import StudyGroupListMain from '../components/studygroup/StudyGroupListMain'
 import BoardListMain from '../components/board/boardCommonForm/BoardListMain'
-import RepositoryList from '../components/repository/RepositoryList'
 import AllBoard from '../components/board/AllBoard'
 import '../assets/css/HomePage.css'
 export default {
@@ -52,7 +51,6 @@ export default {
 		ImgBanner,
 		StudyGroupListMain,
 		BoardListMain,
-    RepositoryList,
     AllBoard
   },
   created () {
