@@ -19,7 +19,7 @@
       <v-text-field col-8 v-model="title"></v-text-field>
     </v-col>
   </v-row>
-  <textarea v-model="body" id="" cols="30" rows="10"></textarea>
+  <textarea style="border:1px solid black" v-model="body" id="" cols="100%" rows="10"></textarea>
   <codemirror ref="myCm"
               :value="code"
               :options="cmOptions"
@@ -67,7 +67,7 @@ export default {
         tabSize: 4,
         mode: 'text/x-python',
         // mode: '',
-        theme: 'base16-dark',
+        // theme: 'base16-dark',
         lineNumbers: true,
         line: true,
       }
