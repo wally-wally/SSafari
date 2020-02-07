@@ -8,7 +8,7 @@ public interface IJmtService {
 
 	public List<Jmt> getJmts(int memberid);
 
-	public Jmt getJmt(int id);
+	public Jmt getJmt(Jmt jmt);
 
 	public void addJmt(Jmt jmt);
 

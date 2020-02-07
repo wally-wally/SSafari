@@ -26,8 +26,8 @@ public class JmtServiceImpl implements IJmtService {
 
 	@Override
 	@Transactional(readOnly=true)
-	public Jmt getJmt(int id) {
-		return jmtdao.getJmt(id);
+	public Jmt getJmt(Jmt jmt) {
+		return jmtdao.getJmt(jmt);
 	}
 
 	@Override

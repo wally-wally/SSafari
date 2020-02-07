@@ -18,8 +18,8 @@ public class JmtDaoImpl {
 	public List<Jmt> getJmts(int memberid) {
 		return sqlSession.selectList(ns+"getJmts",memberid);
 	}
-	public Jmt getJmt(int id) {
-		return sqlSession.selectOne(ns+"getJmt",id);
+	public Jmt getJmt(Jmt jmt) {
+		return sqlSession.selectOne(ns+"getJmt",jmt);
 	}
 	public void addJmt(Jmt jmt) {
 		sqlSession.insert(ns+"addJmt",jmt);

@@ -36,7 +36,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 //http://localhost:8197/humans/swagger-ui.html
-@CrossOrigin(origins = { "*" }, maxAge = 6000,exposedHeaders="access-token")
+@CrossOrigin(origins = { "*" }, maxAge = 6000,exposedHeaders="access-token",allowedHeaders= "*")
 @RestController
 @RequestMapping("/api")
 @Api(value = "SSAFY", description = "A5 Resouces Management 2020")

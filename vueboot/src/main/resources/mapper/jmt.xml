@@ -5,37 +5,40 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="ssafy.jmt">
 
 	<select id="getJmts" parameterType="java.lang.Integer"
-		resultType="com.ssafy.edu.vue.dto.Code">
-		SELECT C.ID ID, C.TITLE TITLE, C.BODY BODY, C.CREATED_AT CREATED_AT, C.LANG LANG, C.MEMBERID MEMBERID, 
-		IF(C.ANONYMOUS=1 AND M.MEMBERID!=#{memberid}, '익명', M.USERNAME) AS USERNAME 
-		FROM CODEREVIEW C, MEMBERS M 
-		WHERE C.MEMBERID=M.MEMBERID 
+		resultType="com.ssafy.edu.vue.dto.Jmt">
+		SELECT J.ID ID, J.NAME NAME, J.LOCATION LOCATION, J.BODY BODY, J.CREATED_AT CREATED_AT, J.MEMBERID MEMBERID, 
+		IF(J.ANONYMOUS=1 AND M.MEMBERID!=#{memberid}, '익명', M.USERNAME) AS USERNAME 
+		FROM JMT J, MEMBERS M 
+		WHERE J.MEMBERID=M.MEMBERID 
 		ORDER BY ID	DESC
 	</select>
 
-	<select id="getJmt" parameterType="java.lang.Integer"
-		resultType="com.ssafy.edu.vue.dto.Code">
-		SELECT C.ID ID, C.TITLE TITLE, C.BODY BODY, C.CREATED_AT CREATED_AT, C.LANG LANG, C.MEMBERID MEMBERID, IF(C.ANONYMOUS=1, '익명', M.USERNAME) AS USERNAME 
-		FROM CODEREVIEW C, MEMBERS M 
-		WHERE C.MEMBERID=M.MEMBERID AND ID = #{id}
+	<select id="getJmt" parameterType="com.ssafy.edu.vue.dto.Jmt"
+		resultType="com.ssafy.edu.vue.dto.Jmt">
+		SELECT J.ID ID, J.NAME NAME, J.LOCATION LOCATION, J.BODY BODY, J.CREATED_AT CREATED_AT, J.MEMBERID MEMBERID, 
+		IF(J.ANONYMOUS=1 AND M.MEMBERID!=#{memberid}, '익명', M.USERNAME) AS USERNAME 
+		FROM JMT J, MEMBERS M 
+		WHERE J.MEMBERID=M.MEMBERID AND J.ID = #{id}
 	</select>
 
 	<insert id="addJmt"
-		parameterType="com.ssafy.edu.vue.dto.Code">
+		parameterType="com.ssafy.edu.vue.dto.Jmt">
 		INSERT INTO
-		CODEREVIEW(TITLE, BODY, CREATED_AT, LANG, MEMBERID, ANONYMOUS)
-		VALUES(#{title},#{body},now(), #{lang}, #{memberid}, #{anonymous})
+		JMT(NAME, LOCATION, BODY, CREATED_AT, MEMBERID, ANONYMOUS)
+		VALUES(#{name},#{location},#{body},now(), #{memberid}, #{anonymous})
 	</insert>
 	
 	<update id="updateJmt"
-		parameterType="com.ssafy.edu.vue.dto.Code">
-		UPDATE CODEREVIEW SET
-		TITLE=#{title},
-		BODY=#{body}
+		parameterType="com.ssafy.edu.vue.dto.Jmt">
+		UPDATE JMT SET
+		NAME=#{name},
+		LOCATION=#{location},
+		BODY=#{body},
+		ANONYMOUS=#{anonymous}
 		WHERE ID=#{id}
 	</update>
 
 	<delete id="deleteJmt" parameterType="java.lang.Integer">
-		DELETE FROM CODEREVIEW WHERE ID=#{id}
+		DELETE FROM JMT WHERE ID=#{id}
 	</delete>
 </mapper>

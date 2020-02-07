@@ -15,6 +15,34 @@ public class Jmt implements Serializable {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	public Jmt(int id, String name, String location, String body, String created_at, int memberid, String username) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.location = location;
+		this.body = body;
+		this.created_at = created_at;
+		this.memberid = memberid;
+		this.username = username;
+	}
+
+	
+	public Jmt(int id, String name, String location, String body, int anonymous) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.location = location;
+		this.body = body;
+		this.anonymous = anonymous;
+	}
+
+	public Jmt(int id, int memberid) {
+		super();
+		this.id = id;
+		this.memberid = memberid;
+	}
+
 	public Jmt(int id, String name, String location, String body, String created_at, int memberid, String username,
 			int anonymous) {
 		super();

@@ -99,6 +99,10 @@ public class JwtServiceImpl implements IJwtService{
 		}
 		@SuppressWarnings("unchecked")
 		Map<String, Object> value = (LinkedHashMap<String, Object>)claims.getBody().get("access-Token");
+		String github = null;
+		if(value.get("githubid")!=null) {
+			github = value.get("githubid").toString();
+		}
 		Member member = new Member(
 				Integer.parseInt(value.get("memberid").toString()),
 				value.get("email").toString(),
@@ -107,7 +111,7 @@ public class JwtServiceImpl implements IJwtService{
 				value.get("username").toString(),
 				value.get("signupdate").toString(),
 				Integer.parseInt(value.get("auth").toString()),
-				value.get("githubid").toString(),
+				github,
 				Integer.parseInt(value.get("locationid").toString()),
 				Integer.parseInt(value.get("unit").toString()));
 		
