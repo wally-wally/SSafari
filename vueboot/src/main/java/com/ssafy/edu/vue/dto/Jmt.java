@@ -11,12 +11,14 @@ public class Jmt implements Serializable {
 	private int memberid;
 	private String username;
 	private int anonymous;
+	private int locationid;
+	
 	public Jmt() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Jmt(int id, String name, String location, String body, String created_at, int memberid, String username) {
+	public Jmt(int id, String name, String location, String body, String created_at, int memberid, String username, int locationid) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -25,16 +27,18 @@ public class Jmt implements Serializable {
 		this.created_at = created_at;
 		this.memberid = memberid;
 		this.username = username;
+		this.locationid = locationid;
 	}
 
 	
-	public Jmt(int id, String name, String location, String body, int anonymous) {
+	public Jmt(int id, String name, String location, String body, int anonymous, int locationid) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.location = location;
 		this.body = body;
 		this.anonymous = anonymous;
+		this.locationid = locationid;
 	}
 
 	public Jmt(int id, int memberid) {
@@ -44,7 +48,7 @@ public class Jmt implements Serializable {
 	}
 
 	public Jmt(int id, String name, String location, String body, String created_at, int memberid, String username,
-			int anonymous) {
+			int anonymous, int locationid) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -54,14 +58,16 @@ public class Jmt implements Serializable {
 		this.memberid = memberid;
 		this.username = username;
 		this.anonymous = anonymous;
+		this.locationid = locationid;
 	}
-	public Jmt(String name, String location, String body, int memberid, int anonymous) {
+	public Jmt(String name, String location, String body, int memberid, int anonymous, int locationid) {
 		super();
 		this.name = name;
 		this.location = location;
 		this.body = body;
 		this.memberid = memberid;
 		this.anonymous = anonymous;
+		this.locationid = locationid;
 	}
 	public Jmt(String name, String location, String body, int anonymous) {
 		super();

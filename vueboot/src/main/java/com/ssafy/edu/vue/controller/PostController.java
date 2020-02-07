@@ -153,7 +153,7 @@ public class PostController {
 	}
 	
 	@ApiOperation(value = "post Comment 전체 보기", response = List.class)
-	@RequestMapping(value = "/commentpost/{postid}", method = RequestMethod.GET)
+	@RequestMapping(value = "/commentpost", method = RequestMethod.GET)
 	public ResponseEntity<List<Commentpost>> getCommentPost(@RequestBody Postinfo postinfo, HttpServletRequest rs) throws Exception {
 		logger.info("1-------------getCommentPost-----------------------------" + new Date());
 		int memberid = 0;
