@@ -16,8 +16,10 @@
     </v-row>
     <v-row>
         <v-col>
-        {{code.memberid}}
-        {{this.langchange[code.lang]}}
+            작성자 : {{code.username}}
+        </v-col>
+        <v-col>
+            언어 : {{this.langchange[code.lang]}}
         </v-col>
     </v-row>
     <codemirror

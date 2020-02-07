@@ -16,37 +16,7 @@
                 </div>
                 <div class="post-count">{{ postCnt }}</div>
             </div>
-            <div v-if="currentMemberId !== null" class="create-post">
-                <div v-if="this.showCreatePost === 0" class="init d-flex justify-space-between" @click="hideInitPostForm">
-                    <div class="write-phrase d-inline">이 곳에 새 글을 작성하세요.</div>
-                    <div class="write-icon d-inline"><i class="fas fa-pencil-alt"></i></div>
-                </div>
-                <form v-else class="create-post-form">
-                    <p><input v-model="title" name="post-form-title" placeholder="제목을 작성하세요." class="post-form-title"></p>
-                    <p>
-                        <textarea v-model="content" name="post-form-contents" class="post-form-contents"
-                                  placeholder="이 곳에 내용을 작성하세요."></textarea>
-                    </p>
-                    <div class="post-form-footer d-flex">
-                        <div class="post-form-footer-att-ann d-flex col-10">
-                            <div class="post-footer-attach d-inline col-8">
-                                <v-file-input :rules="rules" v-model="imgFile" label="File input" class="post-attach-file" outlined dense accept="image/png, image/jpeg, image/bmp"></v-file-input>
-                            </div>
-                            <div class="post-footer-annoymous d-inline col-4">
-                                <v-checkbox v-model="annoymousStatus" label="익명" value="익명" class="annoyCheck"></v-checkbox>
-                            </div>
-                        </div>
-                        <div class="post-form-submit d-inline col-2">
-                            <v-btn class="submit-button" color="primary" @click="create">작성</v-btn>
-                        </div> 
-                    </div>
-                </form>
-            </div>
-            <div v-else>
-                <div class="init d-flex justify-space-between">
-                    <div class="write-phrase d-inline">글을 작성하려면 로그인을 먼저 하세요.</div>
-                </div>
-            </div>
+            <router-link to="create"><v-btn class="mb-3" color="primary">맛집 </v-btn></router-link>
             <v-layout>
                 <v-flex>
                     <BoardList :category="this.$route.name" @showPostCount="onPostCount" :limits="5" :load-more="true"></BoardList>
