@@ -38,7 +38,6 @@ import 'codemirror/mode/xml/xml.js'
 import 'codemirror/mode/javascript/javascript.js'
 import 'codemirror/theme/base16-dark.css'
 import 'codemirror/mode/python/python.js'
-
 export default {
     name : 'CodeDetail',
     components: codemirror,
@@ -76,6 +75,9 @@ export default {
     },
     mounted() {
         this.getcode()
+        .then(
+            this.showOptions.mode = this.code.lang
+        )
     }
 }
 </script>
