@@ -2,6 +2,7 @@ package com.ssafy.edu.vue.service;
 
 import java.util.List;
 
+import com.ssafy.edu.vue.dto.Category;
 import com.ssafy.edu.vue.dto.CategoryPost;
 import com.ssafy.edu.vue.dto.Commentpost;
 import com.ssafy.edu.vue.dto.Likepost;
@@ -43,5 +44,7 @@ public interface IPostService {
 	int getLikeCounts(Likepost likepost);
 
 	int getCommentCounts(Likepost likepost);
+
+	void addBoardCategory(Category category);
 	
 }

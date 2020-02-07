@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.edu.vue.dto.Category;
 import com.ssafy.edu.vue.dto.CategoryPost;
 import com.ssafy.edu.vue.dto.Commentpost;
 import com.ssafy.edu.vue.dto.Likepost;
@@ -238,7 +239,17 @@ public class PostController {
 		return new ResponseEntity<Integer>(counts, HttpStatus.OK);
 	}
 	
-	// 좋아요 많은 순서대로 다섯개 post list
+	// 게시판 추가
+	@ApiOperation(value = "post category 추가 (게시판 추가)", response = List.class)
+	@RequestMapping(value = "/boardcategory", method = RequestMethod.POST)
+	public ResponseEntity<BoolResult> addBoardCategory(@RequestBody Category category) throws Exception {
+		logger.info("1-------------addBoardCategory-----------------------------" + new Date());
+		postservice.addBoardCategory(category);
+		BoolResult nr=new BoolResult();
+   		nr.setName("addBoardCategory");
+   		nr.setState("succ");
+		return new ResponseEntity<BoolResult>(nr, HttpStatus.OK);
+	}
 	
 	
 }

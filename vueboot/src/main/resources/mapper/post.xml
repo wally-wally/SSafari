@@ -131,4 +131,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT COUNT(*) FROM COMMENTPOST
 		WHERE CATEGORYID=#{categoryid} AND POSTID = #{postid}
 	</select>
+	
+	<insert id="addBoardCategory" parameterType="java.lang.String">
+		INSERT INTO CATEGORY(NAME,EXPLANATION) VALUES(#{name}, #{explanation})
+	</insert>
 </mapper>
