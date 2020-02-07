@@ -2,12 +2,17 @@
   float:left;
 }
 
-.github-subinfo > div {
-  padding: 5px 5px 20px 5px;
+.github-subinfo > div:nth-child(1),
+.github-subinfo > div:nth-child(2) {
+  padding: 5px 5px 28px 5px;
+}
+
+.github-subinfo > div:last-child {
+  padding: 5px 5px 0 5px;
 }
 
 .github-name {
-  font-size: 2rem;
+  font-size: 2.5rem;
   font-family: 'Gudea';
 }
 
@@ -21,17 +26,33 @@
   padding-right: 10px;
 }
 
+.github-subinfo-1 > p:nth-child(2) > span:hover {
+  cursor: pointer;
+  color: #f5b157;
+}
+
 .github-subinfo-2 > div {
-  margin-right: 40px;
+  margin-right: 20px;
+  padding: 3px 6px;
+  border-color: lightgray;
+  border-width: 1.5px;
+  border-style: solid;
+  border-radius: 10px 10px;
+  box-shadow: 1px 1px 1px grey;
+}
+
+.github-subinfo-2 > div:first-child:hover {
+  box-shadow: 3px 3px 6px grey;
+  cursor: pointer;
 }
 
 .github-subinfo-2 > div > div:first-child {
-  font-size: 1.2em;
+  font-size: 1.3em;
   font-family: 'Quicksand';
   font-weight: bold;
 }
 
 .github-subinfo-2 > div > div:last-child {
-  font-size: 1.5em;
+  font-size: 1.7em;
   font-family: 'Sarabun', sans-serif;
 }
