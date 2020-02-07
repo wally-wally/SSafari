@@ -12,7 +12,7 @@ import FreeBoard from './components/board/FreeBoard.vue'
 import CodeBoard from './components/board/codeboard/CodeBoard.vue'
 import JobBoard from './components/board//JobBoard.vue'
 import JmtBoard from './components/board/Jmtboard/JmtBoard.vue'
-
+import CodeDetail from './components/board/codeboard/CodeDetail.vue'
 // StudyGroup(스터디 모임) import 구문
 import StudyGroupPage from './views/StudyGroupPage.vue'
 import StudyGroupindex from './components/studygroup/StudyGroupindex.vue'
@@ -52,6 +52,7 @@ export default new Router({
 				{ path : 'free', name: "free" , component : FreeBoard },
 				{ path : 'codereview', name:"code", component : CodeBoard,},
 				{ path : 'codereview/create', name: "codecreate", component : CodeCreate},
+				{ path : 'codereview/:id', name : "codedetail", component : CodeDetail , props : true},
 				{ path : 'job' , name: "job", component : JobBoard },
 				{ path : 'jmt' , name: "jmt" ,component : JmtBoard },
 				{ path : ':id', component : BoardDetail , props : true }

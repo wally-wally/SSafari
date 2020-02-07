@@ -24,6 +24,9 @@
 </script>
 
 <style>
+  a {
+    text-decoration:none;
+  }
   .subheader-top {
     height: 80px;
     background-color: lightgray;
