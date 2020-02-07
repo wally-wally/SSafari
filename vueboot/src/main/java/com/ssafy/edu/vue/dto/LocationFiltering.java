@@ -10,6 +10,7 @@ public class LocationFiltering implements Serializable {
 
 	private int categoryid;
 	private int locationid;
+	private int memberid;
 
 	public LocationFiltering() {
 		super();
@@ -21,18 +22,34 @@ public class LocationFiltering implements Serializable {
 		this.categoryid = categoryid;
 		this.locationid = locationid;
 	}
+	
+	public LocationFiltering(int categoryid, int locationid, int memberid) {
+		super();
+		this.categoryid = categoryid;
+		this.locationid = locationid;
+		this.memberid = memberid;
+	}
 
 	@Override
 	public String toString() {
-		return "LocationFiltering [categoryid=" + categoryid + ", locationid=" + locationid + "]";
+		return "LocationFiltering [categoryid=" + categoryid + ", locationid=" + locationid + ", memberid=" + memberid
+				+ "]";
 	}
 
-	public int getBoardid() {
+	public int getCategoryid() {
 		return categoryid;
 	}
 
-	public void setBoardid(int categoryid) {
+	public void setCategoryid(int categoryid) {
 		this.categoryid = categoryid;
+	}
+
+	public int getMemberid() {
+		return memberid;
+	}
+
+	public void setMemberid(int memberid) {
+		this.memberid = memberid;
 	}
 
 	public int getLocationid() {
