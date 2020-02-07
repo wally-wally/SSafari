@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ssafy.edu.vue.dao.PostDaoImpl;
+import com.ssafy.edu.vue.dto.Category;
 import com.ssafy.edu.vue.dto.Commentpost;
 import com.ssafy.edu.vue.dto.Likepost;
 import com.ssafy.edu.vue.dto.LocationFiltering;
@@ -113,6 +114,12 @@ public class PostServiceImpl implements IPostService {
 	public int getCommentCounts(Likepost likepost) {
 		return postdao.getCommentCounts(likepost);
 
+	}
+	
+	@Override
+	@Transactional
+	public void addBoardCategory(Category category) {
+		postdao.addBoardCategory(category);
 	}
 
 }

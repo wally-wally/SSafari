@@ -123,4 +123,8 @@ WHERE C.CATEGORYID=#{categoryid} AND C.POSTID=#{postid} AND M.MEMBERID=C.MEMBERI
 		SELECT COUNT(*) FROM COMMENTPOST
 		WHERE CATEGORYID=#{categoryid} AND POSTID = #{postid}
 	</select>
+	
+	<insert id="addBoardCategory" parameterType="java.lang.String">
+		INSERT INTO CATEGORY(NAME,EXPLANATION) VALUES(#{name}, #{explanation})
+	</insert>
 </mapper>

@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.ssafy.edu.vue.dto.Category;
 import com.ssafy.edu.vue.dto.Commentpost;
 import com.ssafy.edu.vue.dto.Likepost;
 import com.ssafy.edu.vue.dto.LocationFiltering;
@@ -81,6 +82,10 @@ public class PostDaoImpl {
 
 	public int getCommentCounts(Likepost likepost) {
 		return sqlSession.selectOne(ns+"getCommentCounts", likepost);
+	}
+
+	public void addBoardCategory(Category category) {
+		sqlSession.insert(ns+"addBoardCategory",category);
 	}
 
 }
