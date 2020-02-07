@@ -22,6 +22,25 @@ public class Commentpost implements Serializable {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	
+
+	public Commentpost(int categoryid, int postid, int memberid) {
+		super();
+		this.categoryid = categoryid;
+		this.postid = postid;
+		this.memberid = memberid;
+	}
+
+
+
+	public Commentpost(int categoryid, int postid) {
+		super();
+		this.categoryid = categoryid;
+		this.postid = postid;
+	}
+
+
 
 	public Commentpost(int cpostid, int categoryid, int postid, int memberid, String wdate, String content) {
 		super();

@@ -42,7 +42,6 @@ public class JmtController {
 	public ResponseEntity<List<Jmt>> getJmts(HttpServletRequest rs) throws Exception {
 		logger.info("1-------------getJmts-----------------------------" + new Date());
 		int memberid = 0;
-		System.out.println("rsLOGINMEMBER===="+rs.getAttribute("loginMember"));
 		if(rs.getAttribute("loginMember")!=null) {
 			Member member = (Member) rs.getAttribute("loginMember");
 			memberid = member.getMemberid();

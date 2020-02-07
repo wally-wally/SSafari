@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -77,7 +78,7 @@ public class PostController {
 	
 	@ApiOperation(value = "post category 중 지역별 전체 보기", response = List.class)
 	@RequestMapping(value = "/postslocation", method = RequestMethod.GET)
-	public ResponseEntity<List<Post>> getLocationPosts(@RequestBody LocationFiltering locationfiltering, HttpServletRequest rs) throws Exception {
+	public ResponseEntity<List<Post>> getLocationPosts(@ModelAttribute LocationFiltering locationfiltering, HttpServletRequest rs) throws Exception {
 		logger.info("1-------------getLocationPosts-----------------------------" + new Date());
 		List<Post> posts;
 		int memberid = 0;
@@ -154,7 +155,7 @@ public class PostController {
 	
 	@ApiOperation(value = "post Comment 전체 보기", response = List.class)
 	@RequestMapping(value = "/commentpost", method = RequestMethod.GET)
-	public ResponseEntity<List<Commentpost>> getCommentPost(@RequestBody Postinfo postinfo, HttpServletRequest rs) throws Exception {
+	public ResponseEntity<List<Commentpost>> getCommentPost(@ModelAttribute Postinfo postinfo, HttpServletRequest rs) throws Exception {
 		logger.info("1-------------getCommentPost-----------------------------" + new Date());
 		int memberid = 0;
 		if(rs.getAttribute("loginMember")!=null) {
@@ -223,7 +224,7 @@ public class PostController {
 	
 	@ApiOperation(value = "post 좋아요 수 출력", response = BoolResult.class)
 	@RequestMapping(value = "/likecounts", method = RequestMethod.GET)
-	public ResponseEntity<Integer> getLikeCounts(@RequestBody Likepost likepost) throws Exception {
+	public ResponseEntity<Integer> getLikeCounts(@ModelAttribute Likepost likepost) throws Exception {
 		logger.info("1-------------getLikeCounts-----------------------------" + new Date());
 		int counts = postservice.getLikeCounts(likepost);
 		return new ResponseEntity<Integer>(counts, HttpStatus.OK);
@@ -231,7 +232,7 @@ public class PostController {
 	
 	@ApiOperation(value = "post 댓글 수 출력", response = BoolResult.class)
 	@RequestMapping(value = "/commentcounts", method = RequestMethod.GET)
-	public ResponseEntity<Integer> getCommentCounts(@RequestBody Likepost likepost) throws Exception {
+	public ResponseEntity<Integer> getCommentCounts(@ModelAttribute Likepost likepost) throws Exception {
 		logger.info("1-------------getCommentCounts-----------------------------" + new Date());
 		int counts = postservice.getCommentCounts(likepost);
 		return new ResponseEntity<Integer>(counts, HttpStatus.OK);
