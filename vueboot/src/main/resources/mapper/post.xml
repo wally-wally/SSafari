@@ -108,8 +108,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		P.CATEGORYID CATEGORYID, P.ANONYMOUS ANONYMOUS, P.LOCATIONID LOCATIONID,
 		IF(P.ANONYMOUS=1 AND M.MEMBERID!=#{memberid}, '익명', M.USERNAME) AS USERNAME
 		FROM POSTS P, MEMBERS M 
-		WHERE P.MEMBERID=M.MEMBERID 
-		ORDER BY POSTID	DESC AND P.CATEGORYID=#{categoryid} AND P.LOCATIONID=#{locationid}
+		WHERE P.MEMBERID=M.MEMBERID AND P.CATEGORYID=#{categoryid} AND P.LOCATIONID=#{locationid}
+		ORDER BY POSTID	DESC
 	</select>
 	
 	<insert id="addLikePost" parameterType="com.ssafy.edu.vue.dto.Likepost">

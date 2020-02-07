@@ -167,7 +167,7 @@ public class PortfolioController {
 	
 	@ApiOperation(value = "강좌 수강 여부 확인", response = List.class)
 	@RequestMapping(value = "/sugang", method = RequestMethod.GET)
-	public ResponseEntity<Integer> isApplicant(@ModelAttribute("data") Sugang sugang) throws Exception {
+	public ResponseEntity<Integer> isApplicant(@ModelAttribute Sugang sugang) throws Exception {
 		logger.info("1-------------isApplicant-----------------------------" + new Date());
 		int result = portfolioservice.isApplicant(sugang);
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
