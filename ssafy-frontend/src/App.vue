@@ -33,7 +33,17 @@ export default {
 *:focus {
     outline: none;
 }
-  a {
-    text-decoration:none;
-  }
+a {
+  text-decoration:none;
+}
+.v-application a{
+  text-decoration:none;
+}
+.router-link-active {
+  text-decoration:none;
+}
+.router-link-exact-active {
+  text-decoration:none;
+
+}
 </style>

@@ -3,12 +3,24 @@
         <div class="main-post-section">
             <div class="post-header">
                 <h1>Code Review</h1>
-                <router-link to="create"><button>코드 작성하러가기</button></router-link>
-                <div class="post-count">{{ postCnt }}</div>
+                <div class="post-count">{{ codes.length }}</div>
             </div>
+            <router-link to="create"><v-btn class="mb-3" color="primary">코드 작성</v-btn></router-link>
             <v-layout>
                 <v-flex>
-                    <BoardList :category="this.$route.name" @showPostCount="onPostCount" :limits="5" :load-more="true"></BoardList>
+                      <div v-for="code in codes" :key="code.id">
+                          <router-link :to="`${code.id}`">
+                            <v-card class="mb-3">
+                                <v-card-title>
+                                {{code.memberid}}
+                                {{code.title}}
+                                </v-card-title>
+                            <v-card-subtitle>
+                                {{code.body}}
+                            </v-card-subtitle>
+                            </v-card>
+                          </router-link>
+                        </div>
                 </v-flex>
             </v-layout>
         </div>
@@ -71,13 +83,14 @@
     export default {
         name: 'CodeBoard',
         components: {
-            BoardList,
+            BoardList
         },
         // props: {
         //     category: { type: String },
         // },
         data() {
             return {
+                codes : [],
                 postCnt: 0,
                 region: 'All', // deafult를 로그인한 유저의 지역으로 하고 싶으면 이 부분 수정
                 regions: ['All', 'Seoul', 'Daejeon', 'Gawngju', 'Gumi'],
@@ -106,9 +119,18 @@
             })
         },
         mounted() {
+            this.getcodes()
             this.currentMemberId = this.$store.state.memberid
         },
         methods: {
+            getcodes() {
+                axios.get('api/codes')
+                .then(response => {
+                    console.log(response.data)
+                    this.codes = response.data
+                })
+            },
+
             onPostCount(value) {
                 this.postCnt = value
             },
