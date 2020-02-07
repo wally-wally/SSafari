@@ -5,6 +5,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import com.ssafy.edu.vue.dto.Member;
@@ -18,6 +20,7 @@ public class JwtInterceptor implements HandlerInterceptor{
 	private IJwtService jwtService;
 
 	@Override
+	@CrossOrigin(allowedHeaders="access-token")
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		final String token = request.getHeader(HEADER_AUTH);

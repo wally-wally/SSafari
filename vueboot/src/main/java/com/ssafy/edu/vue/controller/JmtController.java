@@ -42,6 +42,7 @@ public class JmtController {
 	public ResponseEntity<List<Jmt>> getJmts(HttpServletRequest rs) throws Exception {
 		logger.info("1-------------getJmts-----------------------------" + new Date());
 		int memberid = 0;
+		System.out.println("rsLOGINMEMBER===="+rs.getAttribute("loginMember"));
 		if(rs.getAttribute("loginMember")!=null) {
 			Member member = (Member) rs.getAttribute("loginMember");
 			memberid = member.getMemberid();
@@ -57,7 +58,12 @@ public class JmtController {
 	@RequestMapping(value = "/jmt/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Jmt> getJmt(@PathVariable int id,HttpServletRequest rs) throws Exception {
 		logger.info("1-------------getJmt-----------------------------" + new Date());
-		Jmt jmt = jmtservice.getJmt(id);
+		int memberid = 0;
+		if(rs.getAttribute("loginMember")!=null) {
+			Member member = (Member) rs.getAttribute("loginMember");
+			memberid = member.getMemberid();
+		}
+		Jmt jmt = jmtservice.getJmt(new Jmt(id, memberid));
 		if (jmt == null) {
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
 		}
@@ -66,8 +72,15 @@ public class JmtController {
 	
 	@ApiOperation(value = "jmt 추가", response = List.class)
 	@RequestMapping(value = "/jmt", method = RequestMethod.POST)
-	public ResponseEntity<BoolResult> addJmt(@RequestBody Jmt jmt) throws Exception {
+	public ResponseEntity<BoolResult> addJmt(@RequestBody Jmt jmt,HttpServletRequest rs) throws Exception {
 		logger.info("1-------------addJmt-----------------------------" + new Date());
+		int memberid = 0;
+		if(rs.getAttribute("loginMember")!=null) {
+			Member member = (Member) rs.getAttribute("loginMember");
+			memberid = member.getMemberid();
+		}
+		logger.info("2-------------addJmt-----------------------------" + jmt.getAnonymous());
+		jmt.setMemberid(memberid);
 		jmtservice.addJmt(jmt);
 		BoolResult nr=new BoolResult();
    		nr.setName("addJmt");
