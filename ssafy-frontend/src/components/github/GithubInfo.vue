@@ -37,9 +37,9 @@ export default {
 				this.githubInformation = {
 					githubID: this.githubid,
 					name: githubData.name,
-					company: githubData.company === '' ? 'No company' : githubData.company,
-					blog: githubData.blog === '' ? 'No blog' : githubData.blog,
-					location: githubData.location === '' ? 'No location' : githubData.location,
+					company: githubData.company in ['', null] ? 'No company' : githubData.company,
+					blog: githubData.blog in ['', null] ? 'No blog' : githubData.blog,
+					location: githubData.location in ['', null] ? 'No location' : githubData.location,
 					publicReposCount: githubData['public_repos'],
 					followers: githubData.followers,
 					following: githubData.following
@@ -79,9 +79,17 @@ export default {
 
 <style>
 	.github-info-card {
-		margin: 10px;
+		margin: 10px auto;
 		border: 1px solid black;
+		width: 800px;
 		overflow: hidden;
+	}
+
+	/* 모바일, 태블릿 사이즈일 때 커스터마이징 하기 위해 width를 auto로 설정 */
+	@media (max-width: 950px) {
+		.github-info-card {
+			width: auto;
+		}
 	}
 
 	.github-img {
@@ -91,5 +99,6 @@ export default {
 	.github-img > img {
 		vertical-align: top;
 		padding: 10px;
+		margin: 0 auto;
 	}
 </style>
