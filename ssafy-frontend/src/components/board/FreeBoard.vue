@@ -9,6 +9,7 @@
                             label="Choose Region"
                             color="#f7b157"
                             target="#dropdown-region"
+                            v-model="selectRegion"
                             >
                         </v-select>
                     </v-container>
@@ -48,7 +49,7 @@
             </div>
             <v-layout>
                 <v-flex>
-                    <BoardList :category="this.$route.name" @showPostCount="onPostCount" :limits="5" :load-more="true"></BoardList>
+                    <BoardList :category="this.$route.name" :region="selectRegion" @showPostCount="onPostCount" :limits="5" :load-more="true"></BoardList>
                 </v-flex>
             </v-layout>
         </div>
@@ -119,7 +120,7 @@
         data() {
             return {
                 postCnt: 0,
-                region: 'All', // deafult를 로그인한 유저의 지역으로 하고 싶으면 이 부분 수정
+                selectRegion: 'All', // deafult를 로그인한 유저의 지역으로 하고 싶으면 이 부분 수정
                 regions: ['All', 'Seoul', 'Daejeon', 'Gawngju', 'Gumi'],
                 showCreatePost: 0,
                 annoymousStatus: false,
