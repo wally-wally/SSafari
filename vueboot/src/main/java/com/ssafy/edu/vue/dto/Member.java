@@ -20,6 +20,7 @@ public class Member implements Serializable {
 	private String githubid;
 	private int locationid;
 	private int unit;
+	private int social;
 	private boolean signup;
 	private String message;
 	
@@ -38,6 +39,53 @@ public class Member implements Serializable {
 		this.password = password;
 		this.name = name;
 		this.username = username;
+	}
+
+
+
+	public Member(String email, String password, String name, String username, int social) {
+		super();
+		this.email = email;
+		this.password = password;
+		this.name = name;
+		this.username = username;
+		this.social = social;
+	}
+
+
+
+	public Member(int memberid, String email, String name, String username, String signupdate, int auth,
+			String githubid, int locationid, int unit, int social) {
+		super();
+		this.memberid = memberid;
+		this.email = email;
+		this.name = name;
+		this.username = username;
+		this.signupdate = signupdate;
+		this.auth = auth;
+		this.githubid = githubid;
+		this.locationid = locationid;
+		this.unit = unit;
+		this.social = social;
+	}
+
+
+
+	public Member(int memberid, String username, String githubid) {
+		super();
+		this.memberid = memberid;
+		this.username = username;
+		this.githubid = githubid;
+	}
+
+
+
+	public Member(int memberid, String password, String username, String githubid) {
+		super();
+		this.memberid = memberid;
+		this.password = password;
+		this.username = username;
+		this.githubid = githubid;
 	}
 
 
@@ -72,6 +120,14 @@ public class Member implements Serializable {
 
 
 	
+	public Member(int memberid, String password) {
+		super();
+		this.memberid = memberid;
+		this.password = password;
+	}
+
+
+
 	public Member(String email, String password, String name, String username, String signupdate) {
 		super();
 		this.email = email;
@@ -150,6 +206,9 @@ public class Member implements Serializable {
 
 
 
+
+
+
 	public Member(int memberid, String email, String password, String name, String username, String signupdate,
 			int delflag, int auth, String githubid, int locationid, int unit, boolean signup, String message) {
 		super();
@@ -170,11 +229,39 @@ public class Member implements Serializable {
 
 
 
+	
+
+	public Member(int memberid, String email, String password, String name, String username, String signupdate,
+			int delflag, int auth, String githubid, int locationid, int unit, int social, boolean signup,
+			String message) {
+		super();
+		this.memberid = memberid;
+		this.email = email;
+		this.password = password;
+		this.name = name;
+		this.username = username;
+		this.signupdate = signupdate;
+		this.delflag = delflag;
+		this.auth = auth;
+		this.githubid = githubid;
+		this.locationid = locationid;
+		this.unit = unit;
+		this.social = social;
+		this.signup = signup;
+		this.message = message;
+	}
+
+
+
 	@Override
 	public String toString() {
 		return "Member [memberid=" + memberid + ", email=" + email + ", password=" + password + ", name=" + name
-				+ ", signupdate=" + signupdate + ", delflag=" + delflag + ", auth=" + auth + "]";
+				+ ", username=" + username + ", signupdate=" + signupdate + ", delflag=" + delflag + ", auth=" + auth
+				+ ", githubid=" + githubid + ", locationid=" + locationid + ", unit=" + unit + ", social=" + social
+				+ ", signup=" + signup + ", message=" + message + "]";
 	}
+
+
 
 	public int getMemberid() {
 		return memberid;
@@ -300,6 +387,18 @@ public class Member implements Serializable {
 
 	public void setUnit(int unit) {
 		this.unit = unit;
+	}
+
+
+
+	public int getSocial() {
+		return social;
+	}
+
+
+
+	public void setSocial(int social) {
+		this.social = social;
 	}
 
 

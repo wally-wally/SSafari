@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ssafy.edu.vue.dao.MemberDaoImpl;
+import com.ssafy.edu.vue.dto.AuthRequest;
 import com.ssafy.edu.vue.dto.Member;
 
 
@@ -80,6 +81,18 @@ public class MemberServiceImpl implements IMemberService {
 	@Transactional(readOnly=true)
 	public int checkDelflag(String email) {
 		return memberdao.checkDelflag(email);
+	}
+
+	@Override
+	@Transactional
+	public void authMember(AuthRequest ar) {
+		memberdao.authMember(ar);
+	}
+
+	@Override
+	@Transactional
+	public void updatePassword(Member member) {
+		memberdao.updatePassword(member);
 	}
 
 
