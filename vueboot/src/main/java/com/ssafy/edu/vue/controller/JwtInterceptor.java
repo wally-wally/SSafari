@@ -24,6 +24,8 @@ public class JwtInterceptor implements HandlerInterceptor{
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		final String token = request.getHeader(HEADER_AUTH);
+		System.out.println(request.getHeader("access-token"));
+		System.out.println(request.getHeader("Content-Type"));
 		Member member = jwtService.get(request);
 		System.out.println("login : "+member+" / token : "+token);
 		request.setAttribute("loginMember", member);
