@@ -17,7 +17,7 @@ import CodeDetail from './components/board/codeboard/CodeDetail.vue'
 import StudyGroupPage from './views/StudyGroupPage.vue'
 import StudyGroupindex from './components/studygroup/StudyGroupindex.vue'
 import StudyGroupDetail from './components/studygroup/StudyGroupDetail.vue'
-import CodeCreate from  './components/CodeCreate.vue'
+import CodeCreate from  './components/board/codeboard/CodeCreate.vue'
 
 import StudyGroupCreateForm from './components/studygroup/StudyGroupCreateForm.vue'
 import UpdateForm from './components/etc/UpdateForm.vue'
@@ -53,14 +53,16 @@ export default new Router({
 			children : [
 				{ path : '', component : AllBoard },
 				{ path : 'free', name: "free" , component : FreeBoard },
+				{ path : 'free/:id', name: "free", component : BoardDetail , props:true},
+				{ path : 'job' , name: "job", component : JobBoard },
+				{ path : 'job/:id', name: "job", component : BoardDetail , props:true},
 				{ path : 'codereview', name:"code", component : CodeBoard,},
 				{ path : 'codereview/create', name: "codecreate", component : CodeCreate},
 				{ path : 'codereview/:id', name : "codedetail", component : CodeDetail , props : true},
-				{ path : 'job' , name: "job", component : JobBoard },
+				{ path : 'codereview/:id/edit', name : "codeedit", component : CodeCreate , props : true},
 				{ path : 'jmt' , name: "jmt" ,component : JmtBoard },
 				{ path : 'jmt/create', name: 'jmtcreate', component: RestaurantCreateForm},
 				{ path : 'jmt/:id', name : "jmtdetail", component : RestaurantDetail , props : true},
-				{ path : ':id', component : BoardDetail , props : true }
 			]
 		},
 		{

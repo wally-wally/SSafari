@@ -51,7 +51,7 @@ export default {
       post: [],
       comments: [],
       currentMemberId: '',
-      currentMemberAuth: ''
+      currentMemberAuth: '',
       }
     },
     props: {
@@ -59,7 +59,6 @@ export default {
     },
     mounted() {
         this.getPost()
-        this.getPostComment()
         this.currentMemberId = this.$store.state.memberid
         this.currentMemberAuth = this.$store.getters.user.auth
     },
@@ -67,14 +66,17 @@ export default {
         getPost() {
             axios.get(`api/post/${this.id}`)
                 .then(response => { 
-                  console.log(response.data)
-                    this.post = response.data
+                  this.post = response.data
+                  this.getPostComment()
           })
         },
         getPostComment() {
-          axios.get(`api/commentpost/${this.id}`)
+          axios.get(`api/commentpost/`, {params : {'postid':this.id, 'categoryid' : this.post.categoryid}} , this.$store.getters.options)
             .then(response => {
+              console.log(response)
               this.comments = response.data
+            }).catch(error=> {
+              console.log(error)
             })
         },
         deletePost() {

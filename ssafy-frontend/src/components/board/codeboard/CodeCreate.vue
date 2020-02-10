@@ -28,15 +28,14 @@
               @input="onCmCodeChange">
   </codemirror>
   <v-checkbox v-model="anonymousStatus" label="익명" value="익명" class="annoyCheck"/>
-
-  <hr>
-  <button @click="codecreate">작성하기</button>
+  <button @click="codecreate()">작성하기</button>
 </v-container>
 
 </template>
 
 
 <script>
+import router from '@/router'
 import CodeMirror from 'codemirror'
 import { codemirror } from 'vue-codemirror'
 import axios from 'axios'
@@ -49,10 +48,13 @@ export default {
   components: {
     codemirror
   },
+  props : {
+    id : {type: String }
+  },
   data () {
     return {
       body : '',
-      anonymousStatus : false,
+      anonymousStatus : null,
       codes : [],
       title : '',
       items : [
@@ -73,7 +75,22 @@ export default {
       }
     }
   },
+  mounted() {
+    if (this.id){
+      this.getcode()
+    }
+  },
   methods: {
+    getcode() {
+        axios.get(`api/code/${this.id}`)
+        .then(response => {
+        this.code = response.data.code
+        this.title = response.data.title
+        this.body = response.data.body
+        this.anonymousStatus = response.data.anonymous ? '익명' : null
+        this.type = response.data.lang
+        })
+    },
     onCmReady(cm) {
       cm.options.mode = this.type
       console.log('the editor is readied!', cm)
@@ -87,21 +104,36 @@ export default {
       this.code = newCode
     },
     codecreate() {
+      console.log(this.$route.name)
       const formData = new FormData()
       const data = {
         'title' : this.title,
         'body' : this.body,
         'code' : this.code,
         'lang' : this.type,
-        'anonymous' : this.anonymousStatus,
+        'anonymous' : this.anonymousStatus ? 1 : 0,
         'memberid' : this.$store.state.memberid,
       }
-      // axios.get('/api/code',data)
-      // .then(response =>{
-      //   console.log(response)
-      // }).catch(error => {
-      //   console.log(error)
-      // })
+      if (this.$route.name==="codecreate"){
+        axios.post('/api/code',data)
+        .then(response =>{
+        console.log(response)
+        router.push({ path: '/board/codereview/' })
+
+        }).catch(error => {
+          console.log(error)
+        })
+      } else if(this.$route.name ==="codeedit"){
+        data['id'] = this.id
+        console.log(data)
+        axios.put(`/api/code`,data)
+        .then(response =>{
+        console.log(response)
+        router.push({ path: `/board/codereview/${this.id}` })
+        }).catch(error => {
+          console.log(error)
+        })
+      }
     },
   },
   computed: {

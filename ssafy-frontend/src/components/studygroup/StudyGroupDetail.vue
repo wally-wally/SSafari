@@ -82,7 +82,6 @@ export default {
         axios.get(`api/sugang?portfolioid=${this.portfolio.portfolioid}&memberid=${this.currentMemberId}`)
         .then(response => {
           this.myapplicate = response.data
-          console.log('듣고있나요', this.myapplicate)
         })
       },
       getPortfolio() {

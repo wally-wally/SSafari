@@ -37,7 +37,7 @@
         </div>
         <div class="form sign-up">
           <h2>회원가입</h2>
-          <form @submit.prevent="signup" class="login-form" style="display: inline;">
+          <v-form v-model="signupvalid"  @submit.prevent="signup" class="login-form" style="display: inline;">
             <label class="label">
               <v-text-field v-model="signUpUser.email" :rules="emailRules" label="이메일" required class=""></v-text-field>
             </label>
@@ -51,9 +51,10 @@
             </label>
             <label class="label">
               <v-text-field v-model="signUpUser.username" type="text" label="닉네임" required class=""></v-text-field>
-            </label>
+            </label> 
+            <div v-if="this.message">{{this.message}}</div>
             <button type="submit" class="submit button">회원가입</button>
-          </form>
+          </v-form>
         <v-card-actions>
           <button type="submit" class="close button" @click="close">닫기</button>
         </v-card-actions>
@@ -84,11 +85,13 @@ export default {
               v => !!v || 'E-mail is required',
               v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
             ],
-            valid: true,
+            signupvalid : true,
+            loginvalid: true,
             loginfailcount : 0,
             loginDialog: false,
             signUpUser: {},
             errormessage : {username: [], password: []},
+            message : null,
         }
     },
     methods: {
@@ -128,7 +131,7 @@ export default {
           document.querySelector('.cont').classList.toggle('s--signup');
         },
         login() {
-          console.log(this.credentials)
+          if (this.loginvalid){
           axios.post('api/login', this.credentials)
             .then(response => {
               console.log(response)
@@ -150,19 +153,25 @@ export default {
               this.loginfail()
             })
             this.credentials = {}
+          }
           },
         loginfail() {
       this.loginfailcount ++
     },
         signup() {
+          if (this.signupvalid){
             axios.post('api/member', this.signUpUser)
                 .then((response) => {
                     console.log(response)
+                    if (response.data.signup){
                     this.errormessage = {username: [], password: []}
                     if(response.status === 200){
                       this.$emit('update');
                       this.signUpUser = {}
                       document.querySelector('.cont').classList.remove('s--signup');
+                    }
+                    } else {
+                      this.message = response.data.message
                     }
                     // router.push({name:'home'})
                 })
@@ -172,6 +181,7 @@ export default {
                     this.errormessage.password = error.response.data.password
                 })
                 this.signUpUser = {}
+          }
         },
         clear() {
             this.credentials.username = ''
