@@ -20,11 +20,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE C.MEMBERID=M.MEMBERID AND ID=#{id}
 	</select>
 
-	<insert id="addCode"
-		parameterType="com.ssafy.edu.vue.dto.Code">
-		INSERT INTO
-		CODEREVIEW(TITLE, BODY, CODE, CREATED_AT, LANG, MEMBERID, ANONYMOUS)
-		VALUES(#{title}, #{body}, now(), #{lang}, #{memberid}, #{anonymous})
+	<insert id="addCode" parameterType="com.ssafy.edu.vue.dto.Code">
+		INSERT INTO CODEREVIEW(TITLE, BODY, CODE, CREATED_AT, MEMBERID, LANG, ANONYMOUS)
+		VALUES(#{title}, #{body}, #{code}, now(), #{memberid}, #{lang}, #{anonymous})
 	</insert>
 	
 	<update id="updateCode"
