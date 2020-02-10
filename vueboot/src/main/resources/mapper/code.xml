@@ -7,7 +7,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getCodes" parameterType="java.lang.Integer"
 		resultType="com.ssafy.edu.vue.dto.Code">
 		SELECT C.ID ID, C.TITLE TITLE, C.BODY BODY, C.CODE CODE, C.CREATED_AT CREATED_AT, C.LANG LANG, C.MEMBERID MEMBERID, 
-		IF(C.ANONYMOUS=1 AND M.MEMBERID!=#{memberid}, '익명', M.USERNAME) AS USERNAME 
+		IF(C.ANONYMOUS=1 AND M.MEMBERID!=#{memberid}, '익명', M.USERNAME) AS USERNAME, C.ANONYMOUS ANONYMOUS
 		FROM CODEREVIEW C, MEMBERS M 
 		WHERE C.MEMBERID=M.MEMBERID 
 		ORDER BY ID	DESC
@@ -15,7 +15,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<select id="getCode" parameterType="java.lang.Integer"
 		resultType="com.ssafy.edu.vue.dto.Code">
-		SELECT C.ID ID, C.TITLE TITLE, C.BODY BODY, C.CODE CODE, C.CREATED_AT CREATED_AT, C.LANG LANG, C.MEMBERID MEMBERID, IF(C.ANONYMOUS=1, '익명', M.USERNAME) AS USERNAME 
+		SELECT C.ID ID, C.TITLE TITLE, C.BODY BODY, C.CODE CODE, C.CREATED_AT CREATED_AT, C.LANG LANG, C.MEMBERID MEMBERID,
+		IF(C.ANONYMOUS=1 AND M.MEMBERID!=#{memberid}, '익명', M.USERNAME) AS USERNAME, C.ANONYMOUS ANONYMOUS
 		FROM CODEREVIEW C, MEMBERS M 
 		WHERE C.MEMBERID=M.MEMBERID AND ID=#{id}
 	</select>
@@ -30,7 +31,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		UPDATE CODEREVIEW SET
 		TITLE=#{title},
 		BODY=#{body},
-		CODE=#{code}
+		CODE=#{code},
+		LANG=#{lang},
+		ANONYMOUS=#{anonymous}
 		WHERE ID=#{id}
 	</update>
 
