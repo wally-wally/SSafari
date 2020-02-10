@@ -139,10 +139,4 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT COUNT(*) FROM LIKEPOST
 		WHERE CATEGORYID=#{categoryid} AND POSTID = #{postid} AND MEMBERID = #{memberid}
 	</select>
-	
-	<insert id="addCode" parameterType="com.ssafy.edu.vue.dto.Code">
-		INSERT INTO CODEREVIEW(TITLE, BODY, CODE, CREATED_AT, MEMBERID, LANG, ANONYMOUS)
-		VALUES(#{title}, #{body}, #{code}, now(), #{memberid}, #{lang}, #{anonymous})
-	</insert>
-	
 </mapper>
