@@ -17,6 +17,7 @@ public class Commentpost implements Serializable {
 	private String content;
 	private String username;
 	private int anonym;
+	private int writer;
 
 	public Commentpost() {
 		super();
@@ -108,6 +109,24 @@ public class Commentpost implements Serializable {
 		this.content = content;
 		this.anonym = anonym;
 	}
+	
+	
+
+	public Commentpost(int cpostid, int categoryid, int postid, int memberid, String wdate, String content,
+			String username, int anonym, int writer) {
+		super();
+		this.cpostid = cpostid;
+		this.categoryid = categoryid;
+		this.postid = postid;
+		this.memberid = memberid;
+		this.wdate = wdate;
+		this.content = content;
+		this.username = username;
+		this.anonym = anonym;
+		this.writer = writer;
+	}
+
+
 
 	@Override
 	public String toString() {
@@ -182,6 +201,30 @@ public class Commentpost implements Serializable {
 	public void setAnonym(int anonym) {
 		this.anonym = anonym;
 	}
+
+	public int getPostid() {
+		return postid;
+	}
+
+
+
+	public void setPostid(int postid) {
+		this.postid = postid;
+	}
+
+
+
+	public int getWriter() {
+		return writer;
+	}
+
+
+
+	public void setWriter(int writer) {
+		this.writer = writer;
+	}
+
+
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
