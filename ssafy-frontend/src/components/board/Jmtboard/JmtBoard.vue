@@ -4,22 +4,16 @@
 			<div class="post-header">
 				<div class="region-checkbox">
 					<v-container id="dropdown-region">
-						<v-select :items="regions" label="Choose Region" color="#f7b157" target="#dropdown-region">
+						<v-select :items="regions" label="Choose Region" color="#f7b157" target="#dropdown-region" v-model="selectRegion">
 							<!-- v-model="region" -->
 						</v-select>
 					</v-container>
 				</div>
-				<div class="post-count">{{ postCnt }}</div>
+				<div class="jmt-post-count">{{ postCnt }}</div>
 			</div>
 			<router-link :to="`/board/jmt/create`">
 				<v-btn class="mb-3" color="primary">맛집 후기 남기기</v-btn>
 			</router-link>
-			<v-layout>
-				<v-flex>
-					<BoardList :category="this.$route.name" @showPostCount="onPostCount" :limits="5" :load-more="true">
-					</BoardList>
-				</v-flex>
-			</v-layout>
 			<v-layout>
 				<v-flex>
 					<div v-for="restaurant in restaurants" :key="restaurant.id">
@@ -94,7 +88,7 @@
 	import router from '@/router.js'
 	import BoardList from '@/components/board/boardCommonForm/BoardList'
 	export default {
-		name: 'Postindex',
+		name: 'JmtBoard',
 		components: {
 			BoardList,
 		},
@@ -104,7 +98,7 @@
 		data() {
 			return {
 				postCnt: 0,
-				region: 'All', // deafult를 로그인한 유저의 지역으로 하고 싶으면 이 부분 수정
+				selectRegion: 'All', // deafult를 로그인한 유저의 지역으로 하고 싶으면 이 부분 수정
 				regions: ['All', 'Seoul', 'Daejeon', 'Gawngju', 'Gumi', 'etc'],
 				restaurants: '',
 				showCreatePost: 0,
@@ -139,8 +133,8 @@
 			getRestaurants() {
         axios.get('api/jmts')
           .then(response => {
-            console.log(response.data)
-            this.restaurants = response.data
+						this.restaurants = response.data
+						this.postCnt = this.restaurants.length
         })
       },
 			onPostCount(value) {
@@ -162,6 +156,32 @@
 						}
 					})
 			}
+		},
+		watch: {
+			selectRegion: {
+				handler() {
+					axios.get('api/jmts')
+						.then(response => {
+							const jmtData = response.data
+							this.restaurants = []
+							let regionNumber = { 'Seoul': 1, 'Daejeon': 2, 'Gawngju': 3, 'Gumi': 4 , 'etc': 5 }
+							if (this.selectRegion !== 'All') {
+								let regionRestaurantData = []
+								for (let i = 0; i < jmtData.length; i++) {
+									if (jmtData[i]['locationid'] === regionNumber[this.selectRegion]) {
+										regionRestaurantData.push(jmtData[i])
+									}
+								}
+								this.restaurants = regionRestaurantData
+							} else {
+								this.restaurants = jmtData
+							}
+							console.log(this.restaurants)
+							this.postCnt = this.restaurants.length
+							// this.postCnt = (this.restaurants.length >= 5) ? 5 : this.restaurants.length  
+						})
+				}
+			}
 		}
 	}
 </script>
@@ -176,14 +196,14 @@
 		justify-content: space-between;
 	}
 
-	.post-count {
+	.jmt-post-count {
 		font-size: 1.2em;
 		font-weight: bold;
 		font-family: 'Noto Sans KR', sans-serif;
 		line-height: 4.6;
 	}
 
-	.post-count::after {
+	.jmt-post-count::after {
 		content: '개의 맛집 게시글';
 	}
 
@@ -205,23 +225,23 @@
 		}
 
 		@media (max-width: 600px) {
-			.post-count {
+			.jmt-post-count {
 				font-size: 1.1em;
 				line-height: 5.2;
 			}
 
-			.post-count::after {
+			.jmt-post-count::after {
 				content: ' Posts';
 			}
 		}
 
 		@media (max-width: 404px) {
-			.post-count {
+			.jmt-post-count {
 				font-size: 0.75em;
 				line-height: 7.5;
 			}
 
-			.post-count::after {
+			.jmt-post-count::after {
 				content: ' Posts';
 			}
 		}

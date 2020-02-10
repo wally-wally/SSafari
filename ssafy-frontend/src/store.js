@@ -11,8 +11,8 @@ export default new Vuex.Store({
     state : {         
         category : {
             'free' : '1',
-            'job' : '4',
-            'jmt' : '3',
+            'job' : '2',
+            'jmt' : '4',
         },
         token: null,
         isLogin : false,
