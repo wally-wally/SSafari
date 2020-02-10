@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.ssafy.edu.vue.dto.Category;
 import com.ssafy.edu.vue.dto.CategoryPost;
+import com.ssafy.edu.vue.dto.Code;
 import com.ssafy.edu.vue.dto.Commentpost;
 import com.ssafy.edu.vue.dto.Likepost;
 import com.ssafy.edu.vue.dto.LocationFiltering;
@@ -87,6 +88,14 @@ public class PostDaoImpl {
 
 	public void addBoardCategory(Category category) {
 		sqlSession.insert(ns+"addBoardCategory",category);
+	}
+
+	public int isLike(Likepost likepost) {
+		return sqlSession.selectOne(ns+"isLike",likepost);
+	}
+
+	public void addCode(Code code) {
+		sqlSession.insert(ns+"addCode",code);
 	}
 
 }
