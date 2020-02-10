@@ -2,7 +2,10 @@
     <v-list-item>
     <v-list-item-content>
         <v-list-item-title style="font-size:1.3rem;">
-        {{ comment.username }} <small style="font-size:0.7rem;">( {{comment.wdate}} )</small>
+        <span v-if="comment.anonym && comment.memberid === this.id">익명(작성자)</span>
+        <span v-if="comment.anonym">익명</span>
+        <span v-else>{{ comment.username }}</span>
+        <small style="font-size:0.7rem;">( {{comment.wdate}} )</small>
         </v-list-item-title>
         <v-list-item-subtitle class="mt-2" style="font-size:1rem;" v-if="!this.update">
             {{comment.content}}

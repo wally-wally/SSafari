@@ -22,15 +22,32 @@
             언어 : {{this.langchange[code.lang]}}
         </v-col>
     </v-row>
+    <v-row class="mb-3" v-if="this.$store.state.memberid===code.memberid">
+        <v-btn class="mx-3" @click="recode()" small color="warning" dark>수정</v-btn>
+        <v-btn small @click="codedelete()" color="error">삭제</v-btn>
+    </v-row>
     <codemirror
         :options="showOptions"
         :value="code.code"
   ></codemirror>
+  <div class="mt-3">
+      <h1>
+      댓글~!
+      </h1>
+  <div v-for="comment in comments" :key="comment.cpostid">
+    <comment boardtype="post" :comment="comment" />
+    <v-divider />
+  </div>
+  </div>
+    <input v-model="commentbody" placeholder="여기를 수정해보세요">
+    
 </v-container>
 </template>
 
 <script>
 import axios from 'axios'
+import Comment from '../../comment/Comment'
+import router from '@/router'
 import CodeMirror from 'codemirror'
 import { codemirror } from 'vue-codemirror'
 import 'codemirror/lib/codemirror.css'
@@ -40,12 +57,14 @@ import 'codemirror/theme/base16-dark.css'
 import 'codemirror/mode/python/python.js'
 export default {
     name : 'CodeDetail',
-    components: codemirror,
+    components: {codemirror,Comment},
     props :{
-      id : {type:Number}  
+      id : {type: String}  
     },
     data() {
         return {
+            comments : [],
+            commentbody : '',
             langchange:  {
                 'text/x-python' : 'Python',
                 'text/x-java' : 'Java',
@@ -60,7 +79,7 @@ export default {
                     lineNumbers: true,
                     readOnly : true,
                     line :true,
-                    lineSeparator : '↵'
+                    lineSeparator : '\n'
                 },
         }
     },
@@ -71,17 +90,43 @@ export default {
             console.log(response.data)
             this.code = response.data
             })
+        },
+        getcomments() {
+            const data = {
+                'postid' : this.id,
+                'categoryid' : 3,
+            }
+            axios.get(`api/commentpost/`, {params: data})
+            .then(response =>{
+                this.comments = response.data
+            })
+        },
+        codedelete() {
+            const chk = confirm("진짜?")
+            if (chk){
+            axios.delete(`api/code/${this.id}`)
+            .then(response=> {
+                console.log(response.data)
+                router.push({ path: '/board/codereview/' })
+            })
+            }
+        },
+        recode() {
+            router.push({path:`/board/codereview/${this.id}/edit`})
         }
     },
     mounted() {
         this.getcode()
-        .then(
-            this.showOptions.mode = this.code.lang
-        )
+        this.getcomments()
     }
 }
 </script>
 
 <style>
-
+.CodeMirror {
+  height: 100%;
+  /* Necessary so the scrollbar can be absolutely positioned within the wrapper on Lion. */
+  position: relative;
+  /* This prevents unwanted scrollbars from showing up on the body and wrapper in IE. */
+}
 </style>

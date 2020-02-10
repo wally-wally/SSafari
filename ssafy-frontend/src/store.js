@@ -63,7 +63,7 @@ export default new Vuex.Store({
         options(state) {
             return {
                 headers : {
-                    Authorization : state.token,
+                    'access-token' : state.token,
                 }
             }
         }
