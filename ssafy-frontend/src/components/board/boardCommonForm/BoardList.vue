@@ -32,7 +32,7 @@ export default {
 	},
 	data() {
 		return { 
-			boards: [],
+			posts: [],
 			showPostsCount : 0, 
 			morePostsIcon : true,
 			hidePostsIcon : false
@@ -101,20 +101,21 @@ export default {
 	watch: {
 		region: {
 			handler() {
-				axios.get('api/posts')
+				axios.get(`api/posts/${this.$store.state.category[this.category]}`)
 					.then( response => {
+						const boardData = response.data
 						this.posts = [] // posts 리스트 초기화 작업
-						let regionNumber = { 'Seoul': 0, 'Daejeon': 1, 'Gawngju': 2, 'Gumi': 3 }
+						let regionNumber = { 'Seoul': 1, 'Daejeon': 2, 'Gawngju': 3, 'Gumi': 4 }
 						if (this.region !== 'All') {
 							let regionPostData = []
-							for (let i = 0; i < response.data.length; i++) {
-								if (response.data[i]['locationid'] == regionNumber[this.region]) {
-									regionPostData.push(response.data[i])
+							for (let i = 0; i < boardData.length; i++) {
+								if (boardData[i]['locationid'] === regionNumber[this.region]) {
+									regionPostData.push(boardData[i])
 								}
 							}
 							this.posts = regionPostData
 						} else {
-							this.posts = response.data
+							this.posts = boardData
 						}
 						this.showPostsCount = (this.posts.length >= 5) ? 5 : this.posts.length  
 						this.$emit('showPostCount', this.posts.length)

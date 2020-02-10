@@ -2,8 +2,19 @@
     <div class="d-flex post-index">
         <div class="main-post-section">
             <div class="post-header">
-                <h1>Code Review</h1>
-                <div class="post-count">{{ codes.length }}</div>
+                <div class="lang-checkbox">
+                    <v-container id="dropdown-lang">
+                        <v-select
+                            :items="languages"
+                            label="Choose Language"
+                            color="#f7b157"
+                            target="#dropdown-lang"
+                            v-model="selectLanguage"
+                            >
+                        </v-select>
+                    </v-container>
+                </div>
+                <div class="code-post-count">{{ codes.length }}</div>
             </div>
             <router-link to="create"><v-btn class="mb-3" color="primary">코드 작성</v-btn></router-link>
             <v-layout>
@@ -93,9 +104,8 @@
         data() {
             return {
                 codes : [],
-                postCnt: 0,
-                region: 'All', // deafult를 로그인한 유저의 지역으로 하고 싶으면 이 부분 수정
-                regions: ['All', 'Seoul', 'Daejeon', 'Gawngju', 'Gumi'],
+                selectLanguage: 'All', // deafult를 로그인한 유저의 지역으로 하고 싶으면 이 부분 수정
+                languages: ['All', 'Python', 'Java', 'JavaScript', 'HTML', 'C++'],
                 showCreatePost: 0,
                 annoymousStatus: false,
                 currentMemberId: null,
@@ -128,7 +138,6 @@
             getcodes() {
                 axios.get('api/codes')
                 .then(response => {
-                    console.log(response.data)
                     this.codes = response.data
                 })
             },
@@ -152,6 +161,29 @@
                         }
                     })
             }
+        },
+        watch: {
+            selectLanguage: {
+                handler() {
+                    axios.get('api/codes')
+                        .then(response => {
+                            const codesData = response.data
+                            this.codes = []
+                            let lang = { 'Python': 'x-python', 'Java': 'x-java', 'JavaScript': 'javascript', 'HTML': 'html', 'C++': 'x-c++src' }
+                            if (this.selectLanguage !== 'All') {
+                                let selectLangCodesData = []
+                                for (let i = 0; i < codesData.length; i++) {
+                                    if (codesData[i]['lang'].split('/')[1] === lang[this.selectLanguage]) {
+                                        selectLangCodesData.push(codesData[i])
+                                    }
+                                }
+                                this.codes = selectLangCodesData
+                            } else {
+                                this.codes = codesData
+                            }
+                        })
+                }
+            }
         }
     }
 </script>
@@ -166,15 +198,15 @@
         justify-content: space-between;
     }
 
-    .post-count {
+    .code-post-count {
         font-size: 1.2em;
         font-weight: bold;
         font-family: 'Noto Sans KR', sans-serif;
         line-height: 4.6;
     }
 
-    .post-count::after {
-        content: '개의 Post 게시글';
+    .code-post-count::after {
+        content: '개의 Code Review';
     }
 
     .main-post-section {
@@ -195,29 +227,29 @@
         }
 
         @media (max-width: 600px) {
-            .post-count {
+            .code-post-count {
                 font-size: 1.1em;
                 line-height: 5.2;
             }
 
-            .post-count::after {
-                content: ' Posts';
+            .code-post-count::after {
+                content: ' Codes';
             }
         }
 
         @media (max-width: 404px) {
-            .post-count {
+            .code-post-count {
                 font-size: 0.75em;
                 line-height: 7.5;
             }
 
-            .post-count::after {
-                content: ' Posts';
+            .code-post-count::after {
+                content: ' Codes';
             }
         }
     }
 
-    #dropdown-region {
+    #dropdown-lang {
         padding-left: 0;
     }
 
