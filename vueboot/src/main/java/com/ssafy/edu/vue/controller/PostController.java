@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.edu.vue.dto.Category;
 import com.ssafy.edu.vue.dto.CategoryPost;
+import com.ssafy.edu.vue.dto.Code;
 import com.ssafy.edu.vue.dto.Commentpost;
 import com.ssafy.edu.vue.dto.Likepost;
 import com.ssafy.edu.vue.dto.LocationFiltering;
@@ -239,7 +240,6 @@ public class PostController {
 		return new ResponseEntity<Integer>(counts, HttpStatus.OK);
 	}
 	
-	// 게시판 추가
 	@ApiOperation(value = "post category 추가 (게시판 추가)", response = List.class)
 	@RequestMapping(value = "/boardcategory", method = RequestMethod.POST)
 	public ResponseEntity<BoolResult> addBoardCategory(@RequestBody Category category) throws Exception {
@@ -251,5 +251,23 @@ public class PostController {
 		return new ResponseEntity<BoolResult>(nr, HttpStatus.OK);
 	}
 	
+	@ApiOperation(value = "좋아요 클릭 여부 확인", response = List.class)
+	@RequestMapping(value = "/like", method = RequestMethod.GET)
+	public ResponseEntity<Integer> isLike(@ModelAttribute("data") Likepost likepost) throws Exception {
+		logger.info("1-------------isLike-----------------------------" + new Date());
+		int result = postservice.isLike(likepost);
+		return new ResponseEntity<Integer>(result, HttpStatus.OK);
+	}
 	
+	@ApiOperation(value = "code 추가", response = List.class)
+	@RequestMapping(value = "/code", method = RequestMethod.POST)
+	public ResponseEntity<BoolResult> addCode(@RequestBody Code code) throws Exception {
+		logger.info("1-------------addPoaddCodest-----------------------------" + new Date());
+		postservice.addCode(code);
+		BoolResult nr=new BoolResult();
+   		nr.setName("addCode");
+   		nr.setState("succ");
+		return new ResponseEntity<BoolResult>(nr, HttpStatus.OK);
+	}
+
 }

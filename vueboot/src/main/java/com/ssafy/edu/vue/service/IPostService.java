@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.ssafy.edu.vue.dto.Category;
 import com.ssafy.edu.vue.dto.CategoryPost;
+import com.ssafy.edu.vue.dto.Code;
 import com.ssafy.edu.vue.dto.Commentpost;
 import com.ssafy.edu.vue.dto.Likepost;
 import com.ssafy.edu.vue.dto.LocationFiltering;
@@ -46,5 +47,9 @@ public interface IPostService {
 	int getCommentCounts(Likepost likepost);
 
 	void addBoardCategory(Category category);
+
+	int isLike(Likepost likepost);
+
+	void addCode(Code code);
 	
 }
