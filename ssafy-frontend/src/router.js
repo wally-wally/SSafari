@@ -21,9 +21,11 @@ import CodeCreate from  './components/CodeCreate.vue'
 
 import StudyGroupCreateForm from './components/studygroup/StudyGroupCreateForm.vue'
 import UpdateForm from './components/etc/UpdateForm.vue'
+import MemberModify from '@/components/login/MemberModify.vue'
+import PasswordModify from '@/components/login/PasswordModify.vue'
 import MyPage from  './views/MyPage.vue'
 import store from './store'
-
+ 
 import RestaurantCreateForm from '@/components/board/Jmtboard/RestaurantCreateForm.vue'
 import RestaurantDetail from '@/components/board/Jmtboard/RestaurantDetail.vue'
 
@@ -98,7 +100,17 @@ export default new Router({
 		{
 			path: '/mypage',
 			name : 'MyPage',
-			component: MyPage
+			component: MyPage,
 		},
+		{
+			path: '/mypage/member',
+			name: 'MemberModify',
+			component: MemberModify
+		},
+		{
+			path: '/mypage/password',
+			name: 'PasswordModify',
+			component: PasswordModify
+		}
   ]
 })
