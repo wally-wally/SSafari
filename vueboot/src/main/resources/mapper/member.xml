@@ -7,7 +7,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- </select> -->
 
 	<select id="checkLogin" resultType="com.ssafy.edu.vue.dto.Member" parameterType="com.ssafy.edu.vue.dto.Member">
-		SELECT MEMBERID, EMAIL, NAME, USERNAME, SIGNUPDATE, AUTH, GITHUBID FROM MEMBERS WHERE EMAIL=#{email} AND PASSWORD=hex(aes_encrypt(#{password}, 'key'))
+		SELECT MEMBERID, EMAIL, NAME, USERNAME, SIGNUPDATE, AUTH, GITHUBID, SOCIAL FROM MEMBERS WHERE EMAIL=#{email} AND PASSWORD=hex(aes_encrypt(#{password}, 'key'))
 	</select>
 	
 	<select id="getMemberList" resultType="com.ssafy.edu.vue.dto.Member">
@@ -15,7 +15,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="getMember" resultType="com.ssafy.edu.vue.dto.Member" parameterType="java.lang.Integer">
-		SELECT MEMBERID, EMAIL, NAME, USERNAME, SIGNUPDATE, AUTH, GITHUBID, LOCATIONID, UNIT FROM MEMBERS WHERE MEMBERID=#{memberid}
+		SELECT MEMBERID, EMAIL, NAME, USERNAME, SIGNUPDATE, AUTH, GITHUBID, LOCATIONID, UNIT, SOCIAL FROM MEMBERS WHERE MEMBERID=#{memberid}
 	</select>
 	
 	<delete id="deleteMember" parameterType="java.lang.Integer">
@@ -24,17 +24,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<insert id="addMember" parameterType="com.ssafy.edu.vue.dto.Member">
 		INSERT INTO
-		MEMBERS(EMAIL, PASSWORD, NAME, USERNAME, SIGNUPDATE)
-		VALUES(#{email},hex(aes_encrypt(#{password}, 'key')),#{name},#{username},now())
+		MEMBERS(EMAIL, PASSWORD, NAME, USERNAME, SIGNUPDATE, SOCIAL)
+		VALUES(#{email},hex(aes_encrypt(#{password}, 'key')),#{name},#{username},now(),#{social})
 	</insert>
 	
 	<update id="updateMember"
 		parameterType="com.ssafy.edu.vue.dto.Member">
 		UPDATE MEMBERS SET
-		EMAIL=#{email},
-		PASSWORD=hex(aes_encrypt(#{password}, 'key')),
-		NAME=#{name},
-		USERNAME=#{username}
+		USERNAME=#{username},
+		GITHUBID=#{githubid}
 		WHERE
 		MEMBERID=#{memberid}
 	</update>
@@ -60,4 +58,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="checkDelflag" resultType="java.lang.Integer" parameterType="java.lang.String">
 		SELECT DELFLAG FROM MEMBERS WHERE EMAIL=#{email}
 	</select>
+	<insert id="authMember" parameterType="com.ssafy.edu.vue.dto.AuthRequest">
+		INSERT INTO
+		AUTHREQUEST(MEMBERID, IMG)
+		VALUES(#{memberid},#{img})
+	</insert>
+	<update id="updatePassword" parameterType="com.ssafy.edu.vue.dto.Member">
+		UPDATE MEMBERS SET
+		PASSWORD=hex(aes_encrypt(#{password}, 'key'))
+		WHERE
+		MEMBERID=#{memberid}
+	</update>
 </mapper>

@@ -2,6 +2,7 @@ package com.ssafy.edu.vue.service;
 
 import java.util.List;
 
+import com.ssafy.edu.vue.dto.AuthRequest;
 import com.ssafy.edu.vue.dto.Member;
 
 public interface IMemberService {
@@ -27,6 +28,10 @@ public interface IMemberService {
 	void updateMemberAuth(Member member);
 
 	int checkDelflag(String email);
+
+	void authMember(AuthRequest ar);
+
+	void updatePassword(Member member);
 
 
 }

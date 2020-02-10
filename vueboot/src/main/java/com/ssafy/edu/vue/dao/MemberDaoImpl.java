@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.ssafy.edu.vue.dto.AuthRequest;
 import com.ssafy.edu.vue.dto.Member;
 
 @Repository
@@ -58,6 +59,14 @@ public class MemberDaoImpl {
 
 	public int checkDelflag(String email) {
 		return sqlSession.selectOne(ns+"checkDelflag",email);
+	}
+
+	public void authMember(AuthRequest ar) {
+		sqlSession.insert(ns+"authMember",ar);
+	}
+
+	public void updatePassword(Member member) {
+		sqlSession.update(ns+"updatePassword",member);
 	}
 
 }
