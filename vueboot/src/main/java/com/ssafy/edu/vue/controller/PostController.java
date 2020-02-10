@@ -258,16 +258,5 @@ public class PostController {
 		int result = postservice.isLike(likepost);
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}
-	
-	@ApiOperation(value = "code 추가", response = List.class)
-	@RequestMapping(value = "/code", method = RequestMethod.POST)
-	public ResponseEntity<BoolResult> addCode(@RequestBody Code code) throws Exception {
-		logger.info("1-------------addPoaddCodest-----------------------------" + new Date());
-		postservice.addCode(code);
-		BoolResult nr=new BoolResult();
-   		nr.setName("addCode");
-   		nr.setState("succ");
-		return new ResponseEntity<BoolResult>(nr, HttpStatus.OK);
-	}
 
 }

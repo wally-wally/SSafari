@@ -26,5 +26,7 @@ public interface IMemberService {
 
 	void updateMemberAuth(Member member);
 
+	int checkDelflag(String email);
+
 
 }

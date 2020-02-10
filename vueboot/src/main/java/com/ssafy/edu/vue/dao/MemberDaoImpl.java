@@ -56,4 +56,8 @@ public class MemberDaoImpl {
 		sqlSession.update(ns+"updateMemberAuth", member);
 	}
 
+	public int checkDelflag(String email) {
+		return sqlSession.selectOne(ns+"checkDelflag",email);
+	}
+
 }

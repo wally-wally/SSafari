@@ -79,18 +79,24 @@ public class MemberController {
 	public ResponseEntity<Map<String, Object>> login(@RequestBody Member member) throws Exception {
 		Map<String, Object> resultMap = new HashMap<>();
 		logger.info("1-------------login-----------------------------" + new Date());
-		Member login = memberservice.checkLogin(member);
-		if (login == null) {
-			return new ResponseEntity(HttpStatus.NO_CONTENT);
-		}
-
-		String token = jwtService.signin(login);
-
+		int delflag = memberservice.checkDelflag(member.getEmail());
 		HttpHeaders headers = new HttpHeaders();
-		headers.set("access-token", token);
-		System.out.println(token);
-		resultMap.put("status", true);
-		resultMap.put("data", login);
+		if(delflag==0) {
+			Member login = memberservice.checkLogin(member);
+			if (login == null) {
+				return new ResponseEntity(HttpStatus.NO_CONTENT);
+			}
+			
+			String token = jwtService.signin(login);
+			
+			headers.set("access-token", token);
+			System.out.println(token);
+			resultMap.put("status", true);
+			resultMap.put("data", login);
+		}else {
+			resultMap.put("status", true);
+			resultMap.put("delflag", delflag);
+		}
 
 		return new ResponseEntity<Map<String, Object>>(resultMap, headers, HttpStatus.OK);
 	}
@@ -162,7 +168,7 @@ public class MemberController {
 	}
 
 	@ApiOperation(value = "member 회원 권한 수정", response = BoolResult.class)
-	@RequestMapping(value = "/memberAuth", method = RequestMethod.PUT)
+	@RequestMapping(value = "/memberauth", method = RequestMethod.PUT)
 	public ResponseEntity<BoolResult> updateMemberAuth(@RequestBody Member member) throws Exception {
 		logger.info("1-------------updateMemberAuth-----------------------------" + new Date());
 		memberservice.updateMemberAuth(member);
@@ -212,4 +218,28 @@ public class MemberController {
 
 		return new ResponseEntity<Map<String, Object>>(resultMap, headers, HttpStatus.OK);
 	}
+	
+//	@ApiOperation(value = "member ssafy 인증", response = List.class)
+//	@RequestMapping(value = "/member/auth", method = RequestMethod.POST)
+//	public ResponseEntity<BoolResult> authMember(@RequestBody Member member) throws Exception {
+//		logger.info("1-------------addMember-----------------------------" + new Date());
+//		int email = memberservice.checkEmail(member.getEmail());
+//		int username = memberservice.checkUsername(member.getUsername());
+//		CheckSignUp result = new CheckSignUp();
+//		if (email == 0 && username == 0) {
+//			result.setSignup(true);
+//			result.setMessage("사용 가능");
+//			memberservice.addMember(member);
+//		} else if (email >= 1 && username == 0) {
+//			result.setSignup(false);
+//			result.setMessage("email 중복");
+//		} else if (email == 0 && username >= 1) {
+//			result.setSignup(false);
+//			result.setMessage("username 중복");
+//		} else {
+//			result.setSignup(false);
+//			result.setMessage("email, username 중복");
+//		}
+//		return new ResponseEntity<BoolResult>(result, HttpStatus.OK);
+//	}
 }

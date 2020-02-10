@@ -76,6 +76,12 @@ public class MemberServiceImpl implements IMemberService {
 		memberdao.updateMemberAuth(member);
 	}
 
+	@Override
+	@Transactional(readOnly=true)
+	public int checkDelflag(String email) {
+		return memberdao.checkDelflag(email);
+	}
+
 
 
 

@@ -129,5 +129,13 @@ public class Jmt implements Serializable {
 	public void setAnonymous(int anonymous) {
 		this.anonymous = anonymous;
 	}
+
+	public int getLocationid() {
+		return locationid;
+	}
+
+	public void setLocationid(int locationid) {
+		this.locationid = locationid;
+	}
 	
 }
