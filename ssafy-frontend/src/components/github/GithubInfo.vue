@@ -35,8 +35,8 @@ export default {
 				const githubData = response.data
 				this.profileImgUrl = githubData['avatar_url']
 				this.githubInformation = {
-					githubID: this.githubid,
-					name: githubData.name,
+					githubID: this.$store.getters.githubid,
+					name: githubData['name'],
 					company: githubData.company in ['', null] ? 'No company' : githubData.company,
 					blog: githubData.blog in ['', null] ? 'No blog' : githubData.blog,
 					location: githubData.location in ['', null] ? 'No location' : githubData.location,
@@ -44,7 +44,8 @@ export default {
 					followers: githubData.followers,
 					following: githubData.following
 				}
-				console.log(this.githubInformation)
+				// console.log('=============')
+				// console.log(this.githubInformation)
 			})
 			.catch(error => {
 				console.log(error)
@@ -52,14 +53,14 @@ export default {
 	},
 	methods: {
 		async getGithubInfo(userName) {
-			console.log(userName)
-			const response = await GithubService.getInfo(userName)
-			console.log(repsonse)
+			// console.log(userName)
+			// const response = await GithubService.getInfo(userName)
+			// console.log(repsonse)
 			if(response.status !== 200) {
 				return
 			}
-			this.tempInfo = response.data.name
-			this.repositories = response.data.filter(repository => repository.private === false)
+			// this.tempInfo = response.data.name
+			// this.repositories = response.data.filter(repository => repository.private === false)
 		},
 		loadMoreRepos() {
 			let adjustCount = this.showReposCount + 6 < this.repositories.length ? this.showReposCount + 6 : this.repositories.length
