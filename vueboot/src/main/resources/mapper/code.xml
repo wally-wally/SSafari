@@ -33,7 +33,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		UPDATE CODEREVIEW SET
 		TITLE=#{title},
 		BODY=#{body},
-		CODE=#{code}
+		CODE=#{code},
+		LANG=#{lang},
+		ANONYMOUS=#{anonymous}
 		WHERE ID=#{id}
 	</update>
 
