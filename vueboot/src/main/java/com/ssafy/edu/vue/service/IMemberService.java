@@ -29,9 +29,15 @@ public interface IMemberService {
 
 	int checkDelflag(String email);
 
-	void authMember(AuthRequest ar);
+	void authRequest(AuthRequest ar);
 
 	void updatePassword(Member member);
+
+	void deleteAuthRequest(int memberid);
+
+	List<AuthRequest> getAuthRequestList();
+
+	AuthRequest getAuthRequest(String memberid);
 
 
 }

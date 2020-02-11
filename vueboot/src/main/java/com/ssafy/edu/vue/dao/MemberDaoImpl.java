@@ -61,12 +61,24 @@ public class MemberDaoImpl {
 		return sqlSession.selectOne(ns+"checkDelflag",email);
 	}
 
-	public void authMember(AuthRequest ar) {
-		sqlSession.insert(ns+"authMember",ar);
+	public void authRequest(AuthRequest ar) {
+		sqlSession.insert(ns+"authRequest",ar);
 	}
 
 	public void updatePassword(Member member) {
 		sqlSession.update(ns+"updatePassword",member);
+	}
+
+	public void deleteAuthRequest(int memberid) {
+		sqlSession.delete(ns+"deleteAuthRequest",memberid);
+	}
+
+	public List<AuthRequest> getAuthRequestList() {
+		return sqlSession.selectList(ns+"getAuthRequestList");
+	}
+
+	public AuthRequest getAuthRequest(String memberid) {
+		return sqlSession.selectOne(ns+"getAuthRequest",memberid);
 	}
 
 }

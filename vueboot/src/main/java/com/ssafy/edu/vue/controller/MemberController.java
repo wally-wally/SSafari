@@ -57,9 +57,7 @@ public class MemberController {
 	public ResponseEntity<List<Member>> getMemberList() throws Exception {
 		logger.info("1-------------getMemberList-----------------------------" + new Date());
 		List<Member> members = memberservice.getMemberList();
-		if (members == null) {
-			return new ResponseEntity(HttpStatus.NO_CONTENT);
-		}
+
 		return new ResponseEntity<List<Member>>(members, HttpStatus.OK);
 	}
 
@@ -69,9 +67,6 @@ public class MemberController {
 		logger.info("1-------------getMember-----------------------------" + new Date());
 		Member member = memberservice.getMember(memberid);
 
-		if (member == null) {
-			return new ResponseEntity(HttpStatus.NO_CONTENT);
-		}
 		return new ResponseEntity<Member>(member, HttpStatus.OK);
 	}
 
@@ -271,43 +266,82 @@ public class MemberController {
 		return new ResponseEntity<Map<String, Object>>(resultMap, headers, HttpStatus.OK);
 	}
 	
-	@ApiOperation(value = "member ssafy 인증", response = List.class)
+	@ApiOperation(value = "member ssafy 인증 요청", response = List.class)
 	@RequestMapping(value = "/member/authrequest", method = RequestMethod.POST)
-	public ResponseEntity<BoolResult> authRequest(@RequestBody String img, HttpServletRequest rs) throws Exception {
+	public ResponseEntity<BoolResult> authRequest(@RequestBody AuthRequest request, HttpServletRequest rs) throws Exception {
 		logger.info("1-------------authRequest-----------------------------" + new Date());
+		logger.info("2-----------"+request);
 		BoolResult nr=new BoolResult();
 		int memberid = 0;
 		if(rs.getAttribute("loginMember")!=null) {
 			Member member = (Member) rs.getAttribute("loginMember");
 			memberid = member.getMemberid();
 		}else {
-			return new ResponseEntity(HttpStatus.BAD_REQUEST);
+			nr.setName("로그인이 필요한 기능입니다.");
+			return new ResponseEntity<BoolResult>(nr, HttpStatus.BAD_REQUEST);
 		}
-		AuthRequest ar = new AuthRequest(memberid,img);
-		memberservice.authMember(ar);
+		request.setMemberid(memberid);
+		memberservice.authRequest(request);
+		memberservice.updateMemberAuth(new Member(memberid,3));
 		
    		nr.setName("인증 요청");
    		nr.setState("succ");
 		return new ResponseEntity<BoolResult>(nr, HttpStatus.OK);
 	}
 	
-	@ApiOperation(value = "member ssafy 인증", response = List.class)
+	@ApiOperation(value = "member ssafy 인증 승인", response = List.class)
+	@RequestMapping(value = "/member/authrequest", method = RequestMethod.PUT)
+	public ResponseEntity<BoolResult> checkAuthRequest(@RequestBody AuthRequest request, HttpServletRequest rs) throws Exception {
+		logger.info("1-------------checkAuthRequest-----------------------------" + new Date());
+		BoolResult nr=new BoolResult();
+//		int loginid = 0;
+//		if(rs.getAttribute("loginMember")!=null) {
+//			Member member = (Member) rs.getAttribute("loginMember");
+//			loginid = member.getMemberid();
+//		}else {
+//			nr.setName("로그인이 필요한 기능입니다.");
+//			return new ResponseEntity<BoolResult>(nr, HttpStatus.BAD_REQUEST);
+//		}
+		
+		memberservice.deleteAuthRequest(request.getMemberid());
+		if(request.getFlag()==1) {
+			memberservice.updateMemberAuth(new Member(request.getMemberid(),2));
+			nr.setName("인증 승인");
+		}else {
+			memberservice.updateMemberAuth(new Member(request.getMemberid(),4));			
+			nr.setName("인증 거절");
+		}
+	
+   		nr.setState("succ");
+		return new ResponseEntity<BoolResult>(nr, HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "member ssafy 인증 요청 전체 목록 보기", response = List.class)
+	@RequestMapping(value = "/member/authrequest", method = RequestMethod.GET)
+	public ResponseEntity<List<AuthRequest>> getAuthRequestList() throws Exception {
+		logger.info("1-------------getAuthRequestList-----------------------------" + new Date());
+		List<AuthRequest> members = memberservice.getAuthRequestList();
+
+		return new ResponseEntity<List<AuthRequest>>(members, HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "member ssafy 인증 요청 정보", response = List.class)
 	@RequestMapping(value = "/member/authrequest/{memberid}", method = RequestMethod.GET)
-	public ResponseEntity<BoolResult> checkAuthRequest(@PathVariable int memberid, HttpServletRequest rs) throws Exception {
-		logger.info("1-------------authMember-----------------------------" + new Date());
+	public ResponseEntity<AuthRequest> getAuthRequest(@PathVariable String memberid, HttpServletRequest rs) throws Exception {
+		logger.info("1-------------getAuthRequest-----------------------------" + new Date());
 		BoolResult nr=new BoolResult();
 		int loginid = 0;
 		if(rs.getAttribute("loginMember")!=null) {
 			Member member = (Member) rs.getAttribute("loginMember");
 			loginid = member.getMemberid();
 		}else {
-			return new ResponseEntity(HttpStatus.BAD_REQUEST);
+			//nr.setName("로그인이 필요한 기능입니다.");
+			//return new ResponseEntity<BoolResult>(nr, HttpStatus.BAD_REQUEST);
 		}
-//		AuthRequest ar = new AuthRequest(memberid,img);
-//		memberservice.authMember(ar);
+		AuthRequest ar = memberservice.getAuthRequest(memberid);
 		
-   		nr.setName("인증 요청");
+		nr.setName("getAuthRequest");
    		nr.setState("succ");
-		return new ResponseEntity<BoolResult>(nr, HttpStatus.OK);
+		return new ResponseEntity<AuthRequest>(ar, HttpStatus.OK);
 	}
 }

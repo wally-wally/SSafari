@@ -134,73 +134,31 @@ public class Commentpost implements Serializable {
 				+ memberid + ", wdate=" + wdate + ", content=" + content + "]";
 	}
 
+	
+
 	public int getCpostid() {
 		return cpostid;
 	}
+
+
 
 	public void setCpostid(int cpostid) {
 		this.cpostid = cpostid;
 	}
 
 
+
 	public int getCategoryid() {
 		return categoryid;
 	}
+
+
 
 	public void setCategoryid(int categoryid) {
 		this.categoryid = categoryid;
 	}
 
 
-
-	public int getMemberid() {
-		return memberid;
-	}
-
-	public void setMemberid(int memberid) {
-		this.memberid = memberid;
-	}
-
-	public String getWdate() {
-		return wdate;
-	}
-
-	public void setWdate(String wdate) {
-		this.wdate = wdate;
-	}
-
-	public String getContent() {
-		return content;
-	}
-
-	public void setContent(String content) {
-		this.content = content;
-	}
-	
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-	
-
-	public int getpostid() {
-		return postid;
-	}
-
-	public void setpostid(int postid) {
-		this.postid = postid;
-	}
-
-	public int getAnonym() {
-		return anonym;
-	}
-
-	public void setAnonym(int anonym) {
-		this.anonym = anonym;
-	}
 
 	public int getPostid() {
 		return postid;
@@ -210,6 +168,66 @@ public class Commentpost implements Serializable {
 
 	public void setPostid(int postid) {
 		this.postid = postid;
+	}
+
+
+
+	public int getMemberid() {
+		return memberid;
+	}
+
+
+
+	public void setMemberid(int memberid) {
+		this.memberid = memberid;
+	}
+
+
+
+	public String getWdate() {
+		return wdate;
+	}
+
+
+
+	public void setWdate(String wdate) {
+		this.wdate = wdate;
+	}
+
+
+
+	public String getContent() {
+		return content;
+	}
+
+
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+
+
+	public String getUsername() {
+		return username;
+	}
+
+
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+
+
+	public int getAnonym() {
+		return anonym;
+	}
+
+
+
+	public void setAnonym(int anonym) {
+		this.anonym = anonym;
 	}
 
 

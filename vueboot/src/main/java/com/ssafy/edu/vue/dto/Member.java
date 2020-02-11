@@ -231,6 +231,14 @@ public class Member implements Serializable {
 
 	
 
+	public Member(int memberid, int auth) {
+		super();
+		this.memberid = memberid;
+		this.auth = auth;
+	}
+
+
+
 	public Member(int memberid, String email, String password, String name, String username, String signupdate,
 			int delflag, int auth, String githubid, int locationid, int unit, int social, boolean signup,
 			String message) {

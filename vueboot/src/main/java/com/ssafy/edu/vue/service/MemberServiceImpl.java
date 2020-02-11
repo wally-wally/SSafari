@@ -85,14 +85,32 @@ public class MemberServiceImpl implements IMemberService {
 
 	@Override
 	@Transactional
-	public void authMember(AuthRequest ar) {
-		memberdao.authMember(ar);
+	public void authRequest(AuthRequest ar) {
+		memberdao.authRequest(ar);
 	}
 
 	@Override
 	@Transactional
 	public void updatePassword(Member member) {
 		memberdao.updatePassword(member);
+	}
+
+	@Override
+	@Transactional
+	public void deleteAuthRequest(int memberid) {
+		memberdao.deleteAuthRequest(memberid);
+	}
+
+	@Override
+	@Transactional(readOnly=true)
+	public List<AuthRequest> getAuthRequestList() {
+		return memberdao.getAuthRequestList();
+	}
+
+	@Override
+	@Transactional(readOnly=true)
+	public AuthRequest getAuthRequest(String memberid) {
+		return memberdao.getAuthRequest(memberid);
 	}
 
 
