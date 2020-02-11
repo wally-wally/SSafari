@@ -34,12 +34,6 @@ public class MemberServiceImpl implements IMemberService {
 	public void addMember(Member member) {
 		memberdao.addMember(member);
 	}
-
-	@Override
-	@Transactional
-	public void addMemberImgId(int memberid) {
-		memberdao.addMemberImgId(memberid);
-	}
 	
 	@Override
 	@Transactional
@@ -123,12 +117,6 @@ public class MemberServiceImpl implements IMemberService {
 	@Transactional
 	public void updateLocationUnit(AuthRequest ar) {
 		memberdao.updateLocationUnit(ar);
-	}
-
-	@Override
-	@Transactional(readOnly=true)
-	public String getMemberImg(int memberid) {
-		return memberdao.getMemberImg(memberid);
 	}
 
 }

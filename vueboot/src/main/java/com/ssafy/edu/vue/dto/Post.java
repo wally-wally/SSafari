@@ -18,6 +18,7 @@ public class Post implements Serializable {
 	private int categoryid;
 	private int anonymous;
 	private int locationid;
+	private String img;
 
 	public Post() {
 		super();
@@ -27,7 +28,7 @@ public class Post implements Serializable {
 	
 
 	public Post(int postid, String title, String body, String created_at, int memberid, String username, int categoryid,
-			int anonymous, int locationid) {
+			int anonymous, int locationid, String img) {
 		super();
 		this.postid = postid;
 		this.title = title;
@@ -38,6 +39,7 @@ public class Post implements Serializable {
 		this.categoryid = categoryid;
 		this.anonymous = anonymous;
 		this.locationid = locationid;
+		this.img = img;
 	}
 
 
@@ -60,6 +62,14 @@ public class Post implements Serializable {
 	}
 
 	
+	public String getImg() {
+		return img;
+	}
+	
+	public void setImg(String img) {
+		this.img = img;
+	}
+
 	public int getPostid() {
 		return postid;
 	}

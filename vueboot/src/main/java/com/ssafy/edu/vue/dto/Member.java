@@ -21,6 +21,7 @@ public class Member implements Serializable {
 	private int locationid;
 	private int unit;
 	private int social;
+	private String img;
 	private boolean signup;
 	private String message;
 	
@@ -54,6 +55,34 @@ public class Member implements Serializable {
 
 
 
+	public Member(int memberid, String username, String githubid, String img) {
+		super();
+		this.memberid = memberid;
+		this.username = username;
+		this.githubid = githubid;
+		this.img = img;
+	}
+
+
+
+	public Member(int memberid, String email, String name, String username, String signupdate, int auth,
+			String githubid, int locationid, int unit, int social, String img) {
+		super();
+		this.memberid = memberid;
+		this.email = email;
+		this.name = name;
+		this.username = username;
+		this.signupdate = signupdate;
+		this.auth = auth;
+		this.githubid = githubid;
+		this.locationid = locationid;
+		this.unit = unit;
+		this.social = social;
+		this.img = img;
+	}
+
+
+
 	public Member(int memberid, String email, String name, String username, String signupdate, int auth,
 			String githubid, int locationid, int unit, int social) {
 		super();
@@ -74,16 +103,6 @@ public class Member implements Serializable {
 	public Member(int memberid, String username, String githubid) {
 		super();
 		this.memberid = memberid;
-		this.username = username;
-		this.githubid = githubid;
-	}
-
-
-
-	public Member(int memberid, String password, String username, String githubid) {
-		super();
-		this.memberid = memberid;
-		this.password = password;
 		this.username = username;
 		this.githubid = githubid;
 	}
@@ -249,6 +268,25 @@ public class Member implements Serializable {
 
 
 	public Member(int memberid, String email, String password, String name, String username, String signupdate,
+			int auth, String githubid, int locationid, int unit, int social, String img) {
+		super();
+		this.memberid = memberid;
+		this.email = email;
+		this.password = password;
+		this.name = name;
+		this.username = username;
+		this.signupdate = signupdate;
+		this.auth = auth;
+		this.githubid = githubid;
+		this.locationid = locationid;
+		this.unit = unit;
+		this.social = social;
+		this.img = img;
+	}
+
+
+
+	public Member(int memberid, String email, String password, String name, String username, String signupdate,
 			int delflag, int auth, String githubid, int locationid, int unit, int social, boolean signup,
 			String message) {
 		super();
@@ -356,6 +394,18 @@ public class Member implements Serializable {
 
 	public void setGithubid(String githubid) {
 		this.githubid = githubid;
+	}
+
+
+
+	public String getImg() {
+		return img;
+	}
+
+
+
+	public void setImg(String img) {
+		this.img = img;
 	}
 
 
