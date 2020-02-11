@@ -58,10 +58,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="checkDelflag" resultType="java.lang.Integer" parameterType="java.lang.String">
 		SELECT DELFLAG FROM MEMBERS WHERE EMAIL=#{email}
 	</select>
-	<insert id="authMember" parameterType="com.ssafy.edu.vue.dto.AuthRequest">
+	<insert id="authRequest" parameterType="com.ssafy.edu.vue.dto.AuthRequest">
 		INSERT INTO
-		AUTHREQUEST(MEMBERID, IMG)
-		VALUES(#{memberid},#{img})
+		AUTHREQUEST(MEMBERID, IMG, LOCATIONID, UNIT)
+		VALUES(#{memberid},#{img},#{locationid},#{unit})
 	</insert>
 	<update id="updatePassword" parameterType="com.ssafy.edu.vue.dto.Member">
 		UPDATE MEMBERS SET
@@ -69,4 +69,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE
 		MEMBERID=#{memberid}
 	</update>
+	<delete id="deleteAuthRequest" parameterType="java.lang.Integer">
+		DELETE FROM AUTHREQUEST WHERE MEMBERID=#{memberid}
+	</delete>
+	<select id="getAuthRequestList" resultType="com.ssafy.edu.vue.dto.AuthRequest">
+		SELECT A.MEMBERID, M.NAME, IMG, A.LOCATIONID, L.LOCATION, A.UNIT  FROM AUTHREQUEST A, LOCATION L, MEMBERS M WHERE M.MEMBERID=A.MEMBERID AND L.ID=A.LOCATIONID
+	</select>
+	<select id="getAuthRequest" resultType="com.ssafy.edu.vue.dto.AuthRequest" parameterType="java.lang.Integer">
+		SELECT A.memberid, M.name, img, A.locationid, L.location, A.unit  FROM AUTHREQUEST A, LOCATION L, MEMBERS M WHERE M.MEMBERID=A.MEMBERID AND L.ID=A.LOCATIONID AND A.MEMBERID=#{memberid} 
+	</select>
 </mapper>

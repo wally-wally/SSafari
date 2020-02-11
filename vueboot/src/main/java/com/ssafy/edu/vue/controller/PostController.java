@@ -159,6 +159,7 @@ public class PostController {
 	@RequestMapping(value = "/commentpost", method = RequestMethod.GET)
 	public ResponseEntity<List<Commentpost>> getCommentPost(@ModelAttribute Postinfo postinfo, HttpServletRequest rs) throws Exception {
 		logger.info("1-------------getCommentPost-----------------------------" + new Date());
+		logger.info("2--------"+postinfo);
 		int memberid = 0;
 		if(rs.getAttribute("loginMember")!=null) {
 			Member member = (Member) rs.getAttribute("loginMember");
@@ -166,9 +167,6 @@ public class PostController {
 		}
 		postinfo.setMemberid(memberid);
 		List<Commentpost> posts = postservice.getCommentPost(postinfo);
-		if (posts == null) {
-			return new ResponseEntity(HttpStatus.NO_CONTENT);
-		}
 		return new ResponseEntity<List<Commentpost>>(posts, HttpStatus.OK);
 	}
 	
@@ -177,7 +175,7 @@ public class PostController {
 	public ResponseEntity<List<Commentpost>> addCommentPost(@RequestBody Commentpost commentpost) throws Exception {
 		logger.info("1-------------addCommentPost-----------------------------" + new Date());
 		postservice.addCommentPost(commentpost);
-		Postinfo postinfo = new Postinfo(commentpost.getCategoryid(),commentpost.getpostid());
+		Postinfo postinfo = new Postinfo(commentpost.getCategoryid(),commentpost.getPostid());
    		List<Commentpost> posts = postservice.getCommentPost(postinfo);
 		return new ResponseEntity<List<Commentpost>>(posts, HttpStatus.OK);
 	}
@@ -187,7 +185,7 @@ public class PostController {
 	public ResponseEntity<List<Commentpost>> updateCommentPost(@RequestBody Commentpost commentpost) throws Exception {
 		logger.info("1-------------updateCommentPost-----------------------------" + new Date());
 		postservice.updateCommentPost(commentpost);
-		Postinfo postinfo = new Postinfo(commentpost.getCategoryid(),commentpost.getpostid());
+		Postinfo postinfo = new Postinfo(commentpost.getCategoryid(),commentpost.getPostid());
    		List<Commentpost> posts = postservice.getCommentPost(postinfo);
 		return new ResponseEntity<List<Commentpost>>(posts, HttpStatus.OK);
 	}
@@ -197,7 +195,7 @@ public class PostController {
 	public ResponseEntity<List<Commentpost>> deleteCommentPost(@RequestBody Commentpost commentpost) throws Exception {
 		logger.info("1-------------deleteCommentPost-----------------------------" + new Date());
 		postservice.deleteCommentPost(commentpost.getCpostid());
-		Postinfo postinfo = new Postinfo(commentpost.getCategoryid(),commentpost.getpostid());
+		Postinfo postinfo = new Postinfo(commentpost.getCategoryid(),commentpost.getPostid());
    		List<Commentpost> posts = postservice.getCommentPost(postinfo);
 		return new ResponseEntity<List<Commentpost>>(posts, HttpStatus.OK);
 	}
