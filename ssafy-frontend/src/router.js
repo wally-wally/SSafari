@@ -23,6 +23,8 @@ import StudyGroupCreateForm from './components/studygroup/StudyGroupCreateForm.v
 import UpdateForm from './components/etc/UpdateForm.vue'
 import MemberModify from '@/components/login/MemberModify.vue'
 import PasswordModify from '@/components/login/PasswordModify.vue'
+import SsafyAuth from '@/components/login/SsafyAuth.vue'
+import MakeSsafyAuth from '@/components/login/MakeSsafyAuth.vue'
 import MyPage from  './views/MyPage.vue'
 import store from './store'
  
@@ -111,6 +113,16 @@ export default new Router({
 			path: '/mypage/password',
 			name: 'PasswordModify',
 			component: PasswordModify
+		},
+		{
+			path: '/mypage/ssafyauth',
+			name: 'SsafyAuth',
+			component: SsafyAuth
+		},
+		{
+			path: '/mypage/makessafyauth',
+			name: 'MakeSsafyAuth',
+			component: MakeSsafyAuth
 		}
   ]
 })

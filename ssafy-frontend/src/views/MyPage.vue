@@ -2,7 +2,10 @@
   <div style="margin: 0 5%;">
     <v-btn class="orange mx-1 my-3" :to="{name : 'MemberModify'}">회원정보 수정</v-btn>
     <v-btn v-if="!social" class="green mx-1 my-3" :to="{name : 'PasswordModify'}">비밀번호 변경</v-btn>
+    <v-btn v-if="ssafyAuth === 4" class="blue mx-1 my-3" :to="{name : 'SsafyAuth'}">싸피 인증 받기</v-btn>
+    <v-btn v-if="ssafyAuth === 1" class="yellow mx-1 my-3" :to="{name : 'MakeSsafyAuth'}">싸피 인증 하기</v-btn>
     <v-btn class="red mx-1 my-3" @click="memberDropOut">회원탈퇴</v-btn>
+    <h1 v-if="ssafyAuth === 3" class="red">현재 싸피 인증 대기 중입니다.</h1>
     <div class="mypage-title">
       <h1>MY BOARD</h1>
     </div>
@@ -41,6 +44,7 @@ export default {
         githubid: '',
         token: '',
         social: '',
+        ssafyAuth: '',
       }
     },
     methods: {
@@ -86,6 +90,7 @@ export default {
       }
       this.getmyinfo()
       this.social = this.$store.state.social
+      this.ssafyAuth = this.$store.state.auth
     }
 }
 </script>

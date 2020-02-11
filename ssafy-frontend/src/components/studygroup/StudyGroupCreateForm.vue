@@ -94,6 +94,7 @@ export default {
             rules: [
                 function(value) {
                     const extension = value.name.toString().split('.')[1]
+                    extension = extension.toLowerCase()
                     if (!(extension === 'jpg' || extension === 'png' || extension === 'bmp')) {
                         // const fileValue = document.querySelector('#file')
                         alert("Please upload image file.(available jpg, png, bmp flie)")

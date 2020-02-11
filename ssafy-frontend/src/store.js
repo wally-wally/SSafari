@@ -29,6 +29,7 @@ export default new Vuex.Store({
         state.username = jwtDecode(state.token)['access-Token'].username
         state.isLogin = true
         state.social = jwtDecode(state.token)['access-Token'].social
+        state.auth = jwtDecode(state.token)['access-Token'].auth
     },
     logout(state){
         const result = confirm('로그아웃 하시겠습니까')
@@ -38,6 +39,7 @@ export default new Vuex.Store({
             state.username = null
             state.isLogin = false
             state.social = null
+            state.auth = null
         }
     },
     dropout(state){
@@ -46,6 +48,7 @@ export default new Vuex.Store({
         state.username = null
         state.isLogin = false
         state.social = null
+        state.auth = null
     }
 },
  actions : {

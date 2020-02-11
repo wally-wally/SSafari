@@ -22,7 +22,7 @@
 
   <v-app-bar v-else app :collapse="!collapseOnScroll" :collapse-on-scroll="collapseOnScroll" color="white" @click.stop="drawer = !drawer">
     <div class="d-flex align-center">
-      <a href="/" style="text-decoration: none; color: #f7b157;"> <v-toolbar-title>iTeacher</v-toolbar-title></a>
+      <a href="/" style="text-decoration: none; color: #f7b157;"> <v-toolbar-title>SSavry Time</v-toolbar-title></a>
     </div>
     <v-spacer></v-spacer>
     <v-app-bar-nav-icon></v-app-bar-nav-icon>
