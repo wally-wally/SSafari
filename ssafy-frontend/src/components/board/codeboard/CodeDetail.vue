@@ -30,6 +30,7 @@
         :options="showOptions"
         :value="code.code"
   ></codemirror>
+    <boardcomment />
   <div class="mt-3">
       <h1>
       댓글~!
@@ -55,9 +56,11 @@ import 'codemirror/mode/xml/xml.js'
 import 'codemirror/mode/javascript/javascript.js'
 import 'codemirror/theme/base16-dark.css'
 import 'codemirror/mode/python/python.js'
+import boardcomment from '@/components/comment/boardcomment'
+
 export default {
     name : 'CodeDetail',
-    components: {codemirror,Comment},
+    components: {codemirror,Comment,boardcomment},
     props :{
       id : {type: String}  
     },
@@ -98,6 +101,7 @@ export default {
             }
             axios.get(`api/commentpost/`, {params: data})
             .then(response =>{
+                console.log(response.data)
                 this.comments = response.data
             })
         },

@@ -7,11 +7,18 @@
                 <v-divider />
             </div>
         </v-list>
-        <v-form @submit.prevent="Createcomment">
-          <div class="form-group d-flex justify-content-center">
-            <textarea rows="3" v-model="new_comment" class="commentinput" v-bind:readonly="!isLogin" v-bind:placeholder="check"></textarea>
-                <v-btn large type="submit" color="secondary" class="btn btn-info align-self-end mx-2 mb-1">등록</v-btn>
-			</div>
+        <v-form @submit.prevent="Createcomment" clas>
+            <v-row class="form-group d-flex">
+                <v-col cols="7">
+                    <textarea rows="3" v-model="new_comment" class="commentinput" v-bind:readonly="!isLogin" v-bind:placeholder="check"></textarea>
+                </v-col>
+                <v-col cols="2">
+                    <v-checkbox v-model="anonymousStatus" label="익명" value="익명" class="annoyCheck"/>
+                </v-col>
+                <v-col cols="1">
+                    <v-btn type="submit" color="secondary" class="btn btn-info align-self-end mx-2 mb-1">등록</v-btn>
+                </v-col>
+            </v-row>
         </v-form>
     </v-container>
 </template>
@@ -24,6 +31,7 @@ import { mapState} from 'vuex'
 export default {
     name : 'boardcomment',
     props : {
+        categoryid : {type : String},
         comments : {type : Array},
         boardtype : {type: String},
         postid : {type: String},
@@ -31,6 +39,7 @@ export default {
     components : {Comment},
     data() {
         return {
+            anonymousStatus : '',
             new_comment : '',
             check : '',
         }
@@ -46,7 +55,9 @@ export default {
             const data = {
                 'memberid' : this.$store.state.memberid,
                 'content' : this.new_comment,
+                'anonym' : this.anonymousStatus ? 1 : 0,
             }
+            data['categoryid'] = this.categoryid
             data[`${this.boardtype}id`] = this.postid
             axios.post(`api/comment${this.boardtype}`,data)
                 .then(response => {
@@ -75,7 +86,7 @@ export default {
 
 <style>
 .commentinput {
-    width:80%;
+    width: 100%;
     background-color:white;
     margin-top:2rem;
 }

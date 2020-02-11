@@ -14,8 +14,10 @@
             <v-spacer></v-spacer>
             <div class="my-2 mx-2">
               <span class="headline">{{ post.title }} <h6>{{ post.created_at }} </h6>
-                <v-btn class="mr-1" v-if="currentMemberId === post.memberid" small color="green" :to="{ name: 'BoardUpdate', params: { id: id, title: post.title, content: post.body, memberId: post.memberid }}">수정</v-btn>
-                <v-btn v-if="currentMemberId === post.memberid || currentMemberAuth === 1" @click="deletePost" small color="error">삭제</v-btn>
+                <div v-if="this.$store.state.memberid === post.memberid">
+                <v-btn class="mr-1" small color="green" :to="{ name: 'BoardUpdate', params: { id: id, title: post.title, content: post.body, memberId: post.memberid }}">수정</v-btn>
+                <v-btn @click="deletePost" small color="error">삭제</v-btn>
+                </div>
               </span>
             </div>
           </div>
@@ -29,7 +31,7 @@
           </v-list-item>
         <v-divider></v-divider>
           <v-col cols="12" sm="12">
-            <boardcomment :postid="this.id" boardtype="post" :comments="comments"/>
+            <boardcomment :categoryid="post.categoryid" :postid="this.id" boardtype="post" :comments="comments"/>
           </v-col>
         </v-list>
       </v-card>
@@ -50,8 +52,6 @@ export default {
 	    return {
       post: [],
       comments: [],
-      currentMemberId: '',
-      currentMemberAuth: '',
       }
     },
     props: {
@@ -59,8 +59,6 @@ export default {
     },
     mounted() {
         this.getPost()
-        this.currentMemberId = this.$store.state.memberid
-        this.currentMemberAuth = this.$store.getters.user.auth
     },
     methods: {
         getPost() {
@@ -71,7 +69,7 @@ export default {
           })
         },
         getPostComment() {
-          axios.get(`api/commentpost/`, {params : {'postid':this.id, 'categoryid' : this.post.categoryid}} , this.$store.getters.options)
+          axios.get(`api/commentpost/`, {params : {'postid':this.id, 'categoryid' : this.post.categoryid},} , this.$store.getters.options)
             .then(response => {
               console.log(response)
               this.comments = response.data

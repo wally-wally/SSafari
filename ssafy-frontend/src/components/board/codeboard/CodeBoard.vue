@@ -96,7 +96,7 @@
     export default {
         name: 'CodeBoard',
         components: {
-            BoardList
+            BoardList,
         },
         // props: {
         //     category: { type: String },

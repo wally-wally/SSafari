@@ -16,6 +16,7 @@
         <div v-if="this.update">
             <form @submit.prevent="commentput()">
                 <textarea class="ma-3" rows="3" style="width:50%" v-model="new_comment"/>
+                <v-checkbox v-model="anonymousStatus" label="익명" value="1" class="annoyCheck"/>
                 <button class="mr-3" type="submit"><small>등록</small></button>
                 <button @click="commentupdate()"><small>취소</small></button>
             </form>
@@ -36,10 +37,12 @@ export default {
         return {
             update: false,
             new_comment :'',
+            anonymousStatus: false,
         }
     },
     mounted() {
         this.new_comment = this.comment.content
+        this.anonymousStatus = this.comment.anonym
     },
     methods : {
         commentupdate() {
@@ -59,6 +62,7 @@ export default {
         },
         commentput() {
             this.comment['content'] = this.new_comment
+            this.comment['anonym'] = this.anonymousStatus ? 1 : 0
             axios.put(`api/comment${this.board}`,this.comment)
             .then(response => {
                 this.comment.content = this.new_comment
