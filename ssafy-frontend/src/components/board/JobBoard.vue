@@ -168,8 +168,7 @@
                 axios.post('api/post', boardData)
                     .then(response => {
                         if(response.status === 200){
-                            router.push({ path: '' })
-                            // this.$router.push('/board/free/')
+                            router.go('/board/job')
                         }
                     })
             }

@@ -1,9 +1,9 @@
 <template>
   <div class="boards-list">
     <div class="boards" v-for="board in boards" :key="`${board.postid}-${board['created_at']}`">
-      <div class="board-element d-flex justify-space-between" @click="goBoardDetail(board.postid)">
+      <div class="board-element d-flex justify-space-between" @click="goBoardDetail(board)">
         <strong>
-          <span v-if="boardType === 'jmt'" class="board-title" @click="goBoardDetail(board.postid)">{{ board.name }}</span>
+          <span v-if="boardType === 'jmt'" class="board-title" >{{ board.name }}</span>
           <span v-else class="board-title">{{ board.title }}</span>
         </strong>
         <span v-if="boardType === 'jmt'" class="board-info">{{ board.location }}</span>
@@ -25,8 +25,12 @@ export default {
     return {}
   },
   methods: {
-    goBoardDetail(postID) {
-      this.$router.push(`board/${this.boardType}/${postID}`)
+    goBoardDetail(boardData) {
+      if (this.boardType === 'free' || this.boardType === 'job') {
+        this.$router.push(`board/${this.boardType}/${boardData.postid}`)
+      } else {
+        this.$router.push(`board/${this.boardType}/${boardData.id}`)
+      }
     }
   }
 }
