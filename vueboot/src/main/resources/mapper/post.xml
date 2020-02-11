@@ -56,7 +56,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		= #{postid}
 	</delete>
 	
-	<select id="getCommentPost"
+	<select id="getCommentCode"
 		parameterType="com.ssafy.edu.vue.dto.Postinfo"
 		resultType="com.ssafy.edu.vue.dto.Commentpost">
 		SELECT C.CPOSTID CPOSTID, C.CATEGORYID CATEGORYID, C.POSTID POSTID, 
@@ -64,6 +64,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		C.WDATE WDATE, C.CONTENT CONTENT, C.ANONYM ANONYM, R.MEMBERID WRITER
 		FROM COMMENTPOST C, MEMBERS M, CODEREVIEW R
 		WHERE C.CATEGORYID=#{categoryid} AND C.POSTID=#{postid} AND M.MEMBERID=C.MEMBERID AND C.POSTID=R.ID ORDER BY C.CPOSTID;
+	</select>
+	
+	<select id="getCommentPost"
+		parameterType="com.ssafy.edu.vue.dto.Postinfo"
+		resultType="com.ssafy.edu.vue.dto.Commentpost">
+		SELECT C.CPOSTID CPOSTID, C.CATEGORYID CATEGORYID, C.POSTID POSTID, 
+		C.MEMBERID MEMBERID, C.ANONYM ANONYM, M.USERNAME USERNAME, 
+		C.WDATE WDATE, C.CONTENT CONTENT, C.ANONYM ANONYM, P.MEMBERID WRITER
+		FROM COMMENTPOST C, MEMBERS M, POSTS P
+		WHERE C.CATEGORYID=#{categoryid} AND C.POSTID=#{postid} AND M.MEMBERID=C.MEMBERID AND C.CATEGORYID=P.CATEGORYID AND C.POSTID=P.POSTID ORDER BY C.CPOSTID;
 	</select>
 	
 	<insert id="addCommentPost"

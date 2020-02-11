@@ -155,6 +155,21 @@ public class PostController {
 		return new ResponseEntity<BoolResult>(nr, HttpStatus.OK);
 	}
 	
+	@ApiOperation(value = "code Comment 전체 보기", response = List.class)
+	@RequestMapping(value = "/commentcode", method = RequestMethod.GET)
+	public ResponseEntity<List<Commentpost>> getCommentCode(@ModelAttribute Postinfo postinfo, HttpServletRequest rs) throws Exception {
+		logger.info("1-------------getCommentCode-----------------------------" + new Date());
+		logger.info("2--------"+postinfo);
+		int memberid = 0;
+		if(rs.getAttribute("loginMember")!=null) {
+			Member member = (Member) rs.getAttribute("loginMember");
+			memberid = member.getMemberid();
+		}
+		postinfo.setMemberid(memberid);
+		List<Commentpost> posts = postservice.getCommentCode(postinfo);
+		return new ResponseEntity<List<Commentpost>>(posts, HttpStatus.OK);
+	}
+	
 	@ApiOperation(value = "post Comment 전체 보기", response = List.class)
 	@RequestMapping(value = "/commentpost", method = RequestMethod.GET)
 	public ResponseEntity<List<Commentpost>> getCommentPost(@ModelAttribute Postinfo postinfo, HttpServletRequest rs) throws Exception {

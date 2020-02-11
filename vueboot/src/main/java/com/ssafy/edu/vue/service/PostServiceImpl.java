@@ -134,4 +134,9 @@ public class PostServiceImpl implements IPostService {
 		postdao.addCode(code);
 	}
 
+	@Override
+	public List<Commentpost> getCommentCode(Postinfo postinfo) {
+		return postdao.getCommentCode(postinfo);
+	}
+
 }
