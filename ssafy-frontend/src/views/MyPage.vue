@@ -1,5 +1,11 @@
 <template>
   <div style="margin: 0 5%;">
+    <v-btn class="orange mx-1 my-3" :to="{name : 'MemberModify'}">회원정보 수정</v-btn>
+    <v-btn v-if="!social" class="green mx-1 my-3" :to="{name : 'PasswordModify'}">비밀번호 변경</v-btn>
+    <v-btn v-if="ssafyAuth === 4" class="blue mx-1 my-3" :to="{name : 'SsafyAuth'}">싸피 인증 받기</v-btn>
+    <v-btn v-if="ssafyAuth === 1" class="yellow mx-1 my-3" :to="{name : 'MakeSsafyAuth'}">싸피 인증 하기</v-btn>
+    <v-btn class="red mx-1 my-3" @click="memberDropOut">회원탈퇴</v-btn>
+    <h1 v-if="ssafyAuth === 3" class="red">현재 싸피 인증 대기 중입니다.</h1>
     <div class="mypage-title">
       <h1>MY BOARD</h1>
     </div>
@@ -35,10 +41,28 @@ export default {
         showpost: true,
         showportfolio : true, 
         mydata : Object,
-        githubid: ''
+        githubid: '',
+        token: '',
+        social: '',
+        ssafyAuth: '',
       }
     },
     methods: {
+      memberDropOut() {
+        var confirmation = confirm("회원 탈퇴 하시겠습니까?");
+        if(confirmation){
+          var data = {
+            memberid : this.$store.state.memberid,
+          }
+          var token = this.$store.state.token
+          axios.delete(`api/member/${this.$store.state.memberid}`, {headers: {'access-token' : token}})
+            .then(response => {
+              console.log(response)
+            })
+          this.$store.dispatch('dropout')
+          this.$router.push('/')
+        }
+      },
       postshow() {
         this.showpost = !this.showpost
       },
@@ -61,7 +85,12 @@ export default {
       }
     },
     mounted() {
+      if (this.$store.state.token == null){
+        this.$router.push('/')
+      }
       this.getmyinfo()
+      this.social = this.$store.state.social
+      this.ssafyAuth = this.$store.state.auth
     }
 }
 </script>

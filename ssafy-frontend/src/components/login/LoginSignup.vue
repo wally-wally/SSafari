@@ -135,6 +135,10 @@ export default {
           axios.post('api/login', this.credentials)
             .then(response => {
               console.log(response)
+              if(response.data.delflag === 1){
+                alert('탈퇴한 회원입니다.')
+                return;
+              }
               const token = response.headers['access-token']
               if (token) {
                 this.$session.start()
