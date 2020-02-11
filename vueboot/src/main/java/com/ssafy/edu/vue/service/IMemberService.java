@@ -13,6 +13,8 @@ public interface IMemberService {
 
 	void addMember(Member member);
 
+	void addMemberImgId(int memberid);
+
 	void updateMember(Member member);
 
 	void deleteMember(int memberid);
@@ -37,7 +39,12 @@ public interface IMemberService {
 
 	List<AuthRequest> getAuthRequestList();
 
-	AuthRequest getAuthRequest(String memberid);
+	AuthRequest getAuthRequest(int memberid);
+
+	void updateLocationUnit(AuthRequest ar);
+
+	String getMemberImg(int memberid);
+
 
 
 }

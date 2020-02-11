@@ -28,6 +28,10 @@ public class MemberDaoImpl {
 	public void addMember(Member member) {
 		sqlSession.insert(ns+"addMember", member);
 	}
+	
+	public void addMemberImgId(int memberid) {
+		sqlSession.insert(ns+"addMemberImgId", memberid);
+	}
 
 	public void updateMember(Member member) {
 		sqlSession.update(ns+"updateMember", member);
@@ -77,8 +81,16 @@ public class MemberDaoImpl {
 		return sqlSession.selectList(ns+"getAuthRequestList");
 	}
 
-	public AuthRequest getAuthRequest(String memberid) {
+	public AuthRequest getAuthRequest(int memberid) {
 		return sqlSession.selectOne(ns+"getAuthRequest",memberid);
+	}
+
+	public void updateLocationUnit(AuthRequest ar) {
+		sqlSession.update(ns+"updateLocationUnit",ar);
+	}
+
+	public String getMemberImg(int memberid) {
+		return sqlSession.selectOne(ns+"getMemberImg",memberid);
 	}
 
 }
