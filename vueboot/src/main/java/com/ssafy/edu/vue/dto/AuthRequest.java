@@ -30,6 +30,13 @@ public class AuthRequest implements Serializable {
 		this.unit = unit;
 	}
 	
+	public AuthRequest(int memberid, int locationid, int unit) {
+		super();
+		this.memberid = memberid;
+		this.locationid = locationid;
+		this.unit = unit;
+	}
+
 	public AuthRequest(int memberid, int flag) {
 		super();
 		this.memberid = memberid;

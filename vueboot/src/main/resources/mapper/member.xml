@@ -7,7 +7,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- </select> -->
 
 	<select id="checkLogin" resultType="com.ssafy.edu.vue.dto.Member" parameterType="com.ssafy.edu.vue.dto.Member">
-		SELECT MEMBERID, EMAIL, NAME, USERNAME, SIGNUPDATE, AUTH, GITHUBID, SOCIAL FROM MEMBERS WHERE EMAIL=#{email} AND PASSWORD=hex(aes_encrypt(#{password}, 'key'))
+		SELECT MEMBERID, EMAIL, NAME, USERNAME, SIGNUPDATE, AUTH, GITHUBID, LOCATIONID, UNIT, SOCIAL FROM MEMBERS WHERE EMAIL=#{email} AND PASSWORD=hex(aes_encrypt(#{password}, 'key'))
 	</select>
 	
 	<select id="getMemberList" resultType="com.ssafy.edu.vue.dto.Member">
@@ -26,6 +26,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		INSERT INTO
 		MEMBERS(EMAIL, PASSWORD, NAME, USERNAME, SIGNUPDATE, SOCIAL)
 		VALUES(#{email},hex(aes_encrypt(#{password}, 'key')),#{name},#{username},now(),#{social})
+	</insert>
+	<insert id="addMemberImgId" parameterType="java.lang.Integer">
+		INSERT INTO
+		PROFILE(MEMBERID)
+		VALUES(#{memberid})
 	</insert>
 	
 	<update id="updateMember"
@@ -77,5 +82,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	<select id="getAuthRequest" resultType="com.ssafy.edu.vue.dto.AuthRequest" parameterType="java.lang.Integer">
 		SELECT A.memberid, M.name, img, A.locationid, L.location, A.unit  FROM AUTHREQUEST A, LOCATION L, MEMBERS M WHERE M.MEMBERID=A.MEMBERID AND L.ID=A.LOCATIONID AND A.MEMBERID=#{memberid} 
+	</select>
+	<update id="updateLocationUnit" parameterType="com.ssafy.edu.vue.dto.AuthRequest">
+		UPDATE MEMBERS SET
+		LOCATIONID=#{locationid},
+		UNIT=#{unit}
+		WHERE
+		MEMBERID=#{memberid}
+	</update>
+	<select id="getMemberImg" resultType="java.lang.String" parameterType="java.lang.Integer">
+		SELECT IMG FROM PROFILE WHERE MEMBERID=#{memberid}
 	</select>
 </mapper>

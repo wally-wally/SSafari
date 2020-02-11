@@ -37,6 +37,12 @@ public class MemberServiceImpl implements IMemberService {
 
 	@Override
 	@Transactional
+	public void addMemberImgId(int memberid) {
+		memberdao.addMemberImgId(memberid);
+	}
+	
+	@Override
+	@Transactional
 	public void updateMember(Member member) {
 		memberdao.updateMember(member);
 	}
@@ -109,11 +115,20 @@ public class MemberServiceImpl implements IMemberService {
 
 	@Override
 	@Transactional(readOnly=true)
-	public AuthRequest getAuthRequest(String memberid) {
+	public AuthRequest getAuthRequest(int memberid) {
 		return memberdao.getAuthRequest(memberid);
 	}
 
+	@Override
+	@Transactional
+	public void updateLocationUnit(AuthRequest ar) {
+		memberdao.updateLocationUnit(ar);
+	}
 
-
+	@Override
+	@Transactional(readOnly=true)
+	public String getMemberImg(int memberid) {
+		return memberdao.getMemberImg(memberid);
+	}
 
 }
