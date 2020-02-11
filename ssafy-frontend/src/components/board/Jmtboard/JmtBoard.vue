@@ -164,7 +164,7 @@
 						.then(response => {
 							const jmtData = response.data
 							this.restaurants = []
-							let regionNumber = { 'Seoul': 1, 'Daejeon': 2, 'Gawngju': 3, 'Gumi': 4 , 'etc': 5 }
+							let regionNumber = { 'Seoul': 1, 'Daejeon': 2, 'Gawngju': 4, 'Gumi': 3 , 'etc': 5 }
 							if (this.selectRegion !== 'All') {
 								let regionRestaurantData = []
 								for (let i = 0; i < jmtData.length; i++) {

@@ -105,7 +105,7 @@ export default {
 					.then( response => {
 						const boardData = response.data
 						this.posts = [] // posts 리스트 초기화 작업
-						let regionNumber = { 'Seoul': 1, 'Daejeon': 2, 'Gawngju': 3, 'Gumi': 4 }
+						let regionNumber = { 'Seoul': 1, 'Daejeon': 2, 'Gumi': 3, 'Gawngju': 4 }
 						if (this.region !== 'All') {
 							let regionPostData = []
 							for (let i = 0; i < boardData.length; i++) {
