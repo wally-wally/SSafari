@@ -51,5 +51,7 @@ public interface IPostService {
 	int isLike(Likepost likepost);
 
 	void addCode(Code code);
+
+	List<Commentpost> getCommentCode(Postinfo postinfo);
 	
 }

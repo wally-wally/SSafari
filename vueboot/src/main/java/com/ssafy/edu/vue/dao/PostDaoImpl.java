@@ -98,4 +98,8 @@ public class PostDaoImpl {
 		sqlSession.insert(ns+"addCode",code);
 	}
 
+	public List<Commentpost> getCommentCode(Postinfo postinfo) {
+		return sqlSession.selectList(ns+"getCommentCode",postinfo);
+	}
+
 }
