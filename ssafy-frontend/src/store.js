@@ -14,6 +14,13 @@ export default new Vuex.Store({
             'job' : '2',
             'jmt' : '4',
         },
+        region: {
+            'Seoul': '1',
+            'Daejeon': '2',
+            'Gumi': '3',
+            'Gawngju': '4',
+            'etc': '5'
+        },
         token: null,
         isLogin : false,
         memberid : null,

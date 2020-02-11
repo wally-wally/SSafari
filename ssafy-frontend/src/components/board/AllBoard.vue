@@ -1,56 +1,79 @@
 <template>
-    <div>
+    <div class="col-12 col-lg-6">
         <div class="boardlist">
             <p>자유게시판</p>
-            <BoardList :category="'free'" :limits="5" :load-more="true"></BoardList>
+            <BoardListAll :boards="freeBoard" :boardType="'free'"/>
         </div>
         <div class="boardlist">
             <p>취업게시판</p>
-            <BoardList :category="'job'" :limits="5" :load-more="true"></BoardList>
+            <BoardListAll :boards="jobBoard" :boardType="'job'"/>
+        </div>
+        <div class="boardlist">
+            <p>코드리뷰</p>
+            <BoardListAll :boards="codeBoard" :boardType="'codereview'"/>
         </div>
         <div class="boardlist">
             <p>주변맛집</p>
-            <BoardList :category="'jmt'"  :limits="5" :load-more="true"></BoardList>
+            <BoardListAll :boards="jmtBoard" :boardType="'jmt'"/>
         </div>
+        <!-- <div class="boardlist">
+            <p>자유게시판</p>
+            <BoardList :category="'free'" :limits="5" :region="'All'" :load-more="true"></BoardList>
+        </div>
+        <div class="boardlist">
+            <p>취업게시판</p>
+            <BoardList :category="'job'" :limits="5" :region="'All'" :load-more="true"></BoardList>
+        </div>
+        <div class="boardlist">
+            <p>주변맛집</p>
+            <BoardList :category="'jmt'"  :limits="5" :region="'All'" :load-more="true"></BoardList>
+        </div> -->
     </div>
 </template>
 
 <script>
     import axios from 'axios'
     import router from '@/router.js'
-    import BoardList from '@/components/board/boardCommonForm/BoardList'
+    import BoardListAll from '@/components/board/boardCommonForm/BoardListAll'
     export default {
         name: 'AllBoard',
         components: {
-            BoardList,
+            BoardListAll,
         },
         data() {
             return {
-                showCreatePost: 0
+                freeBoard: null,
+                jobBoard: null,
+                codeBoard: null,
+                jmtBoard: null,
             }
         },
-        methods: {
-            create() {
-                let postData = {
-                    title: this.title,
-                    body: this.content,
-                    memberid: this.$store.state.memberid
-                }
-                axios.post('api/post', postData)
-                    .then(response => {
-                        if(response.status === 200){
-                            this.$router.push('/board')
-                        }
-                    })
-            }
+        mounted() {
+            axios.get(`api/posts/1`)
+                .then(response => {
+                    this.freeBoard = response.data.slice(0, 5)
+                })
+            axios.get(`api/posts/2`)
+                .then(response => {
+                    this.jobBoard = response.data.slice(0, 5)
+                })
+            axios.get(`api/codes`)
+                .then(response => {
+                    this.codeBoard = response.data.slice(0, 5)
+                })
+            axios.get(`api/jmts`)
+                .then(response => {
+                    this.jmtBoard = response.data.slice(0, 5)
+                })
         }
     }
 </script>
 
 <style>
     .boardlist {
-        margin: 5px 5%;
+        margin: 20px 5%;
         padding-bottom: 10px;
+        /* display: inline; */
     }
 
     .boardlist > p {
