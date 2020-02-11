@@ -1,13 +1,13 @@
 <template>
   <v-layout mt-5 row wrap style="margin: 0 10%">
     <v-flex v-for="i in this.showPostsCount"  :key="i" style="width: 100%;"> <!-- col-12 sm6 md3 -->
-			<router-link :to="`/board/${posts[i - 1].postid}`">
-				<Board  :date="posts[i - 1].created_at"
-								:title="posts[i - 1].title"
-								:body="posts[i - 1].body"
-								:username="posts[i - 1].username"
-								:memberid="posts[i - 1].memberid">
-				</Board>
+		<router-link :to="`/board/${posts[i - 1].postid}`">
+			<Board  :date="posts[i - 1].created_at"
+				:title="posts[i - 1].title"
+				:body="posts[i - 1].body"
+				:username="posts[i - 1].username"
+				:memberid="posts[i - 1].memberid">
+			</Board>
 	  	</router-link>
     </v-flex>
   </v-layout>
