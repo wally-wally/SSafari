@@ -1,6 +1,6 @@
 <template>
 	<v-flex justify-center>
-		<div v-if="currentMemberId !== null">
+		<div v-if="currentMemberId !== null && auth === 1">
 			<div id="create-form-title">
 				<span id="form-title">SSAFY 인증 관리</span>
 			</div>
@@ -21,8 +21,8 @@
 					<v-card-subtitle>
 						<h3>{{ssafyRequest.unit}}기</h3>
 					</v-card-subtitle>
-					<v-btn class="mr-5" color="blue" @click="makeCompleted">승인</v-btn>
-					<v-btn class="mr-5" color="red" @click="makeDenied">거절</v-btn>
+					<v-btn class="mr-5" color="blue" @click="makeCompleted(ssafyRequest.memberid)">승인</v-btn>
+					<v-btn class="mr-5" color="red" @click="makeDenied(ssafyRequest.memberid)">거절</v-btn>
 				</v-card>
 			</div>
 			<v-btn color="error" @click="back">돌아가기</v-btn>
@@ -50,6 +50,7 @@
 		},
 		mounted() {
 			this.currentMemberId = this.$store.state.memberid
+			this.auth = this.$store.state.auth
 			this.getSsafyRequest()
 		},
 		methods: {
@@ -59,21 +60,39 @@
 			zoom(url) {
 				this.selectedImage = url;
 			},
-			getSsafyRequest() {
+			getSsafyRequest(memberid) {
 				axios.get('api/member/authrequest')
 					.then(response => {
 						console.log('MakeSsafyAuth: ', response.data)
 						this.ssafyRequests = response.data
+						console.log(this.ssafyRequests)
 					})
 			},
-			makeCompleted() {
+			makeCompleted(memberid) {
 				var confirmation = confirm("해당 사람을 싸피인으로 인증해주시겠습니까?");
-				if (confirmation) {
-
+				if(confirmation) {
+					var data = {
+						memberid: memberid,
+						flag: 1
+					}
+					axios.put('api/member/authrequest', data)
+						.then(response => {
+							this.getSsafyRequest()
+						})
 				}
 			},
-			makeDenied() {
+			makeDenied(memberid) {
 				var confirmation = confirm("해당 사람의 승인 신청을 거절하시겠습니까?");
+				if(confirmation) {
+					var data = {
+						memberid: memberid,
+						flag: 0
+					}
+					axios.put('api/member/authrequest', data)
+						.then(response => {
+							this.getSsafyRequest()
+						})
+				}
 			}
 		}
 	}

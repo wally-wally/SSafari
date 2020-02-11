@@ -48,7 +48,6 @@ export default {
 			axios.get(`api/postlist/${ this.$store.getters.user.memberid }`)
 				.then( response => {
 					this.posts = response.data
-					console.log(this.posts)
 					this.showPostsCount = (this.posts.length >= 6) ? 6 : this.posts.length  
 				})
 		},

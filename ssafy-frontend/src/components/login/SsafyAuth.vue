@@ -109,6 +109,7 @@
 							.then(response => {
 								if (response.status === 200) {
 									alert('싸피 인증 신청이 완료되었습니다!')
+									this.$store.state.auth = 3
 									this.$router.push('/mypage')
 								}
 							})
