@@ -4,16 +4,14 @@ export default {
   name: 'GithubReposChart',
   extends: Bar,
   props: {
-    datacollection: { type: Object }
+    datacollection: { type: Object, defalut: null }
   },
   data() {
     return {
-      datacollection: this.datacollection,
-      options: {}
     }
   },
   mounted() {
-    this.renderChart(this.datacollection, this.options)
+    this.renderChart(this.datacollection, {})
   }
 }
 </script>
