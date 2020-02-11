@@ -78,12 +78,14 @@ export default {
             })
         },
         deletePost() {
-          axios.delete(`api/post/${this.id}`)
-            .then(response => {
-              if(response.status == 200){
-                router.push({ path: '/board' })
-              }
-            })
+          if (confirm('정말로 삭제하시겠습니까?')) {
+            axios.delete(`api/post/${this.id}`)
+              .then(response => {
+                if(response.status == 200){
+                  router.push({ path: '/board' })
+                }
+              })
+          }
         }
     }
 }

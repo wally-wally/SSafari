@@ -1,33 +1,21 @@
 <template>
-    <div class="col-12 col-lg-6">
-        <div class="boardlist">
+    <div class="row mx-4">
+        <div class="col-12 col-lg-6 boardlist">
             <p>자유게시판</p>
             <BoardListAll :boards="freeBoard" :boardType="'free'"/>
         </div>
-        <div class="boardlist">
+        <div class="col-12 col-lg-6 boardlist">
             <p>취업게시판</p>
             <BoardListAll :boards="jobBoard" :boardType="'job'"/>
         </div>
-        <div class="boardlist">
+        <div class="col-12 col-lg-6 boardlist">
             <p>코드리뷰</p>
             <BoardListAll :boards="codeBoard" :boardType="'codereview'"/>
         </div>
-        <div class="boardlist">
+        <div class="col-12 col-lg-6 boardlist">
             <p>주변맛집</p>
             <BoardListAll :boards="jmtBoard" :boardType="'jmt'"/>
         </div>
-        <!-- <div class="boardlist">
-            <p>자유게시판</p>
-            <BoardList :category="'free'" :limits="5" :region="'All'" :load-more="true"></BoardList>
-        </div>
-        <div class="boardlist">
-            <p>취업게시판</p>
-            <BoardList :category="'job'" :limits="5" :region="'All'" :load-more="true"></BoardList>
-        </div>
-        <div class="boardlist">
-            <p>주변맛집</p>
-            <BoardList :category="'jmt'"  :limits="5" :region="'All'" :load-more="true"></BoardList>
-        </div> -->
     </div>
 </template>
 
@@ -70,12 +58,6 @@
 </script>
 
 <style>
-    .boardlist {
-        margin: 20px 5%;
-        padding-bottom: 10px;
-        /* display: inline; */
-    }
-
     .boardlist > p {
         font-size: 1.5rem;
         font-weight: bold;

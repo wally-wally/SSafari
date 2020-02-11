@@ -37,7 +37,8 @@
                             </div>
                         </div>
                         <div class="post-form-submit d-inline col-2">
-                            <router-view :key="$route.fullPath"/><v-btn class="submit-button" color="primary" @click="create">작성</v-btn>
+                            <!-- <router-view :key="$route.fullPath"/> -->
+                            <v-btn class="submit-button" color="primary" @click="create">작성</v-btn>
                         </div> 
                     </div>
                 </div>
@@ -169,7 +170,7 @@
                     .then(response => {
                         if(response.status === 200){
                             // location.reload(true)
-                        router.push({ path: '' })
+                        router.go('/board/free')
                         }
                     })
             }
