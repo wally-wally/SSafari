@@ -24,6 +24,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE P.MEMBERID=M.MEMBERID AND P.MEMBERID=#{memberid} 
 		ORDER BY POSTID	DESC
 	</select>
+	
+	<select id="getPostsPaging"
+		parameterType="com.ssafy.edu.vue.dto.PostPaging"
+		resultType="com.ssafy.edu.vue.dto.Post">
+		SELECT P.POSTID POSTID, P.TITLE TITLE, P.BODY BODY, P.CREATED_AT CREATED_AT, P.MEMBERID MEMBERID,
+		P.CATEGORYID CATEGORYID, P.ANONYMOUS ANONYMOUS, P.LOCATIONID LOCATIONID,
+		IF(P.ANONYMOUS=1 AND M.MEMBERID!=#{memberid}, '익명', M.USERNAME) AS USERNAME 
+		FROM POSTS P, MEMBERS M 
+		WHERE P.MEMBERID=M.MEMBERID 
+		ORDER BY POSTID	DESC
+	</select>
 
 	<select id="getPost" parameterType="java.lang.Integer"
 		resultType="com.ssafy.edu.vue.dto.Post">
@@ -56,6 +67,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		POSTID
 		= #{postid}
 	</delete>
+	
+	<select id="getCommentJMT"
+		parameterType="com.ssafy.edu.vue.dto.Postinfo"
+		resultType="com.ssafy.edu.vue.dto.Commentpost">
+		SELECT C.CPOSTID CPOSTID, C.CATEGORYID CATEGORYID, C.POSTID POSTID, 
+		C.MEMBERID MEMBERID, C.ANONYM ANONYM, M.USERNAME USERNAME, 
+		C.WDATE WDATE, C.CONTENT CONTENT, C.ANONYM ANONYM, J.MEMBERID WRITER
+		FROM COMMENTPOST C, MEMBERS M, JMT J
+		WHERE C.CATEGORYID=#{categoryid} AND C.POSTID=#{postid} AND M.MEMBERID=C.MEMBERID AND C.POSTID=J.ID ORDER BY C.CPOSTID;
+	</select>
 	
 	<select id="getCommentCode"
 		parameterType="com.ssafy.edu.vue.dto.Postinfo"

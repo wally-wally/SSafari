@@ -13,6 +13,7 @@ import com.ssafy.edu.vue.dto.Commentpost;
 import com.ssafy.edu.vue.dto.Likepost;
 import com.ssafy.edu.vue.dto.LocationFiltering;
 import com.ssafy.edu.vue.dto.Post;
+import com.ssafy.edu.vue.dto.PostPaging;
 import com.ssafy.edu.vue.dto.Postinfo;
 
 @Repository
@@ -100,6 +101,14 @@ public class PostDaoImpl {
 
 	public List<Commentpost> getCommentCode(Postinfo postinfo) {
 		return sqlSession.selectList(ns+"getCommentCode",postinfo);
+	}
+
+	public List<Post> getPostsPaging(PostPaging postpaging) {
+		return sqlSession.selectList(ns+"getPostsPaging",postpaging);
+	}
+
+	public List<Commentpost> getCommentJMT(Postinfo postinfo) {
+		return sqlSession.selectList(ns+"getCommentJMT",postinfo);
 	}
 
 }
