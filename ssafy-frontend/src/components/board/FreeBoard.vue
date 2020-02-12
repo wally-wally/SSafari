@@ -52,7 +52,22 @@
                 <v-flex>
                     <BoardList :category="this.$route.name" :region="selectRegion" @showPostCount="onPostCount" :limits="5" :load-more="true"></BoardList>
                 </v-flex>
+                
             </v-layout>
+            <v-flex>
+                <v-btn class="board-go-first" v-if="pageData.page >= 3" @click="changePageIndex(0)">처음</v-btn>
+                <v-btn class="board-go-prev" v-if="pageData.page >= 2" @click="changePageIndex(-1)">이전</v-btn>
+                <v-btn class="board-go-next" @click="changePageIndex(1)">다음</v-btn>
+                {{ pageData.page }}
+            </v-flex>
+            <div class="d-flex justify-space-between" style="max-width:80%;">
+			<v-text-field class="pa-0 ma-0 search-board-keyword"
+				hide-details
+				single-line
+				v-model="pageData.keyword">
+			</v-text-field>
+			<i class="fas fa-search" @click="changePageIndex(2)"></i>
+		</div>
         </div>
         <div class="side-post-section" style="margin-left: 3%;">
             <div class="popular-post">
@@ -120,6 +135,13 @@
         // },
         data() {
             return {
+                pageData : {
+                    page: 1,
+                    categoryid: this.$store.state.category[this.$route.name],
+                    keyword: '',
+                    locationid: 0
+                },
+                searchKeyword: '',
                 postCnt: 0,
                 selectRegion: 'All', // deafult를 로그인한 유저의 지역으로 하고 싶으면 이 부분 수정
                 regions: ['All', 'Seoul', 'Daejeon', 'Gumi', 'Gawngju'],
@@ -173,6 +195,36 @@
                         router.go('/board/free')
                         }
                     })
+            },
+            changePageIndex(status) { // (1) pagination으로 동작하는 경우
+                if (status === 0) {
+                    this.pageData.page = 1
+                } else if (status === -1) {
+                    this.pageData.page = this.pageData.page - 1 === 0 ? 1 : this.pageData.page - 1
+                } else if (status === 1) {
+                    this.pageData.page += 1
+                } else {
+                    if (this.pageData.keyword) {
+                        this.pageData.page =1
+                    } else {
+                        alert('검색어를 입력하세요.')
+                    }
+                }
+                console.log(this.pageData)
+                axios.get(`api/posts/page`, {params:this.pageData})
+                    .then(response => {
+                        // console.log(response)
+                    }
+                    )
+            }
+        },
+        watch: {
+            selectRegion: {
+                handler() {
+                    this.pageData.locationid = this.selectRegion === 'All' ? 0 : this.$store.state.region[this.selectRegion]
+                    this.pageData.page = 1
+                    console.log(this.pageData)
+                }
             }
         }
     }
