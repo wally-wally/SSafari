@@ -63,14 +63,10 @@ public class MemberController {
 
 	@ApiOperation(value = "member 내 정보", response = List.class)
 	@RequestMapping(value = "/member/{memberid}", method = RequestMethod.GET)
-	public ResponseEntity<Map<String, Object>> getMember(@PathVariable int memberid) throws Exception {
+	public ResponseEntity<Member> getMember(@PathVariable int memberid) throws Exception {
 		logger.info("1-------------getMember-----------------------------" + new Date());
-		Map<String, Object> resultMap = new HashMap<>();
 		Member member = memberservice.getMember(memberid);
-		resultMap.put("member", member);
-		String img = memberservice.getMemberImg(memberid);
-		resultMap.put("img", img);
-		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+		return new ResponseEntity<Member>(member, HttpStatus.OK);
 	}
 
 	@ApiOperation(value = "member 로그인", response = List.class)
@@ -112,8 +108,6 @@ public class MemberController {
 			result.setMessage("사용 가능");
 			member.setSocial(0);
 			memberservice.addMember(member);
-			Member login = memberservice.checkLogin(member);
-			memberservice.addMemberImgId(login.getMemberid());
 		} else if (email >= 1 && username == 0) {
 			result.setSignup(false);
 			result.setMessage("email 중복");
@@ -155,6 +149,9 @@ public class MemberController {
 		}
 		if(member.getGithubid().equals("") || member.getGithubid()==null) {
 			member.setGithubid(origin.getGithubid());
+		}
+		if(member.getImg().equals("") || member.getImg()==null) {
+			member.setImg(origin.getImg());
 		}
 		memberservice.updateMember(member);
 		Member login = memberservice.getMember(member.getMemberid());		

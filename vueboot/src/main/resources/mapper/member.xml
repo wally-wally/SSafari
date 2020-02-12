@@ -7,15 +7,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- </select> -->
 
 	<select id="checkLogin" resultType="com.ssafy.edu.vue.dto.Member" parameterType="com.ssafy.edu.vue.dto.Member">
-		SELECT MEMBERID, EMAIL, NAME, USERNAME, SIGNUPDATE, AUTH, GITHUBID, LOCATIONID, UNIT, SOCIAL FROM MEMBERS WHERE EMAIL=#{email} AND PASSWORD=hex(aes_encrypt(#{password}, 'key'))
+		SELECT MEMBERID, EMAIL, NAME, USERNAME, SIGNUPDATE, AUTH, GITHUBID, LOCATIONID, UNIT, SOCIAL, IMG FROM MEMBERS WHERE EMAIL=#{email} AND PASSWORD=hex(aes_encrypt(#{password}, 'key'))
 	</select>
 	
 	<select id="getMemberList" resultType="com.ssafy.edu.vue.dto.Member">
-		SELECT MEMBERID, EMAIL, NAME, USERNAME, SIGNUPDATE, AUTH FROM MEMBERS WHERE DELFLAG=0 ORDER BY MEMBERID
+		SELECT MEMBERID, EMAIL, NAME, USERNAME, SIGNUPDATE, AUTH, GITHUBID, LOCATIONID, UNIT, SOCIAL, IMG FROM MEMBERS WHERE DELFLAG=0 ORDER BY MEMBERID
 	</select>
 	
 	<select id="getMember" resultType="com.ssafy.edu.vue.dto.Member" parameterType="java.lang.Integer">
-		SELECT MEMBERID, EMAIL, NAME, USERNAME, SIGNUPDATE, AUTH, GITHUBID, LOCATIONID, UNIT, SOCIAL FROM MEMBERS WHERE MEMBERID=#{memberid}
+		SELECT MEMBERID, EMAIL, NAME, USERNAME, SIGNUPDATE, AUTH, GITHUBID, LOCATIONID, UNIT, SOCIAL, IMG FROM MEMBERS WHERE MEMBERID=#{memberid}
 	</select>
 	
 	<delete id="deleteMember" parameterType="java.lang.Integer">
@@ -27,17 +27,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		MEMBERS(EMAIL, PASSWORD, NAME, USERNAME, SIGNUPDATE, SOCIAL)
 		VALUES(#{email},hex(aes_encrypt(#{password}, 'key')),#{name},#{username},now(),#{social})
 	</insert>
-	<insert id="addMemberImgId" parameterType="java.lang.Integer">
-		INSERT INTO
-		PROFILE(MEMBERID)
-		VALUES(#{memberid})
-	</insert>
 	
 	<update id="updateMember"
 		parameterType="com.ssafy.edu.vue.dto.Member">
 		UPDATE MEMBERS SET
 		USERNAME=#{username},
-		GITHUBID=#{githubid}
+		GITHUBID=#{githubid},
+		IMG=#{img}
 		WHERE
 		MEMBERID=#{memberid}
 	</update>
@@ -90,7 +86,4 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE
 		MEMBERID=#{memberid}
 	</update>
-	<select id="getMemberImg" resultType="java.lang.String" parameterType="java.lang.Integer">
-		SELECT IMG FROM PROFILE WHERE MEMBERID=#{memberid}
-	</select>
 </mapper>
