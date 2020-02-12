@@ -11,7 +11,7 @@
 						<div>
 							<div>
 								<v-avatar class="mr-5 mb-2">
-									<img src='https://user-images.githubusercontent.com/52685250/73902320-c72d6c00-48d8-11ea-82b4-eb9bfebfe9fb.png' alt="profile">
+									<img :src="restaurant.img" alt="X">
 								</v-avatar><span>{{ restaurant.username }}</span>
 							</div>
 							<div>

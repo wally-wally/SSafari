@@ -30,7 +30,7 @@
         imgFile: null,
         rules: [
           function (value) {
-            if(value) {
+            if (value) {
               var extension = value.name.toString().split('.')[1]
               extension = extension.toLowerCase()
               if (!(extension === 'jpg' || extension === 'png' || extension === 'bmp')) {
@@ -40,7 +40,7 @@
                 filename.innerText = ''
               }
               return true
-            }else{
+            } else {
               return ''
             }
           }
@@ -56,26 +56,24 @@
           var data = {
             username: this.nickname,
             githubid: this.githubId,
-            memberid: this.$store.state.memberid
+            memberid: this.$store.state.memberid,
+            img: this.imgFile,
           }
           axios.put('api/member', data)
             .then(response => {
               console.log(response)
+              if (response.data.state == "이미 존재하는 username 입니다."){
+                alert(response.data.state)
+                return
+              }
               if (response.status === 200) {
                 alert('성공적으로 회원 정보를 수정했습니다.')
-                if (this.nickname !== null) {
-                  this.$store.state.username = this.nickname
+                const token = response.headers['access-token']
+                if (token) {
+                  this.$session.start()
+                  this.$session.set('token', token)
+                  this.$store.dispatch('login', token)
                 }
-                // const token = response.headers['access-token']
-                // if (token) {
-                //   this.$session.start()
-                //   this.$session.set('token', token)
-                //   // vuex actions 호출 -> dispatch
-                //   this.$store.dispatch('login', token)
-                //   this.loginDialog = false
-                //   this.credentials = {}
-                //   this.$emit('update');
-                // }
                 this.$router.push('/')
               }
             })
@@ -95,18 +93,20 @@
                 memberid: this.$store.state.memberid,
                 img: imgLink,
               }
-              console.log(999234234123123123123123, imgLink)
-              // var token = this.$store.state.token
-              // axios.put('api/member', data)
-              //   .then(response => {
-              //     if (response.status === 200) {
-              //       alert('성공적으로 회원 정보를 수정했습니다.')
-              //       if (this.nickname !== null) {
-              //         this.$store.state.username = this.nickname
-              //       }
-              //       this.$router.push('/')
-              //     }
-              //   })
+              var token = this.$store.state.token
+              axios.put('api/member', data)
+                .then(response => {
+                  if (response.status === 200) {
+                    alert('성공적으로 회원 정보를 수정했습니다.')
+                    const token = response.headers['access-token']
+                    if (token) {
+                      this.$session.start()
+                      this.$session.set('token', token)
+                      this.$store.dispatch('login', token)
+                    }
+                    this.$router.push('/')
+                  }
+                })
             })
             .catch(error => {
               console.log(error)

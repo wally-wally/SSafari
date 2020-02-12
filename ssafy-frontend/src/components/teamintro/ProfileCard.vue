@@ -62,7 +62,7 @@ export default {
 		name: { type: String },
 		position: { type: String},
 		intro: { type: String},
-		skills: { type: Object},
+		skills: { type: Array},
     gitUrl: { type: String},
     email: { type: String}
 	}
