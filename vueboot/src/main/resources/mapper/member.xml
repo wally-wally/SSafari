@@ -74,10 +74,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		DELETE FROM AUTHREQUEST WHERE MEMBERID=#{memberid}
 	</delete>
 	<select id="getAuthRequestList" resultType="com.ssafy.edu.vue.dto.AuthRequest">
-		SELECT A.MEMBERID, M.NAME, IMG, A.LOCATIONID, L.LOCATION, A.UNIT  FROM AUTHREQUEST A, LOCATION L, MEMBERS M WHERE M.MEMBERID=A.MEMBERID AND L.ID=A.LOCATIONID
+		SELECT A.MEMBERID, M.NAME, A.IMG, A.LOCATIONID, L.LOCATION, A.UNIT  FROM AUTHREQUEST A, LOCATION L, MEMBERS M WHERE M.MEMBERID=A.MEMBERID AND L.ID=A.LOCATIONID
 	</select>
 	<select id="getAuthRequest" resultType="com.ssafy.edu.vue.dto.AuthRequest" parameterType="java.lang.Integer">
-		SELECT A.memberid, M.name, img, A.locationid, L.location, A.unit  FROM AUTHREQUEST A, LOCATION L, MEMBERS M WHERE M.MEMBERID=A.MEMBERID AND L.ID=A.LOCATIONID AND A.MEMBERID=#{memberid} 
+		SELECT A.MEMBERID, M.NAME, A.IMG, A.LOCATIONID, L.LOCATION, A.UNIT  FROM AUTHREQUEST A, LOCATION L, MEMBERS M WHERE M.MEMBERID=A.MEMBERID AND L.ID=A.LOCATIONID AND A.MEMBERID=#{memberid} 
 	</select>
 	<update id="updateLocationUnit" parameterType="com.ssafy.edu.vue.dto.AuthRequest">
 		UPDATE MEMBERS SET

@@ -191,7 +191,12 @@ public class PostController {
 		logger.info("1-------------addCommentPost-----------------------------" + new Date());
 		postservice.addCommentPost(commentpost);
 		Postinfo postinfo = new Postinfo(commentpost.getCategoryid(),commentpost.getPostid());
-   		List<Commentpost> posts = postservice.getCommentPost(postinfo);
+		List<Commentpost> posts;
+		if(commentpost.getCategoryid()==3) {
+			posts = postservice.getCommentCode(postinfo);
+		}else {
+			posts = postservice.getCommentPost(postinfo);
+		}
 		return new ResponseEntity<List<Commentpost>>(posts, HttpStatus.OK);
 	}
 	
@@ -201,8 +206,12 @@ public class PostController {
 		logger.info("1-------------updateCommentPost-----------------------------" + new Date());
 		postservice.updateCommentPost(commentpost);
 		Postinfo postinfo = new Postinfo(commentpost.getCategoryid(),commentpost.getPostid());
-   		List<Commentpost> posts = postservice.getCommentPost(postinfo);
-		return new ResponseEntity<List<Commentpost>>(posts, HttpStatus.OK);
+		List<Commentpost> posts;
+		if(commentpost.getCategoryid()==3) {
+			posts = postservice.getCommentCode(postinfo);
+		}else {
+			posts = postservice.getCommentPost(postinfo);
+		}		return new ResponseEntity<List<Commentpost>>(posts, HttpStatus.OK);
 	}
 	
 	@ApiOperation(value = "post Comment 삭제", response = BoolResult.class)
@@ -211,8 +220,12 @@ public class PostController {
 		logger.info("1-------------deleteCommentPost-----------------------------" + new Date());
 		postservice.deleteCommentPost(commentpost.getCpostid());
 		Postinfo postinfo = new Postinfo(commentpost.getCategoryid(),commentpost.getPostid());
-   		List<Commentpost> posts = postservice.getCommentPost(postinfo);
-		return new ResponseEntity<List<Commentpost>>(posts, HttpStatus.OK);
+		List<Commentpost> posts;
+		if(commentpost.getCategoryid()==3) {
+			posts = postservice.getCommentCode(postinfo);
+		}else {
+			posts = postservice.getCommentPost(postinfo);
+		}		return new ResponseEntity<List<Commentpost>>(posts, HttpStatus.OK);
 	}
 	
 	@ApiOperation(value = "post Like 추가 (like count up)", response = List.class)
