@@ -6,6 +6,7 @@ public class PostPaging implements Serializable {
 	private int categoryid;
 	private String keyword;
 	private int page;
+	private int memberid;
 	public PostPaging() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -15,6 +16,13 @@ public class PostPaging implements Serializable {
 		this.categoryid = categoryid;
 		this.keyword = keyword;
 		this.page = page;
+	}
+	public PostPaging(int categoryid, String keyword, int page, int memberid) {
+		super();
+		this.categoryid = categoryid;
+		this.keyword = keyword;
+		this.page = page;
+		this.memberid = memberid;
 	}
 	@Override
 	public String toString() {
@@ -37,5 +45,11 @@ public class PostPaging implements Serializable {
 	}
 	public void setPage(int page) {
 		this.page = page;
+	}
+	public int getMemberid() {
+		return memberid;
+	}
+	public void setMemberid(int memberid) {
+		this.memberid = memberid;
 	}
 }

@@ -213,9 +213,13 @@ public class PostController {
 		List<Commentpost> posts;
 		if(commentpost.getCategoryid()==3) {
 			posts = postservice.getCommentCode(postinfo);
-		}else {
+		}else if(commentpost.getCategoryid()==4){
+			posts = postservice.getCommentJMT(postinfo);
+		}
+		else {
 			posts = postservice.getCommentPost(postinfo);
-		}		return new ResponseEntity<List<Commentpost>>(posts, HttpStatus.OK);
+		}
+		return new ResponseEntity<List<Commentpost>>(posts, HttpStatus.OK);
 	}
 	
 	@ApiOperation(value = "post Comment 삭제", response = BoolResult.class)
@@ -227,9 +231,13 @@ public class PostController {
 		List<Commentpost> posts;
 		if(commentpost.getCategoryid()==3) {
 			posts = postservice.getCommentCode(postinfo);
-		}else {
+		}else if(commentpost.getCategoryid()==4){
+			posts = postservice.getCommentJMT(postinfo);
+		}
+		else {
 			posts = postservice.getCommentPost(postinfo);
-		}		return new ResponseEntity<List<Commentpost>>(posts, HttpStatus.OK);
+		}
+		return new ResponseEntity<List<Commentpost>>(posts, HttpStatus.OK);
 	}
 	
 	@ApiOperation(value = "post Like 추가 (like count up)", response = List.class)
@@ -291,8 +299,14 @@ public class PostController {
 
 	@ApiOperation(value = "post pagination", response = List.class)
 	@RequestMapping(value = "/posts/page", method = RequestMethod.GET)
-	public ResponseEntity<List<Post>> getPostsPaging(@ModelAttribute PostPaging postpaging) throws Exception {
+	public ResponseEntity<List<Post>> getPostsPaging(@ModelAttribute PostPaging postpaging, HttpServletRequest rs) throws Exception {
 		logger.info("1-------------getPostsPaging-----------------------------" + new Date());
+		int memberid = 0;
+		if(rs.getAttribute("loginMember")!=null) {
+			Member member = (Member) rs.getAttribute("loginMember");
+			memberid = member.getMemberid();
+		}
+		postpaging.setMemberid(memberid);
 		List<Post> posts = postservice.getPostsPaging(postpaging);
 		if (posts == null) {
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
