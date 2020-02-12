@@ -47,7 +47,6 @@ export default {
 		getPortfolios() {
 			axios.get('api/portfolios')
 				.then(response => {
-					console.log(response.data)
 					this.portfolios = response.data
 					this.showPortfoliosCount = (this.portfolios.length >= 6) ? 6 : this.portfolios.length 
 					this.$emit('showPortfolioCount', this.portfolios.length)

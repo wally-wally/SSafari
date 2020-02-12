@@ -2,12 +2,12 @@
     <v-card class="cont">
       <div class="form sign-in">
         <h2>로그인</h2>
-        <v-form ref="form" v-model="valid" lazy-validation @submit.prevent="login">
+        <v-form ref="form" lazy-validation @submit.prevent="login">
           <label class="label">
             <v-text-field v-model="credentials.email" :rules="emailRules" label="이메일" required></v-text-field>
           </label>
           <label class="label">
-            <v-text-field v-model="credentials.password" type="password" label="비밀번호" required></v-text-field>
+            <v-text-field v-model="credentials.password" :rules="minRules" type="password" label="비밀번호" required></v-text-field>
           </label>
           <p class="forgot-pass">패스워드를 잊으셨나요?</p>
           <button type="submit" class="submit button">로그인</button>
@@ -79,7 +79,7 @@ export default {
     data() {
         return {
             apiKey: '506786963606539',
-            credentials: {},
+            credentials: {email: '', password: ''},
             minRules: [v => v.length >= 8 || 'Min 8 characters'],
             emailRules: [
               v => !!v || 'E-mail is required',
@@ -89,7 +89,7 @@ export default {
             loginvalid: true,
             loginfailcount : 0,
             loginDialog: false,
-            signUpUser: {},
+            signUpUser: {email: '', password: ''},
             errormessage : {username: [], password: []},
             message : null,
         }

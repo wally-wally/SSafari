@@ -56,7 +56,7 @@ export default new Vuex.Store({
         state.isLogin = false
         state.social = null
         state.auth = null
-    }
+    },
 },
  actions : {
     // 첫번째 인자는 context (다양한)
@@ -79,8 +79,6 @@ export default new Vuex.Store({
             return jwtDecode(state.token)['access-Token'].githubid
         },
         user(state) {
-            console.log('---------------')
-            console.log(jwtDecode(state.token))
             return jwtDecode(state.token)['access-Token']
         },
         options(state) {

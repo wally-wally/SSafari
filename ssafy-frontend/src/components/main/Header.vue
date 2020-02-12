@@ -2,9 +2,9 @@
 <div>
   <v-app-bar v-if="mobile()" app color="white lighten-4" tile>
     <div class="d-flex align-center">
-      <a href="/" style="text-decoration: none; color: #f7b157;">
+      <router-link :to="{name: 'home'}" style="text-decoration: none; color: #f7b157;">
         <v-toolbar-title style="font-size: 16px; padding-right: 10px;">SSavry Time</v-toolbar-title>
-      </a> &nbsp; &nbsp;
+      </router-link> &nbsp; &nbsp;
       <span v-if="!isLogin" class="d-flex align-center">Welcome, Guest</span>
       <span v-else class="d-flex align-center">Welcome, {{$store.state.username}}</span>
     </div>
@@ -15,7 +15,7 @@
     <v-btn v-if="mobile()" color="white" depressed tile to="/studygroup">스터디 모임</v-btn>
     <v-btn v-if="mobile() && isLogin" color="white" depressed tile to="/mypage">내 페이지</v-btn>
     <v-btn v-if="mobile() && !isLogin" color="white" @click.stop="loginDialog = true" depressed tile>로그인</v-btn>
-    <v-btn v-if="mobile() && isLogin" color="white" depressed tile @click="$store.dispatch('logout')">로그아웃</v-btn>
+    <v-btn v-if="mobile() && isLogin" color="white" depressed tile @click="$store.dispatch('logout'); toHome();">로그아웃</v-btn>
     <v-app-bar-nav-icon v-if="!mobile()" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
   
   </v-app-bar>
@@ -134,6 +134,9 @@ export default {
 		...mapState(['isLogin'])
   },
   methods: {
+    toHome() {
+      window.location.replace('http://localhost:8080/')
+    },
     changeLoginDialog() {
       this.loginDialog = false
     },

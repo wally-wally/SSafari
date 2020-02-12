@@ -41,14 +41,12 @@ export default {
 		StudyGroup
 	},
 	mounted() {
-		console.log('myportfoliolist')
 		this.getPortfolios()
 	},
 	methods: {
 		getPortfolios() {
 			axios.get(`api/portfoliolist/${ this.$store.getters.user.memberid }`)
 				.then(response => {
-					console.log(response.data)
 					this.portfolios = response.data
 					this.showPortfoliosCount = (this.portfolios.length >= 6) ? 6 : this.portfolios.length 
 				}).catch(error =>
