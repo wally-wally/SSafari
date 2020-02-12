@@ -3,7 +3,7 @@
         <h3> {{ boardtype }} 댓글 </h3>
         <v-list three-line>
             <div v-for="comment in comments" :key="comment.id">
-                <comment :board="boardtype" :comment=comment />
+                <comment @commetdel="commentdelete(comment)" :board="boardtype" :comment=comment />
                 <v-divider />
             </div>
         </v-list>
@@ -32,13 +32,13 @@ export default {
     name : 'boardcomment',
     props : {
         categoryid : {type : String},
-        comments : {type : Array},
         boardtype : {type: String},
         postid : {type: String},
     },
     components : {Comment},
     data() {
         return {
+            comments : [],
             anonymousStatus : '',
             new_comment : '',
             check : '',
@@ -49,9 +49,58 @@ export default {
     },
     mounted() {
         this.getAnswer()
+        this.getcomments()
     },
     methods : {
+        commentdelete(comment){
+            axios.delete(`api/comment${this.boardtype}`,{data:comment})
+                .then(response => {
+                    this.comments = response.data
+                }).catch(error => {
+                    console.log(error)
+            })
+        },
+        getcomments() {
+            if (this.$route.name==="StudygroupDetail"){
+                const data = {
+                    'postid' : this.postid,
+                }
+                axios.get(`api/comment/`, {params: data})
+                .then(response =>{
+                    this.comments = response.data
+                })
+            }
+            if (this.$route.name==="codedetail"){
+                const data = {
+                    'postid' : this.postid,
+                    'categoryid' : 3,
+                }
+                axios.get(`api/commentpost/`, {params: data})
+                .then(response =>{
+                    this.comments = response.data
+                })
+            } else if (this.$route.name==="jmtdetail"){
+                const data = {
+                    'postid' : this.postid,
+                    'categoryid' : 4,
+                }
+                axios.get(`api/commentpost/`, {params: data})
+                .then(response =>{
+                    console.log(response.data)
+                    this.comments = response.data
+                })
+            } else {
+                const data = {'postid':this.postid, 'categoryid' : this.categoryid}
+                    axios.get(`api/commentpost/`, {params : data})
+                        .then(response => {
+                        this.comments = response.data
+                        }).catch(error=> {
+                        console.log(error)
+                        })
+            }
+        },
         Createcomment () {
+            if (this.new_comment){
             const data = {
                 'memberid' : this.$store.state.memberid,
                 'content' : this.new_comment,
@@ -61,12 +110,12 @@ export default {
             data[`${this.boardtype}id`] = this.postid
             axios.post(`api/comment${this.boardtype}`,data)
                 .then(response => {
-                    console.log(response.data)
                     this.comments = response.data
                 }).catch(error => {
                     console.log(error)
                 })
             this.new_comment = ''
+            }
         },
         getAnswer() {
             if(!this.$store.state.isLogin) {

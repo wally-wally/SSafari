@@ -31,7 +31,7 @@
           </v-list-item>
         <v-divider></v-divider>
           <v-col cols="12" sm="12">
-            <boardcomment :categoryid="post.categoryid" :postid="this.id" boardtype="post" :comments="comments"/>
+            <boardcomment :categoryid="this.$store.state.category[`${this.$route.name}`]" :postid="this.id" boardtype="post"/>
           </v-col>
         </v-list>
       </v-card>
@@ -50,8 +50,8 @@ export default {
     components : {boardcomment},
     data() {
 	    return {
-      post: [],
-      comments: [],
+        post: [],
+        comments: [],
       }
     },
     props: {
@@ -65,17 +65,7 @@ export default {
             axios.get(`api/post/${this.id}`)
                 .then(response => { 
                   this.post = response.data
-                  this.getPostComment()
           })
-        },
-        getPostComment() {
-          axios.get(`api/commentpost/`, {params : {'postid':this.id, 'categoryid' : this.post.categoryid},} , this.$store.getters.options)
-            .then(response => {
-              console.log(response)
-              this.comments = response.data
-            }).catch(error=> {
-              console.log(error)
-            })
         },
         deletePost() {
           if (confirm('정말로 삭제하시겠습니까?')) {
