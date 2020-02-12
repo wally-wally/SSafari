@@ -165,12 +165,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE CATEGORYID=#{categoryid} AND POSTID = #{postid}
 	</select>
 	
-	<insert id="addBoardCategory" parameterType="java.lang.String">
-		INSERT INTO CATEGORY(NAME,EXPLANATION) VALUES(#{name}, #{explanation})
+	<insert id="addBoardCategory" parameterType="com.ssafy.edu.vue.dto.Category">
+		INSERT INTO CATEGORY(NAME,EXPLANATION,MEMBERID) VALUES(#{name}, #{explanation},#{memberid})
+	</insert>
+	<insert id="addBoardCategoryAuth" parameterType="com.ssafy.edu.vue.dto.Category">
+		INSERT INTO CATEGORYAUTH(NAME,EXPLANATION,MEMBERID) VALUES(#{name}, #{explanation},#{memberid})
 	</insert>
 	
 	<select id="isLike" parameterType="com.ssafy.edu.vue.dto.Likepost" resultType="java.lang.Integer">
 		SELECT COUNT(*) FROM LIKEPOST
 		WHERE CATEGORYID=#{categoryid} AND POSTID = #{postid} AND MEMBERID = #{memberid}
 	</select>
+	<select id="getBoardCategory"  resultType="com.ssafy.edu.vue.dto.Category">
+		SELECT ID, NAME, EXPLANATION, MEMBERID FROM CATEGORY WHERE ID>=5
+	</select>
+	<select id="getBoardCategoryAuth"  resultType="com.ssafy.edu.vue.dto.Category">
+		SELECT C.ID, C.NAME, C.EXPLANATION, C.MEMBERID, M.USERNAME FROM CATEGORYAUTH C, MEMBERS M 
+		WHERE C.MEMBERID=M.MEMBERID
+	</select>
+	<select id="getBoardCategoryOne"  parameterType="java.lang.Integer" resultType="com.ssafy.edu.vue.dto.Category">
+		SELECT ID, NAME, EXPLANATION, MEMBERID FROM CATEGORYAUTH
+		WHERE ID=#{id}
+	</select>
+	<delete id="deleteBoardCategoryAuth" parameterType="java.lang.Integer">
+		DELETE FROM CATEGORYAUTH WHERE ID=#{id}
+	</delete>
 </mapper>

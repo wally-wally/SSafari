@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.edu.vue.dto.AuthRequest;
 import com.ssafy.edu.vue.dto.Category;
 import com.ssafy.edu.vue.dto.CategoryPost;
 import com.ssafy.edu.vue.dto.Code;
@@ -156,21 +157,6 @@ public class PostController {
 		return new ResponseEntity<BoolResult>(nr, HttpStatus.OK);
 	}
 	
-	@ApiOperation(value = "code Comment 전체 보기", response = List.class)
-	@RequestMapping(value = "/commentcode", method = RequestMethod.GET)
-	public ResponseEntity<List<Commentpost>> getCommentCode(@ModelAttribute Postinfo postinfo, HttpServletRequest rs) throws Exception {
-		logger.info("1-------------getCommentCode-----------------------------" + new Date());
-		logger.info("2--------"+postinfo);
-		int memberid = 0;
-		if(rs.getAttribute("loginMember")!=null) {
-			Member member = (Member) rs.getAttribute("loginMember");
-			memberid = member.getMemberid();
-		}
-		postinfo.setMemberid(memberid);
-		List<Commentpost> posts = postservice.getCommentCode(postinfo);
-		return new ResponseEntity<List<Commentpost>>(posts, HttpStatus.OK);
-	}
-	
 	@ApiOperation(value = "post Comment 전체 보기", response = List.class)
 	@RequestMapping(value = "/commentpost", method = RequestMethod.GET)
 	public ResponseEntity<List<Commentpost>> getCommentPost(@ModelAttribute Postinfo postinfo, HttpServletRequest rs) throws Exception {
@@ -182,7 +168,15 @@ public class PostController {
 			memberid = member.getMemberid();
 		}
 		postinfo.setMemberid(memberid);
-		List<Commentpost> posts = postservice.getCommentPost(postinfo);
+		List<Commentpost> posts;
+		if(postinfo.getCategoryid()==3) {
+			posts = postservice.getCommentCode(postinfo);
+		}else if(postinfo.getCategoryid()==4){
+			posts = postservice.getCommentJMT(postinfo);
+		}
+		else {
+			posts = postservice.getCommentPost(postinfo);
+		}
 		return new ResponseEntity<List<Commentpost>>(posts, HttpStatus.OK);
 	}
 	
@@ -280,11 +274,56 @@ public class PostController {
 	
 	@ApiOperation(value = "post category 추가 (게시판 추가)", response = List.class)
 	@RequestMapping(value = "/boardcategory", method = RequestMethod.POST)
-	public ResponseEntity<BoolResult> addBoardCategory(@RequestBody Category category) throws Exception {
+	public ResponseEntity<BoolResult> addBoardCategory(@RequestBody Category category, HttpServletRequest rs) throws Exception {
 		logger.info("1-------------addBoardCategory-----------------------------" + new Date());
-		postservice.addBoardCategory(category);
+		logger.info("2------------" + category);
+		logger.info("3-----"+rs.getAttribute("loginMember"));
 		BoolResult nr=new BoolResult();
+		int loginid = 0;
+		if (rs.getAttribute("loginMember") != null) {
+			Member member = (Member) rs.getAttribute("loginMember");
+			loginid = member.getMemberid();
+		}else {
+			nr.setName("로그인 필요");
+			return new ResponseEntity<BoolResult>(nr, HttpStatus.BAD_REQUEST);
+		}
+		category.setMemberid(loginid);
+		postservice.addBoardCategoryAuth(category);
    		nr.setName("addBoardCategory");
+   		nr.setState("succ");
+		return new ResponseEntity<BoolResult>(nr, HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "post category 목록 (게시판 목록)", response = List.class)
+	@RequestMapping(value = "/boardcategory", method = RequestMethod.GET)
+	public ResponseEntity<List<Category>> getBoardCategory() throws Exception {
+		logger.info("1-------------getBoardCategory-----------------------------" + new Date());
+		List<Category> list = postservice.getBoardCategory();
+		return new ResponseEntity<List<Category>>(list, HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "post category 인증 요청 목록 (게시판 인증 요청 목록)", response = List.class)
+	@RequestMapping(value = "/boardcategory/auth", method = RequestMethod.GET)
+	public ResponseEntity<List<Category>> getBoardCategoryAuth() throws Exception {
+		logger.info("1-------------getBoardCategoryAuth-----------------------------" + new Date());
+		List<Category> list = postservice.getBoardCategoryAuth();
+		return new ResponseEntity<List<Category>>(list, HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "post category 인증 승인 (게시판 인증 승인)", response = List.class)
+	@RequestMapping(value = "/boardcategory/auth", method = RequestMethod.PUT)
+	public ResponseEntity<BoolResult> checkBoardCategoryAuth(@RequestBody Category request) throws Exception {
+		logger.info("1-------------checkBoardCategoryAuth-----------------------------" + new Date());
+		BoolResult nr=new BoolResult();
+		if(request.getFlag()==1) {
+			Category category = postservice.getBoardCategoryOne(request.getId());
+			postservice.addBoardCategory(category);
+			nr.setName("인증 승인");
+		}else {
+			nr.setName("인증 거절");
+		}
+		postservice.deleteBoardCategoryAuth(request.getId());
+	
    		nr.setState("succ");
 		return new ResponseEntity<BoolResult>(nr, HttpStatus.OK);
 	}
