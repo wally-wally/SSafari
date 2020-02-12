@@ -141,13 +141,12 @@ public class PostServiceImpl implements IPostService {
 	}
 
 	@Override
-	public List<Post> getPostsPaging(PostPaging postpaging) {
-		return postdao.getPostsPaging(postpaging);
-	}
-
-	@Override
 	public List<Commentpost> getCommentJMT(Postinfo postinfo) {
 		return postdao.getCommentJMT(postinfo);
 	}
 
+	@Override
+	public List<Post> getPostsPaging(PostPaging postpaging) {
+		return postdao.getPostsPaging(postpaging);
+	}
 }

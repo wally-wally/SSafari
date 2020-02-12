@@ -32,7 +32,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		P.CATEGORYID CATEGORYID, P.ANONYMOUS ANONYMOUS, P.LOCATIONID LOCATIONID,
 		IF(P.ANONYMOUS=1 AND M.MEMBERID!=#{memberid}, '익명', M.USERNAME) AS USERNAME 
 		FROM POSTS P, MEMBERS M 
-		WHERE P.MEMBERID=M.MEMBERID 
+		WHERE P.MEMBERID=M.MEMBERID AND CATEGORYID=#{categoryid}
+		<if test="locationid!=0">AND LOCATIONID=#{locationid}</if>
+		<if test="keyword!=null">AND TITLE LIKE '%#{keyword}%'</if>
+		LIMIT 20 OFFSET (#{page}-1)*20
 		ORDER BY POSTID	DESC
 	</select>
 

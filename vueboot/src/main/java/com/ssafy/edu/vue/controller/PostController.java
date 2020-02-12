@@ -51,6 +51,7 @@ public class PostController {
 	@RequestMapping(value = "/posts", method = RequestMethod.GET)
 	public ResponseEntity<List<Post>> getPosts(HttpServletRequest rs) throws Exception {
 		logger.info("1-------------getPosts-----------------------------" + new Date());
+		
 		int memberid = 0;
 		if(rs.getAttribute("loginMember")!=null) {
 			Member member = (Member) rs.getAttribute("loginMember");
@@ -156,21 +157,6 @@ public class PostController {
 		return new ResponseEntity<BoolResult>(nr, HttpStatus.OK);
 	}
 	
-	@ApiOperation(value = "code Comment 전체 보기", response = List.class)
-	@RequestMapping(value = "/commentcode", method = RequestMethod.GET)
-	public ResponseEntity<List<Commentpost>> getCommentCode(@ModelAttribute Postinfo postinfo, HttpServletRequest rs) throws Exception {
-		logger.info("1-------------getCommentCode-----------------------------" + new Date());
-		logger.info("2--------"+postinfo);
-		int memberid = 0;
-		if(rs.getAttribute("loginMember")!=null) {
-			Member member = (Member) rs.getAttribute("loginMember");
-			memberid = member.getMemberid();
-		}
-		postinfo.setMemberid(memberid);
-		List<Commentpost> posts = postservice.getCommentCode(postinfo);
-		return new ResponseEntity<List<Commentpost>>(posts, HttpStatus.OK);
-	}
-	
 	@ApiOperation(value = "post Comment 전체 보기", response = List.class)
 	@RequestMapping(value = "/commentpost", method = RequestMethod.GET)
 	public ResponseEntity<List<Commentpost>> getCommentPost(@ModelAttribute Postinfo postinfo, HttpServletRequest rs) throws Exception {
@@ -182,7 +168,15 @@ public class PostController {
 			memberid = member.getMemberid();
 		}
 		postinfo.setMemberid(memberid);
-		List<Commentpost> posts = postservice.getCommentPost(postinfo);
+		List<Commentpost> posts;
+		if(postinfo.getCategoryid()==3) {
+			posts = postservice.getCommentCode(postinfo);
+		}else if(postinfo.getCategoryid()==4){
+			posts = postservice.getCommentJMT(postinfo);
+		}
+		else {
+			posts = postservice.getCommentPost(postinfo);
+		}
 		return new ResponseEntity<List<Commentpost>>(posts, HttpStatus.OK);
 	}
 	
@@ -307,10 +301,8 @@ public class PostController {
 			memberid = member.getMemberid();
 		}
 		postpaging.setMemberid(memberid);
+		postpaging.setKeyword(postpaging.getKeyword().trim());
 		List<Post> posts = postservice.getPostsPaging(postpaging);
-		if (posts == null) {
-			return new ResponseEntity(HttpStatus.NO_CONTENT);
-		}
 		return new ResponseEntity<List<Post>>(posts, HttpStatus.OK);
 	}
 }

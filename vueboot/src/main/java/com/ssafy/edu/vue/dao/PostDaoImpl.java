@@ -102,13 +102,13 @@ public class PostDaoImpl {
 	public List<Commentpost> getCommentCode(Postinfo postinfo) {
 		return sqlSession.selectList(ns+"getCommentCode",postinfo);
 	}
+	
+	public List<Commentpost> getCommentJMT(Postinfo postinfo) {
+		return sqlSession.selectList(ns+"getCommentJMT",postinfo);
+	}
 
 	public List<Post> getPostsPaging(PostPaging postpaging) {
 		return sqlSession.selectList(ns+"getPostsPaging",postpaging);
-	}
-
-	public List<Commentpost> getCommentJMT(Postinfo postinfo) {
-		return sqlSession.selectList(ns+"getCommentJMT",postinfo);
 	}
 
 }
