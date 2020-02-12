@@ -17,7 +17,7 @@
     <MyStudyGroupList/>
     <v-divider/>
     <div class="mypage-title">
-      <h1>{{this.githubid}} 's Github</h1>
+      <h1>{{this.$store.getters.user.githubid}} 's Github</h1>
     </div>
     <GithubInfo :githubid="githubid"></GithubInfo>
   </div>
@@ -41,7 +41,7 @@ export default {
         showpost: true,
         showportfolio : true, 
         mydata : Object,
-        githubid: '',
+        githubid: this.$store.getters.user.githubid,
         token: '',
         social: '',
         ssafyAuth: '',
@@ -77,7 +77,7 @@ export default {
         // axios.defaults.headers["Access-Control-Expose-Headers"] = "ETag, Link, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval"
         axios.get(`api/member/${this.$store.getters.user.memberid}`)
         .then(response=>{
-          this.githubid = response.data.githubid
+          // this.githubid = response.data.githubid
           // console.log(response)
           })
         .catch(error => {
@@ -89,7 +89,7 @@ export default {
         this.$router.push('/')
       }
       this.getmyinfo()
-      this.social = this.$store.state.social
+      // this.social = this.$store.state.social
       this.ssafyAuth = this.$store.state.auth
     }
 }
