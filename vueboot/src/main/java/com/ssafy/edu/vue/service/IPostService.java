@@ -55,6 +55,8 @@ public interface IPostService {
 
 	List<Commentpost> getCommentCode(Postinfo postinfo);
 
+	List<Commentpost> getCommentJMT(Postinfo postinfo);
+
 	List<Post> getPostsPaging(PostPaging postpaging);
 
 	List<Commentpost> getCommentJMT(Postinfo postinfo);

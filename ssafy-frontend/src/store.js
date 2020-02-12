@@ -15,7 +15,14 @@ export default new Vuex.Store({
             'free' : '1',
             'job' : '2',
             'jmt' : '4',
+            'code' : '3',
         },
+        categorys : {
+            '1' : 'free',
+            '2' : 'job',
+            '3' : 'code',
+            '4' : 'jmt'
+         },
         region: {
             'Seoul': '1',
             'Daejeon': '2',

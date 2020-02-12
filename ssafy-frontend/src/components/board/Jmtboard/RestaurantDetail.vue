@@ -37,7 +37,7 @@
 						<v-divider></v-divider>
 						<v-row justify="center">
 							<v-col cols="12" sm="12">
-								<boardcomment :postid="3" boardtype="맛집" :comments="comments" />
+								<boardcomment :postid="this.id" categoryid="4" boardtype="post"/>
 							</v-col>
 						</v-row>
 					</v-list>
@@ -50,7 +50,6 @@
 <script>
 	import boardcomment from '@/components/comment/boardcomment.vue'
 	import axios from 'axios'
-
 	export default {
 		name: 'RestaurantDetail',
 		components: {

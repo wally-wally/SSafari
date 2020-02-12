@@ -1,7 +1,7 @@
 <template>
   <v-layout mt-5 row wrap style="margin: 20px;">
     <v-flex v-for="i in this.showPostsCount" :key="i" style="width: 100%;"> <!-- col-12 sm6 md3 -->
-      <router-link :to="`/board/${posts[i - 1].postid}`">
+	  <router-link :to="`/board/${$store.state.categorys[posts[i-1].categoryid]}/${posts[i - 1].postid}`">
 				<MyBoard 
 									:date="posts[i - 1].created_at"
 									:title="posts[i - 1].title"

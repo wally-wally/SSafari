@@ -52,6 +52,7 @@ public class PostController {
 	@RequestMapping(value = "/posts", method = RequestMethod.GET)
 	public ResponseEntity<List<Post>> getPosts(HttpServletRequest rs) throws Exception {
 		logger.info("1-------------getPosts-----------------------------" + new Date());
+		
 		int memberid = 0;
 		if(rs.getAttribute("loginMember")!=null) {
 			Member member = (Member) rs.getAttribute("loginMember");
@@ -346,10 +347,8 @@ public class PostController {
 			memberid = member.getMemberid();
 		}
 		postpaging.setMemberid(memberid);
+		postpaging.setKeyword(postpaging.getKeyword().trim());
 		List<Post> posts = postservice.getPostsPaging(postpaging);
-		if (posts == null) {
-			return new ResponseEntity(HttpStatus.NO_CONTENT);
-		}
 		return new ResponseEntity<List<Post>>(posts, HttpStatus.OK);
 	}
 }

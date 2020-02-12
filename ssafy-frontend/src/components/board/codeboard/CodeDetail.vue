@@ -30,18 +30,7 @@
         :options="showOptions"
         :value="code.code"
   ></codemirror>
-    <boardcomment />
-  <div class="mt-3">
-      <h1>
-      댓글~!
-      </h1>
-  <div v-for="comment in comments" :key="comment.cpostid">
-    <comment boardtype="post" :comment="comment" />
-    <v-divider />
-  </div>
-  </div>
-    <input v-model="commentbody" placeholder="여기를 수정해보세요">
-    
+    <boardcomment :postid="this.id" categoryid="3" boardtype="post"/>
 </v-container>
 </template>
 
@@ -94,17 +83,6 @@ export default {
             this.code = response.data
             })
         },
-        getcomments() {
-            const data = {
-                'postid' : this.id,
-                'categoryid' : 3,
-            }
-            axios.get(`api/commentpost/`, {params: data})
-            .then(response =>{
-                console.log(response.data)
-                this.comments = response.data
-            })
-        },
         codedelete() {
             const chk = confirm("진짜?")
             if (chk){
@@ -121,7 +99,6 @@ export default {
     },
     mounted() {
         this.getcode()
-        this.getcomments()
     }
 }
 </script>

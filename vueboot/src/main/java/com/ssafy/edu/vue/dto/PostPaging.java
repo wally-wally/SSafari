@@ -7,26 +7,23 @@ public class PostPaging implements Serializable {
 	private String keyword;
 	private int page;
 	private int memberid;
+	private int locationid;
 	public PostPaging() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public PostPaging(int categoryid, String keyword, int page) {
-		super();
-		this.categoryid = categoryid;
-		this.keyword = keyword;
-		this.page = page;
-	}
-	public PostPaging(int categoryid, String keyword, int page, int memberid) {
+	public PostPaging(int categoryid, String keyword, int page, int memberid, int locationid) {
 		super();
 		this.categoryid = categoryid;
 		this.keyword = keyword;
 		this.page = page;
 		this.memberid = memberid;
+		this.locationid = locationid;
 	}
 	@Override
 	public String toString() {
-		return "PostPaging [categoryid=" + categoryid + ", keyword=" + keyword + ", page=" + page + "]";
+		return "PostPaging [categoryid=" + categoryid + ", keyword=" + keyword + ", page=" + page + ", memberid="
+				+ memberid + ", locationid=" + locationid + "]";
 	}
 	public int getCategoryid() {
 		return categoryid;
@@ -51,5 +48,11 @@ public class PostPaging implements Serializable {
 	}
 	public void setMemberid(int memberid) {
 		this.memberid = memberid;
+	}
+	public int getLocationid() {
+		return locationid;
+	}
+	public void setLocationid(int locationid) {
+		this.locationid = locationid;
 	}
 }
