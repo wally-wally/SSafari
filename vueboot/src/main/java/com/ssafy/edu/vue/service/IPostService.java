@@ -9,6 +9,7 @@ import com.ssafy.edu.vue.dto.Commentpost;
 import com.ssafy.edu.vue.dto.Likepost;
 import com.ssafy.edu.vue.dto.LocationFiltering;
 import com.ssafy.edu.vue.dto.Post;
+import com.ssafy.edu.vue.dto.PostPaging;
 import com.ssafy.edu.vue.dto.Postinfo;
 
 
@@ -53,5 +54,9 @@ public interface IPostService {
 	void addCode(Code code);
 
 	List<Commentpost> getCommentCode(Postinfo postinfo);
+
+	List<Post> getPostsPaging(PostPaging postpaging);
+
+	List<Commentpost> getCommentJMT(Postinfo postinfo);
 	
 }

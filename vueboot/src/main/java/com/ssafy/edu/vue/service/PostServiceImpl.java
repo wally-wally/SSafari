@@ -14,6 +14,7 @@ import com.ssafy.edu.vue.dto.Commentpost;
 import com.ssafy.edu.vue.dto.Likepost;
 import com.ssafy.edu.vue.dto.LocationFiltering;
 import com.ssafy.edu.vue.dto.Post;
+import com.ssafy.edu.vue.dto.PostPaging;
 import com.ssafy.edu.vue.dto.Postinfo;
 
 
@@ -137,6 +138,16 @@ public class PostServiceImpl implements IPostService {
 	@Override
 	public List<Commentpost> getCommentCode(Postinfo postinfo) {
 		return postdao.getCommentCode(postinfo);
+	}
+
+	@Override
+	public List<Post> getPostsPaging(PostPaging postpaging) {
+		return postdao.getPostsPaging(postpaging);
+	}
+
+	@Override
+	public List<Commentpost> getCommentJMT(Postinfo postinfo) {
+		return postdao.getCommentJMT(postinfo);
 	}
 
 }

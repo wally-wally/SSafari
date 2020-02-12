@@ -27,6 +27,7 @@ import com.ssafy.edu.vue.dto.LocationFiltering;
 import com.ssafy.edu.vue.dto.Member;
 import com.ssafy.edu.vue.dto.Portfolio;
 import com.ssafy.edu.vue.dto.Post;
+import com.ssafy.edu.vue.dto.PostPaging;
 import com.ssafy.edu.vue.dto.Postinfo;
 import com.ssafy.edu.vue.help.BoolResult;
 import com.ssafy.edu.vue.service.IPostService;
@@ -191,7 +192,15 @@ public class PostController {
 		logger.info("1-------------addCommentPost-----------------------------" + new Date());
 		postservice.addCommentPost(commentpost);
 		Postinfo postinfo = new Postinfo(commentpost.getCategoryid(),commentpost.getPostid());
-   		List<Commentpost> posts = postservice.getCommentPost(postinfo);
+		List<Commentpost> posts;
+		if(commentpost.getCategoryid()==3) {
+			posts = postservice.getCommentCode(postinfo);
+		}else if(commentpost.getCategoryid()==4){
+			posts = postservice.getCommentJMT(postinfo);
+		}
+		else {
+			posts = postservice.getCommentPost(postinfo);
+		}
 		return new ResponseEntity<List<Commentpost>>(posts, HttpStatus.OK);
 	}
 	
@@ -201,8 +210,12 @@ public class PostController {
 		logger.info("1-------------updateCommentPost-----------------------------" + new Date());
 		postservice.updateCommentPost(commentpost);
 		Postinfo postinfo = new Postinfo(commentpost.getCategoryid(),commentpost.getPostid());
-   		List<Commentpost> posts = postservice.getCommentPost(postinfo);
-		return new ResponseEntity<List<Commentpost>>(posts, HttpStatus.OK);
+		List<Commentpost> posts;
+		if(commentpost.getCategoryid()==3) {
+			posts = postservice.getCommentCode(postinfo);
+		}else {
+			posts = postservice.getCommentPost(postinfo);
+		}		return new ResponseEntity<List<Commentpost>>(posts, HttpStatus.OK);
 	}
 	
 	@ApiOperation(value = "post Comment 삭제", response = BoolResult.class)
@@ -211,8 +224,12 @@ public class PostController {
 		logger.info("1-------------deleteCommentPost-----------------------------" + new Date());
 		postservice.deleteCommentPost(commentpost.getCpostid());
 		Postinfo postinfo = new Postinfo(commentpost.getCategoryid(),commentpost.getPostid());
-   		List<Commentpost> posts = postservice.getCommentPost(postinfo);
-		return new ResponseEntity<List<Commentpost>>(posts, HttpStatus.OK);
+		List<Commentpost> posts;
+		if(commentpost.getCategoryid()==3) {
+			posts = postservice.getCommentCode(postinfo);
+		}else {
+			posts = postservice.getCommentPost(postinfo);
+		}		return new ResponseEntity<List<Commentpost>>(posts, HttpStatus.OK);
 	}
 	
 	@ApiOperation(value = "post Like 추가 (like count up)", response = List.class)
@@ -272,4 +289,14 @@ public class PostController {
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
 	}
 
+	@ApiOperation(value = "post pagination", response = List.class)
+	@RequestMapping(value = "/posts/page", method = RequestMethod.GET)
+	public ResponseEntity<List<Post>> getPostsPaging(@ModelAttribute PostPaging postpaging) throws Exception {
+		logger.info("1-------------getPostsPaging-----------------------------" + new Date());
+		List<Post> posts = postservice.getPostsPaging(postpaging);
+		if (posts == null) {
+			return new ResponseEntity(HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<List<Post>>(posts, HttpStatus.OK);
+	}
 }
