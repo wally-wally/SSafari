@@ -36,12 +36,14 @@ export default {
 			showPostsCount : 0, 
 			morePostsIcon : true,
 			hidePostsIcon : false,
+			categoryNum: '',
 		}
 	},
 	components: {
 		Board
 	},
 	mounted(){
+		this.categoryNum = (Number(this.category) >= 5) ?  this.id: this.$store.state.category[this.category]
 		this.getPosts()
 	},
 	// methods: {
@@ -68,7 +70,7 @@ export default {
 	// },
 	methods: {
 		getPosts() {
-			axios.get(`api/posts/${this.$store.state.category[this.category]}`)
+			axios.get(`api/posts/${this.categoryNum}`)
 				.then( response => {
 					this.posts = response.data
 					this.showPostsCount = (this.posts.length >= 5) ? 5 : this.posts.length  
@@ -91,7 +93,7 @@ export default {
 	watch: {
 		region: {
 			handler() {
-				axios.get(`api/posts/${this.$store.state.category[this.category]}`)
+				axios.get(`api/posts/${this.categoryNum}`)
 					.then( response => {
 						const boardData = response.data
 						this.posts = [] // posts 리스트 초기화 작업
