@@ -111,4 +111,28 @@ public class PostDaoImpl {
 		return sqlSession.selectList(ns+"getPostsPaging",postpaging);
 	}
 
+	public List<Commentpost> getCommentJMT(Postinfo postinfo) {
+		return sqlSession.selectList(ns+"getCommentJMT",postinfo);
+	}
+
+	public List<Category> getBoardCategory() {
+		return sqlSession.selectList(ns+"getBoardCategory");
+	}
+
+	public List<Category> getBoardCategoryAuth() {
+		return sqlSession.selectList(ns+"getBoardCategoryAuth");
+	}
+
+	public Category getBoardCategoryOne(int id) {
+		return sqlSession.selectOne(ns+"getBoardCategoryOne",id);
+	}
+
+	public void deleteBoardCategoryAuth(int id) {
+		sqlSession.delete(ns+"deleteBoardCategoryAuth",id);
+	}
+
+	public void addBoardCategoryAuth(Category category) {
+		sqlSession.insert(ns+"addBoardCategoryAuth",category);
+	}
+
 }

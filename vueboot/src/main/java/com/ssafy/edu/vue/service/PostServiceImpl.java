@@ -126,27 +126,63 @@ public class PostServiceImpl implements IPostService {
 	}
 
 	@Override
+	@Transactional
 	public int isLike(Likepost likepost) {
 		return postdao.isLike(likepost);
 	}
 
 	@Override
+	@Transactional
 	public void addCode(Code code) {
 		postdao.addCode(code);
 	}
 
 	@Override
+	@Transactional(readOnly=true)
 	public List<Commentpost> getCommentCode(Postinfo postinfo) {
 		return postdao.getCommentCode(postinfo);
 	}
 
 	@Override
+	@Transactional(readOnly=true)
+	public List<Post> getPostsPaging(PostPaging postpaging) {
+		return postdao.getPostsPaging(postpaging);
+	}
+
+	@Override
+	@Transactional(readOnly=true)
 	public List<Commentpost> getCommentJMT(Postinfo postinfo) {
 		return postdao.getCommentJMT(postinfo);
 	}
 
 	@Override
-	public List<Post> getPostsPaging(PostPaging postpaging) {
-		return postdao.getPostsPaging(postpaging);
+	@Transactional(readOnly=true)
+	public List<Category> getBoardCategory() {
+		return postdao.getBoardCategory();
 	}
+
+	@Override
+	@Transactional(readOnly=true)
+	public List<Category> getBoardCategoryAuth() {
+		return postdao.getBoardCategoryAuth();
+	}
+
+	@Override
+	@Transactional(readOnly=true)
+	public Category getBoardCategoryOne(int id) {
+		return postdao.getBoardCategoryOne(id);
+	}
+
+	@Override
+	@Transactional
+	public void deleteBoardCategoryAuth(int id) {
+		postdao.deleteBoardCategoryAuth(id);
+	}
+
+	@Override
+	@Transactional
+	public void addBoardCategoryAuth(Category category) {
+		postdao.addBoardCategoryAuth(category);
+	}
+
 }

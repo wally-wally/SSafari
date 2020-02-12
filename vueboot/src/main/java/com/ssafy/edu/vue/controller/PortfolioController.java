@@ -147,7 +147,6 @@ public class PortfolioController {
 	public ResponseEntity<BoolResult> registerSugang(@RequestBody Sugang sugang) throws Exception {
 		logger.info("1-------------registerSugang-----------------------------" + new Date());
 		portfolioservice.registerSugang(sugang);
-		portfolioservice.addSugangMember(sugang.getPortfolioid());
 		BoolResult nr=new BoolResult();
    		nr.setName("registerSugang");
    		nr.setState("succ");
@@ -158,7 +157,6 @@ public class PortfolioController {
 	public ResponseEntity<BoolResult> deletePortfolio(@RequestBody Sugang sugang) throws Exception {
 		logger.info("1-------------deleteSugang-----------------------------" + new Date());
 		portfolioservice.deleteSugang(sugang);
-		portfolioservice.subSugangMember(sugang.getPortfolioid());
 		BoolResult nr=new BoolResult();
    		nr.setName("deleteSugang");
    		nr.setState("succ");

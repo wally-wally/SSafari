@@ -59,4 +59,16 @@ public interface IPostService {
 
 	List<Post> getPostsPaging(PostPaging postpaging);
 
+	List<Commentpost> getCommentJMT(Postinfo postinfo);
+
+	List<Category> getBoardCategory();
+
+	List<Category> getBoardCategoryAuth();
+
+	Category getBoardCategoryOne(int id);
+
+	void deleteBoardCategoryAuth(int id);
+
+	void addBoardCategoryAuth(Category category);
+	
 }
