@@ -8,6 +8,7 @@ import BoardPage from './views/BoardPage.vue'
 
 import AllBoard from './components/board/AllBoard.vue'
 import BoardDetail from './components/board/boardCommonForm/BoardDetail.vue'
+import BoardCreate from '@/components/board/boardCommonForm/BoardCreate.vue'
 import FreeBoard from './components/board/FreeBoard.vue'
 import CodeBoard from './components/board/codeboard/CodeBoard.vue'
 import JobBoard from './components/board//JobBoard.vue'
@@ -55,6 +56,7 @@ export default new Router({
 			name: 'board',
 			component: BoardPage,
 			children : [
+				{ path : 'create', component: BoardCreate, name: 'BoardCreate'},
 				{ path : '', component : AllBoard },
 				{ path : 'free', name: "free" , component : FreeBoard },
 				{ path : 'free/:id', name: "free", component : BoardDetail , props:true},
@@ -67,6 +69,7 @@ export default new Router({
 				{ path : 'jmt' , name: "jmt" ,component : JmtBoard },
 				{ path : 'jmt/create', name: 'jmtcreate', component: RestaurantCreateForm},
 				{ path : 'jmt/:id', name : "jmtdetail", component : RestaurantDetail , props : true},
+				{ path : ':id', component: FreeBoard},
 			]
 		},
 		{

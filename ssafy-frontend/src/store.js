@@ -34,6 +34,8 @@ export default new Vuex.Store({
         isLogin : false,
         memberid : null,
         username : null,
+        social: null,
+        auth: null
     },
 // mutations : state를 변화시키기 위한 메서드(함수)
  mutations : {
@@ -66,6 +68,14 @@ export default new Vuex.Store({
         state.social = null
         state.auth = null
     },
+    memberChange(state) {
+      state.token = token
+      state.memberid = jwtDecode(state.token)['access-Token'].memberid
+      state.username = jwtDecode(state.token)['access-Token'].username
+      state.isLogin = true
+      state.social = jwtDecode(state.token)['access-Token'].social
+      state.auth = jwtDecode(state.token)['access-Token'].auth
+  },
 },
  actions : {
     // 첫번째 인자는 context (다양한)

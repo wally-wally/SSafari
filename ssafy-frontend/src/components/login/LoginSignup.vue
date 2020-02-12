@@ -139,6 +139,18 @@ export default {
                 alert('탈퇴한 회원입니다.')
                 return;
               }
+              if(response.data.state == "이미 존재하는 email 입니다."){
+                alert(response.data.state)
+                return
+              }
+              if(response.data.state == "이미 존재하는 username 입니다."){
+                alert(response.data.state)
+                return
+              }
+              if(response.data.state == "이미 존재하는 email, username 입니다."){
+                alert(response.data.state)
+                return
+              }
               const token = response.headers['access-token']
               if (token) {
                 this.$session.start()
