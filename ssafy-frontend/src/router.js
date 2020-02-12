@@ -69,7 +69,7 @@ export default new Router({
 				{ path : 'jmt' , name: "jmt" ,component : JmtBoard },
 				{ path : 'jmt/create', name: 'jmtcreate', component: RestaurantCreateForm},
 				{ path : 'jmt/:id', name : "jmtdetail", component : RestaurantDetail , props : true},
-				{ path : ':id', component: FreeBoard},
+				{ path : ':id', name: ':id', component: FreeBoard, props:true},
 			]
 		},
 		{

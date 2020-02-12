@@ -131,14 +131,14 @@
         components: {
             BoardList,
         },
-        // props: {
-        //     category: { type: String },
-        // },
+        props: {
+            id: { type: String },
+        },
         data() {
             return {
                 pageData : {
                     page: 1,
-                    categoryid: this.$store.state.category[this.$route.name],
+                    categoryid: (Number(this.id) >= 5) ?  this.id: this.$store.state.category[this.$route.name],
                     keyword: '',
                     locationid: 0
                 },
@@ -188,7 +188,7 @@
                     'body': this.content,
                     'anonymous': this.annoymousStatus ? 1 : 0,
                     'memberid': this.$store.state.memberid,
-                    'categoryid': Number(this.$store.state.category['free']),
+                    'categoryid': (Number(this.id) >= 5) ?  Number(this.id): Number(this.$store.state.category['free']),
                     'locationid': Number(this.$store.state.region[this.selectRegion])
                 }
                 axios.post('api/post', boardData)
