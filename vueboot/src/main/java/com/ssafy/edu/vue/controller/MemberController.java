@@ -110,13 +110,13 @@ public class MemberController {
 			memberservice.addMember(member);
 		} else if (email >= 1 && username == 0) {
 			result.setSignup(false);
-			result.setMessage("email 중복");
+			result.setMessage("이미 존재하는 email 입니다.");
 		} else if (email == 0 && username >= 1) {
 			result.setSignup(false);
-			result.setMessage("username 중복");
+			result.setMessage("이미 존재하는 username 입니다.");
 		} else {
 			result.setSignup(false);
-			result.setMessage("email, username 중복");
+			result.setMessage("이미 존재하는 email, username 입니다.");
 		}
 		return new ResponseEntity<CheckSignUp>(result, HttpStatus.OK);
 	}
@@ -144,13 +144,13 @@ public class MemberController {
 			member.setUsername(origin.getUsername());
 		}else if(memberservice.checkUsername(member.getUsername())>0) {
 			
-			resultMap.put("state", "username 중복");
-			return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.BAD_REQUEST); 
+			resultMap.put("state", "이미 존재하는 username 입니다.");
+			return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK); 
 		}
-		if(member.getGithubid().equals("") || member.getGithubid()==null) {
+		if(member.getGithubid()==null || member.getGithubid().equals("") ) {
 			member.setGithubid(origin.getGithubid());
 		}
-		if(member.getImg().equals("") || member.getImg()==null) {
+		if(member.getImg()==null || member.getImg().equals("") ) {
 			member.setImg(origin.getImg());
 		}
 		memberservice.updateMember(member);
@@ -158,8 +158,8 @@ public class MemberController {
 		String token = jwtService.signin(login);
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("access-token", token);
-		resultMap.put("state", "succ");
-		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+		resultMap.put("state", "사용 가능");
+		return new ResponseEntity<Map<String, Object>>(resultMap, headers, HttpStatus.OK);
 		
 	}
 	
