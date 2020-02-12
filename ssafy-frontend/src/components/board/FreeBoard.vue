@@ -14,7 +14,21 @@
                         </v-select>
                     </v-container>
                 </div>
-                <div class="post-count">{{ postCnt }}</div>
+                <div class="post-count">{{ boards.length }}</div>
+            </div>
+            <div class="d-flex justify-space-between pb-4">
+                <v-flex>
+                    <v-btn class="board-go-first" v-if="pageData.page >= 3" @click="changePageIndex(0)">처음</v-btn>
+                    <v-btn class="board-go-prev" v-if="pageData.page >= 2" @click="changePageIndex(-1)">이전</v-btn>
+                    <v-btn class="board-go-next" @click="changePageIndex(1)">다음</v-btn>
+                    {{ pageData.page }}[page]
+                </v-flex>
+                <v-text-field class="pa-0 ma-0 search-board-keyword"
+                    hide-details
+                    single-line
+                    v-model="pageData.keyword">
+                </v-text-field>
+                <i class="fas fa-search" @click="changePageIndex(2)"></i>
             </div>
             <div v-if="currentMemberId !== null && this.selectRegion !== 'All'" class="create-post">
                 <div v-if="this.showCreatePost === 0" class="init d-flex justify-space-between" @click="hideInitPostForm">
@@ -53,22 +67,7 @@
                     <!-- @showPostCount="onPostCount" :limits="5" :load-more="true" -->
                     <BoardList :boards="boards"></BoardList>
                 </v-flex>
-                
             </v-layout>
-            <v-flex>
-                <v-btn class="board-go-first" v-if="pageData.page >= 3" @click="changePageIndex(0)">처음</v-btn>
-                <v-btn class="board-go-prev" v-if="pageData.page >= 2" @click="changePageIndex(-1)">이전</v-btn>
-                <v-btn class="board-go-next" @click="changePageIndex(1)">다음</v-btn>
-                {{ pageData.page }}
-            </v-flex>
-            <div class="d-flex justify-space-between" style="max-width:80%;">
-			<v-text-field class="pa-0 ma-0 search-board-keyword"
-				hide-details
-				single-line
-				v-model="pageData.keyword">
-			</v-text-field>
-			<i class="fas fa-search" @click="changePageIndex(2)"></i>
-		</div>
         </div>
         <div class="side-post-section" style="margin-left: 3%;">
             <div class="popular-post">
@@ -144,7 +143,6 @@
                 },
                 boards: [],
                 searchKeyword: '',
-                postCnt: 0,
                 selectRegion: 'All', // deafult를 로그인한 유저의 지역으로 하고 싶으면 이 부분 수정
                 regions: ['All', 'Seoul', 'Daejeon', 'Gumi', 'Gawngju'],
                 showCreatePost: 0,
@@ -254,7 +252,7 @@
     }
 
     .post-count::after {
-        content: '개의 Post 게시글';
+        content: '개의 게시글';
     }
 
     .main-post-section {

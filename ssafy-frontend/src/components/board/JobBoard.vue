@@ -14,7 +14,21 @@
                         </v-select>
                     </v-container>
                 </div>
-                <div class="post-count">{{ postCnt }}</div>
+                <div class="post-count">{{ boards.length }}</div>
+            </div>
+            <div class="d-flex justify-space-between pb-4">
+                <v-flex>
+                    <v-btn class="board-go-first" v-if="pageData.page >= 3" @click="changePageIndex(0)">처음</v-btn>
+                    <v-btn class="board-go-prev" v-if="pageData.page >= 2" @click="changePageIndex(-1)">이전</v-btn>
+                    <v-btn class="board-go-next" @click="changePageIndex(1)">다음</v-btn>
+                    {{ pageData.page }}[page]
+                </v-flex>
+                <v-text-field class="pa-0 ma-0 search-board-keyword"
+                    hide-details
+                    single-line
+                    v-model="pageData.keyword">
+                </v-text-field>
+                <i class="fas fa-search" @click="changePageIndex(2)"></i>
             </div>
             <div v-if="currentMemberId !== null && this.selectRegion !== 'All'" class="create-post">
                 <div v-if="this.showCreatePost === 0" class="init d-flex justify-space-between" @click="hideInitPostForm">
@@ -49,7 +63,7 @@
             </div>
             <v-layout>
                 <v-flex>
-                    <BoardList :category="this.$route.name" :region.sync="selectRegion" @showPostCount="onPostCount" :limits="5" :load-more="true"></BoardList>
+                    <BoardList :boards="boards"></BoardList>
                 </v-flex>
             </v-layout>
         </div>
@@ -119,7 +133,14 @@
         // },
         data() {
             return {
-                postCnt: 0,
+                pageData : {
+                    page: 1,
+                    categoryid: this.$store.state.category[this.$route.name],
+                    keyword: '',
+                    locationid: 0
+                },
+                boards: [],
+                searchKeyword: '',
                 selectRegion: 'All', // deafult를 로그인한 유저의 지역으로 하고 싶으면 이 부분 수정
                 regions: ['All', 'Seoul', 'Daejeon', 'Gumi', 'Gawngju'],
                 showCreatePost: 0,
@@ -147,6 +168,7 @@
             })
         },
         mounted() {
+            this.changePageIndex(0)
             this.currentMemberId = this.$store.state.memberid
         },
         methods: {
@@ -171,15 +193,41 @@
                             router.go('/board/job')
                         }
                     })
+            },
+            changePageIndex(status) { // (1) pagination으로 동작하는 경우
+                if (status === 0) {
+                    this.pageData.page = 1
+                } else if (status === -1) {
+                    this.pageData.page = this.pageData.page - 1 === 0 ? 1 : this.pageData.page - 1
+                } else if (status === 1) {
+                    this.pageData.page += 1
+                } else {
+                    if (this.pageData.keyword) {
+                        this.pageData.page =1
+                    } else {
+                        alert('검색어를 입력하세요.')
+                    }
+                }
+                console.log(this.pageData)
+                axios.get(`api/posts/page`, {params:this.pageData})
+                    .then(response => {
+                        console.log('--------------------')
+                        console.log(response)
+                        this.boards = response.data
+                    })
             }
         },
-        // watch: {
-        //     selectRegion: {
-        //         handler() {
-        //             console.log('1414')
-        //         }
-        //     }
-        // }
+        watch: {
+            selectRegion: {
+                handler() {
+                    this.pageData.locationid = this.selectRegion === 'All' ? 0 : Number(this.$store.state.region[this.selectRegion])
+                    this.pageData.page = 1
+                    this.pageData.keyword =''
+                    console.log(this.pageData)
+                    this.changePageIndex(0)
+                }
+            }
+        }
     }
 </script>
 
@@ -201,7 +249,7 @@
     }
 
     .post-count::after {
-        content: '개의 Post 게시글';
+        content: '개의 게시글';
     }
 
     .main-post-section {
