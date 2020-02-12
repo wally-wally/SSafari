@@ -21,7 +21,7 @@ export default {
     return {
     };
   },
-  mounted(){
+  beforeCreate  (){
     if (this.$session.get('token')){
       const token = this.$session.get('token')
       this.$store.dispatch('login', token)
