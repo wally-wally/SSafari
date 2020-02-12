@@ -111,10 +111,6 @@ public class PostDaoImpl {
 		return sqlSession.selectList(ns+"getPostsPaging",postpaging);
 	}
 
-	public List<Commentpost> getCommentJMT(Postinfo postinfo) {
-		return sqlSession.selectList(ns+"getCommentJMT",postinfo);
-	}
-
 	public List<Category> getBoardCategory() {
 		return sqlSession.selectList(ns+"getBoardCategory");
 	}

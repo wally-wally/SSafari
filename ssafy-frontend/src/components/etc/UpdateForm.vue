@@ -1,9 +1,10 @@
 <template>
     <v-flex justify-center>
-        <div v-if="currentMemberId === memberId">
+        {{post}}
+        <div v-if="currentMemberId === post.memberid">
         <div id="create-form-title">
-            <span id="form-title" v-if="this.$route.path === `/board/${id}/update`">Board Form</span>
-            <span id="form-title" v-else-if="this.$route.path === `/studygroup/${id}/update`">Studygroup Form</span>
+            <span id="form-title" v-if="this.$route.path === `/board/${this.$store.state.categorys[post.categoryid]}/${post.postid}/update`">Board Form</span>
+            <span id="form-title" v-else-if="this.$route.path === `/studygroup/${post.postid}/update`">Studygroup Form</span>
         </div>
         <hr class="title-headline">
         <div class="title-top">
@@ -11,7 +12,9 @@
             <textarea v-model="titleData" id="title-form"></textarea>
         </div>
         <textarea v-model="contentData" id="create-content" name="content"></textarea>
-        <v-file-input :rules="rules" v-if="this.$route.path === `/studygroup/${id}/update`" v-model="imgFile" label="File input" id="file" outlined dense accept="image/png, image/jpeg, image/bmp"></v-file-input>
+        <v-file-input :rules="rules" v-if="this.$route.path === `/studygroup/${post.postid}/update`" v-model="imgFile" label="File input" id="file" outlined dense accept="image/png, image/jpeg, image/bmp"></v-file-input>
+         <v-checkbox v-model="anonymousStatus" label="익명" value="1" class="annoyCheck"/>
+
         <v-btn class="mr-5" color="primary" @click="update">수정</v-btn>
         <v-btn color="error" @click="goBack()">취소</v-btn>
         </div>
@@ -30,6 +33,7 @@ export default {
     name: 'UpdateForm',
     data() {
         return {
+            anonymousStatus : false,
             currentMemberId: '',
             titleData: '',
             contentData: '',
@@ -49,11 +53,7 @@ export default {
         }
     },
     props: {
-        id: { type: Number},
-        title: { type: String},
-        content: { type: String},
-        imgSrc: { type: String},
-        memberId: { type: String}
+        post : {type : Object}
     },
     beforeRouteEnter(to, from, next) {
         next((vm) => {
@@ -61,8 +61,8 @@ export default {
         });
     },
     mounted() {
-        this.titleData = this.title
-        this.contentData = this.content
+        this.titleData = this.post.title
+        this.contentData = this.post.body
         this.currentMemberId = this.$store.state.memberid
     },
     methods: {
@@ -75,24 +75,25 @@ export default {
             }
         },
         update() {
-            if(this.$route.path === `/board/${this.id}/update`){
+            if(this.$route.path === `/board/${this.post.postid}/update`){
                 var postData = {
-                    postid: this.id,
+                    postid: this.post.postid,
                     title: this.titleData,
                     body: this.contentData,
-                    memberid: this.$store.state.memberid
+                    memberid: this.$store.state.memberid,
+                    anonym : this.anonymousStatus ? 1 : 0
                 }
                 axios.put('api/post', postData)
                     .then(response => {
                         console.log(response.status)
                         if(response.status === 200){
-                            this.$router.push(`/board/${this.id}`)
+                            this.$router.push(`/board/${this.post.postid}`)
                         }
                     })
             }
-            else if(this.$route.path === `/studygroup/${this.id}/update`){
+            else if(this.$route.path === `/studygroup/${this.post.postid}/update`){
                 var portfolioData = {
-                    portfolioid: this.id,
+                    portfolioid: this.post.postid,
                     title: this.titleData,
                     body: this.contentData,
                     memberid: this.$store.state.memberid,
@@ -102,7 +103,7 @@ export default {
                     axios.put('api/portfolio', portfolioData)
                         .then(response => {
                             if(response.status === 200){
-                                this.$router.push(`/studygroup/${this.id}`)
+                                this.$router.push(`/studygroup/${this.post.postid}`)
                             }
                         })
                 }

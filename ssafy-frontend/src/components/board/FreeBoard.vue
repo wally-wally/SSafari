@@ -50,7 +50,8 @@
             </div>
             <v-layout>
                 <v-flex>
-                    <BoardList :category="this.$route.name" :region="selectRegion" @showPostCount="onPostCount" :limits="5" :load-more="true"></BoardList>
+                    <!-- @showPostCount="onPostCount" :limits="5" :load-more="true" -->
+                    <BoardList :boards="boards"></BoardList>
                 </v-flex>
                 
             </v-layout>
@@ -141,6 +142,7 @@
                     keyword: '',
                     locationid: 0
                 },
+                boards: [],
                 searchKeyword: '',
                 postCnt: 0,
                 selectRegion: 'All', // deafult를 로그인한 유저의 지역으로 하고 싶으면 이 부분 수정
@@ -170,6 +172,7 @@
             })
         },
         mounted() {
+            this.changePageIndex(0)
             this.currentMemberId = this.$store.state.memberid
         },
         methods: {
@@ -213,17 +216,20 @@
                 console.log(this.pageData)
                 axios.get(`api/posts/page`, {params:this.pageData})
                     .then(response => {
-                        // console.log(response)
-                    }
-                    )
+                        console.log('--------------------')
+                        console.log(response)
+                        this.boards = response.data
+                    })
             }
         },
         watch: {
             selectRegion: {
                 handler() {
-                    this.pageData.locationid = this.selectRegion === 'All' ? 0 : this.$store.state.region[this.selectRegion]
+                    this.pageData.locationid = this.selectRegion === 'All' ? 0 : Number(this.$store.state.region[this.selectRegion])
                     this.pageData.page = 1
+                    this.pageData.keyword =''
                     console.log(this.pageData)
+                    this.changePageIndex(0)
                 }
             }
         }

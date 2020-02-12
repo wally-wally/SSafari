@@ -15,7 +15,7 @@
             <div class="my-2 mx-2">
               <span class="headline">{{ post.title }} <h6>{{ post.created_at }} </h6>
                 <div v-if="this.$store.state.memberid === post.memberid">
-                <v-btn class="mr-1" small color="green" :to="{ name: 'BoardUpdate', params: { id: id, title: post.title, content: post.body, memberId: post.memberid }}">수정</v-btn>
+                <v-btn class="mr-1" small color="green" :to="{ path : `/board/${$store.state.categorys[post.categoryid]}/${post.postid}/update`, params: { post:post }}">수정</v-btn>
                 <v-btn @click="deletePost" small color="error">삭제</v-btn>
                 </div>
               </span>

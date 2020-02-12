@@ -341,13 +341,21 @@ public class PostController {
 	@RequestMapping(value = "/posts/page", method = RequestMethod.GET)
 	public ResponseEntity<List<Post>> getPostsPaging(@ModelAttribute PostPaging postpaging, HttpServletRequest rs) throws Exception {
 		logger.info("1-------------getPostsPaging-----------------------------" + new Date());
+		logger.info("2-------------"+postpaging);
 		int memberid = 0;
 		if(rs.getAttribute("loginMember")!=null) {
 			Member member = (Member) rs.getAttribute("loginMember");
 			memberid = member.getMemberid();
 		}
 		postpaging.setMemberid(memberid);
-		postpaging.setKeyword(postpaging.getKeyword().trim());
+		String keyword;
+		if(postpaging.getKeyword()==null) {
+			keyword="";
+		}else {
+			keyword = postpaging.getKeyword();
+		}
+		postpaging.setKeyword("%"+keyword+"%");
+		postpaging.setPage((postpaging.getPage()-1)*20);
 		List<Post> posts = postservice.getPostsPaging(postpaging);
 		return new ResponseEntity<List<Post>>(posts, HttpStatus.OK);
 	}
