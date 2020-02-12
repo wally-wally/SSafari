@@ -49,7 +49,7 @@
             </div>
             <v-layout>
                 <v-flex>
-                    <BoardList :category="this.$route.name" :region="selectRegion" @showPostCount="onPostCount" :limits="5" :load-more="true"></BoardList>
+                    <BoardList :category="this.$route.name" :region.sync="selectRegion" @showPostCount="onPostCount" :limits="5" :load-more="true"></BoardList>
                 </v-flex>
             </v-layout>
         </div>
@@ -172,7 +172,14 @@
                         }
                     })
             }
-        }
+        },
+        // watch: {
+        //     selectRegion: {
+        //         handler() {
+        //             console.log('1414')
+        //         }
+        //     }
+        // }
     }
 </script>
 
