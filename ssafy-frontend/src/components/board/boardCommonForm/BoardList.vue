@@ -1,7 +1,7 @@
 <template>
   <v-layout mt-5 row wrap>
-    <v-flex v-for="board in this.boards"  :key="board.id" style="width: 100%;"> <!-- col-12 sm6 md3 -->
-		<router-link :to="`/board/${$store.state.categorys[board.categoryid]}/${board.postid}`">
+    <v-flex v-for="board in this.boards"  :key="board.postid" style="width: 100%;"> <!-- col-12 sm6 md3 -->
+	<router-link :to="`/board/${boardname}/${board.postid}`">
 	  <Board :date="board.created_at"
           :title="board.title"
           :body="board.body"
@@ -18,9 +18,10 @@ import Board from '@/components/board/boardCommonForm/Board'
 import axios from 'axios'
 
 export default {
-	name: 'BoardtList',
+	name: 'BoardList',
 	props: {
-		boards: {type: Array}
+		boards: {type: Array},
+		boardname : {type: String}
 	},
 	data() {
 		return {}
