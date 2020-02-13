@@ -1,7 +1,9 @@
 package com.ssafy.edu.vue.controller;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -19,8 +21,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.edu.vue.dto.Jmt;
 import com.ssafy.edu.vue.dto.Member;
+import com.ssafy.edu.vue.dto.Postinfo;
 import com.ssafy.edu.vue.help.BoolResult;
 import com.ssafy.edu.vue.service.IJmtService;
+import com.ssafy.edu.vue.service.IPostService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -36,6 +40,8 @@ public class JmtController {
 
 	@Autowired
 	private IJmtService jmtservice;
+	@Autowired
+	private IPostService postservice;
 	
 	@ApiOperation(value = "jmt 전체 보기", response = List.class)
 	@RequestMapping(value = "/jmts", method = RequestMethod.GET)
@@ -55,18 +61,30 @@ public class JmtController {
 	
 	@ApiOperation(value = "jmt 상세 보기", response = List.class)
 	@RequestMapping(value = "/jmt/{id}", method = RequestMethod.GET)
-	public ResponseEntity<Jmt> getJmt(@PathVariable int id,HttpServletRequest rs) throws Exception {
+	public ResponseEntity<Map<String,Object>> getJmt(@PathVariable int id,HttpServletRequest rs) throws Exception {
 		logger.info("1-------------getJmt-----------------------------" + new Date());
+		Map<String,Object> result = new HashMap();
 		int memberid = 0;
 		if(rs.getAttribute("loginMember")!=null) {
 			Member member = (Member) rs.getAttribute("loginMember");
 			memberid = member.getMemberid();
 		}
+		
 		Jmt jmt = jmtservice.getJmt(new Jmt(id, memberid));
-		if (jmt == null) {
-			return new ResponseEntity(HttpStatus.NO_CONTENT);
+		result.put("jmt", jmt);
+		
+		Postinfo likepost = new Postinfo(4,id);
+		int counts = postservice.getLikeCounts(likepost);
+		result.put("count", counts);
+		
+		int flag = 0;
+		if(memberid!=0) {
+			likepost.setMemberid(memberid);
+			postservice.isLike(likepost);
 		}
-		return new ResponseEntity<Jmt>(jmt, HttpStatus.OK);
+		result.put("flag", flag);
+		
+		return new ResponseEntity<Map<String,Object>>(result, HttpStatus.OK);
 	}
 	
 	@ApiOperation(value = "jmt 추가", response = List.class)

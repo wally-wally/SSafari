@@ -1,7 +1,9 @@
 package com.ssafy.edu.vue.controller;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -18,9 +20,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.edu.vue.dto.Member;
+import com.ssafy.edu.vue.dto.Postinfo;
 import com.ssafy.edu.vue.dto.Code;
 import com.ssafy.edu.vue.help.BoolResult;
 import com.ssafy.edu.vue.service.ICodeService;
+import com.ssafy.edu.vue.service.IPostService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -36,6 +40,8 @@ public class CodeController {
 
 	@Autowired
 	private ICodeService codeservice;
+	@Autowired
+	private IPostService postservice;
 	
 	@ApiOperation(value = "code 전체 보기", response = List.class)
 	@RequestMapping(value = "/codes", method = RequestMethod.GET)
@@ -55,13 +61,30 @@ public class CodeController {
 	
 	@ApiOperation(value = "code 상세 보기", response = List.class)
 	@RequestMapping(value = "/code/{id}", method = RequestMethod.GET)
-	public ResponseEntity<Code> getCode(@PathVariable int id,HttpServletRequest rs) throws Exception {
+	public ResponseEntity<Map<String,Object>> getCode(@PathVariable int id,HttpServletRequest rs) throws Exception {
 		logger.info("1-------------getCode-----------------------------" + new Date());
-		Code code = codeservice.getCode(id);
-		if (code == null) {
-			return new ResponseEntity(HttpStatus.NO_CONTENT);
+		Map<String,Object> result = new HashMap();
+		int memberid = 0;
+		if(rs.getAttribute("loginMember")!=null) {
+			Member member = (Member) rs.getAttribute("loginMember");
+			memberid = member.getMemberid();
 		}
-		return new ResponseEntity<Code>(code, HttpStatus.OK);
+		
+		Code code = codeservice.getCode(id);
+		result.put("code", code);
+		
+		Postinfo likepost = new Postinfo(3,id);
+		int counts = postservice.getLikeCounts(likepost);
+		result.put("count", counts);
+		
+		int flag = 0;
+		if(memberid!=0) {
+			likepost.setMemberid(memberid);
+			postservice.isLike(likepost);
+		}
+		result.put("flag", flag);
+		
+		return new ResponseEntity<Map<String,Object>>(result, HttpStatus.OK);
 	}
 	
 	@ApiOperation(value = "code 추가", response = List.class)
