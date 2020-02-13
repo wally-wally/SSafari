@@ -57,8 +57,6 @@ export default new Router({
 			children : [
 				{ path : 'create', component: BoardCreate, name: 'BoardCreate'},
 				{ path : '', component : AllBoard },
-				{ path : 'free/:id', name: "free", component : BoardDetail , props:true},
-				{ path : 'job/:id', name: "job", component : BoardDetail , props:true},
 				{ path : 'codereview', name:"code", component : CodeBoard,},
 				{ path : 'codereview/create', name: "codecreate", component : CodeCreate},
 				{ path : 'codereview/:id', name : "codedetail", component : CodeDetail , props : true},

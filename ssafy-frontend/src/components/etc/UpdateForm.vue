@@ -1,6 +1,5 @@
 <template>
     <v-flex justify-center>
-        {{this.post}}
         <div v-if="this.$store.state.memberid === post.memberid">
             <div id="create-form-title">
                 <span id="form-title" v-if="this.$route.path === `/studygroup/${post.postid}/update`">Studygroup Form</span>
