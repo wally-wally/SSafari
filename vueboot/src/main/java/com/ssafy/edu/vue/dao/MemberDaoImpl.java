@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.ssafy.edu.vue.dto.AuthRequest;
+import com.ssafy.edu.vue.dto.LikePost;
 import com.ssafy.edu.vue.dto.Member;
 
 @Repository
@@ -83,6 +84,10 @@ public class MemberDaoImpl {
 
 	public void updateLocationUnit(AuthRequest ar) {
 		sqlSession.update(ns+"updateLocationUnit",ar);
+	}
+
+	public List<LikePost> getMemberLikePost(int memberid) {
+		return sqlSession.selectList(ns+"getMemberLikePost",memberid);
 	}
 
 }

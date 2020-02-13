@@ -56,29 +56,36 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE
 		MEMBERID=#{memberid}
 	</update>
+	
 	<select id="checkDelflag" resultType="java.lang.Integer" parameterType="java.lang.String">
 		SELECT DELFLAG FROM MEMBERS WHERE EMAIL=#{email}
 	</select>
+	
 	<insert id="authRequest" parameterType="com.ssafy.edu.vue.dto.AuthRequest">
 		INSERT INTO
 		AUTHREQUEST(MEMBERID, IMG, LOCATIONID, UNIT)
 		VALUES(#{memberid},#{img},#{locationid},#{unit})
 	</insert>
+	
 	<update id="updatePassword" parameterType="com.ssafy.edu.vue.dto.Member">
 		UPDATE MEMBERS SET
 		PASSWORD=hex(aes_encrypt(#{password}, 'key'))
 		WHERE
 		MEMBERID=#{memberid}
 	</update>
+	
 	<delete id="deleteAuthRequest" parameterType="java.lang.Integer">
 		DELETE FROM AUTHREQUEST WHERE MEMBERID=#{memberid}
 	</delete>
+	
 	<select id="getAuthRequestList" resultType="com.ssafy.edu.vue.dto.AuthRequest">
 		SELECT A.MEMBERID, M.NAME, A.IMG, A.LOCATIONID, L.LOCATION, A.UNIT  FROM AUTHREQUEST A, LOCATION L, MEMBERS M WHERE M.MEMBERID=A.MEMBERID AND L.ID=A.LOCATIONID
 	</select>
+	
 	<select id="getAuthRequest" resultType="com.ssafy.edu.vue.dto.AuthRequest" parameterType="java.lang.Integer">
 		SELECT A.MEMBERID, M.NAME, A.IMG, A.LOCATIONID, L.LOCATION, A.UNIT  FROM AUTHREQUEST A, LOCATION L, MEMBERS M WHERE M.MEMBERID=A.MEMBERID AND L.ID=A.LOCATIONID AND A.MEMBERID=#{memberid} 
 	</select>
+	
 	<update id="updateLocationUnit" parameterType="com.ssafy.edu.vue.dto.AuthRequest">
 		UPDATE MEMBERS SET
 		LOCATIONID=#{locationid},
@@ -86,4 +93,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE
 		MEMBERID=#{memberid}
 	</update>
+	
+	<select id="getMemberLikePost" parameterType="java.lang.Integer" resultType="com.ssafy.edu.vue.dto.LikePost">
+		( SELECT J.ID, J.NAME TITLE, (4) AS CATEGORYID, L.MEMBERID, J.CREATED_AT FROM JMT J, LIKEPOST L
+		WHERE L.CATEGORYID=4 AND J.ID=L.POSTID AND L.MEMBERID=#{memberid}
+		UNION
+		SELECT C.ID, C.TITLE, (3) AS CATEGORYID, L.MEMBERID, C.CREATED_AT FROM CODEREVIEW C, LIKEPOST L
+		WHERE L.CATEGORYID=3 AND C.ID=L.POSTID AND L.MEMBERID=#{memberid}
+		UNION
+		SELECT P.POSTID, P.TITLE, L.CATEGORYID, L.MEMBERID, P.CREATED_AT FROM POSTS P, LIKEPOST L
+		WHERE P.CATEGORYID=L.CATEGORYID AND P.POSTID=L.POSTID AND L.MEMBERID=#{memberid} ) 
+		ORDER BY CREATED_AT
+	</select>
+	
 </mapper>

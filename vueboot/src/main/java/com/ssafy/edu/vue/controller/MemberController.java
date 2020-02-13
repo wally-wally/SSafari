@@ -28,6 +28,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import com.ssafy.edu.vue.dto.AuthRequest;
 import com.ssafy.edu.vue.dto.CheckSignUp;
 import com.ssafy.edu.vue.dto.Facebook;
+import com.ssafy.edu.vue.dto.LikePost;
 import com.ssafy.edu.vue.dto.Member;
 import com.ssafy.edu.vue.dto.Portfolio;
 import com.ssafy.edu.vue.help.BoolResult;
@@ -331,5 +332,21 @@ public class MemberController {
 		List<AuthRequest> members = memberservice.getAuthRequestList();
 
 		return new ResponseEntity<List<AuthRequest>>(members, HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "member 좋아요 누른 게시글", response = List.class)
+	@RequestMapping(value = "/member/likepost", method = RequestMethod.GET)
+	public ResponseEntity<List<LikePost>> getMemberLikePost(HttpServletRequest rs) throws Exception {
+		logger.info("1-------------getMemberLikePost-----------------------------" + new Date());
+		int memberid = 0;
+		if(rs.getAttribute("loginMember")!=null) {
+			Member member = (Member) rs.getAttribute("loginMember");
+			memberid = member.getMemberid();
+		}else {
+			return new ResponseEntity<List<LikePost>>(HttpStatus.BAD_REQUEST);
+		}
+		List<LikePost> likepost = memberservice.getMemberLikePost(memberid);
+
+		return new ResponseEntity<List<LikePost>>(likepost, HttpStatus.OK);
 	}
 }

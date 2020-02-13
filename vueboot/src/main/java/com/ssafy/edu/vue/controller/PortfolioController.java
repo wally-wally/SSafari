@@ -42,9 +42,7 @@ public class PortfolioController {
 	public ResponseEntity<List<Portfolio>> getPortfolios() throws Exception {
 		logger.info("1-------------getPortfolios-----------------------------" + new Date());
 		List<Portfolio> portfolios = portfolioservice.getPortfolios();
-		if (portfolios == null) {
-			return new ResponseEntity(HttpStatus.NO_CONTENT);
-		}
+		
 		return new ResponseEntity<List<Portfolio>>(portfolios, HttpStatus.OK);
 	}
 	
@@ -53,9 +51,7 @@ public class PortfolioController {
 	public ResponseEntity<List<Portfolio>> getPortfolioList(@PathVariable int memberid) throws Exception {
 		logger.info("1-------------getPortfolioList-----------------------------" + new Date());
 		List<Portfolio> portfolios = portfolioservice.getPortfolioList(memberid);
-		if (portfolios == null) {
-			return new ResponseEntity(HttpStatus.NO_CONTENT);
-		}
+		
 		return new ResponseEntity<List<Portfolio>>(portfolios, HttpStatus.OK);
 	}
 	
@@ -64,9 +60,7 @@ public class PortfolioController {
 	public ResponseEntity<Portfolio> getPortfolio(@PathVariable int portfolioid) throws Exception {
 		logger.info("1-------------getPortfolio-----------------------------" + new Date());
 		Portfolio portfolio = portfolioservice.getPortfolio(portfolioid);
-		if (portfolio == null) {
-			return new ResponseEntity(HttpStatus.NO_CONTENT);
-		}
+		
 		return new ResponseEntity<Portfolio>(portfolio, HttpStatus.OK);
 	}
 	
@@ -106,11 +100,9 @@ public class PortfolioController {
 	@ApiOperation(value = "portfolio Comment 전체 보기", response = List.class)
 	@RequestMapping(value = "/commentportfolio/{portfolioid}", method = RequestMethod.GET)
 	public ResponseEntity<List<Commentportfolio>> getCommentPortfolio(@PathVariable int portfolioid) throws Exception {
-		logger.info("1-------------getPortfolioList-----------------------------" + new Date());
+		logger.info("1-------------getCommentPortfolio-----------------------------" + new Date());
 		List<Commentportfolio> portfolios = portfolioservice.getCommentPortfolio(portfolioid);
-		if (portfolios == null) {
-			return new ResponseEntity(HttpStatus.NO_CONTENT);
-		}
+		
 		return new ResponseEntity<List<Commentportfolio>>(portfolios, HttpStatus.OK);
 	}
 	
@@ -176,9 +168,7 @@ public class PortfolioController {
 	public ResponseEntity<List<Sugang>> getSugangMember(@PathVariable int portfolioid) throws Exception {
 		logger.info("1-------------getSugangMember-----------------------------" + new Date());
 		List<Sugang> sugang = portfolioservice.getSugangMember(portfolioid);
-		if (sugang == null) {
-			return new ResponseEntity(HttpStatus.NO_CONTENT);
-		}
+		
 		return new ResponseEntity<List<Sugang>>(sugang, HttpStatus.OK);
 	}
 	
@@ -187,9 +177,7 @@ public class PortfolioController {
 	public ResponseEntity<List<Portfolio>> getMemberPortfolio(@PathVariable int memberid) throws Exception {
 		logger.info("1-------------getMemberPortfolio-----------------------------" + new Date());
 		List<Portfolio> portfolios = portfolioservice.getMemberPortfolio(memberid);
-		if (portfolios == null) {
-			return new ResponseEntity(HttpStatus.NO_CONTENT);
-		}
+		
 		return new ResponseEntity<List<Portfolio>>(portfolios, HttpStatus.OK);
 	}
 
