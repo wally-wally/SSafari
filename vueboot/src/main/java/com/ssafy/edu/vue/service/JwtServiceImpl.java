@@ -36,7 +36,7 @@ public class JwtServiceImpl implements IJwtService{
 		String jwt = Jwts.builder()
 						 .setHeaderParam("typ", "JWT")
 						 .setHeaderParam("regDate", System.currentTimeMillis())
-						 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 ))
+						// .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 ))
 						 .setSubject("로그인토큰")
 						 .claim("access-Token", data)
 						 .signWith(SignatureAlgorithm.HS256, this.generateKey())

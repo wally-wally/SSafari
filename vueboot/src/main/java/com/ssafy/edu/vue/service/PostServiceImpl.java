@@ -11,7 +11,6 @@ import com.ssafy.edu.vue.dto.Category;
 import com.ssafy.edu.vue.dto.CategoryPost;
 import com.ssafy.edu.vue.dto.Code;
 import com.ssafy.edu.vue.dto.Commentpost;
-import com.ssafy.edu.vue.dto.Likepost;
 import com.ssafy.edu.vue.dto.LocationFiltering;
 import com.ssafy.edu.vue.dto.Post;
 import com.ssafy.edu.vue.dto.PostPaging;
@@ -97,24 +96,24 @@ public class PostServiceImpl implements IPostService {
 	}
 
 	@Override
-	public void addLikePost(Likepost likepost) {
+	public void addLikePost(Postinfo likepost) {
 		postdao.addLikePost(likepost);
 	}
 
 	@Override
-	public void deleteLikePost(Likepost likepost) {
+	public void deleteLikePost(Postinfo likepost) {
 		postdao.deleteLikePost(likepost);
 	}
 
 	@Override
 	@Transactional
-	public int getLikeCounts(Likepost likepost) {
+	public int getLikeCounts(Postinfo likepost) {
 		return postdao.getLikeCounts(likepost);
 	}
 
 	@Override
 	@Transactional
-	public int getCommentCounts(Likepost likepost) {
+	public int getCommentCounts(Postinfo likepost) {
 		return postdao.getCommentCounts(likepost);
 
 	}
@@ -127,7 +126,7 @@ public class PostServiceImpl implements IPostService {
 
 	@Override
 	@Transactional
-	public int isLike(Likepost likepost) {
+	public int isLike(Postinfo likepost) {
 		return postdao.isLike(likepost);
 	}
 
