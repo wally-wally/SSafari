@@ -30,7 +30,7 @@
         :options="showOptions"
         :value="code.code"
   ></codemirror>
-    <boardcomment :postid="this.id" categoryid="3" boardtype="post"/>
+    <boardcomment boardname="code" :postid="this.id" categoryid="3" boardtype="post"/>
 </v-container>
 </template>
 
@@ -51,7 +51,8 @@ export default {
     name : 'CodeDetail',
     components: {codemirror,Comment,boardcomment},
     props :{
-      id : {type: String}  
+      id : {type: String},
+      boardname : {type : String}
     },
     data() {
         return {

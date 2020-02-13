@@ -9,7 +9,7 @@
         <router-link to="/board/job/" :style="{ color: '#60666C'}">
           <div class="job-notice"><i class="fas fa-user-tie"></i></div>
         </router-link>
-        <router-link to="/board/codereview/" :style="{ color: '#60666C'}">
+        <router-link to="/board/code/" :style="{ color: '#60666C'}">
           <div class="code-notice"><i class="fas fa-code"></i></div>
         </router-link>
         <router-link to="/board/jmt/" :style="{ color: '#60666C'}">

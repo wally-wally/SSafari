@@ -37,7 +37,7 @@
 						<v-divider></v-divider>
 						<v-row justify="center">
 							<v-col cols="12" sm="12">
-								<boardcomment :postid="this.id" categoryid="4" boardtype="post"/>
+								<boardcomment boardname="jmt" :postid="this.id" categoryid="4" boardtype="post"/>
 							</v-col>
 						</v-row>
 					</v-list>
