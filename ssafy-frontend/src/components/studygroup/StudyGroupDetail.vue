@@ -12,7 +12,7 @@
 						</div>
 						<div>
 					  	<span class="headline">{{ portfolio.title }} <h6>{{ portfolio.created_at }} </h6>
-								<v-btn class="mr-1" v-if="currentMemberId === portfolio.memberid" small color="green" :to="{ name: 'PortfolioUpdate', params: { id: id, title: portfolio.title, content: portfolio.body, imgSrc: portfolio.img, memberId: portfolio.memberid }}">수정</v-btn>
+								<v-btn class="mr-1" v-if="currentMemberId === portfolio.memberid" small color="green" :to="{ path : `/studygroup/${portfolio.portfolioid}/update`}">수정</v-btn>
 								<v-btn v-if="currentMemberId === portfolio.memberid || currentMemberAuth === 1" small color="error" @click="deletePortfolio">삭제</v-btn>
 							</span>
 						</div>
