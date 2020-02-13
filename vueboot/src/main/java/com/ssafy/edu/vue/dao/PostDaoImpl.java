@@ -10,7 +10,6 @@ import com.ssafy.edu.vue.dto.Category;
 import com.ssafy.edu.vue.dto.CategoryPost;
 import com.ssafy.edu.vue.dto.Code;
 import com.ssafy.edu.vue.dto.Commentpost;
-import com.ssafy.edu.vue.dto.Likepost;
 import com.ssafy.edu.vue.dto.LocationFiltering;
 import com.ssafy.edu.vue.dto.Post;
 import com.ssafy.edu.vue.dto.PostPaging;
@@ -71,19 +70,19 @@ public class PostDaoImpl {
 		return sqlSession.selectList(ns+"getLocationPosts",locationfiltering);
 	}
 
-	public void addLikePost(Likepost likepost) {
+	public void addLikePost(Postinfo likepost) {
 		sqlSession.insert(ns+"addLikePost",likepost);
 	}
 
-	public void deleteLikePost(Likepost likepost) {
+	public void deleteLikePost(Postinfo likepost) {
 		sqlSession.delete(ns+"deleteLikePost",likepost);
 	}
 
-	public int getLikeCounts(Likepost likepost) {
+	public int getLikeCounts(Postinfo likepost) {
 		return sqlSession.selectOne(ns+"getLikeCounts", likepost);
 	}
 
-	public int getCommentCounts(Likepost likepost) {
+	public int getCommentCounts(Postinfo likepost) {
 		return sqlSession.selectOne(ns+"getCommentCounts", likepost);
 	}
 
@@ -91,7 +90,7 @@ public class PostDaoImpl {
 		sqlSession.insert(ns+"addBoardCategory",category);
 	}
 
-	public int isLike(Likepost likepost) {
+	public int isLike(Postinfo likepost) {
 		return sqlSession.selectOne(ns+"isLike",likepost);
 	}
 
@@ -129,6 +128,13 @@ public class PostDaoImpl {
 
 	public void addBoardCategoryAuth(Category category) {
 		sqlSession.insert(ns+"addBoardCategoryAuth",category);
+	}
+
+	public List<Category> getBoardSearch(String keyword) {
+		return sqlSession.selectList(ns+"getBoardSearch",keyword);
+		
+	public int getTotalPost(PostPaging postpaging) {
+		return sqlSession.selectOne(ns+"getTotalPost",postpaging);
 	}
 
 }

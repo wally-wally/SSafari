@@ -1,7 +1,9 @@
 package com.ssafy.edu.vue.controller;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -23,7 +25,6 @@ import com.ssafy.edu.vue.dto.Category;
 import com.ssafy.edu.vue.dto.CategoryPost;
 import com.ssafy.edu.vue.dto.Code;
 import com.ssafy.edu.vue.dto.Commentpost;
-import com.ssafy.edu.vue.dto.Likepost;
 import com.ssafy.edu.vue.dto.LocationFiltering;
 import com.ssafy.edu.vue.dto.Member;
 import com.ssafy.edu.vue.dto.Portfolio;
@@ -125,6 +126,34 @@ public class PostController {
 		return new ResponseEntity<Post>(post, HttpStatus.OK);
 	}
 	
+	/*@ApiOperation(value = "post 상세 보기", response = List.class)
+	@RequestMapping(value = "/post", method = RequestMethod.GET)
+	public ResponseEntity<Map<String,Object>> getPost(@RequestBody Postinfo postinfo,HttpServletRequest rs) throws Exception {
+		logger.info("1-------------getPost-----------------------------" + new Date());
+		Map<String,Object> result = new HashMap();
+		int memberid = 0;
+		if(rs.getAttribute("loginMember")!=null) {
+			Member member = (Member) rs.getAttribute("loginMember");
+			memberid = member.getMemberid();
+			postinfo.setMemberid(memberid);
+		}
+		
+		Post post = postservice.getPost(postinfo);	//int -> postinfo
+		result.put("post",post);
+		
+		int counts = postservice.getLikeCounts(likepost);
+		result.put("count", counts);
+		
+		int flag = 0;
+		if(memberid!=0) {
+			likepost.setMemberid(memberid);
+			postservice.isLike(likepost);
+		}
+		result.put("flag", flag);
+		
+		return new ResponseEntity<Map<String,Object>>(result, HttpStatus.OK);
+	}*/
+	
 	@ApiOperation(value = "post 추가", response = List.class)
 	@RequestMapping(value = "/post", method = RequestMethod.POST)
 	public ResponseEntity<BoolResult> addPost(@RequestBody Post post) throws Exception {
@@ -185,6 +214,7 @@ public class PostController {
 	@RequestMapping(value = "/commentpost", method = RequestMethod.POST)
 	public ResponseEntity<List<Commentpost>> addCommentPost(@RequestBody Commentpost commentpost) throws Exception {
 		logger.info("1-------------addCommentPost-----------------------------" + new Date());
+		logger.info("2----"+commentpost);
 		postservice.addCommentPost(commentpost);
 		Postinfo postinfo = new Postinfo(commentpost.getCategoryid(),commentpost.getPostid());
 		List<Commentpost> posts;
@@ -237,7 +267,7 @@ public class PostController {
 	
 	@ApiOperation(value = "post Like 추가 (like count up)", response = List.class)
 	@RequestMapping(value = "/likepost", method = RequestMethod.POST)
-	public ResponseEntity<BoolResult> addLikePost(@RequestBody Likepost likepost) throws Exception {
+	public ResponseEntity<BoolResult> addLikePost(@RequestBody Postinfo likepost) throws Exception {
 		logger.info("1-------------addLikePost-----------------------------" + new Date());
 		postservice.addLikePost(likepost);
 		BoolResult nr=new BoolResult();
@@ -248,7 +278,7 @@ public class PostController {
 	
 	@ApiOperation(value = "post Like 삭제 (like count down)", response = List.class)
 	@RequestMapping(value = "/likepost", method = RequestMethod.DELETE)
-	public ResponseEntity<BoolResult> deleteLikePost(@RequestBody Likepost likepost) throws Exception {
+	public ResponseEntity<BoolResult> deleteLikePost(@RequestBody Postinfo likepost) throws Exception {
 		logger.info("1-------------deleteLikePost-----------------------------" + new Date());
 		postservice.deleteLikePost(likepost);
 		BoolResult nr=new BoolResult();
@@ -259,7 +289,7 @@ public class PostController {
 	
 	@ApiOperation(value = "post 좋아요 수 출력", response = BoolResult.class)
 	@RequestMapping(value = "/likecounts", method = RequestMethod.GET)
-	public ResponseEntity<Integer> getLikeCounts(@ModelAttribute Likepost likepost) throws Exception {
+	public ResponseEntity<Integer> getLikeCounts(@ModelAttribute Postinfo likepost) throws Exception {
 		logger.info("1-------------getLikeCounts-----------------------------" + new Date());
 		int counts = postservice.getLikeCounts(likepost);
 		return new ResponseEntity<Integer>(counts, HttpStatus.OK);
@@ -267,7 +297,7 @@ public class PostController {
 	
 	@ApiOperation(value = "post 댓글 수 출력", response = BoolResult.class)
 	@RequestMapping(value = "/commentcounts", method = RequestMethod.GET)
-	public ResponseEntity<Integer> getCommentCounts(@ModelAttribute Likepost likepost) throws Exception {
+	public ResponseEntity<Integer> getCommentCounts(@ModelAttribute Postinfo likepost) throws Exception {
 		logger.info("1-------------getCommentCounts-----------------------------" + new Date());
 		int counts = postservice.getCommentCounts(likepost);
 		return new ResponseEntity<Integer>(counts, HttpStatus.OK);
@@ -331,7 +361,7 @@ public class PostController {
 	
 	@ApiOperation(value = "좋아요 클릭 여부 확인", response = List.class)
 	@RequestMapping(value = "/like", method = RequestMethod.GET)
-	public ResponseEntity<Integer> isLike(@ModelAttribute("data") Likepost likepost) throws Exception {
+	public ResponseEntity<Integer> isLike(@ModelAttribute("data") Postinfo likepost) throws Exception {
 		logger.info("1-------------isLike-----------------------------" + new Date());
 		int result = postservice.isLike(likepost);
 		return new ResponseEntity<Integer>(result, HttpStatus.OK);
@@ -358,5 +388,26 @@ public class PostController {
 		postpaging.setPage((postpaging.getPage()-1)*20);
 		List<Post> posts = postservice.getPostsPaging(postpaging);
 		return new ResponseEntity<List<Post>>(posts, HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "post category 검색 목록 (게시판 검색 목록)", response = List.class)
+	@RequestMapping(value = "/boardcategory/search", method = RequestMethod.GET)
+	public ResponseEntity<List<Category>> getBoardSearch(@PathVariable String keyword) throws Exception {
+		logger.info("1-------------getBoardSearch-----------------------------" + new Date());
+		keyword = "%"+keyword+"%";
+		List<Category> list = postservice.getBoardSearch(keyword);
+		return new ResponseEntity<List<Category>>(list, HttpStatus.OK);
+	@ApiOperation(value = "다음 페이지 있는지", response = List.class)
+	@RequestMapping(value = "/nextpage", method = RequestMethod.POST)
+	public ResponseEntity<Boolean> hasNextPage(@ModelAttribute PostPaging postpaging) throws Exception {
+		logger.info("1-------------hasNextPage-----------------------------" + new Date());
+		boolean nextpage = false;
+		int total = postservice.getTotalPost(postpaging);
+		if(20*postpaging.getPage()<total) {
+			nextpage = true;
+		}else {
+			nextpage = false;
+		}
+		return new ResponseEntity<Boolean>(nextpage, HttpStatus.OK);
 	}
 }

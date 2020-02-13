@@ -9,9 +9,8 @@ import BoardPage from './views/BoardPage.vue'
 import AllBoard from './components/board/AllBoard.vue'
 import BoardDetail from './components/board/boardCommonForm/BoardDetail.vue'
 import BoardCreate from '@/components/board/boardCommonForm/BoardCreate.vue'
-import FreeBoard from './components/board/FreeBoard.vue'
+import BaseBoard from './components/board/BaseBoard.vue'
 import CodeBoard from './components/board/codeboard/CodeBoard.vue'
-import JobBoard from './components/board//JobBoard.vue'
 import JmtBoard from './components/board/Jmtboard/JmtBoard.vue'
 import CodeDetail from './components/board/codeboard/CodeDetail.vue'
 // StudyGroup(스터디 모임) import 구문
@@ -58,10 +57,6 @@ export default new Router({
 			children : [
 				{ path : 'create', component: BoardCreate, name: 'BoardCreate'},
 				{ path : '', component : AllBoard },
-				{ path : 'free', name: "free" , component : FreeBoard },
-				{ path : 'free/:id', name: "free", component : BoardDetail , props:true},
-				{ path : 'job' , name: "job", component : JobBoard },
-				{ path : 'job/:id', name: "job", component : BoardDetail , props:true},
 				{ path : 'codereview', name:"code", component : CodeBoard,},
 				{ path : 'codereview/create', name: "codecreate", component : CodeCreate},
 				{ path : 'codereview/:id', name : "codedetail", component : CodeDetail , props : true},
@@ -69,11 +64,12 @@ export default new Router({
 				{ path : 'jmt' , name: "jmt" ,component : JmtBoard },
 				{ path : 'jmt/create', name: 'jmtcreate', component: RestaurantCreateForm},
 				{ path : 'jmt/:id', name : "jmtdetail", component : RestaurantDetail , props : true},
-				{ path : ':id', name: ':id', component: FreeBoard, props:true},
+				{ path : ':boardname', component: BaseBoard, props:true},
+				{ path : ':boardname/:id' , component: BoardDetail, props:true}
 			]
 		},
 		{
-			path: '/board/:id/update',
+			path: '/board/:boardname/:id/update',
 			name: 'BoardUpdate',
 			component: UpdateForm,
 			props: true

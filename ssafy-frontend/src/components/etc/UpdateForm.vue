@@ -1,23 +1,22 @@
 <template>
     <v-flex justify-center>
-        {{post}}
-        <div v-if="currentMemberId === post.memberid">
-        <div id="create-form-title">
-            <span id="form-title" v-if="this.$route.path === `/board/${this.$store.state.categorys[post.categoryid]}/${post.postid}/update`">Board Form</span>
-            <span id="form-title" v-else-if="this.$route.path === `/studygroup/${post.postid}/update`">Studygroup Form</span>
-        </div>
-        <hr class="title-headline">
-        <div class="title-top">
-            <div class="create-title">Title</div>
-            <textarea v-model="titleData" id="title-form"></textarea>
-        </div>
-        <textarea v-model="contentData" id="create-content" name="content"></textarea>
-        <v-file-input :rules="rules" v-if="this.$route.path === `/studygroup/${post.postid}/update`" v-model="imgFile" label="File input" id="file" outlined dense accept="image/png, image/jpeg, image/bmp"></v-file-input>
-         <v-checkbox v-model="anonymousStatus" label="익명" value="1" class="annoyCheck"/>
+        <div v-if="this.$store.state.memberid === post.memberid">
+            <div id="create-form-title">
+                <span id="form-title" v-if="this.$route.path === `/studygroup/${post.postid}/update`">Studygroup Form</span>
+                <span id="form-title" v-else>Board Form</span>
+            </div>
+            <hr class="title-headline">
+            <div class="title-top">
+                <div class="create-title">Title</div>
+                <textarea v-model="post.title" id="title-form"></textarea>
+            </div>
+            <textarea v-model="post.body" id="create-content" name="content"></textarea>
+            <v-file-input :rules="rules" v-if="this.$route.path === `/studygroup/${post.postid}/update`" v-model="imgFile" label="File input" id="file" outlined dense accept="image/png, image/jpeg, image/bmp"></v-file-input>
+            <v-checkbox v-model="post.anonymous" label="익명" value="1" class="annoyCheck"/>
 
-        <v-btn class="mr-5" color="primary" @click="update">수정</v-btn>
-        <v-btn color="error" @click="goBack()">취소</v-btn>
-        </div>
+            <v-btn class="mr-5" color="primary" @click="update">수정</v-btn>
+            <v-btn color="error" @click="goBack()">취소</v-btn>
+            </div>
         <div v-else>
             <h1 style="text-align:center; color:red">접근 권한이 없습니다!</h1>
             <v-btn :to="{ name: 'home'}" style="margin:0 auto; display:block; width: 300px;" class="red"><h3>Home으로 이동</h3></v-btn>
@@ -33,8 +32,8 @@ export default {
     name: 'UpdateForm',
     data() {
         return {
+            post : {},
             anonymousStatus : false,
-            currentMemberId: '',
             titleData: '',
             contentData: '',
             imgFile : null,
@@ -52,8 +51,9 @@ export default {
             ]
         }
     },
-    props: {
-        post : {type : Object}
+    props : {
+        id : {type:String},
+        boardname : {type:String},
     },
     beforeRouteEnter(to, from, next) {
         next((vm) => {
@@ -61,11 +61,15 @@ export default {
         });
     },
     mounted() {
-        this.titleData = this.post.title
-        this.contentData = this.post.body
-        this.currentMemberId = this.$store.state.memberid
+        this.getPost()
     },
     methods: {
+        getPost() {
+            axios.get(`api/post/${this.id}`)
+                .then(response => { 
+                this.post = response.data
+          })
+        },
         goBack() {
             const formTitle = document.querySelector('#form-title')
             if (formTitle.innerText === 'Board Form') {
@@ -75,23 +79,7 @@ export default {
             }
         },
         update() {
-            if(this.$route.path === `/board/${this.post.postid}/update`){
-                var postData = {
-                    postid: this.post.postid,
-                    title: this.titleData,
-                    body: this.contentData,
-                    memberid: this.$store.state.memberid,
-                    anonym : this.anonymousStatus ? 1 : 0
-                }
-                axios.put('api/post', postData)
-                    .then(response => {
-                        console.log(response.status)
-                        if(response.status === 200){
-                            this.$router.push(`/board/${this.post.postid}`)
-                        }
-                    })
-            }
-            else if(this.$route.path === `/studygroup/${this.post.postid}/update`){
+            if (this.$route.path === `/studygroup/${this.post.postid}/update`){
                 var portfolioData = {
                     portfolioid: this.post.postid,
                     title: this.titleData,
@@ -109,7 +97,6 @@ export default {
                 }
                 else{
                     const formData = new FormData()
-
                     formData.append('image',this.imgFile)
                     axios.post('https://api.imgur.com/3/image', formData, {headers: { Authorization: 'Client-ID 347364b9fa38df3' }})
                         .then(response=>{
@@ -126,6 +113,14 @@ export default {
                             console.log(error)
                         })
                 }
+            }else {
+                axios.put('api/post', this.post)
+                    .then(response => {
+                        console.log(response.status)
+                        if(response.status === 200){
+                            this.$router.push(`/board/${this.post.categoryid}/${this.post.postid}`)
+                        }
+                    })
             }
         }
     }

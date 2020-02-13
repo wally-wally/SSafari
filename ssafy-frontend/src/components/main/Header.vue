@@ -10,12 +10,12 @@
     </div>
 
     <v-spacer></v-spacer>
-    <v-btn v-if="mobile()" color="white" depressed tile to="/teamintro">팀 소개</v-btn>
-    <v-btn v-if="mobile()" color="white" depressed tile to="/board">게시판</v-btn>
-    <v-btn v-if="mobile()" color="white" depressed tile to="/studygroup">스터디 모임</v-btn>
-    <v-btn v-if="mobile() && isLogin" color="white" depressed tile to="/mypage">내 페이지</v-btn>
-    <v-btn v-if="mobile() && !isLogin" color="white" @click.stop="loginDialog = true" depressed tile>로그인</v-btn>
-    <v-btn v-if="mobile() && isLogin" color="white" depressed tile @click="$store.dispatch('logout'); toHome();">로그아웃</v-btn>
+    <v-btn v-if="mobile()" class="px-3" color="white" depressed tile to="/teamintro">팀 소개</v-btn>
+    <v-btn v-if="mobile()" class="px-3" color="white" depressed tile to="/board">게시판</v-btn>
+    <v-btn v-if="mobile()" class="px-3" color="white" depressed tile to="/studygroup">스터디 모임</v-btn>
+    <v-btn v-if="mobile() && isLogin" class="px-3" color="white" depressed tile to="/mypage">내 페이지</v-btn>
+    <v-btn v-if="mobile() && !isLogin" class="px-3" color="white" @click.stop="loginDialog = true" depressed tile>로그인</v-btn>
+    <v-btn v-if="mobile() && isLogin" class="px-3" color="white" depressed tile @click="$store.dispatch('logout'); toHome();">로그아웃</v-btn>
     <v-app-bar-nav-icon v-if="!mobile()" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
   
   </v-app-bar>

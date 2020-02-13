@@ -1,3 +1,4 @@
 /.metadata/
 /vueboot/log/*.log
+/vueboot/*.log
 /.recommenders/

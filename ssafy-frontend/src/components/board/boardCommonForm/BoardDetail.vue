@@ -15,7 +15,7 @@
             <div class="my-2 mx-2">
               <span class="headline">{{ post.title }} <h6>{{ post.created_at }} </h6>
                 <div v-if="this.$store.state.memberid === post.memberid">
-                <v-btn class="mr-1" small color="green" :to="{ path : `/board/${$store.state.categorys[post.categoryid]}/${post.postid}/update`, params: { post:post }}">수정</v-btn>
+                <v-btn class="mr-1" small color="green" :to="{ path : `/board/${this.boardname}/${post.postid}/update`}">수정</v-btn>
                 <v-btn @click="deletePost" small color="error">삭제</v-btn>
                 </div>
               </span>
@@ -31,7 +31,7 @@
           </v-list-item>
         <v-divider></v-divider>
           <v-col cols="12" sm="12">
-            <boardcomment :categoryid="this.$store.state.category[`${this.$route.name}`]" :postid="this.id" boardtype="post"/>
+            <boardcomment :categoryid="post.categoryid" :boardname="this.boardname" :postid="this.id" boardtype="post"/>
           </v-col>
         </v-list>
       </v-card>
@@ -55,7 +55,8 @@ export default {
       }
     },
     props: {
-        id: { type: String },
+      boardname : {type: String},
+      id: { type: String },
     },
     mounted() {
         this.getPost()
@@ -72,7 +73,7 @@ export default {
             axios.delete(`api/post/${this.id}`)
               .then(response => {
                 if(response.status == 200){
-                  router.push({ path: '/board' })
+                  router.push({ path: `/board/${(Number(this.boardname) >= 5) ?  this.boardname : this.$store.state.category[this.boardname]}` })
                 }
               })
           }

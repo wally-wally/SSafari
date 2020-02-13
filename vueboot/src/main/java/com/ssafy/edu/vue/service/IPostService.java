@@ -6,7 +6,6 @@ import com.ssafy.edu.vue.dto.Category;
 import com.ssafy.edu.vue.dto.CategoryPost;
 import com.ssafy.edu.vue.dto.Code;
 import com.ssafy.edu.vue.dto.Commentpost;
-import com.ssafy.edu.vue.dto.Likepost;
 import com.ssafy.edu.vue.dto.LocationFiltering;
 import com.ssafy.edu.vue.dto.Post;
 import com.ssafy.edu.vue.dto.PostPaging;
@@ -39,17 +38,17 @@ public interface IPostService {
 
 	List<Post> getLocationPosts(LocationFiltering locationfiltering);
 
-	void addLikePost(Likepost likepost);
+	void addLikePost(Postinfo likepost);
 
-	void deleteLikePost(Likepost likepost);
+	void deleteLikePost(Postinfo likepost);
 
-	int getLikeCounts(Likepost likepost);
+	int getLikeCounts(Postinfo likepost);
 
-	int getCommentCounts(Likepost likepost);
+	int getCommentCounts(Postinfo likepost);
 
 	void addBoardCategory(Category category);
 
-	int isLike(Likepost likepost);
+	int isLike(Postinfo likepost);
 
 	void addCode(Code code);
 
@@ -68,5 +67,9 @@ public interface IPostService {
 	void deleteBoardCategoryAuth(int id);
 
 	void addBoardCategoryAuth(Category category);
+
+	List<Category> getBoardSearch(String keyword);
 	
+	int getTotalPost(PostPaging postpaging);
+
 }

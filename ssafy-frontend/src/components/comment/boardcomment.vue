@@ -31,9 +31,10 @@ import { mapState} from 'vuex'
 export default {
     name : 'boardcomment',
     props : {
-        categoryid : {type : String},
+        boardname : {type : String},
         boardtype : {type: String},
         postid : {type: String},
+        categoryid : {type:String}
     },
     components : {Comment},
     data() {
@@ -61,43 +62,15 @@ export default {
             })
         },
         getcomments() {
-            if (this.$route.name==="StudygroupDetail"){
-                const data = {
-                    'postid' : this.postid,
-                }
-                axios.get(`api/comment/`, {params: data})
-                .then(response =>{
+            const data = {'postid':this.postid, 'categoryid' : (Number(this.boardname) >= 5) ?  this.boardname : this.$store.state.category[this.boardname] }
+            console.log(data)
+                axios.get(`api/commentpost/`, {params : data})
+                    .then(response => {
+                        console.log(response)
                     this.comments = response.data
-                })
-            }
-            if (this.$route.name==="codedetail"){
-                const data = {
-                    'postid' : this.postid,
-                    'categoryid' : 3,
-                }
-                axios.get(`api/commentpost/`, {params: data})
-                .then(response =>{
-                    this.comments = response.data
-                })
-            } else if (this.$route.name==="jmtdetail"){
-                const data = {
-                    'postid' : this.postid,
-                    'categoryid' : 4,
-                }
-                axios.get(`api/commentpost/`, {params: data})
-                .then(response =>{
-                    console.log(response.data)
-                    this.comments = response.data
-                })
-            } else {
-                const data = {'postid':this.postid, 'categoryid' : this.categoryid}
-                    axios.get(`api/commentpost/`, {params : data})
-                        .then(response => {
-                        this.comments = response.data
-                        }).catch(error=> {
-                        console.log(error)
-                        })
-            }
+                    }).catch(error=> {
+                    console.log(error)
+                    })
         },
         Createcomment () {
             if (this.new_comment){
@@ -108,6 +81,7 @@ export default {
             }
             data['categoryid'] = this.categoryid
             data[`${this.boardtype}id`] = this.postid
+            console.log(data)
             axios.post(`api/comment${this.boardtype}`,data)
                 .then(response => {
                     this.comments = response.data
