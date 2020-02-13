@@ -69,6 +69,8 @@ public interface IPostService {
 
 	void addBoardCategoryAuth(Category category);
 
-	int getTotalPost(PostPaging postpaging);
+	List<Category> getBoardSearch(String keyword);
 	
+	int getTotalPost(PostPaging postpaging);
+
 }

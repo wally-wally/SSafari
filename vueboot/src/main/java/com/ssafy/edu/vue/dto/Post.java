@@ -60,8 +60,21 @@ public class Post implements Serializable {
 		this.title = title;
 		this.body = body;
 	}
-
 	
+	public Post(int postid, String title, String body, String created_at, int memberid, String username, int categoryid,
+			int anonymous, int locationid) {
+		super();
+		this.postid = postid;
+		this.title = title;
+		this.body = body;
+		this.created_at = created_at;
+		this.memberid = memberid;
+		this.username = username;
+		this.categoryid = categoryid;
+		this.anonymous = anonymous;
+		this.locationid = locationid;
+	}
+
 	public String getImg() {
 		return img;
 	}
