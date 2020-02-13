@@ -112,6 +112,7 @@
 						'access-token': this.$store.state.token
 					})
 					.then(response => {
+						console.log(response)
 						this.restaurant = response.data.jmt
 						this.count = response.data.count
 						this.likeFlag = (response.data.count === 0) ? false : true
