@@ -79,8 +79,8 @@ export default {
         getcode() {
             axios.get(`api/code/${this.id}`)
             .then(response => {
-            console.log(response.data)
-            this.code = response.data
+            console.log(response)
+            this.code = response.data.code
             })
         },
         codedelete() {
