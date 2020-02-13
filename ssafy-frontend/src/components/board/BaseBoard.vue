@@ -61,9 +61,15 @@
                     <div class="write-phrase d-inline">글을 작성하려면 로그인을 먼저 하세요.</div>
                 </div>
             </div>
+            <div v-else>
+                <div class="init d-flex justify-space-between">
+                    <div class="write-phrase d-inline">글을 작성하려면 지역을 선택해 주세요.</div>
+                </div>
+            </div>
             <v-layout>
                 <v-flex>
-                    <BoardList :boards="boards"></BoardList>
+                    <!-- @showPostCount="onPostCount" :limits="5" :load-more="true" -->
+                    <BoardList :boardname="boardname" :boards="boards"></BoardList>
                 </v-flex>
             </v-layout>
         </div>
@@ -124,18 +130,18 @@
     import router from '@/router.js'
     import BoardList from '@/components/board/boardCommonForm/BoardList'
     export default {
-        name: 'JobBoard',
+        name: 'BaseBoard',
         components: {
             BoardList,
         },
-        // props: {
-        //     category: { type: String },
-        // },
+        props: {
+            boardname: { type: String },
+        },
         data() {
             return {
                 pageData : {
                     page: 1,
-                    categoryid: this.$store.state.category[this.$route.name],
+                    categoryid: (Number(this.boardname) >= 5) ?  this.boardname : this.$store.state.category[this.boardname],
                     keyword: '',
                     locationid: 0
                 },
@@ -162,10 +168,11 @@
                 ]
             }
         },
-        beforeRouteEnter(to, from, next) {
-            next((vm) => {
-                vm.from = from
-            })
+        watch : {
+            boardname() {
+                this.pageData.categoryid = (Number(this.boardname) >= 5) ?  this.boardname : this.$store.state.category[this.boardname]
+                this.changePageIndex(0)
+            }
         },
         mounted() {
             this.changePageIndex(0)
@@ -184,17 +191,17 @@
                     'body': this.content,
                     'anonymous': this.annoymousStatus ? 1 : 0,
                     'memberid': this.$store.state.memberid,
-                    'categoryid': Number(this.$store.state.category['job']),
+                    'categoryid': (Number(this.boardname) >= 5) ?  Number(this.boardname): Number(this.$store.state.category[this.boardname]),
                     'locationid': Number(this.$store.state.region[this.selectRegion])
                 }
                 axios.post('api/post', boardData)
                     .then(response => {
                         if(response.status === 200){
-                            router.go('/board/job')
+                            router.go('/board/free')
                         }
                     })
             },
-            changePageIndex(status) { // (1) pagination으로 동작하는 경우
+            changePageIndex(status) {
                 if (status === 0) {
                     this.pageData.page = 1
                 } else if (status === -1) {
@@ -211,23 +218,10 @@
                 console.log(this.pageData)
                 axios.get(`api/posts/page`, {params:this.pageData})
                     .then(response => {
-                        console.log('--------------------')
-                        console.log(response)
                         this.boards = response.data
                     })
             }
         },
-        watch: {
-            selectRegion: {
-                handler() {
-                    this.pageData.locationid = this.selectRegion === 'All' ? 0 : Number(this.$store.state.region[this.selectRegion])
-                    this.pageData.page = 1
-                    this.pageData.keyword =''
-                    console.log(this.pageData)
-                    this.changePageIndex(0)
-                }
-            }
-        }
     }
 </script>
 
