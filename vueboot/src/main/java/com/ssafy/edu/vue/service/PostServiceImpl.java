@@ -188,9 +188,18 @@ public class PostServiceImpl implements IPostService {
 	@Transactional(readOnly=true)
 	public List<Category> getBoardSearch(String keyword) {
 		return postdao.getBoardSearch(keyword);
+	}
 
+	@Override
+	@Transactional(readOnly=true)
 	public int getTotalPost(PostPaging postpaging) {
 		return postdao.getTotalPost(postpaging);
+	}
+
+	@Override
+	@Transactional(readOnly=true)
+	public int getPostCategory(int postid) {
+		return postdao.getPostCategory(postid);
 	}
 
 }

@@ -72,4 +72,6 @@ public interface IPostService {
 	
 	int getTotalPost(PostPaging postpaging);
 
+	int getPostCategory(int postid);
+
 }

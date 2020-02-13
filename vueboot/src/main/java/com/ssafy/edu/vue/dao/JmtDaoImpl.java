@@ -25,7 +25,7 @@ public class JmtDaoImpl {
 		sqlSession.insert(ns+"addJmt",jmt);
 	}
 	public void updateJmt(Jmt jmt) {
-		sqlSession.update(ns+"addJmt",jmt);
+		sqlSession.update(ns+"updateJmt",jmt);
 	}
 	public void deleteJmt(int id) {
 		sqlSession.delete(ns+"deleteJmt",id);
