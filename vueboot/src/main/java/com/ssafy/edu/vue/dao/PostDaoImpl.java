@@ -132,9 +132,14 @@ public class PostDaoImpl {
 
 	public List<Category> getBoardSearch(String keyword) {
 		return sqlSession.selectList(ns+"getBoardSearch",keyword);
+	}
 		
 	public int getTotalPost(PostPaging postpaging) {
 		return sqlSession.selectOne(ns+"getTotalPost",postpaging);
+	}
+
+	public int getPostCategory(int postid) {
+		return sqlSession.selectOne(ns+"getPostCategory",postid);
 	}
 
 }

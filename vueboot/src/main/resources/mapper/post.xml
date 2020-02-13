@@ -38,15 +38,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ORDER BY POSTID	DESC
 		LIMIT 20 OFFSET #{page}
 	</select>
-	
-	<select id="getTotalPost"
-		parameterType="com.ssafy.edu.vue.dto.PostPaging"
-		resultType="java.lang.Integer">
-		SELECT COUNT(*)
-		WHERE CATEGORYID=#{categoryid}
-		<if test="locationid!=0">AND P.LOCATIONID=#{locationid}</if>
-		<if test="keyword!=null">AND TITLE LIKE #{keyword}</if>
-	</select>
 
 	<select id="getPost" parameterType="java.lang.Integer"
 		resultType="com.ssafy.edu.vue.dto.Post">
@@ -189,21 +180,40 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT COUNT(*) FROM LIKEPOST
 		WHERE CATEGORYID=#{categoryid} AND POSTID = #{postid} AND MEMBERID = #{memberid}
 	</select>
+	
 	<select id="getBoardCategory"  resultType="com.ssafy.edu.vue.dto.Category">
 		SELECT ID, NAME, EXPLANATION, MEMBERID FROM CATEGORY WHERE ID>=5
 	</select>
+	
 	<select id="getBoardCategoryAuth"  resultType="com.ssafy.edu.vue.dto.Category">
 		SELECT C.ID, C.NAME, C.EXPLANATION, C.MEMBERID, M.USERNAME FROM CATEGORYAUTH C, MEMBERS M 
 		WHERE C.MEMBERID=M.MEMBERID
 	</select>
+	
 	<select id="getBoardCategoryOne"  parameterType="java.lang.Integer" resultType="com.ssafy.edu.vue.dto.Category">
 		SELECT ID, NAME, EXPLANATION, MEMBERID FROM CATEGORYAUTH
 		WHERE ID=#{id}
 	</select>
+	
 	<delete id="deleteBoardCategoryAuth" parameterType="java.lang.Integer">
 		DELETE FROM CATEGORYAUTH WHERE ID=#{id}
 	</delete>
-	<select id="" parameterType="java.lang.String" resultType="com.ssafy.edu.vue.dto.Category">
+	
+	<select id="getBoardSearch" parameterType="java.lang.String" resultType="com.ssafy.edu.vue.dto.Category">
 		SELECT ID, NAME, EXPLANATION, MEMBERID FROM CATEGORY WHERE NAME LIKE #{keyword}
 	</select>
+	
+	<select id="getTotalPost"
+		parameterType="com.ssafy.edu.vue.dto.PostPaging"
+		resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM POSTS
+		WHERE CATEGORYID=#{categoryid}
+		<if test="locationid!=0">AND LOCATIONID=#{locationid}</if>
+		<if test="keyword!=null">AND TITLE LIKE #{keyword}</if>
+	</select>
+	
+	<select id="getPostCategory" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+		SELECT CATEGORYID FROM POSTS WHERE POSTID = #{postid}
+	</select>
+	
 </mapper>

@@ -127,27 +127,30 @@ public class PostController {
 	}
 	
 	/*@ApiOperation(value = "post 상세 보기", response = List.class)
-	@RequestMapping(value = "/post", method = RequestMethod.GET)
-	public ResponseEntity<Map<String,Object>> getPost(@RequestBody Postinfo postinfo,HttpServletRequest rs) throws Exception {
+	@RequestMapping(value = "/post/{postid}", method = RequestMethod.GET)
+	public ResponseEntity<Map<String,Object>> getPost(@PathVariable int postid,HttpServletRequest rs) throws Exception {
 		logger.info("1-------------getPost-----------------------------" + new Date());
 		Map<String,Object> result = new HashMap();
+		Postinfo postinfo = new Postinfo();
 		int memberid = 0;
 		if(rs.getAttribute("loginMember")!=null) {
 			Member member = (Member) rs.getAttribute("loginMember");
 			memberid = member.getMemberid();
 			postinfo.setMemberid(memberid);
 		}
+		postinfo.setPostid(postid);
+		postinfo.setCategoryid(postservice.getPostCategory(postid));
 		
 		Post post = postservice.getPost(postinfo);	//int -> postinfo
 		result.put("post",post);
 		
-		int counts = postservice.getLikeCounts(likepost);
+		int counts = postservice.getLikeCounts(postinfo);
 		result.put("count", counts);
 		
 		int flag = 0;
 		if(memberid!=0) {
 			likepost.setMemberid(memberid);
-			postservice.isLike(likepost);
+			postservice.isLike(postinfo);
 		}
 		result.put("flag", flag);
 		
@@ -391,14 +394,16 @@ public class PostController {
 	}
 	
 	@ApiOperation(value = "post category 검색 목록 (게시판 검색 목록)", response = List.class)
-	@RequestMapping(value = "/boardcategory/search", method = RequestMethod.GET)
+	@RequestMapping(value = "/boardcategory/search/{keyword}", method = RequestMethod.GET)
 	public ResponseEntity<List<Category>> getBoardSearch(@PathVariable String keyword) throws Exception {
 		logger.info("1-------------getBoardSearch-----------------------------" + new Date());
 		keyword = "%"+keyword+"%";
 		List<Category> list = postservice.getBoardSearch(keyword);
 		return new ResponseEntity<List<Category>>(list, HttpStatus.OK);
+	}
+	
 	@ApiOperation(value = "다음 페이지 있는지", response = List.class)
-	@RequestMapping(value = "/nextpage", method = RequestMethod.POST)
+	@RequestMapping(value = "/nextpage", method = RequestMethod.GET)
 	public ResponseEntity<Boolean> hasNextPage(@ModelAttribute PostPaging postpaging) throws Exception {
 		logger.info("1-------------hasNextPage-----------------------------" + new Date());
 		boolean nextpage = false;

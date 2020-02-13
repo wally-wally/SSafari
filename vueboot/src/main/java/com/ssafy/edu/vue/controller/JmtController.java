@@ -109,6 +109,7 @@ public class JmtController {
 	@RequestMapping(value = "/jmt", method = RequestMethod.PUT)
 	public ResponseEntity<BoolResult> updateJmt(@RequestBody Jmt jmt) throws Exception {
 		logger.info("1-------------updateJmt-----------------------------" + new Date());
+		logger.info("2----------"+jmt);
 		jmtservice.updateJmt(jmt);
 		BoolResult nr=new BoolResult();
    		nr.setName("updateJmt");
