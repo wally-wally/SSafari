@@ -185,4 +185,10 @@ public class PostServiceImpl implements IPostService {
 		postdao.addBoardCategoryAuth(category);
 	}
 
+	@Override
+	@Transactional(readOnly=true)
+	public List<Category> getBoardSearch(String keyword) {
+		return postdao.getBoardSearch(keyword);
+	}
+
 }

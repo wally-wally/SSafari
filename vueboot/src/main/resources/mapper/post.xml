@@ -61,7 +61,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		UPDATE POSTS SET
 		TITLE=#{title},
 		BODY=#{body},
-		CREATED_AT=now()
+		CREATED_AT=now(),
+		ANONYMOUS=#{anonymous}
 		WHERE
 		POSTID=#{postid}
 	</update>
@@ -194,4 +195,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="deleteBoardCategoryAuth" parameterType="java.lang.Integer">
 		DELETE FROM CATEGORYAUTH WHERE ID=#{id}
 	</delete>
+	<select id="" parameterType="java.lang.String" resultType="com.ssafy.edu.vue.dto.Category">
+		SELECT ID, NAME, EXPLANATION, MEMBERID FROM CATEGORY WHERE NAME LIKE #{keyword}
+	</select>
 </mapper>

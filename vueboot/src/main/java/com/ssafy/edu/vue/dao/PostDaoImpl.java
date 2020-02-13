@@ -131,4 +131,8 @@ public class PostDaoImpl {
 		sqlSession.insert(ns+"addBoardCategoryAuth",category);
 	}
 
+	public List<Category> getBoardSearch(String keyword) {
+		return sqlSession.selectList(ns+"getBoardSearch",keyword);
+	}
+
 }

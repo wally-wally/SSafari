@@ -359,4 +359,13 @@ public class PostController {
 		List<Post> posts = postservice.getPostsPaging(postpaging);
 		return new ResponseEntity<List<Post>>(posts, HttpStatus.OK);
 	}
+	
+	@ApiOperation(value = "post category 검색 목록 (게시판 검색 목록)", response = List.class)
+	@RequestMapping(value = "/boardcategory/search", method = RequestMethod.GET)
+	public ResponseEntity<List<Category>> getBoardSearch(@PathVariable String keyword) throws Exception {
+		logger.info("1-------------getBoardSearch-----------------------------" + new Date());
+		keyword = "%"+keyword+"%";
+		List<Category> list = postservice.getBoardSearch(keyword);
+		return new ResponseEntity<List<Category>>(list, HttpStatus.OK);
+	}
 }

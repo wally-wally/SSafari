@@ -68,5 +68,7 @@ public interface IPostService {
 	void deleteBoardCategoryAuth(int id);
 
 	void addBoardCategoryAuth(Category category);
+
+	List<Category> getBoardSearch(String keyword);
 	
 }
