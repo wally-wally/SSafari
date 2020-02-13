@@ -8,6 +8,11 @@
     <v-btn class="red mx-1 my-3" @click="memberDropOut">회원탈퇴</v-btn>
     <h1 v-if="ssafyAuth === 3" class="red">현재 싸피 인증 대기 중입니다.</h1>
     <div class="mypage-title">
+      <h1>MY LIKES</h1>
+    </div>
+    <MyLikeList/>
+    <v-divider/>
+    <div class="mypage-title">
       <h1>MY BOARD</h1>
     </div>
     <MyBoardList/>
@@ -28,6 +33,7 @@
 import axios from 'axios'
 import MyStudyGroupList from '../components/studygroup/MyStudyGroupList'
 import MyBoardList from '../components/board/MyPageBoard/MyBoardList'
+import MyLikeList from '../components/board/MyPageBoard/MyLikeList.vue'
 import GithubInfo from '../components/github/GithubInfo'
 
 export default {
@@ -35,6 +41,7 @@ export default {
     components : {
       MyStudyGroupList,
       MyBoardList,
+      MyLikeList,
       GithubInfo
     },
     data() {
