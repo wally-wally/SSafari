@@ -108,6 +108,7 @@ export default {
             }
             data['categoryid'] = this.categoryid
             data[`${this.boardtype}id`] = this.postid
+            console.log(data)
             axios.post(`api/comment${this.boardtype}`,data)
                 .then(response => {
                     this.comments = response.data

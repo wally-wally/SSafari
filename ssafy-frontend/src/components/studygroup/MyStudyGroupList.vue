@@ -3,12 +3,12 @@
     <v-flex v-for="i in this.showPortfoliosCount" :key="i" col-12 sm6 md3>
 	  <router-link :to="`/studygroup/${portfolios[i - 1].portfolioid}`">
       <StudyGroup class="ma-3"
-								:date="portfolios[i - 1].created_at.toString()"
-								:title="portfolios[i - 1].title"
-								:body="portfolios[i - 1].body"
-								:imgSrc="portfolios[i - 1].img"
-								:username="portfolios[i - 1].username"
-								:memberid="portfolios[i - 1].memberid"
+			:date="portfolios[i - 1].created_at.toString()"
+			:title="portfolios[i - 1].title"
+			:body="portfolios[i - 1].body"
+			:imgSrc="portfolios[i - 1].img"
+			:username="portfolios[i - 1].username"
+			:memberid="portfolios[i - 1].memberid"
       ></StudyGroup>
 	  </router-link>
     </v-flex>
