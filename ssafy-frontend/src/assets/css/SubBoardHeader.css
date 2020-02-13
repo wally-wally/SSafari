@@ -1,0 +1,213 @@
+a {
+  text-decoration: none;
+}
+
+.subheader-top {
+  height: 160px;
+  background-color: lightgray;
+  padding: 10px;
+  margin-bottom: 15px;
+}
+
+.subheader-section:first-child {
+  border-right: 1px solid black;
+  padding: 5px 10px 5px 5px;
+}
+
+.subheader-section:last-child {
+  padding: 5px 5px 5px 10px;
+}
+
+.subheader-section-title-1,
+.subheader-section-title-2 {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 19px;
+  font-weight: bold;
+}
+
+.subheader-section-title-1 {
+  padding-bottom: 12px;
+}
+
+.subheader-section-title-2 {
+  padding-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.createBoardBtn {
+  font-size: 15px;
+  border: 1px solid black;
+  border-radius: 5px 5px;
+  background-color: whitesmoke;
+  padding: 1px;
+}
+
+.createBoardBtn:hover {
+  box-shadow: 1px 1px 5px darkslategrey;
+}
+
+#notice-search {
+  font-size: 14px;
+  background-color: white;
+  border: 1.5px solid darkgray;
+  padding: 2px;
+}
+
+.custom-notices {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+#custom-notice {
+  padding-right: 10px;
+}
+
+@media (max-width: 628px) {
+  .subheader-section-title-1,
+  .subheader-section-title-2 {
+    font-size: 15px;
+  }
+
+  .createBoardBtn {
+    font-size: 13px;
+  }
+
+  .subheader-section-title-2 {
+    display: block;
+  }
+
+  .subheader-section-title-2 > span:nth-child(2) > div {
+    margin-top: 5px;
+  }
+}
+
+@media (min-width: 520px) {
+  .free-notice::after {
+    content: ' 자유게시판';
+  }
+
+  .love-notice::after {
+    content: ' 사랑의 오작교';
+  }
+
+  .job-notice::after {
+    content: ' 취업 게시판';
+  }
+
+  .code-notice::after {
+    content: ' 코드리뷰';
+  }
+
+  .restaurant-notice::after {
+    content: ' 주변맛집';
+  }
+
+  .common-notice {
+    display: inline-block;
+  }
+}
+
+@media (max-width: 520px) {
+
+  .common-notice {
+    display: block;
+  }
+
+  .subheader-section-title-1,
+  .common-notice div {
+    text-align: center;
+  }
+}
+
+/*  .notice-kind {
+  display: flex;
+  line-height: 80px;
+  justify-content: space-evenly;
+}
+
+.notice-kind>span {
+  font-size: 1.2em;
+  font-family: 'Nanum Gothic', sans-serif;
+}
+
+.notice-kind>span:first-child {
+  padding-right: 20px;
+}
+
+.notice-kind>span:last-child {
+  padding-left: 20px;
+}
+
+.notice-kind>span:nth-child(2),
+.notice-kind>span:nth-child(3),
+.notice-kind>span:nth-child(4) {
+  padding: 0 20px;
+}
+
+@media (min-width: 540px) {
+  .free-notice::after {
+    content: ' 자유게시판';
+  }
+
+  .love-notice::after {
+    content: ' 사랑의 오작교';
+  }
+
+  .job-notice::after {
+    content: ' 취업 게시판';
+  }
+
+  .code-notice::after {
+    content: ' 코드리뷰';
+  }
+
+  .restaurant-notice::after {
+    content: ' 주변맛집';
+  }
+
+  @media (min-width: 680px) and (max-width: 880px) {
+    .notice-kind>span {
+      padding: 0 10px;
+      font-size: 1em;
+    }
+
+    .notice-kind>span:first-child {
+      padding-right: 15px;
+    }
+
+    .notice-kind>span:last-child {
+      padding-left: 15px;
+    }
+
+    .notice-kind>span:nth-child(2),
+    .notice-kind>span:nth-child(3),
+    .notice-kind>span:nth-child(4) {
+      padding: 0 15px;
+    }
+  }
+
+  @media (min-width: 540px) and (max-width: 679px) {
+    .notice-kind>span {
+      padding: 0 5px;
+      font-size: 0.8em;
+    }
+
+    .notice-kind>span:first-child {
+      padding-right: 10px;
+    }
+
+    .notice-kind>span:last-child {
+      padding-left: 10px;
+    }
+
+    .notice-kind>span:nth-child(2),
+    .notice-kind>span:nth-child(3),
+    .notice-kind>span:nth-child(4) {
+      padding: 0 10px;
+    }
+  }
+} */
