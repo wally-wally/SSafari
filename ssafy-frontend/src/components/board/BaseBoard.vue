@@ -14,13 +14,13 @@
                         </v-select>
                     </v-container>
                 </div>
-                <div class="post-count">{{ boards.length }}</div>
+                <div class="post-count">{{ boardCount }}</div>
             </div>
             <div class="d-flex justify-space-between pb-4">
                 <v-flex>
                     <v-btn class="board-go-first" v-if="pageData.page >= 3" @click="changePageIndex(0)">처음</v-btn>
                     <v-btn class="board-go-prev" v-if="pageData.page >= 2" @click="changePageIndex(-1)">이전</v-btn>
-                    <v-btn class="board-go-next" @click="changePageIndex(1)">다음</v-btn>
+                    <v-btn class="board-go-next" v-if="pagniationStatus" @click="changePageIndex(1)">다음</v-btn> <!-- v-if="pagniationStatus" -->
                     {{ pageData.page }}[page]
                 </v-flex>
                 <v-text-field class="pa-0 ma-0 search-board-keyword"
@@ -141,7 +141,7 @@
             return {
                 pageData : {
                     page: 1,
-                    categoryid: (Number(this.boardname) >= 5) ?  this.boardname : this.$store.state.category[this.boardname],
+                    categoryid: (Number(this.boardname) >= 5) ?  Number(this.boardname) : Number(this.$store.state.category[this.boardname]),
                     keyword: '',
                     locationid: 0
                 },
@@ -150,6 +150,8 @@
                 selectRegion: 'All', // deafult를 로그인한 유저의 지역으로 하고 싶으면 이 부분 수정
                 regions: ['All', 'Seoul', 'Daejeon', 'Gumi', 'Gawngju'],
                 showCreatePost: 0,
+                boardCount: 0,
+                pagniationStatus: false,
                 annoymousStatus: false,
                 currentMemberId: null,
                 title: '',
@@ -170,8 +172,17 @@
         },
         watch : {
             boardname() {
-                this.pageData.categoryid = (Number(this.boardname) >= 5) ?  this.boardname : this.$store.state.category[this.boardname]
+                this.pageData.categoryid = (Number(this.boardname) >= 5) ?  Number(this.boardname) : Number(this.$store.state.category[this.boardname])
                 this.changePageIndex(0)
+            },
+            selectRegion: {
+                handler() {
+                    axios.get('api/postslocation', {params: {categoryid: this.pageData.categoryid, locationid: Number(this.$store.state.region[this.selectRegion])}})
+                        .then(response => {
+                            this.boards = response.data
+                            this.boardCount = this.boards.length > 20 ? 20 : this.boards.length
+                        })
+                }
             }
         },
         mounted() {
@@ -215,13 +226,21 @@
                         alert('검색어를 입력하세요.')
                     }
                 }
-                console.log(this.pageData)
-                axios.get(`api/posts/page`, {params:this.pageData})
+
+                axios.get('api/nextpage', {params:this.pageData})
+                    .then(response => {
+                        console.log(response)
+                        this.pagniationStatus = response.data
+                    })
+
+                axios.get('api/posts/page', {params:this.pageData})
                     .then(response => {
                         this.boards = response.data
+                        this.boardCount = this.boards.length
                     })
+                
             }
-        },
+        }
     }
 </script>
 
