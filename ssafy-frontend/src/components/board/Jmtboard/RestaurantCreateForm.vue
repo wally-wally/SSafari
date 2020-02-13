@@ -36,7 +36,8 @@
 					<v-checkbox v-model="anonymousStatus" label="익명" value="true" class="anonyCheck"></v-checkbox>
 				</div>
 			</div>
-			<v-btn class="mr-5" color="#f7b157" @click="create">작성</v-btn>
+			<v-btn v-if="updateFlag" class="mr-5" color="#f7b157" @click="update">수정</v-btn>
+			<v-btn v-else class="mr-5" color="#f7b157" @click="create">작성</v-btn>
 			<v-btn color="error" @click="goBack">취소</v-btn>
 		</div>
 	</v-flex>
@@ -67,19 +68,34 @@
 				location: '지도에서 선택해 주세요!',
 				content: '',
 				anonymousStatus: false,
+				updateFlag: false,
+				catagory: {
+					1: '서울',
+					2: '대전',
+					3: '구미',
+					4: '광주',
+					5: '기차'
+				},
+				id: ''
+			}
+		},
+		props: {
+			restaurant: {
+				type: Object
 			}
 		},
 		mounted() {
-			// this.mapContainer = document.getElementById('map');
-			// this.mapOptions = {
-			//     center: new daum.maps.LatLng(this.daejeon[0], this.daejeon[1]),
-			//     level: 5 //지도의 레벨(확대, 축소 정도)
-			// };
-			// this.map = new daum.maps.Map(this.mapContainer, this.mapOptions);
+			if (this.restaurant) {
+				this.updateFlag = true
+				this.name = this.restaurant.name
+				this.location = this.catagory[this.restaurant.locationid]
+				this.content = this.restaurant.body
+				this.id = this.restaurant.id
+				this.locationid = this.restaurant.locationid
+			}
 		},
 		methods: {
 			create() {
-				console.log(123, this.dataArray[this.index])
 				if (this.index === '') {
 					alert('지도에서 카페/식당을 입력해주세요.')
 				} else {
@@ -99,6 +115,21 @@
 							this.$router.push('/board/jmt/')
 						})
 				}
+			},
+			update() {
+				var credentials = {
+					name: this.name,
+					location: this.location,
+					body: this.content,
+					anonymous: (this.anonymousStatus === "true") ? 1 : 0,
+					locationid: this.locationid,
+					id: this.id
+				}
+				axios.put('api/jmt/', credentials)
+					.then(response => {
+							alert('글이 수정되었습니다.')
+							this.$router.push('/board/jmt/')
+					})
 			},
 			goBack() {
 				const formTitle = document.querySelector('#form-title')

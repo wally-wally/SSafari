@@ -18,6 +18,7 @@ import AOS from 'aos';
 import 'aos/dist/aos.css'
 import axios from 'axios'
 
+Vue.prototype.$EventBus = new Vue();
 Vue.config.productionTip = false
 
 axios.defaults.baseURL = 'http://192.168.31.110:8197/ssafyvue/'
