@@ -68,5 +68,7 @@ public interface IPostService {
 	void deleteBoardCategoryAuth(int id);
 
 	void addBoardCategoryAuth(Category category);
+
+	int getTotalPost(PostPaging postpaging);
 	
 }

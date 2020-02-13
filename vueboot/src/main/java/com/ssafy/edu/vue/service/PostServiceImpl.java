@@ -185,4 +185,9 @@ public class PostServiceImpl implements IPostService {
 		postdao.addBoardCategoryAuth(category);
 	}
 
+	@Override
+	public int getTotalPost(PostPaging postpaging) {
+		return postdao.getTotalPost(postpaging);
+	}
+
 }
