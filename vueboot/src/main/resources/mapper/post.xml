@@ -37,7 +37,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="keyword!=null">AND TITLE LIKE #{keyword}</if>
 		ORDER BY POSTID	DESC
 		LIMIT 20 OFFSET #{page}
-		
+	</select>
+	
+	<select id="getTotalPost"
+		parameterType="com.ssafy.edu.vue.dto.PostPaging"
+		resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		WHERE CATEGORYID=#{categoryid}
+		<if test="locationid!=0">AND P.LOCATIONID=#{locationid}</if>
+		<if test="keyword!=null">AND TITLE LIKE #{keyword}</if>
 	</select>
 
 	<select id="getPost" parameterType="java.lang.Integer"

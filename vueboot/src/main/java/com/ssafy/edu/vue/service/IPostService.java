@@ -71,4 +71,6 @@ public interface IPostService {
 
 	List<Category> getBoardSearch(String keyword);
 	
+	int getTotalPost(PostPaging postpaging);
+
 }
