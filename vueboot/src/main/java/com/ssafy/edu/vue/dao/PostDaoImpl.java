@@ -131,4 +131,8 @@ public class PostDaoImpl {
 		sqlSession.insert(ns+"addBoardCategoryAuth",category);
 	}
 
+	public int getTotalPost(PostPaging postpaging) {
+		return sqlSession.selectOne(ns+"getTotalPost",postpaging);
+	}
+
 }

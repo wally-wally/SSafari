@@ -359,4 +359,18 @@ public class PostController {
 		List<Post> posts = postservice.getPostsPaging(postpaging);
 		return new ResponseEntity<List<Post>>(posts, HttpStatus.OK);
 	}
+	
+	@ApiOperation(value = "다음 페이지 있는지", response = List.class)
+	@RequestMapping(value = "/nextpage", method = RequestMethod.POST)
+	public ResponseEntity<Boolean> hasNextPage(@ModelAttribute PostPaging postpaging) throws Exception {
+		logger.info("1-------------hasNextPage-----------------------------" + new Date());
+		boolean nextpage = false;
+		int total = postservice.getTotalPost(postpaging);
+		if(20*postpaging.getPage()<total) {
+			nextpage = true;
+		}else {
+			nextpage = false;
+		}
+		return new ResponseEntity<Boolean>(nextpage, HttpStatus.OK);
+	}
 }
