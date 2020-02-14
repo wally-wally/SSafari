@@ -2,10 +2,16 @@
     <v-list-item>
         <v-list-item-content>
             <v-list-item-title style="font-size:1.3rem;">
-            <span v-if="comment.anonym" >익명</span>
-            <span v-else>{{ comment.username }}</span>
-            <small style="color:blue" v-if="comment.memberid === comment.writer">(작성자)</small>
-            <small style="font-size:0.7rem;">( {{comment.wdate}} )</small>
+                <v-dialog v-if="send" v-model="send">
+                    <sendmessage v-on:close="sendmessage" :comment="comment"/>
+                </v-dialog>
+                    <span v-if="comment.anonym" >익명</span>
+                    <span v-else>{{ comment.username }}</span>
+                    <small style="color:blue" v-if="comment.memberid === comment.writer">(작성자)</small>
+                <div v-if="this.$store.state.isLogin" @click="sendmessage">
+                    <i class="mousehover far fa-envelope"></i>
+                </div>
+                <small style="font-size:0.7rem;">( {{comment.wdate}} )</small>
             </v-list-item-title>
             <v-list-item-subtitle class="mt-2" style="font-size:1rem;" v-if="!this.update">
                 {{comment.content}}
@@ -27,14 +33,18 @@
 
 <script>
 import axios from 'axios'
+import sendmessage from '../message/sendmessage'
+
 export default {
     name : 'Comment',
     props : {
         comment : {type : Object},
         board : {type : String}
     },
+    components : { sendmessage },
     data() {
         return {
+            send: false,
             update: false,
             new_comment :'',
             anonymousStatus: false,
@@ -45,6 +55,9 @@ export default {
         this.anonymousStatus = this.comment.anonym
     },
     methods : {
+        sendmessage() {
+            this.send = !this.send
+        },
         commentupdate() {
             this.update = !this.update
         },
@@ -71,5 +84,7 @@ export default {
 </script>
 
 <style>
-
+.mousehover:hover {
+    cursor:pointer;
+}
 </style>

@@ -27,7 +27,6 @@ import axios from 'axios'
 import Comment from '../comment/Comment'
 import router from '@/router.js'
 import { mapState} from 'vuex'
-
 export default {
     name : 'boardcomment',
     props : {
