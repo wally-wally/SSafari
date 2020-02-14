@@ -226,10 +226,7 @@ public class Post implements Serializable {
 	public void setComments(int comments) {
 		this.comments = comments;
 	}
-	
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
+
 	
 	@Override
 	public String toString() {
