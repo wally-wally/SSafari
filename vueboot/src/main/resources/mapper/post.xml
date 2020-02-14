@@ -35,27 +35,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getPostsPaging"
 		parameterType="com.ssafy.edu.vue.dto.PostPaging"
 		resultType="com.ssafy.edu.vue.dto.Post">
-		SELECT P.POSTID POSTID, P.TITLE TITLE, P.BODY BODY, P.CREATED_AT CREATED_AT, P.MEMBERID MEMBERID,
-		P.CATEGORYID CATEGORYID, P.ANONYMOUS ANONYMOUS, P.LOCATIONID LOCATIONID,
-		IF(P.ANONYMOUS=1 AND M.MEMBERID!=#{memberid}, '익명', M.USERNAME) AS USERNAME,
-		(SELECT COUNT(*) FROM LIKEPOST WHERE CATEGORYID=1 AND POSTID=P.POSTID) LIKES,
-        (SELECT COUNT(*) FROM COMMENTPOST WHERE CATEGORYID=1 AND POSTID=P.POSTID) COMMENTS
-		FROM POSTS P, MEMBERS M 
-		WHERE P.MEMBERID=M.MEMBERID AND CATEGORYID=#{categoryid}
-		<if test="locationid!=0">AND P.LOCATIONID=#{locationid}</if>
-		<if test="keyword!=null">AND TITLE LIKE #{keyword}</if>
-		ORDER BY POSTID	DESC
-		LIMIT 20 OFFSET #{page}
+		select p.postid postid, p.title title, p.body body, p.created_at created_at, p.memberid memberid,
+		p.categoryid categoryid, p.anonymous anonymous, p.locationid locationid,
+		if(p.anonymous=1 and m.memberid!=#{memberid}, '익명', m.username) as username,
+		(select count(*) from likepost where categoryid=1 and postid=p.postid) likes,
+        (select count(*) from commentpost where categoryid=1 and postid=p.postid) comments
+		from posts p, members m 
+		where p.memberid=m.memberid and categoryid=#{categoryid}
+		<if test="locationid!=0">and p.locationid=#{locationid}</if>
+		<if test="keyword!=null">and title like #{keyword}</if>
+		order by postid	desc
+		limit 20 offset #{page}
 	</select>
 	
 	<select id="getTotalPost"
 		parameterType="com.ssafy.edu.vue.dto.PostPaging"
 		resultType="java.lang.Integer">
-		SELECT COUNT(*)
-		FROM POSTS
-		WHERE CATEGORYID=#{categoryid}
-		<if test="locationid!=0">AND LOCATIONID=#{locationid}</if>
-		<if test="keyword!=null">AND TITLE LIKE #{keyword}</if>
+		select count(*) from posts
+		where categoryid=#{categoryid}
+		<if test="locationid!=0">and locationid=#{locationid}</if>
+		<if test="keyword!=null">and title like #{keyword}</if>
 	</select>
 
 	<select id="getPost" parameterType="java.lang.Integer"
@@ -221,14 +220,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select id, name, explanation, memberid from category where name like #{keyword}
 	</select>
 	
-	<select id="getTotalPost"
-		parameterType="com.ssafy.edu.vue.dto.PostPaging"
-		resultType="java.lang.Integer">
-		select count(*) from posts
-		where categoryid=#{categoryid}
-		<if test="locationid!=0">and locationid=#{locationid}</if>
-		<if test="keyword!=null">and title like #{keyword}</if>
-	</select>
+	
 	
 	<select id="getPostCategory" parameterType="java.lang.Integer" resultType="java.lang.Integer">
 		select categoryid from posts where postid = #{postid}

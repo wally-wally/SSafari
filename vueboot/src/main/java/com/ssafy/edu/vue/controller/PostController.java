@@ -107,31 +107,30 @@ public class PostController {
 		return new ResponseEntity<List<Post>>(posts, HttpStatus.OK);
 	}
 	
-	@ApiOperation(value = "post 상세 보기", response = List.class)
-	@RequestMapping(value = "/post/{postid}", method = RequestMethod.GET)
-	public ResponseEntity<Post> getPost(@PathVariable int postid) throws Exception {
-		logger.info("1-------------getPost-----------------------------" + new Date());
-		Post post = postservice.getPost(postid);
-		if (post == null) {
-			return new ResponseEntity(HttpStatus.NO_CONTENT);
-		}
-		return new ResponseEntity<Post>(post, HttpStatus.OK);
-	}
+//	@ApiOperation(value = "post 상세 보기", response = List.class)
+//	@RequestMapping(value = "/post/{postid}", method = RequestMethod.GET)
+//	public ResponseEntity<Post> getPost(@PathVariable int postid) throws Exception {
+//		logger.info("1-------------getPost-----------------------------" + new Date());
+//		Post post = postservice.getPost(postid);
+//		if (post == null) {
+//			return new ResponseEntity(HttpStatus.NO_CONTENT);
+//		}
+//		return new ResponseEntity<Post>(post, HttpStatus.OK);
+//	}
 	
-	/*@ApiOperation(value = "post 상세 보기", response = List.class)
+	@ApiOperation(value = "post 상세 보기", response = List.class)
 	@RequestMapping(value = "/post", method = RequestMethod.GET)
 	public ResponseEntity<Map<String,Object>> getPost(@RequestBody Postinfo postinfo,HttpServletRequest rs) throws Exception {
 		logger.info("1-------------getPost-----------------------------" + new Date());
 		Map<String,Object> result = new HashMap();
-		Postinfo postinfo = new Postinfo();
 		int memberid = 0;
 		if(rs.getAttribute("loginMember")!=null) {
 			Member member = (Member) rs.getAttribute("loginMember");
 			memberid = member.getMemberid();
 			postinfo.setMemberid(memberid);
 		}
-		postinfo.setPostid(postid);
-		postinfo.setCategoryid(postservice.getPostCategory(postid));
+		postinfo.setPostid(postinfo.getPostid());
+		postinfo.setCategoryid(postservice.getPostCategory(postinfo.getPostid()));
 		
 		Post post = postservice.getPost(postinfo);	//int -> postinfo
 		result.put("post",post);
