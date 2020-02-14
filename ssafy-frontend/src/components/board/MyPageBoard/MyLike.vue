@@ -3,12 +3,12 @@
     <div class="faq-section__qnas">
       <div class="qna animate">
         <div class="qna__q" style="display: flex; justify-content:space-between;">
-          <div class="post-list-title" style="margin-right: 15px;">{{title}}</div>
+          <div class="post-list-title" style="margin-right: 15px;"><span style="color:#F67280">{{categoryName}}</span> | {{title}} | {{creator}}</div>
           <div style="font-size: 0.8em; min-width: 87px;">
             <span class="board-date" style="margin-left: 8px; border-left: 1px solid black; padding-left: 8px;">{{date.slice(2, 16)}}</span>
           </div>
         </div>
-        <div class="qna__a">{{body}}</div>
+        <div class="qna__a"></div>
       </div>
     </div>
   </div>
@@ -23,14 +23,11 @@
       title: {
         type: String
       },
-      body: {
+      creator: {
         type: String
       },
-      username: {
+      categoryName: {
         type: String
-      },
-      memberid: {
-        type: Number
       }
     },
     computed: {

@@ -113,13 +113,11 @@
 				}
 			},
 			getRestaurant() {
-				axios.get(`api/jmt/${this.id}`, Headers = {
-						'access-token': this.$store.state.token
-					})
+				axios.get(`api/jmt/${this.id}`, { headers: { 'access-token': this.$store.state.token }})
 					.then(response => {
 						this.restaurant = response.data.jmt
 						this.count = response.data.count
-						this.likeFlag = (response.data.count === 0) ? false : true
+						this.likeFlag = (response.data.flag == 0) ? false : true
 						this.setMap(this.restaurant.location, this.restaurant.name)
 					})
 			},

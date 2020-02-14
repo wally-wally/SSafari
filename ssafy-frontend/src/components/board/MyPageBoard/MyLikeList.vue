@@ -1,20 +1,19 @@
 <template>
   <v-layout mt-5 row wrap style="margin: 20px;">
-    <v-flex v-for="i in this.showPostsCount" :key="i" style="width: 100%;"> <!-- col-12 sm6 md3 -->
-	  <router-link :to="`/board/${$store.state.categorys[posts[i-1].categoryid]}/${posts[i - 1].postid}`">
+    <v-flex v-for="i in this.showLikesCount" :key="i" style="width: 100%;"> <!-- col-12 sm6 md3 -->
+	  <router-link :to="`/board/${(likes[i-1].categoryid >= 5) ? likes[i-1].categoryid :$store.state.categorys[likes[i-1].categoryid]}/${likes[i - 1].postid}`">
 				<MyLike 
-									:date="posts[i - 1].created_at"
-									:title="posts[i - 1].title"
-									:body="posts[i - 1].body"
-						:username="posts[i - 1].username"
-						:memberid="posts[i - 1].memberid">
+									:date="likes[i - 1].created_at"
+									:title="likes[i - 1].title"
+						:creator="likes[i - 1].username"
+						:categoryName="likes[i - 1].categoryname">
 				</MyLike>
 	  </router-link>
 
     </v-flex>
     <v-flex xs12 text-xs-center round my-5 v-if="loadMore">
-      <v-btn v-if="this.posts.length > 6 && this.morePostsIcon" color="#f7b157" dark v-on:click="loadMorePosts"><v-icon size="25" class="mr-2">fa-plus</v-icon> 더 보기</v-btn>&nbsp; &nbsp;
-			<v-btn v-if="this.hidePostsIcon" color="red" dark v-on:click="hidePosts"><v-icon size="25" class="mr-2">fa-minus</v-icon> 숨기기</v-btn>
+      <v-btn v-if="this.likes.length > 6 && this.moreLikesIcon" color="#f7b157" dark v-on:click="loadMoreLikes"><v-icon size="25" class="mr-2">fa-plus</v-icon> 더 보기</v-btn>&nbsp; &nbsp;
+			<v-btn v-if="this.hideLikesIcon" color="red" dark v-on:click="hidePosts"><v-icon size="25" class="mr-2">fa-minus</v-icon> 숨기기</v-btn>
 		</v-flex>
   </v-layout>
 </template>
@@ -27,41 +26,42 @@ export default {
 	props: {
 		column: {type: Number, default: 1},
 		limits: {type: Number, default: 6},
-		loadMore: {type: Boolean, default: false}
 	},
 	data() {
 		return {
-			posts: [],
-			showPostsCount : 0, 
-			morePostsIcon : true,
-			hidePostsIcon : false
+			likes: [],
+			loadMore: false,
+			showLikesCount : 0, 
+			moreLikesIcon : true,
+			hideLikesIcon : false
 		}
 	},
 	components: {
 		MyLike
 	},
 	mounted() {
-		this.getPosts()
+		this.getMyLikes()
 	},
 	methods: {
-		getPosts() {
-			axios.get(`api/postlist/${ this.$store.getters.user.memberid }`)
+		getMyLikes() {
+			axios.get('api/member/likepost', { headers: { 'access-token': this.$store.state.token }})
 				.then( response => {
-					this.posts = response.data
-					this.showPostsCount = (this.posts.length >= 6) ? 6 : this.posts.length  
+					this.likes = response.data
+					this.showLikesCount = (this.likes.length >= 6) ? 6 : this.likes.length
+					this.loadMore = (this.likes.length > 6) ? true : false
 				})
 		},
-		loadMorePosts() {
-			let adjustCount = this.showPostsCount + 6 < this.posts.length ? this.showPostsCount + 6 : this.posts.length
-			this.showPostsCount = adjustCount
-			this.morePostsIcon = adjustCount < this.posts.length ? true : false
-			this.hidePostsIcon = true
+		loadMoreLikes() {
+			let adjustCount = this.showLikesCount + 6 < this.likes.length ? this.showLikesCount + 6 : this.likes.length
+			this.showLikesCount = adjustCount
+			this.moreLikesIcon = adjustCount < this.likes.length ? true : false
+			this.hideLikesIcon = true
     },
 		hidePosts() {
-			let adjustCount2 = this.showPostsCount - 6 > 6 ? this.showPostsCount - 6 : 6
-			this.showPostsCount = adjustCount2
-			this.hidePostsIcon = adjustCount2 === 6 ? false : true
-			this.morePostsIcon = true
+			let adjustCount2 = this.showLikesCount - 6 > 6 ? this.showLikesCount - 6 : 6
+			this.showLikesCount = adjustCount2
+			this.hideLikesIcon = adjustCount2 === 6 ? false : true
+			this.moreLikesIcon = true
 		}
 	}
 }

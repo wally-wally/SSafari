@@ -117,12 +117,12 @@
 				}
 			},
 			getcode() {
-				axios.get(`api/code/${this.id}`, Headers={'access-token': this.$store.state.token})
+				axios.get(`api/code/${this.id}`, { headers: { 'access-token': this.$store.state.token }})
 					.then(response => {
 						console.log(response.data)
 						this.code = response.data.code
 						this.count = response.data.count
-						this.likeFlag = (response.data.count === 0) ? false : true
+						this.likeFlag = (response.data.flag === 0) ? false : true
 					})
 			},
 			codedelete() {
