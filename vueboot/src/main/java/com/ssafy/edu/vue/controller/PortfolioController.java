@@ -1,7 +1,9 @@
 package com.ssafy.edu.vue.controller;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,11 +59,17 @@ public class PortfolioController {
 	
 	@ApiOperation(value = "portfolio 상세 보기", response = List.class)
 	@RequestMapping(value = "/portfolio/{portfolioid}", method = RequestMethod.GET)
-	public ResponseEntity<Portfolio> getPortfolio(@PathVariable int portfolioid) throws Exception {
+	public ResponseEntity<Map<String,Object>> getPortfolio(@PathVariable int portfolioid) throws Exception {
 		logger.info("1-------------getPortfolio-----------------------------" + new Date());
-		Portfolio portfolio = portfolioservice.getPortfolio(portfolioid);
+		Map<String,Object> result = new HashMap();
 		
-		return new ResponseEntity<Portfolio>(portfolio, HttpStatus.OK);
+		Portfolio portfolio = portfolioservice.getPortfolio(portfolioid);
+		result.put("portfolio", portfolio);
+		
+		List<Sugang> sugang = portfolioservice.getSugangMember(portfolioid);
+		result.put("sugang", sugang);
+		
+		return new ResponseEntity<Map<String,Object>>(result, HttpStatus.OK);
 	}
 	
 	@ApiOperation(value = "portfolio 추가", response = List.class)
