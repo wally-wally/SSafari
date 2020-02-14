@@ -20,10 +20,11 @@ export default new Vuex.Store({
         categorys : {
             '1' : 'free',
             '2' : 'job',
-            '3' : 'code',
+            '3' : 'codereview',
             '4' : 'jmt'
          },
         region: {
+            'All': '0',
             'Seoul': '1',
             'Daejeon': '2',
             'Gumi': '3',

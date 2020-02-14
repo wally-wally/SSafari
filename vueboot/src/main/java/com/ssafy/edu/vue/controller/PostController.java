@@ -60,9 +60,7 @@ public class PostController {
 			memberid = member.getMemberid();
 		}
 		List<Post> posts = postservice.getPosts(memberid);
-		if (posts == null) {
-			return new ResponseEntity(HttpStatus.NO_CONTENT);
-		}
+
 		return new ResponseEntity<List<Post>>(posts, HttpStatus.OK);
 	}
 	
@@ -76,9 +74,7 @@ public class PostController {
 			memberid = member.getMemberid();
 		}
 		List<Post> posts = postservice.getCategoryPosts(new CategoryPost(categoryid, memberid));
-		if (posts == null) {
-			return new ResponseEntity(HttpStatus.NO_CONTENT);
-		}
+
 		return new ResponseEntity<List<Post>>(posts, HttpStatus.OK);
 	}
 	
@@ -98,9 +94,7 @@ public class PostController {
 			locationfiltering.setMemberid(memberid);
 			posts = postservice.getLocationPosts(locationfiltering);
 		}
-		if (posts == null) {
-			return new ResponseEntity(HttpStatus.NO_CONTENT);
-		}
+
 		return new ResponseEntity<List<Post>>(posts, HttpStatus.OK);
 	}
 	
@@ -114,6 +108,17 @@ public class PostController {
 		}
 		return new ResponseEntity<List<Post>>(posts, HttpStatus.OK);
 	}
+	
+//	@ApiOperation(value = "post 상세 보기", response = List.class)
+//	@RequestMapping(value = "/post/{postid}", method = RequestMethod.GET)
+//	public ResponseEntity<Post> getPost(@PathVariable int postid,HttpServletRequest rs) throws Exception {
+//		logger.info("1-------------getPost-----------------------------" + new Date());
+//		Post post = postservice.getPost(postid);
+//		if (post == null) {
+//			return new ResponseEntity(HttpStatus.NO_CONTENT);
+//		}
+//		return new ResponseEntity<Post>(post, HttpStatus.OK);
+//	}
 	
 	@ApiOperation(value = "post 상세 보기", response = List.class)
 	@RequestMapping(value = "/post/{postid}", method = RequestMethod.GET)
@@ -131,28 +136,31 @@ public class PostController {
 	public ResponseEntity<Map<String,Object>> getPost(@RequestBody Postinfo postinfo,HttpServletRequest rs) throws Exception {
 		logger.info("1-------------getPost-----------------------------" + new Date());
 		Map<String,Object> result = new HashMap();
+		Postinfo postinfo = new Postinfo();
 		int memberid = 0;
 		if(rs.getAttribute("loginMember")!=null) {
 			Member member = (Member) rs.getAttribute("loginMember");
 			memberid = member.getMemberid();
 			postinfo.setMemberid(memberid);
 		}
+		postinfo.setPostid(postid);
+		postinfo.setCategoryid(postservice.getPostCategory(postid));
 		
 		Post post = postservice.getPost(postinfo);	//int -> postinfo
 		result.put("post",post);
 		
-		int counts = postservice.getLikeCounts(likepost);
+		int counts = postservice.getLikeCounts(postinfo);
 		result.put("count", counts);
 		
 		int flag = 0;
 		if(memberid!=0) {
-			likepost.setMemberid(memberid);
-			postservice.isLike(likepost);
+			postinfo.setMemberid(memberid);
+			flag=postservice.isLike(postinfo);
 		}
 		result.put("flag", flag);
 		
 		return new ResponseEntity<Map<String,Object>>(result, HttpStatus.OK);
-	}*/
+	}
 	
 	@ApiOperation(value = "post 추가", response = List.class)
 	@RequestMapping(value = "/post", method = RequestMethod.POST)
@@ -410,6 +418,20 @@ public class PostController {
 		}else {
 			nextpage = false;
 		}
+		return new ResponseEntity<Boolean>(nextpage, HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "인기 게시글", response = List.class)
+	@RequestMapping(value = "/popular", method = RequestMethod.GET)
+	public ResponseEntity<Boolean> getPopularPost(HttpServletRequest rs) throws Exception {
+		logger.info("1-------------getPopularPost-----------------------------" + new Date());
+		int memberid = 0;
+		if(rs.getAttribute("loginMember")!=null) {
+			Member member = (Member) rs.getAttribute("loginMember");
+			memberid = member.getMemberid();
+		}
+		boolean nextpage = false;
+		
 		return new ResponseEntity<Boolean>(nextpage, HttpStatus.OK);
 	}
 }

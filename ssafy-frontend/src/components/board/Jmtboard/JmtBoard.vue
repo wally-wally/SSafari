@@ -23,6 +23,9 @@
 									{{restaurant.name }} <h6>{{restaurant.location}}</h6>
 								</v-card-title>
 								<v-card-subtitle>
+									{{restaurant.username}}
+								</v-card-subtitle>
+								<v-card-subtitle>
 									{{restaurant.body}}
 								</v-card-subtitle>
 							</v-card>

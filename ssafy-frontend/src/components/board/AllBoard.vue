@@ -1,6 +1,74 @@
 <template>
-    <div class="row mx-4">
-        <div class="col-12 col-lg-6 boardlist">
+    <div class="row board-cards">
+        <div class="col-12 col-sm-6 board">
+            <v-card-title class="main-board-title">자유게시판</v-card-title>
+            <v-card-subtitle class="main-board-subtitle pb-1">{{ freeBoardLength }}개의 게시글 중 최근 5개</v-card-subtitle>
+            <v-divider></v-divider>
+            <table class="freeboard">
+                <thead>
+                    <td>title</td>
+                    <td>date</td>
+                </thead>
+                <tbody v-for="board in freeBoard" :key="board.postid">
+                    <tr class="board-table-row" @click="goBoardDetail('free', board.postid)">
+                        <td>{{ board.title }}</td>
+                        <td>{{ board.created_at }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-12 col-sm-6 board">
+            <v-card-title class="main-board-title">취업게시판</v-card-title>
+            <v-card-subtitle class="main-board-subtitle pb-1">{{ jobBoardLength }}개의 게시글 중 최근 5개</v-card-subtitle>
+            <v-divider></v-divider>
+            <table class="jobboard">
+                <thead>
+                    <td>title</td>
+                    <td>date</td>
+                </thead>
+                <tbody v-for="board in jobBoard" :key="board.postid">
+                    <tr class="board-table-row" @click="goBoardDetail('free', board.postid)">
+                        <td>{{ board.title }}</td>
+                        <td>{{ board.created_at }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-12 col-sm-6 board">
+            <v-card-title class="main-board-title">코드리뷰</v-card-title>
+            <v-card-subtitle class="main-board-subtitle pb-1">{{ codeBoardLength }}개의 게시글 중 최근 5개</v-card-subtitle>
+            <v-divider></v-divider>
+            <table class="codeboard">
+                <thead>
+                    <td>title</td>
+                    <td>date</td>
+                </thead>
+                <tbody v-for="board in codeBoard" :key="board.postid">
+                    <tr class="board-table-row" @click="goBoardDetail('free', board.postid)">
+                        <td>{{ board.title }}</td>
+                        <td>{{ board.created_at }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-12 col-sm-6 board">
+            <v-card-title class="main-board-title">주변맛집</v-card-title>
+            <v-card-subtitle class="main-board-subtitle pb-1">{{ jmtBoardLength }}개의 게시글 중 최근 5개</v-card-subtitle>
+            <v-divider></v-divider>
+            <table class="jmtboard">
+                <thead>
+                    <td>title</td>
+                    <td>date</td>
+                </thead>
+                <tbody v-for="board in jmtBoard" :key="board.postid">
+                    <tr class="board-table-row" @click="goBoardDetail('free', board.postid)">
+                        <td>{{ board.title }}</td>
+                        <td>{{ board.created_at }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- <div class="col-12 col-lg-6 boardlist">
             <p>자유게시판</p>
             <BoardListAll :boards="freeBoard" :boardType="'free'"/>
         </div>
@@ -10,12 +78,12 @@
         </div>
         <div class="col-12 col-lg-6 boardlist">
             <p>코드리뷰</p>
-            <BoardListAll :boards="codeBoard" :boardType="'codereview'"/>
+            <BoardListAll :boards="codeBoard" :boardType="'code'"/>
         </div>
         <div class="col-12 col-lg-6 boardlist">
             <p>주변맛집</p>
             <BoardListAll :boards="jmtBoard" :boardType="'jmt'"/>
-        </div>
+        </div> -->
     </div>
 </template>
 
@@ -30,39 +98,138 @@
         },
         data() {
             return {
-                freeBoard: null,
+                headers: [
+                    { text: 'title', align: 'left', value: 'title' },
+                    { text: 'date', value: 'created_at' }
+                ],
+                freeBoard: [],
+                freeBoardLength: 0,
                 jobBoard: null,
+                jobBoardLength: 0,
                 codeBoard: null,
+                codeBoardLength: 0,
                 jmtBoard: null,
+                jmtBoardLength: 0
             }
         },
         mounted() {
             axios.get(`api/posts/1`)
                 .then(response => {
-                    this.freeBoard = response.data.slice(0, 5)
+                    let mainPageBoards = []
+                    response.data.slice(0, 5).forEach(bdata => {
+                        mainPageBoards.push({
+                            'title': bdata.title,
+                            'created_at': bdata.created_at.slice(2, 16),
+                            'postid': bdata.postid
+                        })
+                    })
+                    this.freeBoard = mainPageBoards
+                    this.freeBoardLength = response.data.length
                 })
             axios.get(`api/posts/2`)
                 .then(response => {
-                    this.jobBoard = response.data.slice(0, 5)
+                    let mainPageBoards = []
+                    response.data.slice(0, 5).forEach(bdata => {
+                        mainPageBoards.push({
+                            'title': bdata.title,
+                            'created_at': bdata.created_at.slice(2, 16),
+                            'postid': bdata.postid
+                        })
+                    })
+                    this.jobBoard = mainPageBoards
+                    this.jobBoardLength = response.data.length
                 })
             axios.get(`api/codes`)
                 .then(response => {
-                    this.codeBoard = response.data.slice(0, 5)
+                    let mainPageBoards = []
+                    response.data.slice(0, 5).forEach(bdata => {
+                        mainPageBoards.push({
+                            'title': bdata.title,
+                            'created_at': bdata.created_at.slice(2, 16),
+                            'postid': bdata.postid
+                        })
+                    })
+                    this.codeBoard = mainPageBoards
+                    this.codeBoardLength = response.data.length
                 })
             axios.get(`api/jmts`)
                 .then(response => {
-                    this.jmtBoard = response.data.slice(0, 5)
+                    let mainPageBoards = []
+                    console.log(response)
+                    response.data.slice(0, 5).forEach(bdata => {
+                        mainPageBoards.push({
+                            'title': bdata.name,
+                            'created_at': bdata.created_at.slice(2, 16),
+                            'postid': bdata.id
+                        })
+                    })
+                    this.jmtBoard = mainPageBoards
+                    this.jmtBoardLength = response.data.length
                 })
+        },
+        methods: {
+            goBoardDetail(boardType, boardID) {
+                if (boardType === 'free') {
+                    this.$router.push(`/board/${boardType}/${boardID}`)
+                }
+            }
         }
     }
 </script>
 
 <style>
-    .boardlist > p {
-        font-size: 1.5rem;
-        font-weight: bold;
-        font-family: 'Noto Sans KR';
-        text-shadow: 3px 3px 5px lightgrey;
+    .board-cards {
+        width: 100%;
         text-align: center;
+        display: flex;
+        margin: 0 auto;
+    }
+
+    .board-cards > .board {
+        border : 1px solid black;
+        border-radius: 20px;
+        padding: 2px;
+    }
+    
+    .main-board-title {
+        font-family: 'Noto Sans KR', sans-serif;
+        font-weight: bold;
+    }
+
+    .main-board-subtitle {
+        font-family: 'Nanum Myeongjo', serif;
+    }
+
+    table[class$='board'] {
+        width: 100%;
+        padding: 3px;
+    }
+
+    table[class$='board'] > thead > td:first-child {
+        width: 63%;
+    }
+
+    table[class$='board'] > thead > td:last-child {
+        width: 37%;
+    }
+
+    table[class$='board'] > tbody > .board-table-row:hover {
+        background-color: lightgray;
+        cursor: pointer;
+    }
+
+    table[class$='board'] > tbody > tr > td:first-child {
+        font-size: 14px;
+        text-align: left;
+        padding-left: 5px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+    }
+
+    table[class$='board'] > tbody > tr > td:last-child {
+        font-size: 14px;
     }
 </style>

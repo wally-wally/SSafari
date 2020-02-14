@@ -26,7 +26,7 @@ public class PostDaoImpl {
 		return sqlSession.selectList(ns+"getPostList",memberid);
 	}
 
-	public Post getPost(int postid) {
+	public Post getPost(Postinfo postid) {
 		return sqlSession.selectOne(ns+"getPost", postid);
 	}
 
@@ -136,6 +136,10 @@ public class PostDaoImpl {
 		
 	public int getTotalPost(PostPaging postpaging) {
 		return sqlSession.selectOne(ns+"getTotalPost",postpaging);
+	}
+
+	public int getPostCategory(int postid) {
+		return sqlSession.selectOne(ns+"getPostCategory",postid);
 	}
 
 }

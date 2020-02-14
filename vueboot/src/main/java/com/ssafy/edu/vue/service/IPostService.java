@@ -16,7 +16,7 @@ public interface IPostService {
 	
 	List<Post> getPostList(int memberid);
 	
-	Post getPost(int postid);
+	Post getPost(Postinfo postinfo);
 	
 	void addPost(Post post);
 	
@@ -71,5 +71,7 @@ public interface IPostService {
 	List<Category> getBoardSearch(String keyword);
 	
 	int getTotalPost(PostPaging postpaging);
+
+	int getPostCategory(int postid);
 
 }

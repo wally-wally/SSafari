@@ -12,7 +12,7 @@
 						</div>
 						<div>
 					  	<span class="headline">{{ portfolio.title }} <h6>{{ portfolio.created_at }} </h6>
-								<v-btn class="mr-1" v-if="currentMemberId === portfolio.memberid" small color="green" :to="{ name: 'PortfolioUpdate', params: { id: id, title: portfolio.title, content: portfolio.body, imgSrc: portfolio.img, memberId: portfolio.memberid }}">수정</v-btn>
+								<v-btn class="mr-1" v-if="currentMemberId === portfolio.memberid" small color="green" :to="{ path : `/studygroup/${portfolio.portfolioid}/update`}">수정</v-btn>
 								<v-btn v-if="currentMemberId === portfolio.memberid || currentMemberAuth === 1" small color="error" @click="deletePortfolio">삭제</v-btn>
 							</span>
 						</div>
@@ -52,89 +52,97 @@
 </template>
 
 <script>
-import axios from 'axios'
-import boardcomment from '@/components/comment/boardcomment.vue'
-import router from '@/router.js'
+  import axios from 'axios'
+  import boardcomment from '@/components/comment/boardcomment.vue'
+  import router from '@/router.js'
 
-export default {
-		name: "PortfolioDetail",
-		components : {boardcomment},
+  export default {
+    name: "PortfolioDetail",
+    components: {
+      boardcomment
+    },
     data() {
-	    return {
-						portfolio: [],
-            comments : [],
-            myapplicate : false,
-            currentMemberId: '',
-            currentMemberAuth: ''
-		}
-	},
+      return {
+        portfolio: [],
+        comments: [],
+        myapplicate: false,
+        currentMemberId: null,
+        currentMemberAuth: ''
+      }
+    },
     props: {
-        id: { type: String },
+      id: {
+        type: String
+      },
     },
     mounted() {
-        this.currentMemberId =  this.$store.state.memberid
-        this.currentMemberAuth = this.$store.getters.auth
-        this.getPortfolio()
-        this.getPortfolioComment()
+      this.currentMemberId = this.$store.state.memberid
+      this.currentMemberAuth = this.$store.getters.auth
+      this.getPortfolio()
+      this.getPortfolioComment()
     },
     methods: {
       checkmyapplicate() {
         axios.get(`api/sugang?portfolioid=${this.portfolio.portfolioid}&memberid=${this.currentMemberId}`)
-        .then(response => {
-          this.myapplicate = response.data
-        })
+          .then(response => {
+            this.myapplicate = response.data
+          })
       },
       getPortfolio() {
         console.log(this.id)
-          axios.get(`api/portfolio/${this.id}`)
-              .then( response => {
-                console.log(response.data)
-                  this.portfolio = response.data
-                  this.checkmyapplicate()
-        })
+        axios.get(`api/portfolio/${this.id}`)
+          .then(response => {
+            console.log(response.data)
+            this.portfolio = response.data
+            this.checkmyapplicate()
+          })
       },
       getPortfolioComment() {
         axios.get(`api/commentportfolio/${this.id}`)
           .then(response => {
             this.comments = response.data
-        })  
+          })
       },
       deletePortfolio() {
-          axios.delete(`api/portfolio/${this.id}`)
-            .then(response => {
-              console.log(response.status)
-              if(response.status == 200){
-                router.push({ path: '/studygroup' })
-              }
-            })
-        },
-        application(){
-          const data = {
-            memberid : this.currentMemberId,
-            portfolioid : this.portfolio.portfolioid
-          }
-          if (!this.myapplicate){
-            console.log('수강')
-            this.portfolio.applicant += 1
-            this.myapplicate = true
-            axios.post(`api/sugang`,data)
-            .then(response=> {
-              console.log(response.data)
-            }).catch(error => {
-              console.log(error)
-            })
-          }else {
-            console.log('수강취소')
-            this.myapplicate = false
-            this.portfolio.applicant -= 1
-            axios.delete(`api/sugang`,{'data':data})
-            .then(response=> {
-              console.log(response.data)
-            }).catch(error => {
-              console.log(error)
-            })
+        axios.delete(`api/portfolio/${this.id}`)
+          .then(response => {
+            console.log(response.status)
+            if (response.status == 200) {
+              router.push({
+                path: '/studygroup'
+              })
             }
+          })
+      },
+      application() {
+        const data = {
+          memberid: this.currentMemberId,
+          portfolioid: this.portfolio.portfolioid
+        }
+        if (!this.myapplicate) {
+          console.log('수강')
+          this.portfolio.applicant += 1
+          this.myapplicate = true
+          axios.post(`api/sugang`, data)
+            .then(response => {
+              console.log(response.data)
+            }).catch(error => {
+              console.log(error)
+            })
+        } else {
+          console.log('수강취소')
+          this.myapplicate = false
+          this.portfolio.applicant -= 1
+          axios.delete(`api/sugang`, {
+              'data': data
+            })
+            .then(response => {
+              console.log(response.data)
+            }).catch(error => {
+              console.log(error)
+            })
         }
       }
     }
+  }
 </script>

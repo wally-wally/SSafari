@@ -9,7 +9,7 @@
         <router-link to="/board/job/" :style="{ color: '#60666C'}">
           <div class="job-notice"><i class="fas fa-user-tie"></i></div>
         </router-link>
-        <router-link to="/board/codereview/" :style="{ color: '#60666C'}">
+        <router-link to="/board/code/" :style="{ color: '#60666C'}">
           <div class="code-notice"><i class="fas fa-code"></i></div>
         </router-link>
         <router-link to="/board/jmt/" :style="{ color: '#60666C'}">
@@ -27,7 +27,7 @@
         </span>
         <span >
           <div id="notice-search-form">
-            <input type="text" id="notice-search">
+            <input v-model="searchTitle" type="text" id="notice-search">
             <button style="padding-left: 5px;" @click="searchBoard"><i class="fas fa-search"></i></button>
           </div>
         </span>
@@ -72,7 +72,8 @@ export default {
   data() {
     return {
       ssafyAuth: '',
-      boards: []
+      boards: [],
+      searchTitle: ''
     }
   },
   mounted() {
@@ -83,15 +84,13 @@ export default {
     getBoards() {
       axios.get('api/boardcategory')
         .then(response => {
-          // console.log(response.data)
           this.boards = response.data
         })
     },
     searchBoard() {
-      const searchBoardTitle = document.querySelector('#notice-search').value
-      axios.get('api/boardcategory', {params: {name: searchBoardTitle}})
+      this.searchTitle = document.querySelector('#notice-search').value
+      axios.get(`api/boardcategory/search/${this.searchTitle}`)
         .then(response => {
-          console.log(response.data)
           this.boards = response.data
           document.querySelector('#notice-search').value = '' // 검색해서 게시판 리스트 가져온 후 검색창 초기화
         })

@@ -23,6 +23,8 @@ public class Portfolio implements Serializable {
 	private String enddate;
 	private int price;
 	private String location;
+	private int locationid;
+	private String memberimg;
 
 	public Portfolio() {
 		super();
@@ -184,13 +186,115 @@ public class Portfolio implements Serializable {
 		this.location = location;
 	}
 
+	
+
+
+	public Portfolio(int portfolioid, String title, String body, String img, String created_at, int memberid,
+			String username, int capacity, int applicant, String startdate, String enddate, int price, int locationid) {
+		super();
+		this.portfolioid = portfolioid;
+		this.title = title;
+		this.body = body;
+		this.img = img;
+		this.created_at = created_at;
+		this.memberid = memberid;
+		this.username = username;
+		this.capacity = capacity;
+		this.applicant = applicant;
+		this.startdate = startdate;
+		this.enddate = enddate;
+		this.price = price;
+		this.locationid = locationid;
+	}
+
+
+
+	public Portfolio(int portfolioid, String title, String body, String img, int capacity, String startdate,
+			String enddate, int price, int locationid) {
+		super();
+		this.portfolioid = portfolioid;
+		this.title = title;
+		this.body = body;
+		this.img = img;
+		this.capacity = capacity;
+		this.startdate = startdate;
+		this.enddate = enddate;
+		this.price = price;
+		this.locationid = locationid;
+	}
+
+
+
+	public Portfolio(String title, String body, String img, String created_at, int memberid, int capacity,
+			String startdate, String enddate, int price, int locationid) {
+		super();
+		this.title = title;
+		this.body = body;
+		this.img = img;
+		this.created_at = created_at;
+		this.memberid = memberid;
+		this.capacity = capacity;
+		this.startdate = startdate;
+		this.enddate = enddate;
+		this.price = price;
+		this.locationid = locationid;
+	}
+
+
+
+	public Portfolio(int portfolioid, String title, String body, String img, String created_at, int memberid,
+			String username, int capacity, int applicant, String startdate, String enddate, int price, int locationid,
+			String memberimg) {
+		super();
+		this.portfolioid = portfolioid;
+		this.title = title;
+		this.body = body;
+		this.img = img;
+		this.created_at = created_at;
+		this.memberid = memberid;
+		this.username = username;
+		this.capacity = capacity;
+		this.applicant = applicant;
+		this.startdate = startdate;
+		this.enddate = enddate;
+		this.price = price;
+		this.locationid = locationid;
+		this.memberimg = memberimg;
+	}
+
 
 
 	@Override
 	public String toString() {
 		return "Portfolio [portfolioid=" + portfolioid + ", title=" + title + ", body=" + body + ", img=" + img
 				+ ", created_at=" + created_at + ", memberid=" + memberid + ", username=" + username + ", commentcount="
-				+ commentcount + "]";
+				+ commentcount + ", capacity=" + capacity + ", applicant=" + applicant + ", startdate=" + startdate
+				+ ", enddate=" + enddate + ", price=" + price + ", location=" + location + ", locationid=" + locationid
+				+ ", memberimg=" + memberimg + "]";
+	}
+
+
+
+	public String getMemberimg() {
+		return memberimg;
+	}
+
+
+
+	public void setMemberimg(String memberimg) {
+		this.memberimg = memberimg;
+	}
+
+
+
+	public int getLocationid() {
+		return locationid;
+	}
+
+
+
+	public void setLocationid(int locationid) {
+		this.locationid = locationid;
 	}
 
 

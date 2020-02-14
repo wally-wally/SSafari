@@ -80,7 +80,7 @@ public class CodeController {
 		int flag = 0;
 		if(memberid!=0) {
 			likepost.setMemberid(memberid);
-			postservice.isLike(likepost);
+			flag=postservice.isLike(likepost);
 		}
 		result.put("flag", flag);
 		

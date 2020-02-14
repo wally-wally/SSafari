@@ -1,10 +1,6 @@
 <template>
-	<!-- <div class="map_wrap">
-		<br>
-		<div id="map" style="width:100%;height:350px;"></div>
-	</div> -->
 	<v-container>
-		<v-row justify="center">
+		<v-row v-if="!updateFlag" justify="center">
 			<v-col cols="12" sm="8">
 				<v-card>
 					<v-card-title class="darken-1">
@@ -15,10 +11,24 @@
 								</v-avatar><span>{{ restaurant.username }}</span>
 							</div>
 							<div>
-								<span class="headline">{{ restaurant.name }} <h6>{{ restaurant.location }} | {{ restaurant.created_at}}
+								<span class="headline">{{ restaurant.name }}
+									<v-btn v-if="((!likeFlag) && isLogin)" @click="clickLike" text icon color="#d3d3d3">
+										<v-icon>mdi-thumb-up</v-icon>
+										<h3>{{ count }}</h3>
+									</v-btn>
+									<v-btn v-if="((likeFlag) && isLogin)" @click="clickLike" text icon color="deep-orange">
+										<v-icon>mdi-thumb-up</v-icon>
+										<h3>{{ count }}</h3>
+									</v-btn>
+									<v-btn v-if="!isLogin" text icon disable>
+										<v-icon>mdi-thumb-up</v-icon>
+										<h3>{{ count }}</h3>
+									</v-btn>
+									<h6>{{ restaurant.location }} | {{ restaurant.created_at}}
 									</h6>
-									<v-btn class="mr-1" small color="green">수정</v-btn>
-									<v-btn small color="error">삭제</v-btn>
+									<v-btn v-if="memberid === restaurant.memberid" class="mr-1" small color="green" @click="clickUpdate">수정</v-btn>
+									<v-btn v-if="memberid === restaurant.memberid" small color="error" @click="deleteRestaurant">삭제
+									</v-btn>
 								</span>
 							</div>
 						</div>
@@ -37,43 +47,92 @@
 						<v-divider></v-divider>
 						<v-row justify="center">
 							<v-col cols="12" sm="12">
-								<boardcomment :postid="this.id" categoryid="4" boardtype="post"/>
+								<boardcomment boardname="jmt" :postid="this.id" categoryid="4" boardtype="post"/>
 							</v-col>
 						</v-row>
 					</v-list>
 				</v-card>
 			</v-col>
 		</v-row>
+		<RestaurantCreateFrom v-else :restaurant="this.restaurant"></RestaurantCreateFrom>
 	</v-container>
 </template>
 
 <script>
 	import boardcomment from '@/components/comment/boardcomment.vue'
+	import RestaurantCreateFrom from './RestaurantCreateForm.vue'
 	import axios from 'axios'
 	export default {
 		name: 'RestaurantDetail',
 		components: {
-			boardcomment
+			boardcomment,
+			RestaurantCreateFrom
 		},
 		props: {
 			id: {
-				type: Number
+				type: String
 			}
 		},
 		data() {
 			return {
 				comments: [],
-				restaurant: '',
+				restaurant: {},
+				likeFlag: false,
+				count: 0,
+				memberid: '',
+				categoryid: 4,
+				updateFlag: false,
+				isLogin: false,
 			}
 		},
 		methods: {
+			clickUpdate() {
+				this.updateFlag = true
+			},
+			clickLike() {
+				this.likeFlag = !this.likeFlag
+				var data = {
+					postid: this.restaurant.id,
+					memberid: this.memberid,
+					categoryid: this.categoryid
+				}
+				if (this.likeFlag) {
+					this.count += 1
+					axios.post('api/likepost', data)
+						.then(response => {
+							console.log(response)
+						})
+				} else {
+					this.count -= 1
+					axios.delete('api/likepost', {
+							data: data
+						})
+						.then(response => {
+							console.log(response)
+						})
+				}
+			},
 			getRestaurant() {
-				axios.get(`api/jmt/${this.id}`)
+				axios.get(`api/jmt/${this.id}`, { headers: { 'access-token': this.$store.state.token }})
 					.then(response => {
-						console.log(response.data)
-						this.restaurant = response.data
+						console.log(response)
+						this.restaurant = response.data.jmt
+						this.count = response.data.count
+						this.likeFlag = (response.data.flag == 0) ? false : true
 						this.setMap(this.restaurant.location, this.restaurant.name)
 					})
+			},
+			deleteRestaurant() {
+				var confirmation = confirm('삭제하시겠습니까?')
+				if (confirmation) {
+					axios.delete(`api/jmt/${this.id}`)
+						.then(response => {
+							if (response.status == 200) {
+								alert('삭제되었습니다.')
+								this.$router.push('/board/jmt/')
+							}
+						})
+				}
 			},
 			setMap(address, name) {
 				var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
@@ -108,6 +167,11 @@
 		},
 		mounted() {
 			this.getRestaurant()
+			this.memberid = this.$store.state.memberid
+			var token = this.$store.state.token
+			if (token) {
+				this.isLogin = true
+			}
 		}
 	}
 </script>
