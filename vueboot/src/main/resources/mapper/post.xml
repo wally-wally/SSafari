@@ -6,214 +6,221 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<select id="getPosts" parameterType="java.lang.Integer"
 		resultType="com.ssafy.edu.vue.dto.Post">
-		SELECT P.POSTID POSTID, P.TITLE TITLE, P.BODY BODY, P.CREATED_AT CREATED_AT, P.MEMBERID MEMBERID,
-		P.CATEGORYID CATEGORYID, P.ANONYMOUS ANONYMOUS, P.LOCATIONID LOCATIONID,
-		IF(P.ANONYMOUS=1 AND M.MEMBERID!=#{memberid}, '익명', M.USERNAME) AS USERNAME, 
-		IF(P.ANONYMOUS=1 AND M.MEMBERID!=#{memberid}, 'https://user-images.githubusercontent.com/52685250/73902320-c72d6c00-48d8-11ea-82b4-eb9bfebfe9fb.png', M.IMG) AS IMG
-		FROM POSTS P, MEMBERS M 
-		WHERE P.MEMBERID=M.MEMBERID 
-		ORDER BY POSTID	DESC
+		select p.postid postid, p.title title, p.body body, p.created_at created_at, p.memberid memberid,
+		p.categoryid categoryid, p.anonymous anonymous, p.locationid locationid,
+		if(p.anonymous=1 and m.memberid!=#{memberid}, '익명', m.username) as username, 
+		if(p.anonymous=1 and m.memberid!=#{memberid}, 'https://user-images.githubusercontent.com/52685250/73902320-c72d6c00-48d8-11ea-82b4-eb9bfebfe9fb.png', m.img) as img
+		from posts p, members m 
+		where p.memberid=m.memberid 
+		order by postid	desc
 	</select>
 
 	<select id="getPostList"
 		parameterType="java.lang.Integer"
 		resultType="com.ssafy.edu.vue.dto.Post">
-		SELECT P.POSTID POSTID, P.TITLE TITLE, P.BODY BODY, P.CREATED_AT CREATED_AT, P.MEMBERID MEMBERID, M.USERNAME USERNAME,
-		P.CATEGORYID CATEGORYID, P.ANONYMOUS ANONYMOUS, P.LOCATIONID LOCATIONID, M.IMG
-		FROM POSTS P, MEMBERS M 
-		WHERE P.MEMBERID=M.MEMBERID AND P.MEMBERID=#{memberid} 
-		ORDER BY POSTID	DESC
+		( select j.id postid, j.name title, j.name body, (4) as categoryid, r.name categoryname, j.memberid, m.username, j.anonymous, j.created_at, j.locationid
+		from jmt j, category r, members m
+		where r.id=4 and j.memberid=#{memberid} and j.memberid=m.memberid
+        union
+        select c.id postid, c.title, c.body body, (3) as categoryid, r.name categoryname, c.memberid, m.username ,c.anonymous, c.created_at, null locationid
+		from codereview c, category r, members m
+		where r.id=3 and c.memberid=#{memberid} and c.memberid=m.memberid
+        union
+        select p.postid postid, p.title, p.body, p.categoryid, r.name categoryname, p.memberid, m.username,p.anonymous, p.created_at, p.locationid
+		from posts p, category r, members m
+		where r.id=p.categoryid and p.memberid=#{memberid} and p.memberid=m.memberid )
+        order by created_at
 	</select>
 	
 	<select id="getPostsPaging"
 		parameterType="com.ssafy.edu.vue.dto.PostPaging"
 		resultType="com.ssafy.edu.vue.dto.Post">
-		SELECT P.POSTID POSTID, P.TITLE TITLE, P.BODY BODY, P.CREATED_AT CREATED_AT, P.MEMBERID MEMBERID,
-		P.CATEGORYID CATEGORYID, P.ANONYMOUS ANONYMOUS, P.LOCATIONID LOCATIONID,
-		IF(P.ANONYMOUS=1 AND M.MEMBERID!=#{memberid}, '익명', M.USERNAME) AS USERNAME 
-		FROM POSTS P, MEMBERS M 
-		WHERE P.MEMBERID=M.MEMBERID AND CATEGORYID=#{categoryid}
-		<if test="locationid!=0">AND P.LOCATIONID=#{locationid}</if>
-		<if test="keyword!=null">AND TITLE LIKE #{keyword}</if>
-		ORDER BY POSTID	DESC
-		LIMIT 20 OFFSET #{page}
+		select p.postid postid, p.title title, p.body body, p.created_at created_at, p.memberid memberid,
+		p.categoryid categoryid, p.anonymous anonymous, p.locationid locationid,
+		if(p.anonymous=1 and m.memberid!=#{memberid}, '익명', m.username) as username 
+		from posts p, members m 
+		where p.memberid=m.memberid and categoryid=#{categoryid}
+		<if test="locationid!=0">and p.locationid=#{locationid}</if>
+		<if test="keyword!=null">and title like #{keyword}</if>
+		order by postid	desc
+		limit 20 offset #{page}
 	</select>
 
 	<select id="getPost" parameterType="java.lang.Integer"
 		resultType="com.ssafy.edu.vue.dto.Post">
-		SELECT P.POSTID POSTID, P.TITLE TITLE, P.BODY BODY, P.CREATED_AT CREATED_AT, P.MEMBERID MEMBERID,
-		P.CATEGORYID CATEGORYID, P.ANONYMOUS ANONYMOUS, P.LOCATIONID LOCATIONID, IF(P.ANONYMOUS=1, 'https://user-images.githubusercontent.com/52685250/73902320-c72d6c00-48d8-11ea-82b4-eb9bfebfe9fb.png', M.IMG) IMG,
-		IF(P.ANONYMOUS=1, '익명', M.USERNAME) AS USERNAME 
-		FROM POSTS P, MEMBERS M 
-		WHERE P.MEMBERID=M.MEMBERID AND POSTID = #{postid}
+		select p.postid postid, p.title title, p.body body, p.created_at created_at, p.memberid memberid,
+		p.categoryid categoryid, p.anonymous anonymous, p.locationid locationid, if(p.anonymous=1, 'https://user-images.githubusercontent.com/52685250/73902320-c72d6c00-48d8-11ea-82b4-eb9bfebfe9fb.png', m.img) img,
+		if(p.anonymous=1, '익명', m.username) as username 
+		from posts p, members m 
+		where p.memberid=m.memberid and postid = #{postid}
 	</select>
 
 	<insert id="addPost"
 		parameterType="com.ssafy.edu.vue.dto.Post">
-		INSERT INTO
-		POSTS(TITLE, BODY, CREATED_AT, MEMBERID, CATEGORYID, ANONYMOUS, LOCATIONID)
-		VALUES(#{title},#{body},now(), #{memberid}, #{categoryid}, #{anonymous}, #{locationid})
+		insert into
+		posts(title, body, created_at, memberid, categoryid, anonymous, locationid)
+		values(#{title},#{body},now(), #{memberid}, #{categoryid}, #{anonymous}, #{locationid})
 	</insert>
 	
 	<update id="updatePost"
 		parameterType="com.ssafy.edu.vue.dto.Post">
-		UPDATE POSTS SET
-		TITLE=#{title},
-		BODY=#{body},
-		CREATED_AT=now(),
-		ANONYMOUS=#{anonymous}
-		WHERE
-		POSTID=#{postid}
+		update posts set
+		title=#{title},
+		body=#{body},
+		created_at=now(),
+		anonymous=#{anonymous}
+		where
+		postid=#{postid}
 	</update>
 
 	<delete id="deletePost" parameterType="java.lang.Integer">
-		DELETE FROM POSTS WHERE
-		POSTID
+		delete from posts where
+		postid
 		= #{postid}
 	</delete>
 	
 	<select id="getCommentJMT"
 		parameterType="com.ssafy.edu.vue.dto.Postinfo"
 		resultType="com.ssafy.edu.vue.dto.Commentpost">
-		SELECT C.CPOSTID CPOSTID, C.CATEGORYID CATEGORYID, C.POSTID POSTID, 
-		C.MEMBERID MEMBERID, C.ANONYM ANONYM, M.USERNAME USERNAME, 
-		C.WDATE WDATE, C.CONTENT CONTENT, C.ANONYM ANONYM, J.MEMBERID WRITER
-		FROM COMMENTPOST C, MEMBERS M, JMT J
-		WHERE C.CATEGORYID=#{categoryid} AND C.POSTID=#{postid} AND M.MEMBERID=C.MEMBERID AND C.POSTID=J.ID ORDER BY C.CPOSTID;
+		select c.cpostid cpostid, c.categoryid categoryid, c.postid postid, 
+		c.memberid memberid, c.anonym anonym, m.username username, 
+		c.wdate wdate, c.content content, c.anonym anonym, j.memberid writer
+		from commentpost c, members m, jmt j
+		where c.categoryid=#{categoryid} and c.postid=#{postid} and m.memberid=c.memberid and c.postid=j.id order by c.cpostid
 	</select>
 	
 	<select id="getCommentCode"
 		parameterType="com.ssafy.edu.vue.dto.Postinfo"
 		resultType="com.ssafy.edu.vue.dto.Commentpost">
-		SELECT C.CPOSTID CPOSTID, C.CATEGORYID CATEGORYID, C.POSTID POSTID, 
-		C.MEMBERID MEMBERID, C.ANONYM ANONYM, M.USERNAME USERNAME, 
-		C.WDATE WDATE, C.CONTENT CONTENT, C.ANONYM ANONYM, R.MEMBERID WRITER
-		FROM COMMENTPOST C, MEMBERS M, CODEREVIEW R
-		WHERE C.CATEGORYID=#{categoryid} AND C.POSTID=#{postid} AND M.MEMBERID=C.MEMBERID AND C.POSTID=R.ID ORDER BY C.CPOSTID;
+		select c.cpostid cpostid, c.categoryid categoryid, c.postid postid, 
+		c.memberid memberid, c.anonym anonym, m.username username, 
+		c.wdate wdate, c.content content, c.anonym anonym, r.memberid writer
+		from commentpost c, members m, codereview r
+		where c.categoryid=#{categoryid} and c.postid=#{postid} and m.memberid=c.memberid and c.postid=r.id order by c.cpostid
 	</select>
 	
 	<select id="getCommentPost"
 		parameterType="com.ssafy.edu.vue.dto.Postinfo"
 		resultType="com.ssafy.edu.vue.dto.Commentpost">
-		SELECT C.CPOSTID CPOSTID, C.CATEGORYID CATEGORYID, C.POSTID POSTID, 
-		C.MEMBERID MEMBERID, C.ANONYM ANONYM, M.USERNAME USERNAME, 
-		C.WDATE WDATE, C.CONTENT CONTENT, C.ANONYM ANONYM, P.MEMBERID WRITER
-		FROM COMMENTPOST C, MEMBERS M, POSTS P
-		WHERE C.CATEGORYID=#{categoryid} AND C.POSTID=#{postid} AND M.MEMBERID=C.MEMBERID AND C.CATEGORYID=P.CATEGORYID AND C.POSTID=P.POSTID ORDER BY C.CPOSTID;
+		select c.cpostid cpostid, c.categoryid categoryid, c.postid postid, 
+		c.memberid memberid, c.anonym anonym, m.username username, 
+		c.wdate wdate, c.content content, c.anonym anonym, p.memberid writer
+		from commentpost c, members m, posts p
+		where c.categoryid=#{categoryid} and c.postid=#{postid} and m.memberid=c.memberid and c.categoryid=p.categoryid and c.postid=p.postid order by c.cpostid
 	</select>
 	
 	<insert id="addCommentPost"
 		parameterType="com.ssafy.edu.vue.dto.Commentpost">
-		INSERT INTO
-		COMMENTPOST(CATEGORYID, POSTID, MEMBERID, WDATE, CONTENT, ANONYM)
-		VALUES(#{categoryid},#{postid},#{memberid},now(), #{content}, #{anonym})
+		insert into
+		commentpost(categoryid, postid, memberid, wdate, content, anonym)
+		values(#{categoryid},#{postid},#{memberid},now(), #{content}, #{anonym})
 	</insert>
 	
 	<update id="updateCommentPost"
 		parameterType="com.ssafy.edu.vue.dto.Commentpost">
-		UPDATE COMMENTPOST SET
-		CONTENT=#{content},
-		WDATE=now(),
-		ANONYM=#{anonym}
-		WHERE
-		CPOSTID=#{cpostid}
+		update commentpost set
+		content=#{content},
+		wdate=now(),
+		anonym=#{anonym}
+		where
+		cpostid=#{cpostid}
 	</update>
 
 	<delete id="deleteCommentPost" parameterType="java.lang.Integer">
-		DELETE FROM COMMENTPOST WHERE
-		CPOSTID
+		delete from commentpost where
+		cpostid
 		= #{cpostid}
 	</delete>
 	
 	<select id="getCategoryPosts"
 		parameterType="com.ssafy.edu.vue.dto.CategoryPost"
 		resultType="com.ssafy.edu.vue.dto.Post">
-		SELECT P.POSTID POSTID, P.TITLE TITLE, P.BODY BODY, P.CREATED_AT CREATED_AT, P.MEMBERID MEMBERID, 
-		P.CATEGORYID CATEGORYID, P.ANONYMOUS ANONYMOUS, P.LOCATIONID LOCATIONID,
-		IF(P.ANONYMOUS=1 AND M.MEMBERID!=#{memberid}, '익명', M.USERNAME) AS USERNAME,
-		IF(P.ANONYMOUS=1 AND M.MEMBERID!=#{memberid}, 'https://user-images.githubusercontent.com/52685250/73902320-c72d6c00-48d8-11ea-82b4-eb9bfebfe9fb.png', M.IMG) AS IMG
-		FROM POSTS P, MEMBERS M 
-		WHERE P.MEMBERID=M.MEMBERID AND P.CATEGORYID=#{categoryid}
-		ORDER BY POSTID	DESC
+		select p.postid postid, p.title title, p.body body, p.created_at created_at, p.memberid memberid, 
+		p.categoryid categoryid, p.anonymous anonymous, p.locationid locationid,
+		if(p.anonymous=1 and m.memberid!=#{memberid}, '익명', m.username) as username,
+		if(p.anonymous=1 and m.memberid!=#{memberid}, 'https://user-images.githubusercontent.com/52685250/73902320-c72d6c00-48d8-11ea-82b4-eb9bfebfe9fb.png', m.img) as img
+		from posts p, members m 
+		where p.memberid=m.memberid and p.categoryid=#{categoryid}
+		order by postid	desc
 	</select>
 	
 	<select id="getLocationPosts"
 		parameterType="com.ssafy.edu.vue.dto.LocationFiltering"
 		resultType="com.ssafy.edu.vue.dto.Post">
-		SELECT P.POSTID POSTID, P.TITLE TITLE, P.BODY BODY, P.CREATED_AT CREATED_AT, P.MEMBERID MEMBERID, 
-		P.CATEGORYID CATEGORYID, P.ANONYMOUS ANONYMOUS, P.LOCATIONID LOCATIONID,
-		IF(P.ANONYMOUS=1 AND M.MEMBERID!=#{memberid}, '익명', M.USERNAME) AS USERNAME,
-		IF(P.ANONYMOUS=1 AND M.MEMBERID!=#{memberid}, 'https://user-images.githubusercontent.com/52685250/73902320-c72d6c00-48d8-11ea-82b4-eb9bfebfe9fb.png', M.IMG) AS IMG
-		FROM POSTS P, MEMBERS M 
-		WHERE P.MEMBERID=M.MEMBERID AND P.CATEGORYID=#{categoryid} AND P.LOCATIONID=#{locationid}
-		ORDER BY POSTID	DESC
+		select p.postid postid, p.title title, p.body body, p.created_at created_at, p.memberid memberid, 
+		p.categoryid categoryid, p.anonymous anonymous, p.locationid locationid,
+		if(p.anonymous=1 and m.memberid!=#{memberid}, '익명', m.username) as username,
+		if(p.anonymous=1 and m.memberid!=#{memberid}, 'https://user-images.githubusercontent.com/52685250/73902320-c72d6c00-48d8-11ea-82b4-eb9bfebfe9fb.png', m.img) as img
+		from posts p, members m 
+		where p.memberid=m.memberid and p.categoryid=#{categoryid} and p.locationid=#{locationid}
+		order by postid	desc
 	</select>
 	
 	<insert id="addLikePost" parameterType="com.ssafy.edu.vue.dto.Postinfo">
-		INSERT INTO
-		LIKEPOST(CATEGORYID, POSTID, MEMBERID)
-		VALUES(#{categoryid},#{postid},#{memberid})
+		insert into
+		likepost(categoryid, postid, memberid)
+		values(#{categoryid},#{postid},#{memberid})
 	</insert>
 	
 	<delete id="deleteLikePost" parameterType="com.ssafy.edu.vue.dto.Postinfo">
-		DELETE FROM LIKEPOST WHERE CATEGORYID=#{categoryid} AND POSTID=#{postid} AND MEMBERID=#{memberid}
+		delete from likepost where categoryid=#{categoryid} and postid=#{postid} and memberid=#{memberid}
 	</delete>
 	
 	<select id="getLikeCounts" parameterType="com.ssafy.edu.vue.dto.Postinfo" resultType="java.lang.Integer">
-		SELECT COUNT(*) FROM LIKEPOST
-		WHERE CATEGORYID=#{categoryid} AND POSTID = #{postid}
+		select count(*) from likepost
+		where categoryid=#{categoryid} and postid = #{postid}
 	</select>
 	
 	<select id="getCommentCounts" parameterType="com.ssafy.edu.vue.dto.Postinfo" resultType="java.lang.Integer">
-		SELECT COUNT(*) FROM COMMENTPOST
-		WHERE CATEGORYID=#{categoryid} AND POSTID = #{postid}
+		select count(*) from commentpost
+		where categoryid=#{categoryid} and postid = #{postid}
 	</select>
 	
 	<insert id="addBoardCategory" parameterType="com.ssafy.edu.vue.dto.Category">
-		INSERT INTO CATEGORY(NAME,EXPLANATION,MEMBERID) VALUES(#{name}, #{explanation},#{memberid})
+		insert into category(name,explanation,memberid) values(#{name}, #{explanation},#{memberid})
 	</insert>
 	<insert id="addBoardCategoryAuth" parameterType="com.ssafy.edu.vue.dto.Category">
-		INSERT INTO CATEGORYAUTH(NAME,EXPLANATION,MEMBERID) VALUES(#{name}, #{explanation},#{memberid})
+		insert into categoryauth(name,explanation,memberid) values(#{name}, #{explanation},#{memberid})
 	</insert>
 	
 	<select id="isLike" parameterType="com.ssafy.edu.vue.dto.Postinfo" resultType="java.lang.Integer">
-		SELECT COUNT(*) FROM LIKEPOST
-		WHERE CATEGORYID=#{categoryid} AND POSTID = #{postid} AND MEMBERID = #{memberid}
+		select count(*) from likepost
+		where categoryid=#{categoryid} and postid = #{postid} and memberid = #{memberid}
 	</select>
 	
 	<select id="getBoardCategory"  resultType="com.ssafy.edu.vue.dto.Category">
-		SELECT ID, NAME, EXPLANATION, MEMBERID FROM CATEGORY WHERE ID>=5
+		select id, name, explanation, memberid from category where id>=5
 	</select>
 	
 	<select id="getBoardCategoryAuth"  resultType="com.ssafy.edu.vue.dto.Category">
-		SELECT C.ID, C.NAME, C.EXPLANATION, C.MEMBERID, M.USERNAME FROM CATEGORYAUTH C, MEMBERS M 
-		WHERE C.MEMBERID=M.MEMBERID
+		select c.id, c.name, c.explanation, c.memberid, m.username from categoryauth c, members m 
+		where c.memberid=m.memberid
 	</select>
 	
 	<select id="getBoardCategoryOne"  parameterType="java.lang.Integer" resultType="com.ssafy.edu.vue.dto.Category">
-		SELECT ID, NAME, EXPLANATION, MEMBERID FROM CATEGORYAUTH
-		WHERE ID=#{id}
+		select id, name, explanation, memberid from categoryauth
+		where id=#{id}
 	</select>
 	
 	<delete id="deleteBoardCategoryAuth" parameterType="java.lang.Integer">
-		DELETE FROM CATEGORYAUTH WHERE ID=#{id}
+		delete from categoryauth where id=#{id}
 	</delete>
 	
 	<select id="getBoardSearch" parameterType="java.lang.String" resultType="com.ssafy.edu.vue.dto.Category">
-		SELECT ID, NAME, EXPLANATION, MEMBERID FROM CATEGORY WHERE NAME LIKE #{keyword}
+		select id, name, explanation, memberid from category where name like #{keyword}
 	</select>
 	
 	<select id="getTotalPost"
 		parameterType="com.ssafy.edu.vue.dto.PostPaging"
 		resultType="java.lang.Integer">
-		SELECT COUNT(*) FROM POSTS
-		WHERE CATEGORYID=#{categoryid}
-		<if test="locationid!=0">AND LOCATIONID=#{locationid}</if>
-		<if test="keyword!=null">AND TITLE LIKE #{keyword}</if>
+		select count(*) from posts
+		where categoryid=#{categoryid}
+		<if test="locationid!=0">and locationid=#{locationid}</if>
+		<if test="keyword!=null">and title like #{keyword}</if>
 	</select>
 	
 	<select id="getPostCategory" parameterType="java.lang.Integer" resultType="java.lang.Integer">
-		SELECT CATEGORYID FROM POSTS WHERE POSTID = #{postid}
+		select categoryid from posts where postid = #{postid}
 	</select>
 	
 </mapper>

@@ -11,6 +11,7 @@ public class Sugang implements Serializable {
 
 	private int portfolioid;
 	private int memberid;
+	private String username;
 	
 	
 	public Sugang() {
@@ -26,9 +27,20 @@ public class Sugang implements Serializable {
 	}
 
 	
+	public Sugang(int portfolioid, int memberid, String username) {
+		super();
+		this.portfolioid = portfolioid;
+		this.memberid = memberid;
+		this.username = username;
+	}
+
+
+	
+
+
 	@Override
 	public String toString() {
-		return "Sugang [portfolioid=" + portfolioid + ", memberid=" + memberid + "]";
+		return "Sugang [portfolioid=" + portfolioid + ", memberid=" + memberid + ", username=" + username + "]";
 	}
 
 
@@ -50,6 +62,16 @@ public class Sugang implements Serializable {
 	public void setMemberid(int memberid) {
 		this.memberid = memberid;
 	}
+
+	public String getUsername() {
+		return username;
+	}
+
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;

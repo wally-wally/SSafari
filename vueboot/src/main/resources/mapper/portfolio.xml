@@ -6,125 +6,125 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<select id="getPortfolios"
 		resultType="com.ssafy.edu.vue.dto.Portfolio">
-		SELECT P.PORTFOLIOID PORTFOLIOID, P.TITLE TITLE, P.BODY BODY, P.IMG IMG, P.CREATED_AT CREATED_AT, P.MEMBERID MEMBERID, M.USERNAME USERNAME, P.CAPACITY, P.STARTDATE, P.ENDDATE, P.PRICE, P.LOCATIONID, COMMENTCOUNT
-		FROM MEMBERS M,PORTFOLIOS P
-		LEFT OUTER JOIN (SELECT COUNT(PORTFOLIOID) COMMENTCOUNT, PORTFOLIOID FROM COMMENTPORTFOLIO GROUP BY PORTFOLIOID) C
-        ON P.PORTFOLIOID=C.PORTFOLIOID
-        WHERE P.MEMBERID = M.MEMBERID
-		ORDER BY P.PORTFOLIOID DESC
+		select p.portfolioid portfolioid, p.title title, p.body body, p.img img, p.created_at created_at, p.memberid memberid, m.username username, p.capacity, p.startdate, p.enddate, p.price, p.locationid, commentcount
+		from members m,portfolios p
+		left outer join (select count(portfolioid) commentcount, portfolioid from commentportfolio group by portfolioid) c
+        on p.portfolioid=c.portfolioid
+        where p.memberid = m.memberid
+		order by p.portfolioid desc
 	</select>
 
 	<select id="getPortfolioList"
 		parameterType="java.lang.Integer"
 		resultType="com.ssafy.edu.vue.dto.Portfolio">
-		SELECT P.PORTFOLIOID PORTFOLIOID, P.TITLE TITLE, P.BODY BODY, P.IMG IMG, P.CREATED_AT CREATED_AT, P.MEMBERID MEMBERID, M.USERNAME USERNAME, P.CAPACITY, P.STARTDATE, P.ENDDATE, P.PRICE, P.LOCATIONID
-		FROM PORTFOLIOS P, MEMBERS M
-		WHERE P.MEMBERID = M.MEMBERID AND P.MEMBERID=#{memberid} 
-		ORDER BY P.PORTFOLIOID DESC
+		select p.portfolioid portfolioid, p.title title, p.body body, p.img img, p.created_at created_at, p.memberid memberid, m.username username, p.capacity, p.startdate, p.enddate, p.price, p.locationid
+		from portfolios p, members m
+		where p.memberid = m.memberid and p.memberid=#{memberid} 
+		order by p.portfolioid desc
 	</select>
 
 	<select id="getPortfolio" parameterType="java.lang.Integer"
 		resultType="com.ssafy.edu.vue.dto.Portfolio">
-		SELECT P.PORTFOLIOID PORTFOLIOID, P.TITLE TITLE, P.BODY BODY, P.IMG IMG, P.CREATED_AT CREATED_AT, P.MEMBERID MEMBERID, M.USERNAME USERNAME, P.CAPACITY, P.STARTDATE, P.ENDDATE, P.PRICE, P.LOCATIONID,
-		(SELECT count(*) FROM a5.sugang where portfolioid=#{portfolioid}) AS APPLICANT, M.IMG MEMBERIMG
-		FROM PORTFOLIOS P, MEMBERS M
-		WHERE P.MEMBERID = M.MEMBERID AND P.PORTFOLIOID = #{portfolioid}
+		select p.portfolioid portfolioid, p.title title, p.body body, p.img img, p.created_at created_at, p.memberid memberid, m.username username, p.capacity, p.startdate, p.enddate, p.price, p.locationid,
+		(select count(*) from a5.sugang where portfolioid=#{portfolioid}) as applicant, m.img memberimg
+		from portfolios p, members m
+		where p.memberid = m.memberid and p.portfolioid = #{portfolioid}
 	</select>
 
 	<insert id="addPortfolio"
 		parameterType="com.ssafy.edu.vue.dto.Portfolio">
-		INSERT INTO
-		PORTFOLIOS(TITLE, BODY, IMG, CREATED_AT, MEMBERID, CAPACITY, STARTDATE, ENDDATE, PRICE, LOCATIONID)
-		VALUES(#{title},#{body},#{img},now(), #{memberid}, #{capacity}, #{startdate}, #{enddate}, #{price}, #{locationid})
+		insert into
+		portfolios(title, body, img, created_at, memberid, capacity, startdate, enddate, price, locationid)
+		values(#{title},#{body},#{img},now(), #{memberid}, #{capacity}, #{startdate}, #{enddate}, #{price}, #{locationid})
 	</insert>
 	
 	<update id="updatePortfolio"
 		parameterType="com.ssafy.edu.vue.dto.Portfolio">
-		UPDATE PORTFOLIOS SET
-		TITLE=#{title},
-		BODY=#{body},
-		IMG=#{img},
-		CAPACITY=#{capacity},
-		STARTDATE=#{startdate},
-		ENDDATE=#{enddate},
-		PRICE=#{price},
-		LOCATIONID=#{locationid}
-		CREATED_AT=now()
-		WHERE
-		PORTFOLIOID=#{portfolioid}
+		update portfolios set
+		title=#{title},
+		body=#{body},
+		img=#{img},
+		capacity=#{capacity},
+		startdate=#{startdate},
+		enddate=#{enddate},
+		price=#{price},
+		locationid=#{locationid}
+		created_at=now()
+		where
+		portfolioid=#{portfolioid}
 	</update>
 
 	<delete id="deletePortfolio" parameterType="java.lang.Integer">
-		DELETE FROM PORTFOLIOS WHERE
-		PORTFOLIOID
+		delete from portfolios where
+		portfolioid
 		= #{portfolioid}
 	</delete>
 
 	<select id="getCommentPortfolio"
 		parameterType="java.lang.Integer"
 		resultType="com.ssafy.edu.vue.dto.Commentportfolio">
-		SELECT C.CPORTFOLIOID CPORTFOLIOID,C.PORTFOLIOID PORTFOLIOID, 
-		C.MEMBERID MEMBERID, C.WDATE WDATE, C.CONTENT CONTENT, 
-		IF(C.ANONYM=1, '익명', M.USERNAME) AS USERNAME, C.ANONYM ANONYM
-		FROM COMMENTPORTFOLIO C, MEMBERS M 
-		WHERE C.PORTFOLIOID=#{portfolioid} AND C.MEMBERID=M.MEMBERID 
-		ORDER BY C.CPORTFOLIOID
+		select c.cportfolioid cportfolioid,c.portfolioid portfolioid, 
+		c.memberid memberid, c.wdate wdate, c.content content, 
+		if(c.anonym=1, '익명', m.username) as username, c.anonym anonym
+		from commentportfolio c, members m 
+		where c.portfolioid=#{portfolioid} and c.memberid=m.memberid 
+		order by c.cportfolioid
 		
 	</select>
 	
 	<insert id="addCommentPortfolio"
 		parameterType="com.ssafy.edu.vue.dto.Commentportfolio">
-		INSERT INTO
-		COMMENTPORTFOLIO(PORTFOLIOID, MEMBERID, WDATE, CONTENT, ANONYM)
-		VALUES(#{portfolioid},#{memberid},now(), #{content}, #{anonym})
+		insert into
+		commentportfolio(portfolioid, memberid, wdate, content, anonym)
+		values(#{portfolioid},#{memberid},now(), #{content}, #{anonym})
 	</insert>
 	
 	<update id="updateCommentPortfolio"
 		parameterType="com.ssafy.edu.vue.dto.Commentportfolio">
-		UPDATE COMMENTPORTFOLIO SET
-		CONTENT=#{content},
-		WDATE=now(),
-		ANONYM=#{anonym}
-		WHERE CPORTFOLIOID=#{cportfolioid}
+		update commentportfolio set
+		content=#{content},
+		wdate=now(),
+		anonym=#{anonym}
+		where cportfolioid=#{cportfolioid}
 	</update>
 
 	<delete id="deleteCommentPortfolio" parameterType="java.lang.Integer">
-		DELETE FROM COMMENTPORTFOLIO WHERE
-		CPORTFOLIOID = #{cportfolioid}
+		delete from commentportfolio where
+		cportfolioid = #{cportfolioid}
 	</delete>
 	
 	<insert id="registerSugang"
 		parameterType="com.ssafy.edu.vue.dto.Sugang">
-		INSERT INTO
-		SUGANG(PORTFOLIOID, MEMBERID)
-		VALUES(#{portfolioid},#{memberid})
+		insert into
+		sugang(portfolioid, memberid)
+		values(#{portfolioid},#{memberid})
 	</insert>
 	
 	<delete id="deleteSugang" parameterType="com.ssafy.edu.vue.dto.Sugang">
-		DELETE FROM SUGANG WHERE
-		PORTFOLIOID = #{portfolioid} AND MEMBERID = #{memberid}
+		delete from sugang where
+		portfolioid = #{portfolioid} and memberid = #{memberid}
 	</delete>
 	
 	<select id="isApplicant" parameterType="com.ssafy.edu.vue.dto.Sugang" resultType="java.lang.Integer">
-		SELECT COUNT(*) FROM SUGANG
-		WHERE PORTFOLIOID = #{portfolioid} AND MEMBERID = #{memberid}
+		select count(*) from sugang
+		where portfolioid = #{portfolioid} and memberid = #{memberid}
 	</select>
 
 	<select id="getSugangMember"
 		parameterType="java.lang.Integer"
 		resultType="com.ssafy.edu.vue.dto.Sugang">
-		SELECT PORTFOLIOID, MEMBERID FROM SUGANG WHERE PORTFOLIOID=#{portfolioid};
+		select s.portfolioid, s.memberid, m.username from sugang s, members m where s.portfolioid=#{portfolioid} and s.memberid=m.memberid
 	</select>
 	
 	<update id="addSugangMember" parameterType="java.lang.Integer">
-		UPDATE PORTFOLIOS SET APPLICANT = APPLICANT + 1 WHERE PORTFOLIOID=#{portfolioid};
+		update portfolios set applicant = applicant + 1 where portfolioid=#{portfolioid}
 	</update>
 	
 	<update id="subSugangMember" >
-		UPDATE PORTFOLIOS SET APPLICANT = APPLICANT - 1 WHERE PORTFOLIOID=#{portfolioid};
+		update portfolios set applicant = applicant - 1 where portfolioid=#{portfolioid}
 	</update>
 	
 	<select id="getMemberPortfolio" parameterType="java.lang.Integer" resultType="com.ssafy.edu.vue.dto.Portfolio">
-		SELECT * FROM PORTFOLIOS WHERE PORTFOLIOID IN (SELECT PORTFOLIOID FROM SUGANG WHERE MEMBERID = #{memberid});
+		select * from portfolios where portfolioid in (select portfolioid from sugang where memberid = #{memberid})
 	</select>
 </mapper>

@@ -16,6 +16,7 @@ public class Post implements Serializable {
 	private int memberid;
 	private String username;
 	private int categoryid;
+	private String categoryname;
 	private int anonymous;
 	private int locationid;
 	private String img;
@@ -40,6 +41,23 @@ public class Post implements Serializable {
 		this.anonymous = anonymous;
 		this.locationid = locationid;
 		this.img = img;
+	}
+
+
+
+	public Post(int postid, String title, String body, String created_at, int memberid, String username, int categoryid,
+			String categoryname, int anonymous, int locationid) {
+		super();
+		this.postid = postid;
+		this.title = title;
+		this.body = body;
+		this.created_at = created_at;
+		this.memberid = memberid;
+		this.username = username;
+		this.categoryid = categoryid;
+		this.categoryname = categoryname;
+		this.anonymous = anonymous;
+		this.locationid = locationid;
 	}
 
 
@@ -155,15 +173,31 @@ public class Post implements Serializable {
 		this.locationid = locationid;
 	}
 
+	public String getCategoryname() {
+		return categoryname;
+	}
+
+
+
+	public void setCategoryname(String categoryname) {
+		this.categoryname = categoryname;
+	}
+
+
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 
+
+
 	@Override
 	public String toString() {
 		return "Post [postid=" + postid + ", title=" + title + ", body=" + body + ", created_at=" + created_at
-				+ ", memberid=" + memberid + ", username=" + username + ", categoryid=" + categoryid + ", anonymous="
-				+ anonymous + ", locationid=" + locationid + "]";
+				+ ", memberid=" + memberid + ", username=" + username + ", categoryid=" + categoryid + ", categoryname="
+				+ categoryname + ", anonymous=" + anonymous + ", locationid=" + locationid + ", img=" + img + "]";
 	}
+
+	
 
 }
