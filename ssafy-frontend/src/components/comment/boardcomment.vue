@@ -62,8 +62,15 @@ export default {
             })
         },
         getcomments() {
+            if (this.$route.name==="StudygroupDetail"){
+                axios.get(`api/commentportfolio/${this.postid}` )
+                    .then(response => {
+                        this.comments = response.data
+                    }).catch(error=> {
+                        console.log(error)
+                    })
+            } else{
             const data = {'postid':this.postid, 'categoryid' : (Number(this.boardname) >= 5) ?  this.boardname : this.$store.state.category[this.boardname] }
-            console.log(data)
                 axios.get(`api/commentpost/`, {params : data})
                     .then(response => {
                         console.log(response)
@@ -71,6 +78,7 @@ export default {
                     }).catch(error=> {
                     console.log(error)
                     })
+            }
         },
         Createcomment () {
             if (this.new_comment){

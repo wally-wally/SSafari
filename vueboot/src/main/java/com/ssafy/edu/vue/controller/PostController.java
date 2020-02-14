@@ -60,9 +60,7 @@ public class PostController {
 			memberid = member.getMemberid();
 		}
 		List<Post> posts = postservice.getPosts(memberid);
-		if (posts == null) {
-			return new ResponseEntity(HttpStatus.NO_CONTENT);
-		}
+
 		return new ResponseEntity<List<Post>>(posts, HttpStatus.OK);
 	}
 	
@@ -76,9 +74,7 @@ public class PostController {
 			memberid = member.getMemberid();
 		}
 		List<Post> posts = postservice.getCategoryPosts(new CategoryPost(categoryid, memberid));
-		if (posts == null) {
-			return new ResponseEntity(HttpStatus.NO_CONTENT);
-		}
+
 		return new ResponseEntity<List<Post>>(posts, HttpStatus.OK);
 	}
 	
@@ -98,9 +94,7 @@ public class PostController {
 			locationfiltering.setMemberid(memberid);
 			posts = postservice.getLocationPosts(locationfiltering);
 		}
-		if (posts == null) {
-			return new ResponseEntity(HttpStatus.NO_CONTENT);
-		}
+
 		return new ResponseEntity<List<Post>>(posts, HttpStatus.OK);
 	}
 	

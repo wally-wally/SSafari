@@ -10,7 +10,7 @@
         </div>
         <div class="col-12 col-lg-6 boardlist">
             <p>코드리뷰</p>
-            <BoardListAll :boards="codeBoard" :boardType="'codereview'"/>
+            <BoardListAll :boards="codeBoard" :boardType="'code'"/>
         </div>
         <div class="col-12 col-lg-6 boardlist">
             <p>주변맛집</p>

@@ -11,7 +11,9 @@
                 <textarea v-model="post.title" id="title-form"></textarea>
             </div>
             <textarea v-model="post.body" id="create-content" name="content"></textarea>
-            <v-file-input :rules="rules" v-if="this.$route.path === `/studygroup/${post.postid}/update`" v-model="imgFile" label="File input" id="file" outlined dense accept="image/png, image/jpeg, image/bmp"></v-file-input>
+            <div  v-if="this.$route.name === 'StudyGroupUpdate'">
+            <v-file-input :rules="rules" v-model="imgFile" label="File input" id="file" outlined dense accept="image/png, image/jpeg, image/bmp"></v-file-input>
+            </div>
             <v-checkbox v-model="post.anonymous" label="익명" value="1" class="annoyCheck"/>
 
             <v-btn class="mr-5" color="primary" @click="update">수정</v-btn>
@@ -65,10 +67,18 @@ export default {
     },
     methods: {
         getPost() {
+            if (this.$route.name === 'StudyGroupUpdate'){
+                axios.get(`api/portfolio/${this.id}`)
+                .then(response => {
+                    this.post = response.data
+                    this.post.img = null
+                })
+            } else {
             axios.get(`api/post/${this.id}`)
                 .then(response => { 
-                this.post = response.data
-          })
+                this.post = response.data.post
+            })
+            }
         },
         goBack() {
             const formTitle = document.querySelector('#form-title')
@@ -79,41 +89,26 @@ export default {
             }
         },
         update() {
-            if (this.$route.path === `/studygroup/${this.post.postid}/update`){
-                var portfolioData = {
-                    portfolioid: this.post.postid,
-                    title: this.titleData,
-                    body: this.contentData,
-                    memberid: this.$store.state.memberid,
-                    img: this.imgSrc
-                }
-                if(this.imgFile === null){
-                    axios.put('api/portfolio', portfolioData)
-                        .then(response => {
-                            if(response.status === 200){
-                                this.$router.push(`/studygroup/${this.post.postid}`)
-                            }
-                        })
-                }
-                else{
+            if (this.$route.name === 'StudyGroupUpdate'){
+                if(this.imgFile){
                     const formData = new FormData()
                     formData.append('image',this.imgFile)
                     axios.post('https://api.imgur.com/3/image', formData, {headers: { Authorization: 'Client-ID 347364b9fa38df3' }})
                         .then(response=>{
                         var imgLink = response.data.data.link
-                        portfolioData['img'] = imgLink
-                        axios.put('api/portfolio', portfolioData)
-                            .then(response => {
-                                if(response.status === 200){
-                                    this.$router.push('/studygroup')
-                                }
-                            })
-                        })
-                        .catch(error =>{
-                            console.log(error)
-                        })
+                        this.post['img'] = imgLink
+                })
                 }
-            }else {
+                console.log(this.post)
+                axios.put('api/portfolio', this.post)
+                    .then(response => {
+                        if(response.status === 200){
+                            this.$router.push('/studygroup')
+                        }
+                    }).catch(error =>{
+                        console.log(error)
+                    })
+            } else {
                 axios.put('api/post', this.post)
                     .then(response => {
                         console.log(response.status)

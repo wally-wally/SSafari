@@ -47,7 +47,7 @@
 						<v-divider></v-divider>
 						<v-row justify="center">
 							<v-col cols="12" sm="12">
-								<boardcomment :postid="this.id" categoryid="4" boardtype="post" />
+								<boardcomment boardname="jmt" :postid="this.id" categoryid="4" boardtype="post"/>
 							</v-col>
 						</v-row>
 					</v-list>
@@ -115,6 +115,7 @@
 			getRestaurant() {
 				axios.get(`api/jmt/${this.id}`, { headers: { 'access-token': this.$store.state.token }})
 					.then(response => {
+						console.log(response)
 						this.restaurant = response.data.jmt
 						this.count = response.data.count
 						this.likeFlag = (response.data.flag == 0) ? false : true
