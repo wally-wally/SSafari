@@ -3,6 +3,7 @@ package com.ssafy.edu.vue.service;
 import java.util.List;
 
 import com.ssafy.edu.vue.dto.AuthRequest;
+import com.ssafy.edu.vue.dto.LikePost;
 import com.ssafy.edu.vue.dto.Member;
 
 public interface IMemberService {
@@ -40,5 +41,7 @@ public interface IMemberService {
 	AuthRequest getAuthRequest(int memberid);
 
 	void updateLocationUnit(AuthRequest ar);
+
+	List<LikePost> getMemberLikePost(int memberid);
 
 }

@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ssafy.edu.vue.dao.MemberDaoImpl;
 import com.ssafy.edu.vue.dto.AuthRequest;
+import com.ssafy.edu.vue.dto.LikePost;
 import com.ssafy.edu.vue.dto.Member;
 
 
@@ -117,6 +118,12 @@ public class MemberServiceImpl implements IMemberService {
 	@Transactional
 	public void updateLocationUnit(AuthRequest ar) {
 		memberdao.updateLocationUnit(ar);
+	}
+
+	@Override
+	@Transactional(readOnly=true)
+	public List<LikePost> getMemberLikePost(int memberid) {
+		return memberdao.getMemberLikePost(memberid);
 	}
 
 }
