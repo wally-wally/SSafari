@@ -4,26 +4,27 @@
       <!-- 화면의 너비가 800px 이상일 때 -->
       <div class="qna animate1">
         <div class="qna__q" style="display: flex; justify-content:space-between;">
-          <div class="post-list-title" style="margin-right: 15px;">{{title}}</div>
+          <div class="post-list-title" style="margin-right: 15px;">{{this.regions[board.locationid]}}
+ | {{board.title}}</div>
           <div style="font-size: 0.8em; min-width:130px;">
-            <span>{{date.slice(2, 16)}} | {{username}}</span>
+            <span>{{board.created_at.slice(2, 16)}} | {{board.username}}</span>
             <span class="pl-3"><i class="far fa-heart" style="color: crimson;">100</i></span> <!-- 추후 '100'을 {{ like }}로 수정 -->
             <span class="pl-1"><i class="far fa-comments" style="color: skyblue;">100</i></span>
           </div>
         </div>
-        <div class="qna__a">{{body}}</div>
+        <div class="qna__a">{{board.body}}</div>
       </div>
       <!-- 화면의 너비가 800px 미만일 때-->
       <div class="qna animate2">
         <div class="qna__q" style="display: block;">
-          <div class="post-list-title">{{title}}</div>
+          <div class="post-list-title">{{board.title}}</div>
           <div>
-            <span>{{date.slice(2, 16)}} | {{username}}</span>
+            <span>{{board.created_at.slice(2, 16)}} | {{board.username}}</span>
             <span class="pl-3"><i class="far fa-heart" style="color: crimson;">100</i></span> <!-- 추후 '100'을 {{ like }}로 수정 -->
             <span class="pl-1"><i class="far fa-comments" style="color: skyblue;">100</i></span>
           </div>
         </div>
-        <div class="qna__a">{{body}}</div>
+        <div class="qna__a">{{board.body}}</div>
       </div>
     </div>
   </div>
@@ -31,34 +32,30 @@
 <script>
   export default {
     name: 'Board',
-    props: {
-      date: {
-        type: String
-      },
-      title: {
-        type: String
-      },
-      body: {
-        type: String
-      },
-      username: {
-        type: String
-      },
-      memberid: {
-        type: Number
-      },
-      like: {
-        type: Number
+    data () {
+      return {
+        regions : {
+          0 : '공통',
+          1 : '서울',
+          2 : '대전',
+          3 : '구미',
+          4 : '광주'
+        },
       }
+    },
+    props: {
+      board : {
+        type:Object
+      },
     },
     computed: {
       postYearMonth() {
-        let date = new Date(this.date)
+        let date = new Date(this.board.created_at)
         let formatedMonth = date.getMonth() + 1 < 9 ? '0' : ''
         return `${date.getFullYear()}-${formatedMonth}${date.getMonth()+1}`
       },
       postDay() {
-        let date = new Date(this.date)
+        let date = new Date(this.board.created_at)
         return date.getDate()
       }
     }
