@@ -186,13 +186,8 @@
             selectRegion: {
                 handler() {
                     this.pageData.keyword = null
-                    this.changePageIndex(0)
                     this.pageData.locationid = this.selectRegion
-                    axios.get('api/postslocation', {params: {categoryid: this.pageData.categoryid, locationid: this.selectRegion}})
-                        .then(response => {
-                            this.boards = response.data
-                            this.boardCount = this.boards.length > 20 ? 20 : this.boards.length
-                        })
+                    this.changePageIndex(0)
                 }
             }
         },
@@ -239,12 +234,12 @@
                 }
                 axios.get('api/nextpage', {params:this.pageData})
                     .then(response => {
-                        console.log(response)
                         this.pagniationStatus = response.data
                     })
 
                 axios.get('api/posts/page', {params:this.pageData})
                     .then(response => {
+                        console.log(response)
                         this.boards = response.data
                         this.boardCount = this.boards.length
                     })

@@ -134,10 +134,10 @@
 		},
 		methods: {
 			getRestaurants() {
-        axios.get('api/jmts')
-          .then(response => {
-						this.restaurants = response.data
-						this.postCnt = this.restaurants.length
+				axios.get('api/jmts')
+				.then(response => {
+								this.restaurants = response.data
+								this.postCnt = this.restaurants.length
         })
       },
 			onPostCount(value) {
