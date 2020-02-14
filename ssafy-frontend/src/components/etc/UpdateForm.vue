@@ -76,7 +76,7 @@ export default {
             } else {
             axios.get(`api/post/${this.id}`)
                 .then(response => { 
-                this.post = response.data
+                this.post = response.data.post
             })
             }
         },

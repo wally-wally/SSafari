@@ -6,6 +6,8 @@
                     <v-container id="dropdown-region">
                         <v-select
                             :items="regions"
+                            item-text="name"
+                            item-value="val"
                             label="Choose Region"
                             color="#f7b157"
                             target="#dropdown-region"
@@ -139,16 +141,22 @@
         },
         data() {
             return {
+                regions : [
+                    {name : 'All' , val : 0},
+                    { name : 'Seoul' , val : 1},
+                    { name : 'Daejeon' , val : 2},
+                    { name : 'Gumi' , val : 3},
+                    { name : 'Gawngju', val : 4}
+                ],
                 pageData : {
                     page: 1,
                     categoryid: (Number(this.boardname) >= 5) ?  Number(this.boardname) : Number(this.$store.state.category[this.boardname]),
-                    keyword: '',
-                    locationid: 0
+                    keyword: null,
+                    locationid: 0 // deafult를 로그인한 유저의 지역으로 하고 싶으면 이 부분 수정
                 },
+                selectRegion : 0,
                 boards: [],
                 searchKeyword: '',
-                selectRegion: 'All', // deafult를 로그인한 유저의 지역으로 하고 싶으면 이 부분 수정
-                regions: ['All', 'Seoul', 'Daejeon', 'Gumi', 'Gawngju'],
                 showCreatePost: 0,
                 boardCount: 0,
                 pagniationStatus: false,
@@ -177,7 +185,10 @@
             },
             selectRegion: {
                 handler() {
-                    axios.get('api/postslocation', {params: {categoryid: this.pageData.categoryid, locationid: Number(this.$store.state.region[this.selectRegion])}})
+                    this.pageData.keyword = null
+                    this.changePageIndex(0)
+                    this.pageData.locationid = this.selectRegion
+                    axios.get('api/postslocation', {params: {categoryid: this.pageData.categoryid, locationid: this.selectRegion}})
                         .then(response => {
                             this.boards = response.data
                             this.boardCount = this.boards.length > 20 ? 20 : this.boards.length
@@ -203,7 +214,7 @@
                     'anonymous': this.annoymousStatus ? 1 : 0,
                     'memberid': this.$store.state.memberid,
                     'categoryid': (Number(this.boardname) >= 5) ?  Number(this.boardname): Number(this.$store.state.category[this.boardname]),
-                    'locationid': Number(this.$store.state.region[this.selectRegion])
+                    'locationid': this.selectRegion
                 }
                 axios.post('api/post', boardData)
                     .then(response => {
@@ -226,7 +237,6 @@
                         alert('검색어를 입력하세요.')
                     }
                 }
-
                 axios.get('api/nextpage', {params:this.pageData})
                     .then(response => {
                         console.log(response)
