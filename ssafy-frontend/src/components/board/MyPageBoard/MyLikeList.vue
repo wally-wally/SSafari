@@ -49,7 +49,6 @@ export default {
 			axios.get('api/member/likepost', { headers: { 'access-token': this.$store.state.token }})
 				.then( response => {
 					this.likes = response.data
-					console.log(response.data)
 					this.showLikesCount = (this.likes.length >= 6) ? 6 : this.likes.length
 					this.loadMore = (this.likes.length > 6) ? true : false
 				})
