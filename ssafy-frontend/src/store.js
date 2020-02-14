@@ -51,14 +51,16 @@ export default new Vuex.Store({
         state.auth = jwtDecode(state.token)['access-Token'].auth
     },
     logout(state){
-        const result = confirm('로그아웃 하시겠습니까')
+        const result = confirm('로그아웃 하시겠습니까??')
         if (result) {
+          console.log('hello world')
             state.token = null
             state.memberid = null
             state.username = null
             state.isLogin = false
             state.social = null
             state.auth = null
+            window.location.replace('http://localhost:8080/')
         }
     },
     dropout(state){

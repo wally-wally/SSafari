@@ -27,6 +27,8 @@ import SsafyAuth from '@/components/login/SsafyAuth.vue'
 import MakeSsafyAuth from '@/components/login/MakeSsafyAuth.vue'
 import MyPage from  './views/MyPage.vue'
 import store from './store'
+
+import MessageBoard from '@/components/message/MessageBoard.vue'
  
 import RestaurantCreateForm from '@/components/board/Jmtboard/RestaurantCreateForm.vue'
 import RestaurantDetail from '@/components/board/Jmtboard/RestaurantDetail.vue'
@@ -124,6 +126,11 @@ export default new Router({
 			path: '/mypage/makessafyauth',
 			name: 'MakeSsafyAuth',
 			component: MakeSsafyAuth
+		},
+		{
+			path: '/message',
+			name: 'MessageBoard',
+			component: MessageBoard
 		}
   ]
 })
