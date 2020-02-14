@@ -26,7 +26,7 @@ public class PostDaoImpl {
 		return sqlSession.selectList(ns+"getPostList",memberid);
 	}
 
-	public Post getPost(int postid) {
+	public Post getPost(Postinfo postid) {
 		return sqlSession.selectOne(ns+"getPost", postid);
 	}
 
