@@ -5,7 +5,7 @@
 				<MyLike 
 									:date="likes[i - 1].created_at"
 									:title="likes[i - 1].title"
-						:creator="likes[i - 1].username"
+						:creator="`${(currentMemberId === likes[i - 1].memberid ? true : false) ? likes[i - 1].username : (likes[i - 1].anonymous === 1) ? '익명' : likes[i - 1].username}`"
 						:categoryName="likes[i - 1].categoryname">
 				</MyLike>
 	  </router-link>
@@ -33,7 +33,8 @@ export default {
 			loadMore: false,
 			showLikesCount : 0, 
 			moreLikesIcon : true,
-			hideLikesIcon : false
+			hideLikesIcon : false,
+			currentMemberId: '',
 		}
 	},
 	components: {
@@ -41,12 +42,14 @@ export default {
 	},
 	mounted() {
 		this.getMyLikes()
+		this.currentMemberId =  this.$store.state.memberid
 	},
 	methods: {
 		getMyLikes() {
 			axios.get('api/member/likepost', { headers: { 'access-token': this.$store.state.token }})
 				.then( response => {
 					this.likes = response.data
+					console.log(response.data)
 					this.showLikesCount = (this.likes.length >= 6) ? 6 : this.likes.length
 					this.loadMore = (this.likes.length > 6) ? true : false
 				})
