@@ -122,7 +122,18 @@ public class PostController {
 	
 	@ApiOperation(value = "post 상세 보기", response = List.class)
 	@RequestMapping(value = "/post/{postid}", method = RequestMethod.GET)
-	public ResponseEntity<Map<String,Object>> getPost(@PathVariable int postid, HttpServletRequest rs) throws Exception {
+	public ResponseEntity<Post> getPost(@PathVariable int postid) throws Exception {
+		logger.info("1-------------getPost-----------------------------" + new Date());
+		Post post = postservice.getPost(postid);
+		if (post == null) {
+			return new ResponseEntity(HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<Post>(post, HttpStatus.OK);
+	}
+	
+	/*@ApiOperation(value = "post 상세 보기", response = List.class)
+	@RequestMapping(value = "/post", method = RequestMethod.GET)
+	public ResponseEntity<Map<String,Object>> getPost(@RequestBody Postinfo postinfo,HttpServletRequest rs) throws Exception {
 		logger.info("1-------------getPost-----------------------------" + new Date());
 		Map<String,Object> result = new HashMap();
 		Postinfo postinfo = new Postinfo();

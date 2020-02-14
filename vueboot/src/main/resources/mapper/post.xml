@@ -30,13 +30,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		resultType="com.ssafy.edu.vue.dto.Post">
 		SELECT P.POSTID POSTID, P.TITLE TITLE, P.BODY BODY, P.CREATED_AT CREATED_AT, P.MEMBERID MEMBERID,
 		P.CATEGORYID CATEGORYID, P.ANONYMOUS ANONYMOUS, P.LOCATIONID LOCATIONID,
-		IF(P.ANONYMOUS=1 AND M.MEMBERID!=#{memberid}, '익명', M.USERNAME) AS USERNAME 
+		IF(P.ANONYMOUS=1 AND M.MEMBERID!=#{memberid}, '익명', M.USERNAME) AS USERNAME,
+		(SELECT COUNT(*) FROM LIKEPOST WHERE CATEGORYID=1 AND POSTID=P.POSTID) LIKES,
+        (SELECT COUNT(*) FROM COMMENTPOST WHERE CATEGORYID=1 AND POSTID=P.POSTID) COMMENTS
 		FROM POSTS P, MEMBERS M 
 		WHERE P.MEMBERID=M.MEMBERID AND CATEGORYID=#{categoryid}
 		<if test="locationid!=0">AND P.LOCATIONID=#{locationid}</if>
 		<if test="keyword!=null">AND TITLE LIKE #{keyword}</if>
 		ORDER BY POSTID	DESC
 		LIMIT 20 OFFSET #{page}
+	</select>
+	
+	<select id="getTotalPost"
+		parameterType="com.ssafy.edu.vue.dto.PostPaging"
+		resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		FROM POSTS
+		WHERE CATEGORYID=#{categoryid}
+		<if test="locationid!=0">AND LOCATIONID=#{locationid}</if>
+		<if test="keyword!=null">AND TITLE LIKE #{keyword}</if>
 	</select>
 
 	<select id="getPost" parameterType="java.lang.Integer"
@@ -198,7 +210,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="deleteBoardCategoryAuth" parameterType="java.lang.Integer">
 		DELETE FROM CATEGORYAUTH WHERE ID=#{id}
 	</delete>
-	
 	<select id="getBoardSearch" parameterType="java.lang.String" resultType="com.ssafy.edu.vue.dto.Category">
 		SELECT ID, NAME, EXPLANATION, MEMBERID FROM CATEGORY WHERE NAME LIKE #{keyword}
 	</select>

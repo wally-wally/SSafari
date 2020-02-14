@@ -29,8 +29,7 @@
             <StudyGroupListMain></StudyGroupListMain>
           </div>
         </div>
-      </v-img>
-      
+      </v-img>  
     </div>
     <div id="mysidenav" class="sidenav">
       <i @click="fnMove('main')" class="fas fa-circle" id="main-icon" style="color: #f7b157;"></i><br>
