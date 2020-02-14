@@ -12,11 +12,15 @@
 							</div>
 							<div>
 								<span class="headline">{{ restaurant.name }}
-									<v-btn v-if="!likeFlag" @click="clickLike" text icon color="#d3d3d3">
+									<v-btn v-if="((!likeFlag) && isLogin)" @click="clickLike" text icon color="#d3d3d3">
 										<v-icon>mdi-thumb-up</v-icon>
 										<h3>{{ count }}</h3>
 									</v-btn>
-									<v-btn v-else @click="clickLike" text icon color="deep-orange">
+									<v-btn v-if="((likeFlag) && isLogin)" @click="clickLike" text icon color="deep-orange">
+										<v-icon>mdi-thumb-up</v-icon>
+										<h3>{{ count }}</h3>
+									</v-btn>
+									<v-btn v-if="!isLogin" text icon disable>
 										<v-icon>mdi-thumb-up</v-icon>
 										<h3>{{ count }}</h3>
 									</v-btn>
@@ -66,7 +70,7 @@
 		},
 		props: {
 			id: {
-				type: Number
+				type: String
 			}
 		},
 		data() {
@@ -78,6 +82,7 @@
 				memberid: '',
 				categoryid: 4,
 				updateFlag: false,
+				isLogin: false,
 			}
 		},
 		methods: {
@@ -108,14 +113,12 @@
 				}
 			},
 			getRestaurant() {
-				axios.get(`api/jmt/${this.id}`, Headers = {
-						'access-token': this.$store.state.token
-					})
+				axios.get(`api/jmt/${this.id}`, { headers: { 'access-token': this.$store.state.token }})
 					.then(response => {
 						console.log(response)
 						this.restaurant = response.data.jmt
 						this.count = response.data.count
-						this.likeFlag = (response.data.count === 0) ? false : true
+						this.likeFlag = (response.data.flag == 0) ? false : true
 						this.setMap(this.restaurant.location, this.restaurant.name)
 					})
 			},
@@ -165,6 +168,10 @@
 		mounted() {
 			this.getRestaurant()
 			this.memberid = this.$store.state.memberid
+			var token = this.$store.state.token
+			if (token) {
+				this.isLogin = true
+			}
 		}
 	}
 </script>

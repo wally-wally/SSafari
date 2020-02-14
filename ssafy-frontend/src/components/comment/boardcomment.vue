@@ -34,7 +34,7 @@ export default {
         boardname : {type : String},
         boardtype : {type: String},
         postid : {type: String},
-        categoryid : {type:String}
+        categoryid : {type: Number}
     },
     components : {Comment},
     data() {

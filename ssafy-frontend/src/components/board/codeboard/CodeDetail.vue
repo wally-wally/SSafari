@@ -114,31 +114,38 @@ export default {
 						})
 				}
 			},
-        getcode() {
-            axios.get(`api/code/${this.id}`)
-            .then(response => {
-            console.log(response)
-            this.code = response.data.code
-            })
-        },
-        codedelete() {
-            const chk = confirm("진짜?")
-            if (chk){
-            axios.delete(`api/code/${this.id}`)
-            .then(response=> {
-                console.log(response.data)
-                router.push({ path: '/board/codereview/' })
-            })
-            }
-        },
-        recode() {
-            router.push({path:`/board/codereview/${this.id}/edit`})
-        }
-    },
-    mounted() {
-        this.getcode()
-    }
-}
+			getcode() {
+				axios.get(`api/code/${this.id}`, { headers: { 'access-token': this.$store.state.token }})
+					.then(response => {
+						console.log(response.data)
+						this.code = response.data.code
+						this.count = response.data.count
+						this.likeFlag = (response.data.flag === 0) ? false : true
+					})
+			},
+			codedelete() {
+				const chk = confirm("진짜?")
+				if (chk) {
+					axios.delete(`api/code/${this.id}`)
+						.then(response => {
+							console.log(response.data)
+							router.push({
+								path: '/board/codereview/'
+							})
+						})
+				}
+			},
+			recode() {
+				router.push({
+					path: `/board/codereview/${this.id}/edit`
+				})
+			}
+		},
+		mounted() {
+			this.getcode()
+			this.memberid = this.$store.state.memberid
+		}
+	}
 </script>
 
 <style>
