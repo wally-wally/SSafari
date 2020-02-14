@@ -1,13 +1,14 @@
 <template>
   <v-layout mt-5 row wrap style="margin: 20px;">
     <v-flex v-for="i in this.showPostsCount" :key="i" style="width: 100%;"> <!-- col-12 sm6 md3 -->
-	  <router-link :to="`/board/${$store.state.categorys[posts[i-1].categoryid]}/${posts[i - 1].postid}`">
+	  <router-link :to="`/board/${(posts[i-1].categoryid >= 5) ? posts[i-1].categoryid :$store.state.categorys[posts[i-1].categoryid]}/${posts[i - 1].postid}`">
 				<MyBoard 
 									:date="posts[i - 1].created_at"
 									:title="posts[i - 1].title"
 									:body="posts[i - 1].body"
 						:username="posts[i - 1].username"
-						:memberid="posts[i - 1].memberid">
+						:memberid="posts[i - 1].memberid"
+						:categoryName="posts[i - 1].categoryname">
 				</MyBoard>
 	  </router-link>
 
@@ -27,10 +28,10 @@ export default {
 	props: {
 		column: {type: Number, default: 1},
 		limits: {type: Number, default: 6},
-		loadMore: {type: Boolean, default: false}
 	},
 	data() {
 		return {
+			loadMore: false,
 			posts: [],
 			showPostsCount : 0, 
 			morePostsIcon : true,
@@ -48,7 +49,9 @@ export default {
 			axios.get(`api/postlist/${ this.$store.getters.user.memberid }`)
 				.then( response => {
 					this.posts = response.data
-					this.showPostsCount = (this.posts.length >= 6) ? 6 : this.posts.length  
+					console.log(this.posts, 123123123123123123)
+					this.showPostsCount = (this.posts.length >= 6) ? 6 : this.posts.length
+					this.loadMore = (this.posts.length > 6) ? true : false
 				})
 		},
 		loadMorePosts() {

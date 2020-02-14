@@ -1,14 +1,16 @@
 <template>
 <v-container >
     <v-row>
-		<v-btn v-if="!likeFlag" @click="clickLike" text icon color="#d3d3d3">
-			<v-icon>mdi-thumb-up</v-icon>
-			<h3>{{ count }}</h3>
-		</v-btn>
-		<v-btn v-else @click="clickLike" text icon color="deep-orange">
-			<v-icon>mdi-thumb-up</v-icon>
-			<h3>{{ count }}</h3>
-		</v-btn>
+		<div v-if="this.$store.state.isLogin">
+			<v-btn v-if="!likeFlag" @click="clickLike" text icon color="#d3d3d3">
+				<v-icon>mdi-thumb-up</v-icon>
+				<h3>{{ count }}</h3>
+			</v-btn>
+			<v-btn v-else @click="clickLike" text icon color="deep-orange">
+				<v-icon>mdi-thumb-up</v-icon>
+				<h3>{{ count }}</h3>
+			</v-btn>
+		</div>
         <v-col cols="3">
             제목 : {{code.title}}
         </v-col>
@@ -130,14 +132,14 @@ export default {
 						.then(response => {
 							console.log(response.data)
 							router.push({
-								path: '/board/codereview/'
+								path: '/board/code/'
 							})
 						})
 				}
 			},
 			recode() {
 				router.push({
-					path: `/board/codereview/${this.id}/edit`
+					path: `/board/code/${this.id}/edit`
 				})
 			}
 		},

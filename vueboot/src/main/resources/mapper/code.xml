@@ -6,11 +6,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<select id="getCodes" parameterType="java.lang.Integer"
 		resultType="com.ssafy.edu.vue.dto.Code">
-		select c.id id, c.title title, c.body body, c.code code, c.created_at created_at, c.lang lang, c.memberid memberid, 
-		if(c.anonymous=1 and m.memberid!=#{memberid}, '익명', m.username) as username, c.anonymous anonymous
-		from codereview c, members m 
-		where c.memberid=m.memberid 
-		order by id	desc
+		SELECT C.ID ID, C.TITLE TITLE, C.BODY BODY, C.CODE CODE, C.CREATED_AT CREATED_AT, C.LANG LANG, C.MEMBERID MEMBERID, 
+		IF(C.ANONYMOUS=1 AND M.MEMBERID!=#{memberid}, '익명', M.USERNAME) AS USERNAME, C.ANONYMOUS ANONYMOUS,
+		(SELECT COUNT(*) FROM LIKEPOST WHERE CATEGORYID=3 AND POSTID=C.ID) LIKES,
+		(SELECT COUNT(*) FROM COMMENTPOST WHERE CATEGORYID=3 AND POSTID=C.ID) COMMENTS
+		FROM CODEREVIEW C, MEMBERS M 
+		WHERE C.MEMBERID=M.MEMBERID 
+		ORDER BY ID	DESC
 	</select>
 
 	<select id="getCode" parameterType="java.lang.Integer"

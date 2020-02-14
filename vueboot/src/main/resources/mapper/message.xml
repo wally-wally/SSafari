@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ssafy.message">
+	<select id="getMessage" parameterType="java.lang.Integer"
+		resultType="com.ssafy.edu.vue.dto.Message">
+		SELECT ID, FROM, TO, TITLE, CONTENT, CREATED_AT FROM MESSAGE WHERE TO=#{memberid} ORDER BY CREATED_AT DESC
+	</select>
+
+	<select id="getMessages" parameterType="java.lang.Integer"
+		resultType="com.ssafy.edu.vue.dto.Message">
+		SELECT ID, FROM, TO, TITLE, CONTENT, CREATED_AT FROM MESSAGE WHERE ID=#{id}
+	</select>
+
+	<insert id="addMessage" parameterType="com.ssafy.edu.vue.dto.Message">
+		INSERT INTO MESSAGE(FROM, TO, TITLE, CONTENT, CREATED_AT)
+		VALUES(#{from}, #{to}, #{title}, #{content}, now())
+	</insert>
+</mapper>
