@@ -33,8 +33,8 @@
                 <i class="fas fa-search" @click="changePageIndex(2)"></i>
             </div>
             <div v-if="currentMemberId !== null && this.selectRegion !== 'All'" class="create-post">
-                <div v-if="this.showCreatePost === 0" class="d-flex justify-space-between" @click="hideInitPostForm">
-                    <div class="write-phrase d-inline">이 곳에 새 글을 작성하세요.</div>
+                <div v-if="this.showCreatePost === 0" id="writeArticleButton" class="d-flex justify-space-between" style="padding:15px" @click="hideInitPostForm">
+                    이 곳에 새 글을 작성하세요.
                     <div class="write-icon d-inline"><i class="fas fa-pencil-alt"></i></div>
                 </div>
                 <div v-else>
@@ -71,13 +71,13 @@
                 </div>
             </div>
             <div v-else-if="this.selectRegion !== 'All'">
-                <div class="d-flex justify-space-between">
-                    <div class="write-phrase d-inline">글을 작성하려면 로그인을 먼저 하세요.</div>
+                <div class="d-flex justify-space-between" id="writeArticleButton" style="padding:15px">
+                    글을 작성하려면 로그인을 먼저 하세요.
                 </div>
             </div>
             <div v-else>
-                <div class="d-flex justify-space-between">
-                    <div class="write-phrase d-inline">글을 작성하려면 지역을 선택해 주세요.</div>
+                <div class="d-flex justify-space-between" id="writeArticleButton" style="padding:15px">
+                    글을 작성하려면 지역을 선택해 주세요.
                 </div>
             </div>
             <v-layout>
@@ -443,5 +443,12 @@
     white-space: pre-wrap;
     overflow-wrap: break-word;
     font: 400 13.3333px Arial;
+    }
+
+    #writeArticleButton {
+    cursor: text;
+    color: #a6a6a6;
+    font-size: 14px;
+    background: #f9f9f9
     }
 </style>
