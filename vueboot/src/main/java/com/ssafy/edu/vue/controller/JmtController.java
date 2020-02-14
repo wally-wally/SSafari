@@ -76,12 +76,13 @@ public class JmtController {
 		Postinfo likepost = new Postinfo(4,id);
 		int counts = postservice.getLikeCounts(likepost);
 		result.put("count", counts);
-		
 		int flag = 0;
 		if(memberid!=0) {
 			likepost.setMemberid(memberid);
-			postservice.isLike(likepost);
+			logger.info("2-----------"+likepost);
+			flag=postservice.isLike(likepost);
 		}
+		logger.info("3-----------"+flag);
 		result.put("flag", flag);
 		
 		return new ResponseEntity<Map<String,Object>>(result, HttpStatus.OK);
