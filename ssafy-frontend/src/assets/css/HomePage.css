@@ -233,13 +233,12 @@ hr {
   border: 2px solid #f7b157;
   display: inline-block;
   min-width: 130px;
-  padding: 0 33px;
-  height: 42px;
+  padding: 0 20px -1px;
+  height: 40px;
   line-height: 36px;
   border-radius: 42px;
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 0.065em;
-  text-transform: uppercase;
   font-weight: 700;
   font-family: Montserrat, Helvetica, sans-serif;
   cursor: pointer;
