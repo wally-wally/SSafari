@@ -31,15 +31,27 @@
                 <i class="fas fa-search" @click="changePageIndex(2)"></i>
             </div>
             <div v-if="currentMemberId !== null && this.selectRegion !== 'All'" class="create-post">
-                <div v-if="this.showCreatePost === 0" class="init d-flex justify-space-between" @click="hideInitPostForm">
+                <div v-if="this.showCreatePost === 0" class="d-flex justify-space-between" @click="hideInitPostForm">
                     <div class="write-phrase d-inline">이 곳에 새 글을 작성하세요.</div>
                     <div class="write-icon d-inline"><i class="fas fa-pencil-alt"></i></div>
                 </div>
-                <div v-else class="create-post-form">
-                    <p><input v-model="title" name="post-form-title" placeholder="제목을 작성하세요." class="post-form-title"></p>
+                <div v-else>
+                    <p><input v-model="title" name="post-form-title" placeholder="제목을 작성하세요." class="post-form-title" style="padding:15px;letter-spacing: -1px;"></p>
                     <p>
-                        <textarea v-model="content" name="post-form-contents" class="post-form-contents"
-                                  placeholder="이 곳에 내용을 작성하세요."></textarea>
+                        <textarea v-model="content" name="post-form-contents" class="post-form-contents" style="padding:15px;letter-spacing: -1px;"
+                                  placeholder="여기를 눌러서 글을 작성할 수 있습니다. 
+아래 내용을 모두 지켜서 게시글을 작성해주세요 :) 
+
+[정보통신망법에 의한 홍보 게시물 작성 금지] 
+1. 커뮤니티, 어플, 쇼핑몰, 카페, 블로그 홍보 및 방문 유도 
+2. 토익, 한자 등 어학원 홍보 
+3. 연극, 영화 티켓 할인 서비스 홍보 
+4. 안과, 치과, 피부과 등 의료업체 홍보 
+
+[커뮤니티 이용규칙에 어긋나는 행위 금지] 
+1. 욕설, 비하, 음란물, 개인정보가 포함된 게시물 게시 
+2. 특정인이나 단체/지역을 비방하는 행위 
+3. 기타 현행법에 어긋나는 행위"></textarea>
                     </p>
                     <div class="post-form-footer d-flex">
                         <div class="post-form-footer-att-ann d-flex col-10">
@@ -57,12 +69,12 @@
                 </div>
             </div>
             <div v-else-if="this.selectRegion !== 'All'">
-                <div class="init d-flex justify-space-between">
+                <div class="d-flex justify-space-between">
                     <div class="write-phrase d-inline">글을 작성하려면 로그인을 먼저 하세요.</div>
                 </div>
             </div>
             <div v-else>
-                <div class="init d-flex justify-space-between">
+                <div class="d-flex justify-space-between">
                     <div class="write-phrase d-inline">글을 작성하려면 지역을 선택해 주세요.</div>
                 </div>
             </div>
@@ -293,25 +305,32 @@
     .init {
         background-color: #DDE1E1; 
         padding: 10px 10px;
-        border: 3px solid grey;
     }
-
-    .create-post-form {
-        background-color: #FFFFFF; 
-        padding: 10px 10px 0;
-        border: 3px solid grey;
+    .create-post{
+        position: relative;
+        margin-bottom: 5px;
+        border: 2px solid #d6d6d6;
+        box-sizing: border-box;
     }
 
     .init:hover {
         cursor: text;
     }
 
-    .post-form-title,
+    .post-form-title
     .post-form-contents {
         width: 100%;
-        resize: none;
         padding-bottom: 5px;
         border-bottom: 2px solid lightgray;
+    }
+
+    .post-form-title{
+        width: 100%;
+        line-height: 20px;
+        border: 0;
+        color: #292929;
+        font-size: 16px;
+        font-weight: bold;
     }
 
     .post-form-contents {
@@ -380,5 +399,25 @@
 
     .best-element > p:nth-child(3) > i {
         color: crimson;
+    }
+    .v-application p {
+    margin-bottom: 0px; 
+    }
+    textarea{
+    text-rendering: auto;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: start;
+    -webkit-appearance: textarea;
+    background-color: -internal-light-dark-color(white, black);
+    -webkit-rtl-ordering: logical;
+    flex-direction: column;
+    cursor: text;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    font: 400 13.3333px Arial;
     }
 </style>

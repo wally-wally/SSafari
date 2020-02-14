@@ -3,6 +3,20 @@
     <div class="scroll-alert">Learn to share!<br>Share to Learn!</div>
     <section id="homepage-imgbanner"></section>
     <div class="container-fluid">
+      <v-img class="post-image"
+             id="post"
+             aspect-ratio="2.15">
+        <div class="post-contents">
+          <div class="post-title">게시판</div>
+          <div data-aos="fade-up" class="post-contents">
+            <!-- <BoardListMain></BoardListMain> -->
+            <div>
+              <AllBoard></AllBoard>
+            </div>
+          </div>
+        </div>
+      </v-img>
+
       <v-img class="portfolio-image"
              id="portfolio"
              aspect-ratio="2.15">
@@ -15,21 +29,7 @@
             <StudyGroupListMain></StudyGroupListMain>
           </div>
         </div>
-      </v-img>
-
-      <v-img class="post-image"
-             id="post"
-             aspect-ratio="2.15">
-        <div class="post-contents">
-          <div class="post-title">게시판</div>
-          <div data-aos="fade-up" class="post-contents">
-            <!-- <BoardListMain></BoardListMain> -->
-            <div style="margin: 0 5%;">
-              <AllBoard></AllBoard>
-            </div>
-          </div>
-        </div>
-      </v-img>
+      </v-img>  
     </div>
     <div id="mysidenav" class="sidenav">
       <i @click="fnMove('main')" class="fas fa-circle" id="main-icon" style="color: #f7b157;"></i><br>

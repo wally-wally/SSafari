@@ -13,6 +13,8 @@ public class Jmt implements Serializable {
 	private int anonymous;
 	private int locationid;
 	private String img;
+	private int likes;
+	private int comments;
 	
 	public Jmt() {
 		super();
@@ -92,6 +94,24 @@ public class Jmt implements Serializable {
 		this.body = body;
 		this.anonymous = anonymous;
 	}
+	
+	public Jmt(int id, String name, String location, String body, String created_at, int memberid, String username,
+			int anonymous, int locationid, String img, int likes, int comments) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.location = location;
+		this.body = body;
+		this.created_at = created_at;
+		this.memberid = memberid;
+		this.username = username;
+		this.anonymous = anonymous;
+		this.locationid = locationid;
+		this.img = img;
+		this.likes = likes;
+		this.comments = comments;
+	}
+
 	@Override
 	public String toString() {
 		return "Jmt [id=" + id + ", name=" + name + ", location=" + location + ", body=" + body + ", created_at="
@@ -160,6 +180,22 @@ public class Jmt implements Serializable {
 
 	public void setImg(String img) {
 		this.img = img;
+	}
+
+	public int getLikes() {
+		return likes;
+	}
+
+	public void setLikes(int likes) {
+		this.likes = likes;
+	}
+
+	public int getComments() {
+		return comments;
+	}
+
+	public void setComments(int comments) {
+		this.comments = comments;
 	}
 	
 }

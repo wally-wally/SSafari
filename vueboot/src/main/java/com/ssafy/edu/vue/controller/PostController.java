@@ -117,7 +117,7 @@ public class PostController {
 	
 	@ApiOperation(value = "post 상세 보기", response = List.class)
 	@RequestMapping(value = "/post/{postid}", method = RequestMethod.GET)
-	public ResponseEntity<Post> getPost(@PathVariable int postid,HttpServletRequest rs) throws Exception {
+	public ResponseEntity<Post> getPost(@PathVariable int postid) throws Exception {
 		logger.info("1-------------getPost-----------------------------" + new Date());
 		Post post = postservice.getPost(postid);
 		if (post == null) {
@@ -391,14 +391,16 @@ public class PostController {
 	}
 	
 	@ApiOperation(value = "post category 검색 목록 (게시판 검색 목록)", response = List.class)
-	@RequestMapping(value = "/boardcategory/search", method = RequestMethod.GET)
+	@RequestMapping(value = "/boardcategory/search/{keyword}", method = RequestMethod.GET)
 	public ResponseEntity<List<Category>> getBoardSearch(@PathVariable String keyword) throws Exception {
 		logger.info("1-------------getBoardSearch-----------------------------" + new Date());
 		keyword = "%"+keyword+"%";
 		List<Category> list = postservice.getBoardSearch(keyword);
 		return new ResponseEntity<List<Category>>(list, HttpStatus.OK);
+	}
+	
 	@ApiOperation(value = "다음 페이지 있는지", response = List.class)
-	@RequestMapping(value = "/nextpage", method = RequestMethod.POST)
+	@RequestMapping(value = "/nextpage", method = RequestMethod.GET)
 	public ResponseEntity<Boolean> hasNextPage(@ModelAttribute PostPaging postpaging) throws Exception {
 		logger.info("1-------------hasNextPage-----------------------------" + new Date());
 		boolean nextpage = false;
