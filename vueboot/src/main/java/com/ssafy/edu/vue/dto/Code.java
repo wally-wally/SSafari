@@ -12,6 +12,8 @@ public class Code implements Serializable {
 	private String username;
 	private String lang;
 	private int anonymous;
+	private int likes;
+	private int comments;
 	public Code() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -41,6 +43,22 @@ public class Code implements Serializable {
 		this.memberid = memberid;
 		this.username = username;
 		this.lang = lang;
+	}
+
+	public Code(int id, String title, String body, String code, String created_at, int memberid, String username,
+			String lang, int anonymous, int likes, int comments) {
+		super();
+		this.id = id;
+		this.title = title;
+		this.body = body;
+		this.code = code;
+		this.created_at = created_at;
+		this.memberid = memberid;
+		this.username = username;
+		this.lang = lang;
+		this.anonymous = anonymous;
+		this.likes = likes;
+		this.comments = comments;
 	}
 
 	public int getId() {
@@ -97,6 +115,22 @@ public class Code implements Serializable {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	public int getLikes() {
+		return likes;
+	}
+
+	public void setLikes(int likes) {
+		this.likes = likes;
+	}
+
+	public int getComments() {
+		return comments;
+	}
+
+	public void setComments(int comments) {
+		this.comments = comments;
 	}
 
 	@Override

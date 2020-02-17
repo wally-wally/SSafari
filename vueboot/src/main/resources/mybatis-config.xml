@@ -16,5 +16,6 @@
 		<mapper resource="mapper/member.xml" />
 		<mapper resource="mapper/code.xml" />
 		<mapper resource="mapper/jmt.xml" />
+		<mapper resource="mapper/message.xml" />
 	</mappers>
 </configuration>

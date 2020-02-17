@@ -9,7 +9,9 @@
                 <v-avatar class="mr-5 mb-2">
                   <img :src="post.img" alt="X">
                 </v-avatar>
-                <span>{{ post.username }}</span>
+                <span>{{ post.username }}
+                  <sendmessage :username="post.username" :id="post.memberid"/>
+                </span>
               </div>
               <v-spacer></v-spacer>
               <div class="my-2 mx-2">
@@ -56,6 +58,7 @@
 </template>
 
 <script>
+  import sendmessage from '../../message/sendmessage'
   import axios from 'axios'
   import boardcomment from '@/components/comment/boardcomment.vue'
   import router from '@/router.js'
@@ -63,7 +66,8 @@
   export default {
     name: "BoardDetail",
     components: {
-      boardcomment
+      boardcomment,
+      sendmessage
     },
     data() {
       return {

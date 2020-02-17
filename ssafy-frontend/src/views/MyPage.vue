@@ -46,20 +46,55 @@
     <v-btn class="red mx-1 my-3" @click="memberDropOut">회원탈퇴</v-btn>
     <h1 v-if="ssafyAuth === 3" class="red">현재 싸피 인증 대기 중입니다.</h1>
     <div class="mypage-title">
-      <h1>MY LIKES</h1>
+      <h1>프로필</h1>
+      <v-card class="mx-auto" max-width="434" tile>
+        <v-img height="100%" src="https://cdn.vuetifyjs.com/images/cards/server-room.jpg">
+          <v-row align="end" class="fill-height">
+            <v-col align-self="start" class="pa-0" cols="12">
+              <v-avatar class="profile" color="grey" size="164" tile>
+                <v-img :src="this.$store.state.img"></v-img>
+              </v-avatar>
+            </v-col>
+            <v-col class="py-0">
+              <v-list-item color="rgba(0, 0, 0, .4)" dark>
+                <v-list-item-content>
+                  <v-list-item-title class="title">{{currentUsername}}</v-list-item-title>
+                  <v-list-item-subtitle>지역: {{this.$store.state.locations[this.$store.state.locationid]}}
+                  </v-list-item-subtitle>
+                  <v-list-item-subtitle>기수: {{this.$store.state.unit}}</v-list-item-subtitle>
+                </v-list-item-content>
+              </v-list-item>
+            </v-col>
+          </v-row>
+        </v-img>
+      </v-card>
+
     </div>
-    <MyLikeList/>
-    <v-divider/>
+    <v-divider />
     <div class="mypage-title">
-      <h1>MY BOARD</h1>
+      <h1>내가 좋아한 게시글</h1>
     </div>
-    <MyBoardList/>
-    <v-divider/>
+    <MyLikeList />
+    <v-divider />
     <div class="mypage-title">
-      <h1>MY STUDY GROUP</h1>
+      <h1>내가 작성한 게시글</h1>
     </div>
-    <MyStudyGroupList/>
-    <v-divider/>
+    <MyBoardList />
+    <v-divider />
+    <div>
+      <div class="mypage-title">
+        <h1>스터디 모임</h1>
+        <h3 style="color:#F67280">내가 작성한 스터디 모집 글</h3>
+      </div>
+      <MyStudyGroupList />
+    </div>
+    <div>
+      <div class="mypage-title">
+        <h3 style="color:#F67280">내가 지원한 스터디</h3>
+      </div>
+      <MyStudyParticipated />
+    </div>
+    <v-divider />
     <div class="mypage-title">
       <h1>{{this.$store.getters.user.githubid}} 's Github</h1>
     </div>
@@ -83,6 +118,7 @@ export default {
       PasswordModify,
       MakeSsafyAuth,
       MyStudyGroupList,
+      MyStudyParticipated,
       MyBoardList,
       MyLikeList,
       GithubInfo
@@ -90,24 +126,29 @@ export default {
     data() {
       return {
         showpost: true,
-        showportfolio : true, 
-        mydata : Object,
+        showportfolio: true,
+        mydata: Object,
         githubid: this.$store.getters.user.githubid,
         token: '',
         social: '',
         ssafyAuth: '',
-        myPageStatus: 0
+        myPageStatus: 0,
+        currentUsername: '',
       }
     },
     methods: {
       memberDropOut() {
         var confirmation = confirm("회원 탈퇴 하시겠습니까?");
-        if(confirmation){
+        if (confirmation) {
           var data = {
-            memberid : this.$store.state.memberid,
+            memberid: this.$store.state.memberid,
           }
           var token = this.$store.state.token
-          axios.delete(`api/member/${this.$store.state.memberid}`, {headers: {'access-token' : token}})
+          axios.delete(`api/member/${this.$store.state.memberid}`, {
+              headers: {
+                'access-token': token
+              }
+            })
             .then(response => {
               console.log(response)
             })
@@ -153,13 +194,14 @@ export default {
       }
     },
     mounted() {
-      if (this.$store.state.token == null){
+      if (this.$store.state.token == null) {
         this.$router.push('/')
       }
       // this.social = this.$store.state.social
       this.ssafyAuth = this.$store.state.auth
+      this.currentUsername = this.$store.state.username
     }
-}
+  }
 </script>
 
 <style>

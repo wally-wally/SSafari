@@ -31,7 +31,7 @@ public class PostServiceImpl implements IPostService {
 
 	@Override
 	@Transactional(readOnly=true)
-	public Post getPost(int postid) {
+	public Post getPost(Postinfo postid) {
 		return postdao.getPost(postid);
 	}
 

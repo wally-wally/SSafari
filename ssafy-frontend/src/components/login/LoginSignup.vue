@@ -160,6 +160,7 @@ export default {
                 this.loginDialog = false
                 this.credentials = {}
                 this.$emit('update');
+                this.$router.go(0)
               }
               else{
                 this.loginfail()
@@ -305,7 +306,7 @@ body {
   top: 0;
   width: 900px;
   height: 100%;
-  background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/sections-3.jpg");
+  background-image: url("https://images.unsplash.com/photo-1542435503-956c469947f6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=967&q=80 ");
   background-size: cover;
   -webkit-transition: -webkit-transform 1.2s ease-in-out;
   transition: -webkit-transform 1.2s ease-in-out;

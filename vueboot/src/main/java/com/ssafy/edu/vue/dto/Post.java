@@ -16,9 +16,12 @@ public class Post implements Serializable {
 	private int memberid;
 	private String username;
 	private int categoryid;
+	private String categoryname;
 	private int anonymous;
 	private int locationid;
 	private String img;
+	private int likes;
+	private int comments;
 
 	public Post() {
 		super();
@@ -40,6 +43,23 @@ public class Post implements Serializable {
 		this.anonymous = anonymous;
 		this.locationid = locationid;
 		this.img = img;
+	}
+
+
+
+	public Post(int postid, String title, String body, String created_at, int memberid, String username, int categoryid,
+			String categoryname, int anonymous, int locationid) {
+		super();
+		this.postid = postid;
+		this.title = title;
+		this.body = body;
+		this.created_at = created_at;
+		this.memberid = memberid;
+		this.username = username;
+		this.categoryid = categoryid;
+		this.categoryname = categoryname;
+		this.anonymous = anonymous;
+		this.locationid = locationid;
 	}
 
 
@@ -74,6 +94,24 @@ public class Post implements Serializable {
 		this.anonymous = anonymous;
 		this.locationid = locationid;
 	}
+
+	public Post(int postid, String title, String body, String created_at, int memberid, String username, int categoryid,
+			int anonymous, int locationid, String img, int likes, int comments) {
+		super();
+		this.postid = postid;
+		this.title = title;
+		this.body = body;
+		this.created_at = created_at;
+		this.memberid = memberid;
+		this.username = username;
+		this.categoryid = categoryid;
+		this.anonymous = anonymous;
+		this.locationid = locationid;
+		this.likes = likes;
+		this.comments = comments;
+	}
+
+
 
 	public String getImg() {
 		return img;
@@ -155,15 +193,47 @@ public class Post implements Serializable {
 		this.locationid = locationid;
 	}
 
+	public String getCategoryname() {
+		return categoryname;
+	}
+
+
+
+	public void setCategoryname(String categoryname) {
+		this.categoryname = categoryname;
+	}
+
+
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
 
+
+
+	public int getLikes() {
+		return likes;
+	}
+
+	public void setLikes(int likes) {
+		this.likes = likes;
+	}
+
+	public int getComments() {
+		return comments;
+	}
+
+	public void setComments(int comments) {
+		this.comments = comments;
+	}
+
+	
 	@Override
 	public String toString() {
 		return "Post [postid=" + postid + ", title=" + title + ", body=" + body + ", created_at=" + created_at
-				+ ", memberid=" + memberid + ", username=" + username + ", categoryid=" + categoryid + ", anonymous="
-				+ anonymous + ", locationid=" + locationid + "]";
+				+ ", memberid=" + memberid + ", username=" + username + ", categoryid=" + categoryid + ", categoryname="
+				+ categoryname + ", anonymous=" + anonymous + ", locationid=" + locationid + ", img=" + img + "]";
 	}
+	
 
 }

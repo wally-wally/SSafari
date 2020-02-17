@@ -7,103 +7,106 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- </select> -->
 
 	<select id="checkLogin" resultType="com.ssafy.edu.vue.dto.Member" parameterType="com.ssafy.edu.vue.dto.Member">
-		SELECT MEMBERID, EMAIL, NAME, USERNAME, SIGNUPDATE, AUTH, GITHUBID, LOCATIONID, UNIT, SOCIAL, IMG FROM MEMBERS WHERE EMAIL=#{email} AND PASSWORD=hex(aes_encrypt(#{password}, 'key'))
+		select memberid, email, name, username, signupdate, auth, githubid, locationid, unit, social, img from members where email=#{email} and password=hex(aes_encrypt(#{password}, 'key'))
 	</select>
 	
 	<select id="getMemberList" resultType="com.ssafy.edu.vue.dto.Member">
-		SELECT MEMBERID, EMAIL, NAME, USERNAME, SIGNUPDATE, AUTH, GITHUBID, LOCATIONID, UNIT, SOCIAL, IMG FROM MEMBERS WHERE DELFLAG=0 ORDER BY MEMBERID
+		select memberid, email, name, username, signupdate, auth, githubid, locationid, unit, social, img from members where delflag=0 order by memberid
 	</select>
 	
 	<select id="getMember" resultType="com.ssafy.edu.vue.dto.Member" parameterType="java.lang.Integer">
-		SELECT MEMBERID, EMAIL, NAME, USERNAME, SIGNUPDATE, AUTH, GITHUBID, LOCATIONID, UNIT, SOCIAL, IMG FROM MEMBERS WHERE MEMBERID=#{memberid}
+		select memberid, email, name, username, signupdate, auth, githubid, locationid, unit, social, img from members where memberid=#{memberid}
 	</select>
 	
 	<delete id="deleteMember" parameterType="java.lang.Integer">
-		UPDATE MEMBERS SET DELFLAG=1 WHERE MEMBERID=#{memberid}
+		update members set delflag=1 where memberid=#{memberid}
 	</delete>
 	
 	<insert id="addMember" parameterType="com.ssafy.edu.vue.dto.Member">
-		INSERT INTO
-		MEMBERS(EMAIL, PASSWORD, NAME, USERNAME, SIGNUPDATE, SOCIAL)
-		VALUES(#{email},hex(aes_encrypt(#{password}, 'key')),#{name},#{username},now(),#{social})
+		insert into
+		members(email, password, name, username, signupdate, social)
+		values(#{email},hex(aes_encrypt(#{password}, 'key')),#{name},#{username},now(),#{social})
 	</insert>
 	
 	<update id="updateMember"
 		parameterType="com.ssafy.edu.vue.dto.Member">
-		UPDATE MEMBERS SET
-		USERNAME=#{username},
-		GITHUBID=#{githubid},
-		IMG=#{img}
-		WHERE
-		MEMBERID=#{memberid}
+		update members set
+		username=#{username},
+		githubid=#{githubid},
+		img=#{img}
+		where
+		memberid=#{memberid}
 	</update>
 	
 	<select id="checkEmail" resultType="java.lang.Integer" parameterType="java.lang.String">
-		SELECT COUNT(*) FROM MEMBERS WHERE EMAIL=#{email}
+		select count(*) from members where email=#{email}
 	</select>
 	
 	<select id="checkUsername" resultType="java.lang.Integer" parameterType="java.lang.String">
-		SELECT COUNT(*) FROM MEMBERS WHERE USERNAME=#{username}
+		select count(*) from members where username=#{username}
 	</select>
 	
 	<select id="checkUsers" resultType="java.lang.Integer">
-		SELECT COUNT(*) FROM MEMBERS WHERE DELFLAG=0
+		select count(*) from members where delflag=0
 	</select>
 	
 	<update id="updateMemberAuth" parameterType="com.ssafy.edu.vue.dto.Member">
-		UPDATE MEMBERS SET
-		AUTH=#{auth}
-		WHERE
-		MEMBERID=#{memberid}
+		update members set
+		auth=#{auth}
+		where
+		memberid=#{memberid}
 	</update>
 	
 	<select id="checkDelflag" resultType="java.lang.Integer" parameterType="java.lang.String">
-		SELECT DELFLAG FROM MEMBERS WHERE EMAIL=#{email}
+		select delflag from members where email=#{email}
 	</select>
 	
 	<insert id="authRequest" parameterType="com.ssafy.edu.vue.dto.AuthRequest">
-		INSERT INTO
-		AUTHREQUEST(MEMBERID, IMG, LOCATIONID, UNIT)
-		VALUES(#{memberid},#{img},#{locationid},#{unit})
+		insert into
+		authrequest(memberid, img, locationid, unit)
+		values(#{memberid},#{img},#{locationid},#{unit})
 	</insert>
 	
 	<update id="updatePassword" parameterType="com.ssafy.edu.vue.dto.Member">
-		UPDATE MEMBERS SET
-		PASSWORD=hex(aes_encrypt(#{password}, 'key'))
-		WHERE
-		MEMBERID=#{memberid}
+		update members set
+		password=hex(aes_encrypt(#{password}, 'key'))
+		where
+		memberid=#{memberid}
 	</update>
 	
 	<delete id="deleteAuthRequest" parameterType="java.lang.Integer">
-		DELETE FROM AUTHREQUEST WHERE MEMBERID=#{memberid}
+		delete from authrequest where memberid=#{memberid}
 	</delete>
 	
 	<select id="getAuthRequestList" resultType="com.ssafy.edu.vue.dto.AuthRequest">
-		SELECT A.MEMBERID, M.NAME, A.IMG, A.LOCATIONID, L.LOCATION, A.UNIT  FROM AUTHREQUEST A, LOCATION L, MEMBERS M WHERE M.MEMBERID=A.MEMBERID AND L.ID=A.LOCATIONID
+		select a.memberid, m.name, a.img, a.locationid, l.location, a.unit  from authrequest a, location l, members m where m.memberid=a.memberid and l.id=a.locationid
 	</select>
 	
 	<select id="getAuthRequest" resultType="com.ssafy.edu.vue.dto.AuthRequest" parameterType="java.lang.Integer">
-		SELECT A.MEMBERID, M.NAME, A.IMG, A.LOCATIONID, L.LOCATION, A.UNIT  FROM AUTHREQUEST A, LOCATION L, MEMBERS M WHERE M.MEMBERID=A.MEMBERID AND L.ID=A.LOCATIONID AND A.MEMBERID=#{memberid} 
+		select a.memberid, m.name, a.img, a.locationid, l.location, a.unit  from authrequest a, location l, members m where m.memberid=a.memberid and l.id=a.locationid and a.memberid=#{memberid} 
 	</select>
 	
 	<update id="updateLocationUnit" parameterType="com.ssafy.edu.vue.dto.AuthRequest">
-		UPDATE MEMBERS SET
-		LOCATIONID=#{locationid},
-		UNIT=#{unit}
-		WHERE
-		MEMBERID=#{memberid}
+		update members set
+		locationid=#{locationid},
+		unit=#{unit}
+		where
+		memberid=#{memberid}
 	</update>
 	
 	<select id="getMemberLikePost" parameterType="java.lang.Integer" resultType="com.ssafy.edu.vue.dto.LikePost">
-		( SELECT J.ID, J.NAME TITLE, (4) AS CATEGORYID, L.MEMBERID, J.CREATED_AT FROM JMT J, LIKEPOST L
-		WHERE L.CATEGORYID=4 AND J.ID=L.POSTID AND L.MEMBERID=#{memberid}
-		UNION
-		SELECT C.ID, C.TITLE, (3) AS CATEGORYID, L.MEMBERID, C.CREATED_AT FROM CODEREVIEW C, LIKEPOST L
-		WHERE L.CATEGORYID=3 AND C.ID=L.POSTID AND L.MEMBERID=#{memberid}
-		UNION
-		SELECT P.POSTID, P.TITLE, L.CATEGORYID, L.MEMBERID, P.CREATED_AT FROM POSTS P, LIKEPOST L
-		WHERE P.CATEGORYID=L.CATEGORYID AND P.POSTID=L.POSTID AND L.MEMBERID=#{memberid} ) 
-		ORDER BY CREATED_AT
+		( select j.id postid, j.name title, (4) as categoryid, r.name categoryname, j.memberid, m.username, j.anonymous, j.created_at 
+		from jmt j, likepost l, category r, members m
+		where l.categoryid=4 and j.id=l.postid and l.memberid=#{memberid} and r.id=l.categoryid and j.memberid=m.memberid
+		union
+		select c.id postid, c.title, (3) as categoryid, r.name categoryname, c.memberid, m.username,c.anonymous, c.created_at 
+		from codereview c, likepost l, category r, members m
+		where l.categoryid=3 and c.id=l.postid and l.memberid=#{memberid} and r.id=l.categoryid and c.memberid=m.memberid
+		union
+		select p.postid postid, p.title, l.categoryid, r.name categoryname, p.memberid, m.username,p.anonymous, p.created_at 
+		from posts p, likepost l, category r, members m
+		where p.categoryid=l.categoryid and p.postid=l.postid and l.memberid=#{memberid} and r.id=l.categoryid and p.memberid=m.memberid ) 
+		order by created_at
 	</select>
 	
 </mapper>

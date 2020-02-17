@@ -31,12 +31,21 @@ export default new Vuex.Store({
             'Gawngju': '4',
             'etc': '5'
         },
+        locations: {
+          '0': '싸피 미인증',
+          '1': '서울',
+          '2': '대전',
+          '3': '구미',
+          '4': '광주'
+        },
         token: null,
         isLogin : false,
         memberid : null,
         username : null,
         social: null,
-        auth: null
+        auth: null,
+        img: null,
+        unit: null
     },
 // mutations : state를 변화시키기 위한 메서드(함수)
  mutations : {
@@ -49,16 +58,24 @@ export default new Vuex.Store({
         state.isLogin = true
         state.social = jwtDecode(state.token)['access-Token'].social
         state.auth = jwtDecode(state.token)['access-Token'].auth
+        state.img = jwtDecode(state.token)['access-Token'].img
+        state.unit = jwtDecode(state.token)['access-Token'].unit
+        state.locationid = jwtDecode(state.token)['access-Token'].locationid
     },
     logout(state){
-        const result = confirm('로그아웃 하시겠습니까')
+        const result = confirm('로그아웃 하시겠습니까??')
         if (result) {
+          console.log('hello world')
             state.token = null
             state.memberid = null
             state.username = null
             state.isLogin = false
             state.social = null
             state.auth = null
+            state.img = null
+            state.unit = null
+            state.locationid = null
+            window.location.replace('http://localhost:8080/')
         }
     },
     dropout(state){
@@ -68,6 +85,9 @@ export default new Vuex.Store({
         state.isLogin = false
         state.social = null
         state.auth = null
+        state.img = null
+        state.unit = null
+        state.locationid = null
     },
     memberChange(state) {
       state.token = token
@@ -76,6 +96,9 @@ export default new Vuex.Store({
       state.isLogin = true
       state.social = jwtDecode(state.token)['access-Token'].social
       state.auth = jwtDecode(state.token)['access-Token'].auth
+      state.img = jwtDecode(state.token)['access-Token'].img
+      state.unit = jwtDecode(state.token)['access-Token'].unit
+      state.locationid = jwtDecode(state.token)['access-Token'].locationid
   },
 },
  actions : {

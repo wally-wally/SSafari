@@ -6,42 +6,44 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<select id="getJmts" parameterType="java.lang.Integer"
 		resultType="com.ssafy.edu.vue.dto.Jmt">
-		SELECT J.ID ID, J.NAME NAME, J.LOCATION LOCATION, J.BODY BODY, J.CREATED_AT CREATED_AT, J.MEMBERID MEMBERID, 
-		IF(J.ANONYMOUS=1 AND M.MEMBERID!=#{memberid}, '익명', M.USERNAME) AS USERNAME, J.LOCATIONID LOCATIONID,
-		IF(J.ANONYMOUS=1 AND M.MEMBERID!=#{memberid}, 'https://user-images.githubusercontent.com/52685250/73902320-c72d6c00-48d8-11ea-82b4-eb9bfebfe9fb.png', M.IMG) AS IMG
-		FROM JMT J, MEMBERS M 
-		WHERE J.MEMBERID=M.MEMBERID 
-		ORDER BY ID	DESC
+		select j.id id, j.name name, j.location location, j.body body, j.created_at created_at, j.memberid memberid, 
+		if(j.anonymous=1 and m.memberid!=#{memberid}, '익명', m.username) as username, j.locationid locationid,
+		if(j.anonymous=1 and m.memberid!=#{memberid}, 'https://user-images.githubusercontent.com/52685250/73902320-c72d6c00-48d8-11ea-82b4-eb9bfebfe9fb.png', m.img) as img,
+		(select count(*) from likepost where categoryid=4 and postid=j.id) likes,
+		(select count(*) from commentpost where categoryid=4 and postid=j.id) comments
+		from jmt j, members m 
+		where j.memberid=m.memberid 
+		order by id	desc
 	</select>
 
 	<select id="getJmt" parameterType="com.ssafy.edu.vue.dto.Jmt"
 		resultType="com.ssafy.edu.vue.dto.Jmt">
-		SELECT J.ID ID, J.NAME NAME, J.LOCATION LOCATION, J.BODY BODY, J.CREATED_AT CREATED_AT, J.MEMBERID MEMBERID, 
-		IF(J.ANONYMOUS=1 AND M.MEMBERID!=#{memberid}, '익명', M.USERNAME) AS USERNAME, J.LOCATIONID LOCATIONID,
-		IF(J.ANONYMOUS=1 AND M.MEMBERID!=#{memberid}, 'https://user-images.githubusercontent.com/52685250/73902320-c72d6c00-48d8-11ea-82b4-eb9bfebfe9fb.png', M.IMG) AS IMG
-		FROM JMT J, MEMBERS M 
-		WHERE J.MEMBERID=M.MEMBERID AND J.ID = #{id}
+		select j.id id, j.name name, j.location location, j.body body, j.created_at created_at, j.memberid memberid, 
+		if(j.anonymous=1 and m.memberid!=#{memberid}, '익명', m.username) as username, j.locationid locationid,
+		if(j.anonymous=1 and m.memberid!=#{memberid}, 'https://user-images.githubusercontent.com/52685250/73902320-c72d6c00-48d8-11ea-82b4-eb9bfebfe9fb.png', m.img) as img
+		from jmt j, members m 
+		where j.memberid=m.memberid and j.id = #{id}
 	</select>
 
 	<insert id="addJmt"
 		parameterType="com.ssafy.edu.vue.dto.Jmt">
-		INSERT INTO
-		JMT(NAME, LOCATION, BODY, CREATED_AT, MEMBERID, ANONYMOUS, LOCATIONID)
-		VALUES(#{name},#{location},#{body},now(), #{memberid}, #{anonymous}, #{locationid})
+		insert into
+		jmt(name, location, body, created_at, memberid, anonymous, locationid)
+		values(#{name},#{location},#{body},now(), #{memberid}, #{anonymous}, #{locationid})
 	</insert>
 	
 	<update id="updateJmt"
 		parameterType="com.ssafy.edu.vue.dto.Jmt">
-		UPDATE JMT SET
-		NAME=#{name},
-		LOCATION=#{location},
-		BODY=#{body},
-		ANONYMOUS=#{anonymous},
-		LOCATIONID=#{locationid}
-		WHERE ID=#{id}
+		update jmt set
+		name=#{name},
+		location=#{location},
+		body=#{body},
+		anonymous=#{anonymous},
+		locationid=#{locationid}
+		where id=#{id}
 	</update>
 
 	<delete id="deleteJmt" parameterType="java.lang.Integer">
-		DELETE FROM JMT WHERE ID=#{id}
+		delete from jmt where id=#{id}
 	</delete>
 </mapper>

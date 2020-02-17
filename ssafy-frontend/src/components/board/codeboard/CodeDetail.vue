@@ -1,14 +1,16 @@
 <template>
 <v-container >
     <v-row>
-		<v-btn v-if="!likeFlag" @click="clickLike" text icon color="#d3d3d3">
-			<v-icon>mdi-thumb-up</v-icon>
-			<h3>{{ count }}</h3>
-		</v-btn>
-		<v-btn v-else @click="clickLike" text icon color="deep-orange">
-			<v-icon>mdi-thumb-up</v-icon>
-			<h3>{{ count }}</h3>
-		</v-btn>
+		<div v-if="this.$store.state.isLogin">
+			<v-btn v-if="!likeFlag" @click="clickLike" text icon color="#d3d3d3">
+				<v-icon>mdi-thumb-up</v-icon>
+				<h3>{{ count }}</h3>
+			</v-btn>
+			<v-btn v-else @click="clickLike" text icon color="deep-orange">
+				<v-icon>mdi-thumb-up</v-icon>
+				<h3>{{ count }}</h3>
+			</v-btn>
+		</div>
         <v-col cols="3">
             제목 : {{code.title}}
         </v-col>
@@ -25,6 +27,7 @@
     <v-row>
         <v-col>
             작성자 : {{code.username}}
+			<sendmessage :username="code.username" :id="code.memberid"/>
         </v-col>
         <v-col>
             언어 : {{this.langchange[code.lang]}}
@@ -43,6 +46,8 @@
 </template>
 
 <script>
+  import sendmessage from '../../message/sendmessage'
+
 	import axios from 'axios'
 	import Comment from '../../comment/Comment'
 	import router from '@/router'
@@ -59,7 +64,7 @@
 
 export default {
     name : 'CodeDetail',
-    components: {codemirror,Comment,boardcomment},
+    components: {codemirror,Comment,boardcomment,sendmessage},
     props :{
       id : {type: String},
       boardname : {type : String}
@@ -130,14 +135,14 @@ export default {
 						.then(response => {
 							console.log(response.data)
 							router.push({
-								path: '/board/codereview/'
+								path: '/board/code/'
 							})
 						})
 				}
 			},
 			recode() {
 				router.push({
-					path: `/board/codereview/${this.id}/edit`
+					path: `/board/code/${this.id}/edit`
 				})
 			}
 		},
