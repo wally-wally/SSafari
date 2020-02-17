@@ -54,6 +54,22 @@ public class MessageController {
 		return new ResponseEntity<List<Message>>(messages, HttpStatus.OK);
 	}
 	
+	@ApiOperation(value = "보낸 메세지 전체 보기", response = List.class)
+	@RequestMapping(value = "/messages/send", method = RequestMethod.GET)
+	public ResponseEntity<List<Message>> getSendMessages(HttpServletRequest rs) throws Exception {
+		logger.info("1-------------getSendMessages-----------------------------" + new Date());
+		int memberid = 0;
+		if(rs.getAttribute("loginMember")!=null) {
+			Member member = (Member) rs.getAttribute("loginMember");
+			memberid = member.getMemberid();
+		}
+		List<Message> messages = messageservice.getSendMessages(memberid);
+		if (messages == null) {
+			return new ResponseEntity(HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<List<Message>>(messages, HttpStatus.OK);
+	}
+	
 	@ApiOperation(value = "메세지 상세 보기", response = List.class)
 	@RequestMapping(value = "/message/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Message> getMessage(@PathVariable int id,HttpServletRequest rs) throws Exception {
@@ -64,6 +80,7 @@ public class MessageController {
 			memberid = member.getMemberid();
 		}
 		Message message = messageservice.getMessage(id);
+		messageservice.readMessage(id); //	//id read 1로 변경
 		if (message == null) {
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
 		}
@@ -79,5 +96,18 @@ public class MessageController {
    		nr.setName("addMessage");
    		nr.setState("succ");
 		return new ResponseEntity<BoolResult>(nr, HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "읽지 않은 메세지 수 출력", response = BoolResult.class)
+	@RequestMapping(value = "/message", method = RequestMethod.GET)
+	public ResponseEntity<Integer> checkUnread(HttpServletRequest rs) throws Exception {
+		logger.info("1-------------checkUnread-----------------------------" + new Date());
+		int memberid = 0;
+		if(rs.getAttribute("loginMember")!=null) {
+			Member member = (Member) rs.getAttribute("loginMember");
+			memberid = member.getMemberid();
+		}
+		int cnt = messageservice.checkUnread(memberid);
+		return new ResponseEntity<Integer>(cnt, HttpStatus.OK);
 	}
 }
