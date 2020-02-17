@@ -3,13 +3,13 @@
 		<div class="team-introduction-title-tag">
 			<span>We are the Team A5</span>
 		</div>
-  		<v-row justify="center">
+  		<div class="profiles">
 			  <ProfileCard data-aos="zoom-in-up" data-aos-once="true" :imgSrc="sy.imgSrc" :name="sy.name" :position="sy.position" :intro="sy.intro" :skills="sy.skills" :gitUrl="sy.gitUrl" :email="sy.email"/>
 			  <ProfileCard data-aos="zoom-in-up" data-aos-once="true" :imgSrc="ah.imgSrc" :name="ah.name" :position="ah.position" :intro="ah.intro" :skills="ah.skills" :gitUrl="ah.gitUrl" :email="ah.email"/>
 			  <ProfileCard data-aos="zoom-in-up" data-aos-once="true" :imgSrc="hj.imgSrc" :name="hj.name" :position="hj.position" :intro="hj.intro" :skills="hj.skills" :gitUrl="hj.gitUrl" :email="hj.email"/>
 			  <ProfileCard data-aos="zoom-in-up" data-aos-once="true" :imgSrc="gh.imgSrc" :name="gh.name" :position="gh.position" :intro="gh.intro" :skills="gh.skills" :gitUrl="gh.gitUrl" :email="gh.email"/>
 		    <ProfileCard data-aos="zoom-in-up" data-aos-once="true" :imgSrc="kr.imgSrc" :name="kr.name" :position="kr.position" :intro="kr.intro" :skills="kr.skills" :gitUrl="kr.gitUrl" :email="kr.email"/>
-      </v-row>
+      </div>
       <v-divider></v-divider>
   		<v-img class="team-intro-image" id="team" aspect-ratio="5.15">
         <div class="team-intro-images">
@@ -82,6 +82,14 @@ export default {
 </script>
 
 <style>
+	.profiles {
+		display: flex;
+		flex-wrap: wrap;
+	  justify-content: center;
+		align-items: center;
+		margin: 15px 0;
+	}
+	
 	.team-introduction-title-tag {
 		font-family: 'Julius Sans One', sans-serif;
 		font-size: 2.5em;

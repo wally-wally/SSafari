@@ -3,6 +3,7 @@ module.exports = {
     "devtool": "source-map"
   },
   "transpileDependencies": [
+    "vue-echarts",
     "vuetify"
   ]
 }
