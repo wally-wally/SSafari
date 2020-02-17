@@ -15,7 +15,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<select id="getMessage" parameterType="java.lang.Integer"
 		resultType="com.ssafy.edu.vue.dto.Message">
-		select id, fromid, toid, title, content, created_at from message where id=#{id}
+		select id, fromid, toid, title, content, created_at from message where toid=#{memberid}
 	</select>
 
 	<insert id="addMessage" parameterType="com.ssafy.edu.vue.dto.Message">

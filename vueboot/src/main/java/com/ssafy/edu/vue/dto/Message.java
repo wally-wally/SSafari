@@ -39,10 +39,10 @@ public class Message implements Serializable {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getFrom() {
+	public int getFromid() {
 		return fromid;
 	}
-	public void setFrom(int fromid) {
+	public void setFromid(int fromid) {
 		this.fromid = fromid;
 	}
 	public int getToid() {
@@ -80,4 +80,5 @@ public class Message implements Serializable {
 		return "Message [id=" + id + ", fromid=" + fromid + ", toid=" + toid + ", title=" + title + ", content=" + content
 				+ ", created_at=" + created_at + "]";
 	}
+	
 }

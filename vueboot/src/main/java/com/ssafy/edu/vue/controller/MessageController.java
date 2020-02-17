@@ -38,7 +38,7 @@ public class MessageController {
 	@Autowired
 	private IMessageService messageservice;
 	
-	@ApiOperation(value = "내 메세지 전체 보기", response = List.class)
+	@ApiOperation(value = "내 받은 메세지 전체 보기", response = List.class)
 	@RequestMapping(value = "/messages", method = RequestMethod.GET)
 	public ResponseEntity<List<Message>> getMessages(HttpServletRequest rs) throws Exception {
 		logger.info("1-------------getMessages-----------------------------" + new Date());
@@ -48,9 +48,7 @@ public class MessageController {
 			memberid = member.getMemberid();
 		}
 		List<Message> messages = messageservice.getMessages(memberid);
-		if (messages == null) {
-			return new ResponseEntity(HttpStatus.NO_CONTENT);
-		}
+
 		return new ResponseEntity<List<Message>>(messages, HttpStatus.OK);
 	}
 	

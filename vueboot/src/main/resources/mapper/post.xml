@@ -216,11 +216,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="deleteBoardCategoryAuth" parameterType="java.lang.Integer">
 		delete from categoryauth where id=#{id}
 	</delete>
+	
 	<select id="getBoardSearch" parameterType="java.lang.String" resultType="com.ssafy.edu.vue.dto.Category">
 		select id, name, explanation, memberid from category where name like #{keyword}
 	</select>
-	
-	
 	
 	<select id="getPostCategory" parameterType="java.lang.Integer" resultType="java.lang.Integer">
 		select categoryid from posts where postid = #{postid}
