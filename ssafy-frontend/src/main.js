@@ -6,6 +6,7 @@ import 'simplemde/dist/simplemde.min.css'
 import 'font-awesome/css/font-awesome.min.css'
 import VueCodemirror from 'vue-codemirror'
 import 'codemirror/lib/codemirror.css'
+import ECharts from 'vue-echarts'
 
 import App from './App.vue'
 import router from './router'
@@ -34,6 +35,8 @@ Vue.use(Vuetify)
 Vue.use(Vueperslides)
 Vue.use(AOS)
 AOS.init()
+
+Vue.component('v-chart', ECharts)
 
 new Vue({
   router,
