@@ -1,0 +1,55 @@
+#create-form-title {
+  padding-bottom: 10px;
+}
+
+#create-form-title > #form-title {
+  font-size: 28px;
+  font-weight: 700;
+  font-family: 'Gothic A1';
+}
+
+.upload-example {
+  padding-top: 15px;
+}
+
+.upload-example > h3 {
+  text-align: center;
+  font-size: 20px;
+}
+
+.upload-example > h3:last-child {
+  font-size: 17px;
+}
+
+
+.upload-example > img[class='upload-img-example'] {
+  width: 60%;
+  margin-left: 20%;
+  margin-right: 20%;
+}
+
+.title-top > .region-checkbox,
+.title-top > .region-checkbox-2 {
+  padding: 0;
+}
+
+.title-top > .region-checkbox .v-input,
+.title-top > .region-checkbox-2 .v-input {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+@media (min-width: 959px) {
+  .upload-example > h3 {
+    font-size: 23px;
+  }
+  
+  .upload-example > h3:last-child {
+    font-size: 20px;
+  }
+
+  .upload-example > img[class='upload-img-example'] {
+    width: 40%;
+    margin: 0 30%;
+  }
+}

@@ -1,19 +1,21 @@
 <template>
-	<div class="">
-		<h2>비밀번호 수정</h2>
-		<v-form ref="form" lazy-validation @submit.prevent="">
-			<label class="label">
-				<v-text-field v-model="password1" :rules="minRules" type="password" label="비밀번호"></v-text-field>
-			</label>
-			<label class="label">
-				<v-text-field v-model="password2" type="password" label="비밀번호 재확인"></v-text-field>
-			</label>
-			<button type="submit" class="submit button" @click="passwordModify">비밀번호 수정</button>
-		</v-form>
-		<v-card-actions>
-			<button type="submit" class="close button" @click="back">뒤로 가기</button>
-		</v-card-actions>
-	</div>
+	<v-container fluid>
+    <v-row>
+      <v-col cols="12">
+        <div class="mb-9">
+          <label class="label" style="width: 60%;">
+						<v-text-field v-model="password1" :rules="minRules" type="password" label="비밀번호"></v-text-field>
+					</label>
+        </div>
+        <div class="mb-12">
+          <label class="label" style="width: 60%;">
+						<v-text-field v-model="password2" type="password" label="비밀번호 재확인"></v-text-field>
+					</label>
+        </div>
+        <button type="submit" class="submit button" @click="passwordModify">비밀번호 수정</button>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
