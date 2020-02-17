@@ -47,6 +47,9 @@ public class MessageController {
 			Member member = (Member) rs.getAttribute("loginMember");
 			memberid = member.getMemberid();
 		}
+		if (memberid == 0) {
+			return new ResponseEntity(HttpStatus.BAD_REQUEST);
+		}
 		List<Message> messages = messageservice.getMessages(memberid);
 
 		return new ResponseEntity<List<Message>>(messages, HttpStatus.OK);
@@ -61,10 +64,10 @@ public class MessageController {
 			Member member = (Member) rs.getAttribute("loginMember");
 			memberid = member.getMemberid();
 		}
-		List<Message> messages = messageservice.getSendMessages(memberid);
-		if (messages == null) {
-			return new ResponseEntity(HttpStatus.NO_CONTENT);
+		if (memberid == 0) {
+			return new ResponseEntity(HttpStatus.BAD_REQUEST);
 		}
+		List<Message> messages = messageservice.getSendMessages(memberid);
 		return new ResponseEntity<List<Message>>(messages, HttpStatus.OK);
 	}
 	
@@ -77,11 +80,11 @@ public class MessageController {
 			Member member = (Member) rs.getAttribute("loginMember");
 			memberid = member.getMemberid();
 		}
+		if (memberid == 0) {
+			return new ResponseEntity(HttpStatus.BAD_REQUEST);
+		}
 		Message message = messageservice.getMessage(id);
 		messageservice.readMessage(id); //	//id read 1로 변경
-		if (message == null) {
-			return new ResponseEntity(HttpStatus.NO_CONTENT);
-		}
 		return new ResponseEntity<Message>(message, HttpStatus.OK);
 	}
 	

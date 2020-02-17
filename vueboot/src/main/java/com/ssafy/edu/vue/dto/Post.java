@@ -111,7 +111,22 @@ public class Post implements Serializable {
 		this.comments = comments;
 	}
 
-
+	public Post(int postid, String title, String body, String created_at, int memberid, String username, int categoryid,
+			String categoryname, int anonymous, int locationid, int likes, int comments) {
+		super();
+		this.postid = postid;
+		this.title = title;
+		this.body = body;
+		this.created_at = created_at;
+		this.memberid = memberid;
+		this.username = username;
+		this.categoryid = categoryid;
+		this.categoryname = categoryname;
+		this.anonymous = anonymous;
+		this.locationid = locationid;
+		this.likes = likes;
+		this.comments = comments;
+	}
 
 	public String getImg() {
 		return img;
