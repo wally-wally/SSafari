@@ -251,7 +251,7 @@
 
                 axios.get('api/posts/page', {params:this.pageData})
                     .then(response => {
-                        console.log(response)
+                        console.log(response, 87684597648957694857645986789)
                         this.boards = response.data
                         this.boardCount = this.boards.length
                     })
