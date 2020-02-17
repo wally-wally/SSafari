@@ -8,12 +8,13 @@
                     <sendmessage :username="comment.anonym ? '익명' : comment.username" :id="comment.memberid"/>
                 <small style="font-size:0.7rem;">( {{comment.wdate}} )</small>
             </v-list-item-title>
-            <v-list-item-subtitle class="mt-2" style="font-size:1rem;" v-if="!this.update">
+            <v-list-item-content class="mt-2" style="white-space: pre-line" v-if="!this.update">
                 {{comment.content}}
-                <v-spacer class="mb-2" />
-                <v-btn small rounded @click="commentupdate()" v-if="comment.memberid==$store.state.memberid">수정</v-btn>
-                <v-btn small rounded @click="commentdelete()" v-if="comment.memberid==$store.state.memberid">삭제</v-btn>
-            </v-list-item-subtitle>
+                <div v-if="comment.memberid==$store.state.memberid" class="mt-2">
+                    <v-btn small rounded @click="commentupdate()">수정</v-btn>
+                    <v-btn small rounded @click="commentdelete()">삭제</v-btn>
+                </div>
+            </v-list-item-content>
             <div v-if="this.update">
                 <form @submit.prevent="commentput()">
                     <textarea class="ma-3" rows="3" style="width:50%" v-model="new_comment"/>

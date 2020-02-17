@@ -53,12 +53,11 @@ export default {
       sendmessage(){
         const chk = confirm('메시지 보내시겠습니까')
         if (chk){
-          console.log(this.message)
-          axios.post('api/message' , this.message)
+          axios.post('api/message' ,this.message )
           .then(response => {
             console.log(response.data)
+            this.modal()
           })
-          this.modal()
         }
       }
     }

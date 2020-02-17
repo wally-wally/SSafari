@@ -41,8 +41,8 @@
           <v-list>
             <v-divider></v-divider>
             <v-list-item>
-              <v-list-item-content>
-                {{ post.body }}
+              <v-list-item-content style="white-space: pre-line">
+                {{post.body}}
               </v-list-item-content>
             </v-list-item>
             <v-divider></v-divider>
