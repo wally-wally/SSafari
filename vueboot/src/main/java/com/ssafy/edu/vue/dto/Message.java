@@ -4,23 +4,34 @@ import java.io.Serializable;
 
 public class Message implements Serializable {
 	private int id;
-	private int from;
-	private int to;
+	private int fromid;
+	private int toid;
 	private String title;
 	private String content;
 	private String created_at;
+	private int read;
 	public Message() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Message(int id, int from, int to, String title, String content, String created_at) {
+	public Message(int id, int fromid, int toid, String title, String content, String created_at) {
 		super();
 		this.id = id;
-		this.from = from;
-		this.to = to;
+		this.fromid = fromid;
+		this.toid = toid;
 		this.title = title;
 		this.content = content;
 		this.created_at = created_at;
+	}
+	public Message(int id, int fromid, int toid, String title, String content, String created_at, int read) {
+		super();
+		this.id = id;
+		this.fromid = fromid;
+		this.toid = toid;
+		this.title = title;
+		this.content = content;
+		this.created_at = created_at;
+		this.read = read;
 	}
 	public int getId() {
 		return id;
@@ -29,16 +40,16 @@ public class Message implements Serializable {
 		this.id = id;
 	}
 	public int getFrom() {
-		return from;
+		return fromid;
 	}
-	public void setFrom(int from) {
-		this.from = from;
+	public void setFrom(int fromid) {
+		this.fromid = fromid;
 	}
-	public int getTo() {
-		return to;
+	public int getToid() {
+		return toid;
 	}
-	public void setTo(int to) {
-		this.to = to;
+	public void setToid(int toid) {
+		this.toid = toid;
 	}
 	public String getTitle() {
 		return title;
@@ -58,9 +69,15 @@ public class Message implements Serializable {
 	public void setCreated_at(String created_at) {
 		this.created_at = created_at;
 	}
+	public int getRead() {
+		return read;
+	}
+	public void setRead(int read) {
+		this.read = read;
+	}
 	@Override
 	public String toString() {
-		return "Message [id=" + id + ", from=" + from + ", to=" + to + ", title=" + title + ", content=" + content
+		return "Message [id=" + id + ", fromid=" + fromid + ", toid=" + toid + ", title=" + title + ", content=" + content
 				+ ", created_at=" + created_at + "]";
 	}
 }
