@@ -5,16 +5,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="ssafy.message">
 	<select id="getMessage" parameterType="java.lang.Integer"
 		resultType="com.ssafy.edu.vue.dto.Message">
-		select id, from, to, title, content, created_at from message where to=#{memberid} order by created_at desc
+		select id, fromid, toid, title, content, created_at from message where toid=#{memberid} order by created_at desc
 	</select>
 
 	<select id="getMessages" parameterType="java.lang.Integer"
 		resultType="com.ssafy.edu.vue.dto.Message">
-		select id, from, to, title, content, created_at from message where id=#{id}
+		select id, fromid, toid, title, content, created_at from message where toid=#{memberid}
 	</select>
 
 	<insert id="addMessage" parameterType="com.ssafy.edu.vue.dto.Message">
-		insert into message(from, to, title, content, created_at)
-		values(#{from}, #{to}, #{title}, #{content}, now())
+		insert into message(fromid, toid, title, content, created_at)
+		values(#{fromid}, #{toid}, #{title}, #{content}, now())
 	</insert>
 </mapper>

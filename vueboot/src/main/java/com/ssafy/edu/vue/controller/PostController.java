@@ -119,18 +119,19 @@ public class PostController {
 //	}
 	
 	@ApiOperation(value = "post 상세 보기", response = List.class)
-	@RequestMapping(value = "/post", method = RequestMethod.GET)
-	public ResponseEntity<Map<String,Object>> getPost(@RequestBody Postinfo postinfo,HttpServletRequest rs) throws Exception {
+	@RequestMapping(value = "/post/{postid}", method = RequestMethod.GET)
+	public ResponseEntity<Map<String,Object>> getPost(@PathVariable int postid,HttpServletRequest rs) throws Exception {
 		logger.info("1-------------getPost-----------------------------" + new Date());
 		Map<String,Object> result = new HashMap();
+		Postinfo postinfo = new Postinfo();
 		int memberid = 0;
 		if(rs.getAttribute("loginMember")!=null) {
 			Member member = (Member) rs.getAttribute("loginMember");
 			memberid = member.getMemberid();
 			postinfo.setMemberid(memberid);
 		}
-		postinfo.setPostid(postinfo.getPostid());
-		postinfo.setCategoryid(postservice.getPostCategory(postinfo.getPostid()));
+		postinfo.setPostid(postid);
+		postinfo.setCategoryid(postservice.getPostCategory(postid));
 		
 		Post post = postservice.getPost(postinfo);	//int -> postinfo
 		result.put("post",post);
@@ -407,17 +408,17 @@ public class PostController {
 		return new ResponseEntity<Boolean>(nextpage, HttpStatus.OK);
 	}
 	
-	@ApiOperation(value = "인기 게시글", response = List.class)
-	@RequestMapping(value = "/popular", method = RequestMethod.GET)
-	public ResponseEntity<Boolean> getPopularPost(HttpServletRequest rs) throws Exception {
-		logger.info("1-------------getPopularPost-----------------------------" + new Date());
-		int memberid = 0;
-		if(rs.getAttribute("loginMember")!=null) {
-			Member member = (Member) rs.getAttribute("loginMember");
-			memberid = member.getMemberid();
-		}
-		boolean nextpage = false;
-		
-		return new ResponseEntity<Boolean>(nextpage, HttpStatus.OK);
-	}
+//	@ApiOperation(value = "인기 게시글", response = List.class)
+//	@RequestMapping(value = "/popular", method = RequestMethod.GET)
+//	public ResponseEntity<Boolean> getPopularPost(HttpServletRequest rs) throws Exception {
+//		logger.info("1-------------getPopularPost-----------------------------" + new Date());
+//		int memberid = 0;
+//		if(rs.getAttribute("loginMember")!=null) {
+//			Member member = (Member) rs.getAttribute("loginMember");
+//			memberid = member.getMemberid();
+//		}
+//		boolean nextpage = false;
+//		
+//		return new ResponseEntity<Boolean>(nextpage, HttpStatus.OK);
+//	}
 }
