@@ -1,0 +1,74 @@
+<template>
+	<v-layout mt-5 row wrap style="margin: 20px;">
+		<h1>보낸 메세지함</h1>
+		<v-flex v-for="i in this.showMessagesCount" :key="i" style="width: 100%;">
+			<!-- col-12 sm6 md3 -->
+			<Message :date="sentMessages[i - 1].created_at" :body="sentMessages[i - 1].body"
+				:from="sentMessages[i - 1].from">
+			</Message>
+		</v-flex>
+		<v-flex xs12 text-xs-center round my-5 v-if="loadMore">
+			<v-btn v-if="this.sentMessages.length > 6 && this.moreMessagesIcon" color="#f7b157" dark v-on:click="loadMoreMessages">
+				<v-icon size="25" class="mr-2">fa-plus</v-icon> 더 보기
+			</v-btn>&nbsp; &nbsp;
+			<v-btn v-if="this.hideMessagesIcon" color="red" dark v-on:click="hideMessage">
+				<v-icon size="25" class="mr-2">fa-minus</v-icon> 숨기기
+			</v-btn>
+		</v-flex>
+	</v-layout>
+</template>
+
+<script>
+	import axios from 'axios'
+	import Message from './Message'
+
+	export default {
+		name: 'MessageSent',
+		components: {
+			Message
+		},
+		data() {
+			return {
+				sentMessages: [],
+				loadMore: false,
+				showMessagesCount: 0,
+				moreMessagesIcon: true,
+				hideMessagesIcon: false,
+			}
+		},
+		mounted() {
+			this.getSentMessages()
+		},
+		methods: {
+			getSentMessages() {
+				axios.get('api/sentMessages', {
+						headers: {
+							'access-token': this.$store.state.token
+						}
+					})
+					.then(response => {
+						console.log(response.data, 123124235237482739847238942734)
+						this.sentMessages = response.data
+						this.showMessagesCount = (this.sentMessages.length >= 6) ? 6 : this.sentMessages.length
+						this.loadMore = (this.sentMessages.length > 6) ? true : false
+					})
+			},
+			loadMoreMessages() {
+				let adjustCount = this.showMessagesCount + 6 < this.sentMessages.length ? this.showMessagesCount + 6 : this.sentMessages.length
+				this.showMessagesCount = adjustCount
+				this.moreMessagesIcon = adjustCount < this.sentMessages.length ? true : false
+				this.hideMessagesIcon = true
+			},
+			hideMessage() {
+				let adjustCount2 = this.showMessagesCount - 6 > 6 ? this.showMessagesCount - 6 : 6
+				this.showMessagesCount = adjustCount2
+				this.hideMessagesIcon = adjustCount2 === 6 ? false : true
+				this.moreMessagesIcon = true
+			}
+		}
+	}
+</script>
+
+<style>
+
+</style>
