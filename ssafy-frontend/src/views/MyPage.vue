@@ -8,6 +8,32 @@
     <v-btn class="red mx-1 my-3" @click="memberDropOut">회원탈퇴</v-btn>
     <h1 v-if="ssafyAuth === 3" class="red">현재 싸피 인증 대기 중입니다.</h1>
     <div class="mypage-title">
+      <h1>프로필</h1>
+      <v-card class="mx-auto" max-width="434" tile>
+        <v-img height="100%" src="https://cdn.vuetifyjs.com/images/cards/server-room.jpg">
+          <v-row align="end" class="fill-height">
+            <v-col align-self="start" class="pa-0" cols="12">
+              <v-avatar class="profile" color="grey" size="164" tile>
+                <v-img :src="this.$store.state.img"></v-img>
+              </v-avatar>
+            </v-col>
+            <v-col class="py-0">
+              <v-list-item color="rgba(0, 0, 0, .4)" dark>
+                <v-list-item-content>
+                  <v-list-item-title class="title">{{currentUsername}}</v-list-item-title>
+                  <v-list-item-subtitle>지역: {{this.$store.state.locations[this.$store.state.locationid]}}
+                  </v-list-item-subtitle>
+                  <v-list-item-subtitle>기수: {{this.$store.state.unit}}</v-list-item-subtitle>
+                </v-list-item-content>
+              </v-list-item>
+            </v-col>
+          </v-row>
+        </v-img>
+      </v-card>
+
+    </div>
+    <v-divider />
+    <div class="mypage-title">
       <h1>내가 좋아한 게시글</h1>
     </div>
     <MyLikeList />
@@ -64,6 +90,7 @@
         token: '',
         social: '',
         ssafyAuth: '',
+        currentUsername: ''
       }
     },
     methods: {
@@ -99,6 +126,7 @@
       }
       // this.social = this.$store.state.social
       this.ssafyAuth = this.$store.state.auth
+      this.currentUsername = this.$store.state.username
     }
   }
 </script>

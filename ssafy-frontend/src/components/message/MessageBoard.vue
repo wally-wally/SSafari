@@ -4,10 +4,10 @@
 			<v-btn @click="changeMessageFlag(true)" class="mx-3">받은 메세지함</v-btn>
 			<v-btn @click="changeMessageFlag(false)">보낸 메세지함</v-btn>
 			<v-container v-if="messageFlag">
-				<MessageList :messageFlag="messageFlag"/>
+				<MessageReceived/>
 			</v-container>
 			<v-container v-else>
-				<MessageList :messageFlag="messageFlag"/>
+				<MessageSent/>
 			</v-container>
 		</div>
 		<div v-else class="mt-10">
@@ -20,12 +20,14 @@
 </template>
 
 <script>
-	import MessageList from './MessageList'
+	import MessageReceived from './MessageReceived'
+	import MessageSent from './MessageSent'
 
 	export default {
 		name: 'MessageBoard',
 		components: {
-			MessageList,
+			MessageReceived,
+			MessageSent
 		},
 		data() {
 			return {
