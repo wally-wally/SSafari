@@ -1,5 +1,5 @@
 <template>
-  <div class="mypage d-flex">
+  <div class="mypage">
     <div class="d-none d-md-block col-md-2 mypage-menu">
 
       <h2>My Page</h2>
@@ -28,14 +28,45 @@
 
       <div class="mypage-description">My Page 설명서</div>
     </div>
-    <div class="col-12 col-md-10 mypage-section">
-      <MemberModify v-if="myPageStatus === 0"/>
-      <PasswordModify v-if="myPageStatus === 1"/>
-      <MakeSsafyAuth v-if="myPageStatus === 2"/>
-      <GithubInfo v-if="myPageStatus === 3" :githubid="githubid"/>
-      <MyBoardList v-if="myPageStatus === 5"/>
-      <MyStudyGroupList v-if="myPageStatus === 6"/>
-      <MyLikeList v-if="myPageStatus === 7"/>
+
+    <div class="d-none d-md-block col-md-10 mypage-section">
+      <MemberModify v-if="smallMenu.indexOf(selectMenuItem) === 0"/>
+      <PasswordModify v-if="smallMenu.indexOf(selectMenuItem) === 1"/>
+      <MakeSsafyAuth v-if="smallMenu.indexOf(selectMenuItem) === 2"/>
+      <GithubInfo v-if="smallMenu.indexOf(selectMenuItem) === 3" :githubid="githubid"/>
+      <MyBoardList v-if="smallMenu.indexOf(selectMenuItem) === 6"/>
+      <MyStudyGroupList v-if="smallMenu.indexOf(selectMenuItem) === 7"/>
+      <MyLikeList v-if="smallMenu.indexOf(selectMenuItem) === 8"/>
+    </div>
+
+    <!-- 태블릿, 모바일 사이즈일 때 mypage menu -->
+    <div class="mypage-menu-small">
+      <div class="d-flex justify-space-between">
+        <div class="mypage-menu-title d-inline">Select Menu</div>
+        <div class="mypage-menu-select d-inline">
+          <v-select
+              class="d-inline"
+              :items="smallMenu"
+              item-text="name"
+              item-value="val"
+              label="Choose Menu"
+              color="#f7b157"
+              hide-details
+              v-model="selectMenuItem"
+              >
+          </v-select>
+        </div>
+      </div>
+    </div>
+
+    <div class="mypage-menu-small-show">
+      <MemberModify v-if="smallMenu.indexOf(selectMenuItem) === 0"/>
+      <PasswordModify v-if="smallMenu.indexOf(selectMenuItem) === 1"/>
+      <MakeSsafyAuth v-if="smallMenu.indexOf(selectMenuItem) === 2"/>
+      <GithubInfo v-if="smallMenu.indexOf(selectMenuItem) === 3" :githubid="githubid"/>
+      <MyBoardList v-if="smallMenu.indexOf(selectMenuItem) === 6"/>
+      <MyStudyGroupList v-if="smallMenu.indexOf(selectMenuItem) === 7"/>
+      <MyLikeList v-if="smallMenu.indexOf(selectMenuItem) === 8"/>
     </div>
   </div>
     <!-- <h1 v-if="ssafyAuth === 2">오 넌 싸피 아이디가 다 있구나!</h1>
@@ -46,55 +77,20 @@
     <v-btn class="red mx-1 my-3" @click="memberDropOut">회원탈퇴</v-btn>
     <h1 v-if="ssafyAuth === 3" class="red">현재 싸피 인증 대기 중입니다.</h1>
     <div class="mypage-title">
-      <h1>프로필</h1>
-      <v-card class="mx-auto" max-width="434" tile>
-        <v-img height="100%" src="https://cdn.vuetifyjs.com/images/cards/server-room.jpg">
-          <v-row align="end" class="fill-height">
-            <v-col align-self="start" class="pa-0" cols="12">
-              <v-avatar class="profile" color="grey" size="164" tile>
-                <v-img :src="this.$store.state.img"></v-img>
-              </v-avatar>
-            </v-col>
-            <v-col class="py-0">
-              <v-list-item color="rgba(0, 0, 0, .4)" dark>
-                <v-list-item-content>
-                  <v-list-item-title class="title">{{currentUsername}}</v-list-item-title>
-                  <v-list-item-subtitle>지역: {{this.$store.state.locations[this.$store.state.locationid]}}
-                  </v-list-item-subtitle>
-                  <v-list-item-subtitle>기수: {{this.$store.state.unit}}</v-list-item-subtitle>
-                </v-list-item-content>
-              </v-list-item>
-            </v-col>
-          </v-row>
-        </v-img>
-      </v-card>
-
+      <h1>MY LIKES</h1>
     </div>
-    <v-divider />
+    <MyLikeList/>
+    <v-divider/>
     <div class="mypage-title">
-      <h1>내가 좋아한 게시글</h1>
+      <h1>MY BOARD</h1>
     </div>
-    <MyLikeList />
-    <v-divider />
+    <MyBoardList/>
+    <v-divider/>
     <div class="mypage-title">
-      <h1>내가 작성한 게시글</h1>
+      <h1>MY STUDY GROUP</h1>
     </div>
-    <MyBoardList />
-    <v-divider />
-    <div>
-      <div class="mypage-title">
-        <h1>스터디 모임</h1>
-        <h3 style="color:#F67280">내가 작성한 스터디 모집 글</h3>
-      </div>
-      <MyStudyGroupList />
-    </div>
-    <div>
-      <div class="mypage-title">
-        <h3 style="color:#F67280">내가 지원한 스터디</h3>
-      </div>
-      <MyStudyParticipated />
-    </div>
-    <v-divider />
+    <MyStudyGroupList/>
+    <v-divider/>
     <div class="mypage-title">
       <h1>{{this.$store.getters.user.githubid}} 's Github</h1>
     </div>
@@ -110,6 +106,7 @@ import MyStudyGroupList from '../components/studygroup/MyStudyGroupList'
 import MyBoardList from '../components/board/MyPageBoard/MyBoardList'
 import MyLikeList from '../components/board/MyPageBoard/MyLikeList.vue'
 import GithubInfo from '../components/github/GithubInfo'
+import '@/assets/css/MyPage.css'
 
 export default {
     name : "MyPage",
@@ -118,7 +115,6 @@ export default {
       PasswordModify,
       MakeSsafyAuth,
       MyStudyGroupList,
-      MyStudyParticipated,
       MyBoardList,
       MyLikeList,
       GithubInfo
@@ -126,29 +122,26 @@ export default {
     data() {
       return {
         showpost: true,
-        showportfolio: true,
-        mydata: Object,
+        showportfolio : true, 
+        mydata : Object,
         githubid: this.$store.getters.user.githubid,
         token: '',
         social: '',
         ssafyAuth: '',
-        myPageStatus: 0,
-        currentUsername: '',
+        myPageStatus: null,
+        smallMenu: ['회원정보 수정', '비밀번호 변경', 'SSAFY 인증', 'github 연동', 'gitlab 연동', '회원탈퇴', '게시판', '스터디 모임', 'Likes'],
+        selectMenuItem: null
       }
     },
     methods: {
       memberDropOut() {
         var confirmation = confirm("회원 탈퇴 하시겠습니까?");
-        if (confirmation) {
+        if(confirmation){
           var data = {
-            memberid: this.$store.state.memberid,
+            memberid : this.$store.state.memberid,
           }
           var token = this.$store.state.token
-          axios.delete(`api/member/${this.$store.state.memberid}`, {
-              headers: {
-                'access-token': token
-              }
-            })
+          axios.delete(`api/member/${this.$store.state.memberid}`, {headers: {'access-token' : token}})
             .then(response => {
               console.log(response)
             })
@@ -164,6 +157,7 @@ export default {
       },
       showMyPageSection(status) {
         this.myPageStatus = status
+        this.selectMenuItem = this.smallMenu[status >= 5 ? status + 1 : status]
         const userEditMenu = document.querySelector('.user-edit')
         const changePasswordMenu = document.querySelector('.change-password')
         const ssafyAuthMenu = document.querySelector('.ssafy-auth')
@@ -194,94 +188,29 @@ export default {
       }
     },
     mounted() {
-      if (this.$store.state.token == null) {
+      if (this.$store.state.token == null){
         this.$router.push('/')
       }
       // this.social = this.$store.state.social
       this.ssafyAuth = this.$store.state.auth
-      this.currentUsername = this.$store.state.username
+    },
+    watch: {
+      selectMenuItem: {
+        handler() {
+          const menuIdx = this.smallMenu.indexOf(this.selectMenuItem)
+          const adjustMenuIdx = menuIdx >= 5 ? menuIdx - 1 : menuIdx
+          if (menuIdx === 5) {
+            this.memberDropOut()
+          } else {
+            this.showMyPageSection(adjustMenuIdx)
+          }
+        }
+      }
     }
-  }
+}
 </script>
 
 <style>
-  .mypage {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    box-sizing: border-box;
-    font-family: 'Sarabun', sans-serif;
-  }
-
-  .mypage .mypage-menu {
-    background-color: #F9F3ED;
-    height: 100%;
-  }
-
-  .mypage-menu h2 {
-    font-family: 'Gothic A1', sans-serif;
-    font-weight: bold;
-    color: #FF8008;
-    text-transform: uppercase;
-    text-align: center;
-    margin-bottom: 25px;
-  }
-
-  .member-management-title,
-  .mypost-title {
-    font-size: 18px;
-    font-weight: bold;
-    padding-left: 14px;
-    padding-bottom: 5px;
-    font-family: 'Noto Sans KR', sans-serif;
-  }
-
-  ul[class='member-management-menu'],
-  ul[class='mypost-menu'] {
-    padding-left: 5px;
-  }
-
-  ul[class='member-management-menu'] > li,
-  ul[class='mypost-menu'] > li {
-    font-family: 'Nanum Gothic', sans-serif;
-    list-style: none;
-    text-decoration: none;
-    padding: 10px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-    border-top: 1px solid rgba(225, 225, 225, 0.05);
-  }
-
-  ul[class='member-management-menu'] > li > .fas,
-  ul[class='member-management-menu'] > li > .fab,
-  ul[class='mypost-menu'] > li > .fas {
-    width: 30px;
-  }
-
-  .separate-section {
-    height: 2px;
-    margin: 20px 0;
-  }
-
-  ul[class='member-management-menu'] > li:hover,
-  ul[class='mypost-menu'] > li:hover {
-    font-weight: 800;
-    background: #FFF7E2;
-    cursor: pointer;
-  }
-
-  .mypage-menu > .mypage-description {
-    font-size: 18px;
-    font-weight: bold;
-    font-family: 'Nanum Gothic', sans-serif;
-    padding-left: 14px;
-    margin-top: 30px;
-  }
-
-  .mypage-menu > .mypage-description:hover {
-    background: #FFF7E2;
-    cursor: pointer;
-  }
-
   /* .mypage-title {
     font-family: 'M PLUS Rounded 1c', sans-serif;
     text-align: center;

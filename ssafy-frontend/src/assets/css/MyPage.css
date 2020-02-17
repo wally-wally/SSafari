@@ -1,0 +1,116 @@
+.mypage {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  box-sizing: border-box;
+  font-family: 'Sarabun', sans-serif;
+}
+
+.mypage .mypage-menu {
+  background-color: #F9F3ED;
+  height: 100%;
+  min-width: 200px;
+
+}
+
+.mypage-menu h2 {
+  font-family: 'Gothic A1', sans-serif;
+  font-weight: bold;
+  color: #FF8008;
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.member-management-title,
+.mypost-title {
+  font-size: 18px;
+  font-weight: bold;
+  padding-left: 14px;
+  padding-bottom: 5px;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+ul[class='member-management-menu'],
+ul[class='mypost-menu'] {
+  padding-left: 5px;
+}
+
+ul[class='member-management-menu'] > li,
+ul[class='mypost-menu'] > li {
+  font-family: 'Nanum Gothic', sans-serif;
+  list-style: none;
+  text-decoration: none;
+  padding: 10px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  border-top: 1px solid rgba(225, 225, 225, 0.05);
+}
+
+ul[class='member-management-menu'] > li > .fas,
+ul[class='member-management-menu'] > li > .fab,
+ul[class='mypost-menu'] > li > .fas {
+  width: 30px;
+}
+
+.separate-section {
+  height: 2px;
+  margin: 20px 0;
+}
+
+ul[class='member-management-menu'] > li:hover,
+ul[class='mypost-menu'] > li:hover {
+  font-weight: 800;
+  background: #FFF7E2;
+  cursor: pointer;
+}
+
+.mypage-menu > .mypage-description {
+  font-size: 18px;
+  font-weight: bold;
+  font-family: 'Nanum Gothic', sans-serif;
+  padding-left: 14px;
+  margin-top: 30px;
+}
+
+.mypage-menu > .mypage-description:hover {
+  background: #FFF7E2;
+  cursor: pointer;
+}
+
+.mypage-menu-small {
+  height: 80px;
+  background-color: #F9F3ED;
+  padding: 5px 20px;
+}
+
+.mypage-menu-select,
+.mypage-menu-title {
+  margin-top: 18px;
+}
+
+.mypage-menu-title {
+  font-size: 21px;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 400;
+  color: #FF8008;
+  text-shadow: 4px 4px 6px lightgray;
+}
+
+@media (min-width: 959px) {
+  .mypage {
+    display: flex;
+  }
+
+  .mypage-menu-small,
+  .mypage-menu-small-show {
+    display: none;
+  }
+}
+
+@media (max-width: 959px) {
+  .mypage,
+  .mypage-menu-small,
+  .mypage-menu-small-show {
+    display: block;
+  }
+}
