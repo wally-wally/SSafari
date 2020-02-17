@@ -44,7 +44,7 @@
                     <td>date</td>
                 </thead>
                 <tbody v-for="board in codeBoard" :key="board.postid">
-                    <tr class="board-table-row" @click="goBoardDetail('free', board.postid)">
+                    <tr class="board-table-row" @click="goBoardDetail('code', board.postid)">
                         <td>{{ board.title }}</td>
                         <td>{{ board.created_at }}</td>
                     </tr>
@@ -61,7 +61,7 @@
                     <td>date</td>
                 </thead>
                 <tbody v-for="board in jmtBoard" :key="board.postid">
-                    <tr class="board-table-row" @click="goBoardDetail('free', board.postid)">
+                    <tr class="board-table-row" @click="goBoardDetail('jmt', board.postid)">
                         <td>{{ board.title }}</td>
                         <td>{{ board.created_at }}</td>
                     </tr>
@@ -146,7 +146,7 @@
                         mainPageBoards.push({
                             'title': bdata.title,
                             'created_at': bdata.created_at.slice(2, 16),
-                            'postid': bdata.postid
+                            'postid': bdata.id
                         })
                     })
                     this.codeBoard = mainPageBoards
@@ -169,9 +169,7 @@
         },
         methods: {
             goBoardDetail(boardType, boardID) {
-                if (boardType === 'free') {
-                    this.$router.push(`/board/${boardType}/${boardID}`)
-                }
+                this.$router.push(`/board/${boardType}/${boardID}`)
             }
         }
     }

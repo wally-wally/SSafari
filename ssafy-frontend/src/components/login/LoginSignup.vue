@@ -160,6 +160,7 @@ export default {
                 this.loginDialog = false
                 this.credentials = {}
                 this.$emit('update');
+                this.$router.go(0)
               }
               else{
                 this.loginfail()
