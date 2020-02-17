@@ -9,6 +9,7 @@
 								<v-avatar class="mr-5 mb-2">
 									<img :src="restaurant.img" alt="X">
 								</v-avatar><span>{{ restaurant.username }}</span>
+								<sendmessage :username="restaurant.username" :id="restaurant.memberid"/>
 							</div>
 							<div>
 								<span class="headline">{{ restaurant.name }}
@@ -59,6 +60,8 @@
 </template>
 
 <script>
+  import sendmessage from '../../message/sendmessage'
+
 	import boardcomment from '@/components/comment/boardcomment.vue'
 	import RestaurantCreateFrom from './RestaurantCreateForm.vue'
 	import axios from 'axios'
@@ -66,7 +69,8 @@
 		name: 'RestaurantDetail',
 		components: {
 			boardcomment,
-			RestaurantCreateFrom
+			RestaurantCreateFrom,
+			sendmessage
 		},
 		props: {
 			id: {

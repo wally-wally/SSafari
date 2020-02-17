@@ -27,6 +27,7 @@
     <v-row>
         <v-col>
             작성자 : {{code.username}}
+			<sendmessage :username="code.username" :id="code.memberid"/>
         </v-col>
         <v-col>
             언어 : {{this.langchange[code.lang]}}
@@ -45,6 +46,8 @@
 </template>
 
 <script>
+  import sendmessage from '../../message/sendmessage'
+
 	import axios from 'axios'
 	import Comment from '../../comment/Comment'
 	import router from '@/router'
@@ -61,7 +64,7 @@
 
 export default {
     name : 'CodeDetail',
-    components: {codemirror,Comment,boardcomment},
+    components: {codemirror,Comment,boardcomment,sendmessage},
     props :{
       id : {type: String},
       boardname : {type : String}

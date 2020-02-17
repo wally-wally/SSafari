@@ -9,6 +9,7 @@
                 <v-avatar class="mr-5 mb-2">
                   <img :src='portfolio.memberimg' alt="X">
                 </v-avatar><span>{{ portfolio.username}}</span>
+                <sendmessage :username="portfolio.username" :id="portfolio.memberid" />
               </div>
               <div>
                 <span class="headline">{{ portfolio.title }} <h6>{{ portfolio.created_at }} </h6>
@@ -37,6 +38,8 @@
                   <v-list v-for="applicant in applicants" :key="applicant.id">
                     <v-list-item-content>
                       <h3>{{ applicant.username }}</h3>
+                      <sendmessage :username="applicants.username" :id="applicant.memberid" />
+
                     </v-list-item-content>
                   </v-list>
                 </div>
@@ -64,12 +67,14 @@
 <script>
   import axios from 'axios'
   import boardcomment from '@/components/comment/boardcomment.vue'
+  import sendmessage from '../message/sendmessage'
   import router from '@/router.js'
 
   export default {
     name: "PortfolioDetail",
     components: {
-      boardcomment
+      boardcomment,
+      sendmessage
     },
     data() {
       return {

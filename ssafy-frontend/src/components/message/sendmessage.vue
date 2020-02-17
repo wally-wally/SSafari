@@ -1,19 +1,28 @@
 <template>
-    <v-card class="cont">
-      <div class="form">
-        <h2>메세지</h2>
-        <br>
-        {{comment.username}} 에게
-          <v-form @submit.prevent="sendmessage()">
-            <v-text-field v-model="message.title" label="제목" required></v-text-field>
-            <v-textarea v-model="message.content" label="내용"  required/>
-            <button type="submit" class="submit button">메세지</button>
-          </v-form>
-        <v-card-actions>
-          <button type="submit" class="close button" @click="close">닫기</button>
-        </v-card-actions>
-    </div>
-  </v-card>
+  <v-div v-if="this.$store.state.isLogin && this.id !== this.$store.state.memberid" >
+    <v-div @click="modal">
+      <i class="messageicon mx-2 far fa-envelope"></i>
+    </v-div>
+    <v-dialog max-width="600px" v-if="send" v-model="send">
+      <v-card class="messagecont pa-3">
+        <v-div class="messageform">
+          <h2>메세지</h2>
+          <br>
+          <div class="mb-4">
+          {{username}} 에게
+          </div> 
+            <v-form @submit.prevent="sendmessage()">
+              <v-text-field v-model="message.title" label="제목" required></v-text-field>
+              <v-textarea v-model="message.content" label="내용"  required/>
+              <button type="submit" class="submit button">메세지</button>
+            </v-form>
+          <v-card-actions>
+            <button type="submit" class="close button" @click="modal">닫기</button>
+          </v-card-actions>
+        </v-div>
+      </v-card>
+    </v-dialog>
+</v-div>
 </template>
 
 <script>
@@ -21,19 +30,26 @@ import axios from 'axios'
 export default {
     name : 'sendmessage',
     props : {
-      comment : {type : Object}
+      id : {type : String},
+      username : {type : String},
     },
     data() {
         return {
-          message : {
+          send : false,
+          message : { 
             title : '',
             content : '',
-            toid : this.comment.memberid,
+            toid : this.id,
             fromid : this.$store.state.memberid
           }
         }
     },
     methods : {
+      modal() {
+            this.send = !this.send  
+            this.message.title = ''
+            this.message.content = ''
+        },
       sendmessage(){
         const chk = confirm('메시지 보내시겠습니까')
         if (chk){
@@ -42,36 +58,22 @@ export default {
           .then(response => {
             console.log(response.data)
           })
-          this.close()
+          this.modal()
         }
-      },
-      close() {
-        this.$emit('close')
-      }
-    },
-    mounted(){
-      if (this.comment.anonym) {
-        this.comment.username = "익명"
       }
     }
 }
 </script>
 
-<style>
+<style scoped> 
 
-
-body {
-  font-family: 'Open Sans', Helvetica, Arial, sans-serif;
-  background: #ededed;
+*, *:before, *:after {
+  margin: 0;
+  padding: 0;
 }
 
-.cont {
-  overflow: hidden;
-  position: relative;
-  width: 900px;
-  height: 550px;
-  margin: auto;
-  background: #fff;
+.messageicon:hover {
+  cursor:pointer;
 }
 
 </style>

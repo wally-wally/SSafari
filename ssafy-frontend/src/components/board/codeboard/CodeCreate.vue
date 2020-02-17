@@ -19,7 +19,7 @@
       <v-text-field col-8 v-model="title"></v-text-field>
     </v-col>
   </v-row>
-  <textarea style="border:1px solid black" v-model="body" id="" cols="100%" rows="10"></textarea>
+  <v-textarea v-model="body" id="" cols="80%" rows="5"></v-textarea>
   <codemirror ref="myCm"
               :value="code"
               :options="cmOptions"
