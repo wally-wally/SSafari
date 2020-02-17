@@ -66,6 +66,13 @@
   overflow: hidden;
 }
 
+.github-repository-wrapper > .no-repos-alert {
+  font-size: 25px;
+  font-weight: 600;
+  font-size: 'Noto Sans KR';
+  padding-top: 10px;
+}
+
 .github-profile-img {
   float: left;
 }

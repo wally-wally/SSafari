@@ -42,7 +42,8 @@
 				<div class="github-info-repository-title">{{ githubid }}'s Repository</div>
 				<v-divider color="#424242"></v-divider>
 				<div class="github-repository-wrapper">
-					<div class="github-repository" v-for="i in githubReposInfo.length" :key="i">
+					<div v-if="githubReposInfo.length === 0" class="no-repos-alert">No Repository</div>
+					<div v-else class="github-repository" v-for="i in githubReposInfo.length" :key="i">
 						<div class="github-repos-header">
 							<div @click="goRepos(githubReposInfo[i - 1].name)">{{ githubReposInfo[i - 1].name }}</div>
 							<div><i class="fas fa-star"></i>{{ githubReposInfo[i - 1].starCount }}</div>
@@ -107,13 +108,14 @@ export default {
 		axios.get(`https://api.github.com/users/${this.githubid}`) // ${this.$store.getters.githubid}
 			.then(response => {
 				const githubData = response.data
+				console.log(githubData)
 				this.profileImgUrl = githubData['avatar_url']
 				this.githubInformation = {
 					githubID: this.githubid, // this.$store.getters.githubid
 					name: githubData.name,
-					company: githubData.company in ['', null] ? 'No company' : githubData.company,
-					blog: githubData.blog in ['', null] ? 'No blog' : githubData.blog,
-					location: githubData.location in ['', null] ? 'No location' : githubData.location,
+					company: githubData.company === null ? 'No company' : githubData.company,
+					blog: githubData.blog === '' ? 'No blog' : githubData.blog,
+					location: githubData.location === null ? 'No location' : githubData.location,
 					publicReposCount: githubData['public_repos'],
 					followers: githubData.followers,
 					following: githubData.following
@@ -126,6 +128,8 @@ export default {
 		axios.get(`https://api.github.com/users/${this.githubid}/repos`)
 			.then(response => {
 				const githubReposData = response.data
+				console.log('------------')
+				console.log(githubReposData)
 				githubReposData.forEach(function(data) {
 					let repoInfo = {
 						'name': data.name,
@@ -228,7 +232,7 @@ export default {
 			}
 		},
 		goBlog(url) {
-			if (url !== 'No Blog') {
+			if (url !== 'No blog') {
 				window.open(`https://${url}`)
 			} else {
 				alert('github에 Blog 정보를 입력하지 않았습니다.')
