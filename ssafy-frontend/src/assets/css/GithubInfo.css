@@ -104,6 +104,11 @@
   line-height: 60px;
 }
 
+.github-name > p:last-child > span:hover {
+  cursor: pointer;
+  color: #ff8008;
+}
+
 .github-info-summary {
   clear: both;
   margin-top: 350px;
@@ -114,6 +119,7 @@
 
 .github-info-summary p {
   font-size: 27px;
+  padding-bottom: 10px;
 }
 
 .github-info-summary > .github-info-summary-company {
@@ -231,6 +237,13 @@
 
 /* 태블릿, 모바일 사이즈일 때 */
 @media (max-width: 959px) {
+  .github-name > p:last-child {
+    position: relative;
+    width: 600px;
+    left: 50%;
+    margin-left: -300px;
+  }
+
   .github-repos-contents {
     display: block;
   }

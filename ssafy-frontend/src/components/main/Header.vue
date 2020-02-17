@@ -37,7 +37,7 @@
 
       <v-list-item class="pb-3">
         <v-list-item-content>
-          <v-list-item-title v-if="isLogin">Welcome, Guest</v-list-item-title>
+          <v-list-item-title v-if="!isLogin">Welcome, Guest</v-list-item-title>
           <v-list-item-title v-else>Welcome, {{$store.state.username}}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
