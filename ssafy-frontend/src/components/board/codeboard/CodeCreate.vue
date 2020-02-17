@@ -129,7 +129,7 @@ export default {
         axios.put(`/api/code`,data)
         .then(response =>{
         console.log(response)
-        router.push({ path: `/board/codereview/${this.id}` })
+        router.push({ path: `/board/code/${this.id}` })
         }).catch(error => {
           console.log(error)
         })
