@@ -22,6 +22,12 @@ public class MessageServiceImpl implements IMessageService {
 
 	@Override
 	@Transactional(readOnly=true)
+	public List<Message> getSendMessages(int memberid) {
+		return messagedao.getSendMessages(memberid);
+	}
+
+	@Override
+	@Transactional(readOnly=true)
 	public Message getMessage(int id) {
 		return messagedao.getMessage(id);
 	}
@@ -31,4 +37,17 @@ public class MessageServiceImpl implements IMessageService {
 	public void addMessage(Message message) {
 		messagedao.addMessage(message);
 	}
+
+	@Override
+	@Transactional
+	public void readMessage(int id) {
+		messagedao.readMessage(id);
+	}
+
+	@Override
+	@Transactional(readOnly=true)
+	public int checkUnread(int memberid) {
+		return messagedao.checkUnread(memberid);
+	}
+
 }
