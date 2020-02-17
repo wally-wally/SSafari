@@ -1,0 +1,280 @@
+/* github header 부분 */
+.github * {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.github-nav ul {
+  display: flex;
+  height: 58px;
+  padding: 0;
+  border-bottom: 1px solid #f7b157;
+}
+
+.github-nav ul li {
+  flex: 1;
+}
+
+.github-nav ul li:hover {
+  cursor: pointer;
+}
+
+.github-nav ul li:first-child span {
+  border-left: 1px solid #ddd;
+}
+
+.github-nav ul li span {
+  display: block;
+  height: 59px;
+  border: 1px solid #ddd;
+  border-left: none;
+  border-bottom: none;
+  font-size: 18px;
+  font-weight: 700;
+  font-family: 'Chivo', sans-serif;
+  color: #505050;
+  text-align: center;
+  line-height: 59px;
+  text-decoration: none;
+}
+
+.github-nav ul li span.on {
+  position: relatvie;
+  height: 58px;
+  border-color: #f7b157;
+  border-top-width: 2px;
+  line-height: 57px;
+  border-bottom: 1px solid #fff;
+}
+
+.github-nav ul li span.on::before {
+  content: '';
+  position: absolute;
+  left: -1px;
+  top: -2px;
+  width: 1px;
+  height: 100%;
+  background: #ffc837;
+  border-top: 2px solid #f7b157;
+}
+
+
+/* github info 부분 */
+.github-info-wrapper {
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.github-repository-wrapper > .no-repos-alert {
+  font-size: 25px;
+  font-weight: 600;
+  font-size: 'Noto Sans KR';
+  padding-top: 10px;
+}
+
+.github-profile-img {
+  float: left;
+}
+
+.github-profile-img > img[id='img-1'] {
+  vertical-align: bottom;
+  min-width: 300px;
+  max-width: 300px;
+}
+
+.github-name {
+  float: left;
+  padding-left: 30px;
+  padding-top: 110px;
+}
+
+.github-name > p {
+  font-family: 'Quicksand', sans-serif;
+}
+
+.github-name > p:first-child {
+  font-size: 60px;
+  font-weight: 700;
+  line-height: 70px;
+}
+
+.github-name > p:last-child {
+  font-size: 30px;
+  line-height: 60px;
+}
+
+.github-info-summary {
+  clear: both;
+  margin-top: 350px;
+  border-top: 2px solid lightgray;
+  padding-top: 50px;
+  display: flex;
+}
+
+.github-info-summary p {
+  font-size: 27px;
+}
+
+.github-info-summary > .github-info-summary-company {
+  padding-right: 100px;
+}
+
+.github-info-summary > .github-info-summary-company > p:nth-child(2) span:hover {
+  cursor: pointer;
+  color: #ff8008;
+}
+
+
+/* github repository info 부분 */
+.github-info-repository-title {
+  font-size: 37px;
+  font-weight: bold;
+  font-family: 'Quicksand';
+  text-shadow: 2px 2px 5px lightgray;
+  padding-bottom: 25px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+  white-space: pre;
+}
+
+.github-repository-wrapper {
+  padding-top: 5px;
+}
+
+.github-repository {
+  margin: 20px 0;
+}
+
+.github-repos-header,
+.github-repos-contents {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.github-repos-header > div:first-child {
+  font-size: 30px;
+  font-weight: 750;
+  font-size: 'Noto Sans KR';
+  padding-bottom: 6px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+  white-space: pre;
+}
+
+.github-repos-header > div:first-child:hover {
+  cursor: pointer;
+  color: #ff8008;
+}
+
+.github-repos-header > div:last-child {
+  font-size: 20px;
+  color: #f5b81e;
+  padding-top: 11px;
+  min-width: 33.5px;
+}
+
+.github-repos-contents-1 {
+  min-width: 280px;
+}
+
+.github-repos-contents-1 > div {
+  margin-bottom: 20px;
+}
+
+.github-repos-contents-description > .description-title,
+.github-repos-contents-clone > .clone-title {
+  font-size: 24px;
+  font-weight: 600;
+  padding-bottom: 4px;
+}
+
+.github-repos-contents-description > div:nth-child(2) {
+  font-size: 20px;
+}
+
+.github-repos-contents-clone > .clone-url {
+  font-size: 19px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+  white-space: pre;
+}
+
+.github-repos-contents-clone > .clone-title > .clone-button {
+  padding-left: 10px;
+}
+
+.github-repos-contents-clone > .clone-title > .clone-button:hover {
+  color: #fd9636;
+  cursor: pointer;
+}
+
+.github-repos-contents-2 > .no-chart-alert {
+  font-size: 25px;
+  font-family: 'Noto Sans KR';
+  font-weight: 600;
+}
+
+@media (min-width: 959px) {
+  .github-profile-img {
+    display: block;
+  }
+
+  .github-profile-img2 {
+    display: none;
+  }
+}
+
+/* 태블릿, 모바일 사이즈일 때 */
+@media (max-width: 959px) {
+  .github-repos-contents {
+    display: block;
+  }
+
+  .github-profile-img {
+    display: none;
+  }
+
+  .github-profile-img2 {
+    display: block;
+  }
+
+  .github-info-wrapper > .github-name {
+    padding: 0;
+    clear: both;
+    display: inline-block;
+    width: 100%;
+  }
+
+  .github-name > p {
+    text-align: center;
+  }
+
+  .github-name > p:first-child {
+    font-size: 44px;
+    margin-bottom: 6px;
+  }
+
+  .github-name > p:last-child {
+    font-size: 23px;
+  }
+
+  .github-info-summary {
+    padding-top: 25px;
+    margin-top: 0;
+    display: block;
+  }
+
+  .github-info-summary > .github-info-summary-company {
+    padding-bottom: 15px;
+    padding-right: 0px;
+  }
+
+  .github-info-summary p {
+    font-size: 21px;
+  }
+}

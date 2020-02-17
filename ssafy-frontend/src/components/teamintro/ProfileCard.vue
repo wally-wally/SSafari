@@ -1,9 +1,75 @@
 <template>
-    <v-card
+  <div class="profile-body">
+    <!-- 데스크탑, 태블릿 사이즈일 때 -->
+    <div class="profile-box">
+      <div class="profile-img-box">
+        <img :src="imgSrc">
+      </div>
+      <div class="profile-content">
+        <h3>{{ name }}</h3>
+        <div class="profile-content-detail">
+          <div class="my-3 black--text">{{ position }}</div>
+          <v-divider></v-divider>
+          <div class="profile-intro">{{ intro }}</div>
+          <div class="profile-skills-title">Main Skills</div>
+          <div class="profile-skill-tag">
+            <v-chip v-for="i in this.skills.length" :key="i" :color="fontColor[skills[i - 1]]">{{ skills[i - 1] }}</v-chip>
+          </div>
+          <div class="sns-button">
+            <a class="btn" :href="`${gitUrl}`" target="_blank">
+              <i class="fab fa-github"></i>
+            </a>
+            <a class="btn" :href="`mailto:${email}`">
+              <i class="fas fa-envelope-square"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 모바일 사이즈일 때 hover 효과 적용이 어려우므로 다른 레이아웃 구성 -->
+    <div class="mobile-profile-box">
+      <v-card
+        class="mx-auto"
+        max-width="300"
+      >
+        <v-img
+          class="white--text align-end"
+          height="400px"
+          :src="imgSrc"
+        >
+          <v-card-title><strong>{{ name }}</strong></v-card-title>
+        </v-img>
+
+        <v-card-subtitle class="pb-2">{{ position }}</v-card-subtitle>
+
+        <v-card-text class="text--primary">
+          <div>{{ intro }}</div>
+        </v-card-text>
+
+        <v-card-actions>
+          <v-btn
+            color="orange"
+            text
+          >
+            Github
+          </v-btn>
+
+          <v-btn
+            color="orange"
+            text
+          >
+            E-mail
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </div>
+  </div> 
+
+  <!-- <v-card
     :loading="loading"
     class="mx-auto my-12 profile-card"
-    max-width="300"
-  >
+    max-width="300">
     <v-img
       height="250"
       :src="imgSrc"
@@ -38,10 +104,11 @@
       </a>
     </div>
     </v-card-actions>
-  </v-card>
+  </v-card> -->
 </template>
 
 <script>
+import '@/assets/css/ProfileCard.css'
 export default {
 	name: 'ProfileCard',
 	data() {
@@ -58,95 +125,13 @@ export default {
 		}
 	},
 	props: {
-		imgSrc: { type: String},
+		imgSrc: { type: String },
 		name: { type: String },
-		position: { type: String},
-		intro: { type: String},
-		skills: { type: Array},
-    gitUrl: { type: String},
-    email: { type: String}
+		position: { type: String },
+		intro: { type: String },
+		skills: { type: Array },
+    gitUrl: { type: String },
+    email: { type: String }
 	}
 }
 </script>
-
-<style>
-  .profile-name {
-    padding-top: 5px;
-    font-size: 1.2em;
-  }
-
-  .profile-card:hover {
-    box-shadow: 3px 3px 5px lightsalmon;
-  }
-
-  .skills {
-    margin-bottom: 90px;
-  }
-
-  .sns-button {
-    position: absolute;
-    top: 91%;
-    transform: translateY(-50%);
-    width: 100%;
-    text-align: center;
-  }
-
-  .btn {
-    display: inline-block;
-    width: 80px;
-    height: 80px;
-    background: #f1f1f1;
-    margin: 10px;
-    border-radius: 30%;
-    box-shadow: 0 5px 15px -15px #00000070;
-    color: #f7b157;
-    overflow: hidden;
-    position: relative;
-  }
-
-  .btn i {
-    line-height: 80px;
-    font-size: 26px;
-    transition: 0.2s linear;
-    color: #f7b157;
-  }
-
-  .btn:hover i{
-    transform: scale(1.3);
-    color: #f1f1f1;
-  }
-
-  .btn::before{
-    content: "";
-    position: absolute;
-    width: 120%;
-    height: 120%;
-    background: #f7b157;
-    transform: rotate(45deg);
-    left: -110%;
-    top: 90%;
-  }
-
-  .btn:hover::before {
-    animation: rint 0.7s 1;
-    top: -10%;
-    left: -10%;
-  }
-
-  @keyframes rint {
-    0% {
-      left: -110%;
-      top: 90%;
-    }
-
-    50% {
-      left: 10%;
-      top: -30%;
-    }
-
-    100% {
-      left: -10%;
-      top: -10%;
-    }
-  }
-</style>
