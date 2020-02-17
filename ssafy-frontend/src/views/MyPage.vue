@@ -30,9 +30,33 @@
     </div>
 
     <div class="d-none d-md-block col-md-10 mypage-section">
+      <div v-if="selectMenuItem === -1">
+        <v-card class="mx-auto" max-width="434" tile>
+          <v-img height="100%" src="https://cdn.vuetifyjs.com/images/cards/server-room.jpg">
+            <v-row align="end" class="fill-height">
+              <v-col align-self="start" class="pa-0" cols="12">
+                <v-avatar class="profile" color="grey" size="164" tile>
+                  <v-img :src="this.$store.state.img"></v-img>
+                </v-avatar>
+              </v-col>
+              <v-col class="py-0">
+                <v-list-item color="rgba(0, 0, 0, .4)" dark>
+                  <v-list-item-content>
+                    <v-list-item-title class="title">{{currentUsername}}</v-list-item-title>
+                    <v-list-item-subtitle>지역: {{this.$store.state.locations[this.$store.state.locationid]}}
+                    </v-list-item-subtitle>
+                    <v-list-item-subtitle>기수: {{this.$store.state.unit}}</v-list-item-subtitle>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-col>
+            </v-row>
+          </v-img>
+        </v-card>
+      </div>
       <MemberModify v-if="smallMenu.indexOf(selectMenuItem) === 0"/>
       <PasswordModify v-if="smallMenu.indexOf(selectMenuItem) === 1"/>
-      <MakeSsafyAuth v-if="smallMenu.indexOf(selectMenuItem) === 2"/>
+      <MakeSsafyAuth v-if="smallMenu.indexOf(selectMenuItem) === 2 && this.ssafyAuth === 1"/>
+      <SsafyAuth v-if="smallMenu.indexOf(selectMenuItem) === 2 && this.ssafyAuth === 4"/>
       <GithubInfo v-if="smallMenu.indexOf(selectMenuItem) === 3" :githubid="githubid"/>
       <MyBoardList v-if="smallMenu.indexOf(selectMenuItem) === 6"/>
       <MyStudyGroupList v-if="smallMenu.indexOf(selectMenuItem) === 7"/>
@@ -60,9 +84,33 @@
     </div>
 
     <div class="mypage-menu-small-show">
+      <div v-if="selectMenuItem === -1">
+        <v-card class="mx-auto" max-width="434" tile>
+          <v-img height="100%" src="https://cdn.vuetifyjs.com/images/cards/server-room.jpg">
+            <v-row align="end" class="fill-height">
+              <v-col align-self="start" class="pa-0" cols="12">
+                <v-avatar class="profile" color="grey" size="164" tile>
+                  <v-img :src="this.$store.state.img"></v-img>
+                </v-avatar>
+              </v-col>
+              <v-col class="py-0">
+                <v-list-item color="rgba(0, 0, 0, .4)" dark>
+                  <v-list-item-content>
+                    <v-list-item-title class="title">{{currentUsername}}</v-list-item-title>
+                    <v-list-item-subtitle>지역: {{this.$store.state.locations[this.$store.state.locationid]}}
+                    </v-list-item-subtitle>
+                    <v-list-item-subtitle>기수: {{this.$store.state.unit}}</v-list-item-subtitle>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-col>
+            </v-row>
+          </v-img>
+        </v-card>
+      </div>
       <MemberModify v-if="smallMenu.indexOf(selectMenuItem) === 0"/>
       <PasswordModify v-if="smallMenu.indexOf(selectMenuItem) === 1"/>
-      <MakeSsafyAuth v-if="smallMenu.indexOf(selectMenuItem) === 2"/>
+      <MakeSsafyAuth v-if="smallMenu.indexOf(selectMenuItem) === 2 && this.ssafyAuth === 1"/>
+      <SsafyAuth v-if="smallMenu.indexOf(selectMenuItem) === 2 && this.ssafyAuth === 4"/>
       <GithubInfo v-if="smallMenu.indexOf(selectMenuItem) === 3" :githubid="githubid"/>
       <MyBoardList v-if="smallMenu.indexOf(selectMenuItem) === 6"/>
       <MyStudyGroupList v-if="smallMenu.indexOf(selectMenuItem) === 7"/>
@@ -102,6 +150,7 @@ import axios from 'axios'
 import MemberModify from '../components/login/MemberModify'
 import PasswordModify from '../components/login/PasswordModify'
 import MakeSsafyAuth from '../components/login/MakeSsafyAuth'
+import SsafyAuth from '../components/login/SsafyAuth'
 import MyStudyGroupList from '../components/studygroup/MyStudyGroupList'
 import MyBoardList from '../components/board/MyPageBoard/MyBoardList'
 import MyLikeList from '../components/board/MyPageBoard/MyLikeList.vue'
@@ -115,6 +164,7 @@ export default {
       MemberModify,
       PasswordModify,
       MakeSsafyAuth,
+      SsafyAuth,
       MyStudyGroupList,
       MyBoardList,
       MyLikeList,
@@ -131,7 +181,7 @@ export default {
         ssafyAuth: '',
         myPageStatus: null,
         smallMenu: ['회원정보 수정', '비밀번호 변경', 'SSAFY 인증', 'github 연동', 'gitlab 연동', '회원탈퇴', '게시판', '스터디 모임', 'Likes'],
-        selectMenuItem: null
+        selectMenuItem: -1
       }
     },
     methods: {
