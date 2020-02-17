@@ -1,11 +1,11 @@
 <template>
-  <v-div v-if="this.$store.state.isLogin && this.id !== this.$store.state.memberid" >
-    <v-div @click="modal">
+  <div v-if="this.$store.state.isLogin && this.id !== this.$store.state.memberid" >
+    <div @click="modal">
       <i class="messageicon mx-2 far fa-envelope"></i>
-    </v-div>
+    </div>
     <v-dialog max-width="600px" v-if="send" v-model="send">
       <v-card class="messagecont pa-3">
-        <v-div class="messageform">
+        <div class="messageform">
           <h2>메세지</h2>
           <br>
           <div class="mb-4">
@@ -19,10 +19,10 @@
           <v-card-actions>
             <button type="submit" class="close button" @click="modal">닫기</button>
           </v-card-actions>
-        </v-div>
+        </div>
       </v-card>
     </v-dialog>
-</v-div>
+</div>
 </template>
 
 <script>
@@ -30,7 +30,7 @@ import axios from 'axios'
 export default {
     name : 'sendmessage',
     props : {
-      id : {type : String},
+      id : {type : Number},
       username : {type : String},
     },
     data() {
