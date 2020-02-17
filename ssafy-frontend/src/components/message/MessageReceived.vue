@@ -3,8 +3,13 @@
 		<h1>받은 메세지함</h1>
 		<v-flex v-for="i in this.showMessagesCount" :key="i" style="width: 100%;">
 			<!-- col-12 sm6 md3 -->
-			<Message :date="receivedMessages[i - 1].created_at" :body="receivedMessages[i - 1].body"
-				:from="receivedMessages[i - 1].from">
+			<Message :date="receivedMessages[i - 1].created_at" 
+                :title="receivedMessages[i - 1].title"
+                :content="receivedMessages[i - 1].content"
+				:opponent="receivedMessages[i - 1].username"
+                :opponentId="receivedMessages[i - 1].fromid"
+                :id="receivedMessages[i - 1].id"
+                :read="receivedMessages[i - 1].isread">
 			</Message>
 		</v-flex>
 		<v-flex xs12 text-xs-center round my-5 v-if="loadMore">

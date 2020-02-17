@@ -3,8 +3,13 @@
 		<h1>보낸 메세지함</h1>
 		<v-flex v-for="i in this.showMessagesCount" :key="i" style="width: 100%;">
 			<!-- col-12 sm6 md3 -->
-			<Message :date="sentMessages[i - 1].created_at" :body="sentMessages[i - 1].body"
-				:from="sentMessages[i - 1].from">
+			<Message :date="sentMessages[i - 1].created_at" 
+                :title="sentMessages[i - 1].title"
+                :content="sentMessages[i - 1].content"
+				:opponent="sentMessages[i - 1].username"
+                :opponentId="sentMessages[i - 1].toid"
+				:id="sentMessages[i - 1].id"
+				:read="sentMessages[i - 1].isread">
 			</Message>
 		</v-flex>
 		<v-flex xs12 text-xs-center round my-5 v-if="loadMore">
@@ -41,13 +46,12 @@
 		},
 		methods: {
 			getSentMessages() {
-				axios.get('api/sentMessages', {
+				axios.get('api/messages/send', {
 						headers: {
 							'access-token': this.$store.state.token
 						}
 					})
 					.then(response => {
-						console.log(response.data, 123124235237482739847238942734)
 						this.sentMessages = response.data
 						this.showMessagesCount = (this.sentMessages.length >= 6) ? 6 : this.sentMessages.length
 						this.loadMore = (this.sentMessages.length > 6) ? true : false

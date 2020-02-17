@@ -38,7 +38,7 @@
                   <v-list v-for="applicant in applicants" :key="applicant.id">
                     <v-list-item-content>
                       <h3>{{ applicant.username }}</h3>
-                      <sendmessage :username="applicants.username" :id="applicant.memberid" />
+                      <sendmessage :username="applicant.username" :id="applicant.memberid" />
 
                     </v-list-item-content>
                   </v-list>
