@@ -16,7 +16,7 @@
                 </div>
                 <div class="code-post-count">{{ codes.length }}</div>
             </div>
-            <router-link to="create"><v-btn class="mb-3" color="primary">코드 작성</v-btn></router-link>
+            <router-link v-if="this.$store.state.isLogin" to="create"><v-btn class="mb-3" color="primary">코드 작성</v-btn></router-link>
             <v-layout>
                 <v-flex>
                       <div v-for="code in codes" :key="code.id">

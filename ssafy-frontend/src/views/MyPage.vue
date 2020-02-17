@@ -110,7 +110,7 @@ import MyStudyGroupList from '../components/studygroup/MyStudyGroupList'
 import MyBoardList from '../components/board/MyPageBoard/MyBoardList'
 import MyLikeList from '../components/board/MyPageBoard/MyLikeList.vue'
 import GithubInfo from '../components/github/GithubInfo'
-
+import MyStudyParticipated from '../components/studygroup/MyStudyParticipated'
 export default {
     name : "MyPage",
     components : {
