@@ -53,9 +53,7 @@ public class CodeController {
 			memberid = member.getMemberid();
 		}
 		List<Code> codes = codeservice.getCodes(memberid);
-		if (codes == null) {
-			return new ResponseEntity(HttpStatus.NO_CONTENT);
-		}
+
 		return new ResponseEntity<List<Code>>(codes, HttpStatus.OK);
 	}
 	

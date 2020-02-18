@@ -231,4 +231,70 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select categoryid from posts where postid = #{postid}
 	</select>
 	
+	<select id="getPopularComment" parameterType="com.ssafy.edu.vue.dto.Popular" resultType="com.ssafy.edu.vue.dto.Post">
+		<choose>
+			<when test="categoryid==3">
+			select c.id postid, c.title, c.body body, (3) as categoryid, r.name categoryname, c.memberid, m.username ,c.anonymous, c.created_at, null locationid,
+        	(select count(*) from likepost where categoryid=3 and postid=c.id) likes,
+			(select count(*) from commentpost where categoryid=3 and postid=c.id) comments
+			from codereview c, category r, members m
+			where r.id=3 and c.memberid=m.memberid and created_at>=#{format}
+			order by comments desc, created_at desc limit 3
+			</when>
+			
+			<when test="categoryid==4">
+			select j.id postid, j.name title, j.name body, (4) as categoryid, r.name categoryname, j.memberid, m.username, j.anonymous, j.created_at, j.locationid,
+			(select count(*) from likepost where categoryid=4 and postid=j.id) likes,
+			(select count(*) from commentpost where categoryid=4 and postid=j.id) comments
+			from jmt j, category r, members m
+			where r.id=4 and j.memberid=m.memberid and created_at>=#{format}
+			<if test="locationid!=0">and j.locationid=#{locationid}</if>
+			order by comments desc, created_at desc limit 3
+			</when>
+			
+			<otherwise>
+			select p.postid postid, p.title, p.body, p.categoryid, r.name categoryname, p.memberid, m.username,p.anonymous, p.created_at, p.locationid,
+        	(select count(*) from likepost where categoryid=p.categoryid and postid=p.postid) likes,
+        	(select count(*) from commentpost where categoryid=p.categoryid and postid=p.postid) comments
+			from posts p, category r, members m
+			where r.id=p.categoryid and p.memberid=m.memberid  and created_at>=#{format}
+			<if test="locationid!=0">and p.locationid=#{locationid}</if>
+        	order by comments desc, created_at desc limit 3
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="getPopularLikes" parameterType="com.ssafy.edu.vue.dto.Popular" resultType="com.ssafy.edu.vue.dto.Post">
+		<choose>
+			<when test="categoryid==3">
+			select c.id postid, c.title, c.body body, (3) as categoryid, r.name categoryname, c.memberid, m.username ,c.anonymous, c.created_at, null locationid,
+        	(select count(*) from likepost where categoryid=3 and postid=c.id) likes,
+			(select count(*) from commentpost where categoryid=3 and postid=c.id) comments
+			from codereview c, category r, members m
+			where r.id=3 and c.memberid=m.memberid and created_at>=#{format}
+			order by likes desc, created_at desc limit 5
+			</when>
+			
+			<when test="categoryid==4">
+			select j.id postid, j.name title, j.name body, (4) as categoryid, r.name categoryname, j.memberid, m.username, j.anonymous, j.created_at, j.locationid,
+			(select count(*) from likepost where categoryid=4 and postid=j.id) likes,
+			(select count(*) from commentpost where categoryid=4 and postid=j.id) comments
+			from jmt j, category r, members m
+			where r.id=4 and j.memberid=m.memberid and created_at>=#{format}
+			<if test="locationid!=0">and j.locationid=#{locationid}</if>
+			order by likes desc, created_at desc limit 5
+			</when>
+			
+			<otherwise>
+			select p.postid postid, p.title, p.body, p.categoryid, r.name categoryname, p.memberid, m.username,p.anonymous, p.created_at, p.locationid,
+        	(select count(*) from likepost where categoryid=p.categoryid and postid=p.postid) likes,
+        	(select count(*) from commentpost where categoryid=p.categoryid and postid=p.postid) comments
+			from posts p, category r, members m
+			where r.id=p.categoryid and p.memberid=m.memberid  and created_at>=#{format}
+			<if test="locationid!=0">and p.locationid=#{locationid}</if>
+        	order by likes desc, created_at desc limit 5
+			</otherwise>
+		</choose>
+	</select>
+	
 </mapper>

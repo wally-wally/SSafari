@@ -11,6 +11,7 @@ import com.ssafy.edu.vue.dto.CategoryPost;
 import com.ssafy.edu.vue.dto.Code;
 import com.ssafy.edu.vue.dto.Commentpost;
 import com.ssafy.edu.vue.dto.LocationFiltering;
+import com.ssafy.edu.vue.dto.Popular;
 import com.ssafy.edu.vue.dto.Post;
 import com.ssafy.edu.vue.dto.PostPaging;
 import com.ssafy.edu.vue.dto.Postinfo;
@@ -140,6 +141,14 @@ public class PostDaoImpl {
 
 	public int getPostCategory(int postid) {
 		return sqlSession.selectOne(ns+"getPostCategory",postid);
+	}
+
+	public List<Post> getPopularComment(Popular pop) {
+		return sqlSession.selectList(ns+"getPopularComment",pop);
+	}
+
+	public List<Post> getPopularLikes(Popular pop) {
+		return sqlSession.selectList(ns+"getPopularLikes",pop);
 	}
 
 }

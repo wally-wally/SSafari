@@ -53,9 +53,7 @@ public class JmtController {
 			memberid = member.getMemberid();
 		}
 		List<Jmt> jmts = jmtservice.getJmts(memberid);
-		if (jmts == null) {
-			return new ResponseEntity(HttpStatus.NO_CONTENT);
-		}
+
 		return new ResponseEntity<List<Jmt>>(jmts, HttpStatus.OK);
 	}
 	
@@ -79,10 +77,8 @@ public class JmtController {
 		int flag = 0;
 		if(memberid!=0) {
 			likepost.setMemberid(memberid);
-			logger.info("2-----------"+likepost);
 			flag=postservice.isLike(likepost);
 		}
-		logger.info("3-----------"+flag);
 		result.put("flag", flag);
 		
 		return new ResponseEntity<Map<String,Object>>(result, HttpStatus.OK);
@@ -110,7 +106,6 @@ public class JmtController {
 	@RequestMapping(value = "/jmt", method = RequestMethod.PUT)
 	public ResponseEntity<BoolResult> updateJmt(@RequestBody Jmt jmt) throws Exception {
 		logger.info("1-------------updateJmt-----------------------------" + new Date());
-		logger.info("2----------"+jmt);
 		jmtservice.updateJmt(jmt);
 		BoolResult nr=new BoolResult();
    		nr.setName("updateJmt");
