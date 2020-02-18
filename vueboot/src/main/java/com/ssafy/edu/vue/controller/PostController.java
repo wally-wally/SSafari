@@ -26,14 +26,19 @@ import com.ssafy.edu.vue.dto.Category;
 import com.ssafy.edu.vue.dto.CategoryPost;
 import com.ssafy.edu.vue.dto.Code;
 import com.ssafy.edu.vue.dto.Commentpost;
+import com.ssafy.edu.vue.dto.Jmt;
 import com.ssafy.edu.vue.dto.LocationFiltering;
 import com.ssafy.edu.vue.dto.Member;
+import com.ssafy.edu.vue.dto.Message;
 import com.ssafy.edu.vue.dto.Popular;
 import com.ssafy.edu.vue.dto.Portfolio;
 import com.ssafy.edu.vue.dto.Post;
 import com.ssafy.edu.vue.dto.PostPaging;
 import com.ssafy.edu.vue.dto.Postinfo;
 import com.ssafy.edu.vue.help.BoolResult;
+import com.ssafy.edu.vue.service.ICodeService;
+import com.ssafy.edu.vue.service.IJmtService;
+import com.ssafy.edu.vue.service.IMessageService;
 import com.ssafy.edu.vue.service.IPostService;
 
 import io.swagger.annotations.Api;
@@ -50,6 +55,12 @@ public class PostController {
 
 	@Autowired
 	private IPostService postservice;
+	@Autowired
+	private IMessageService messageservice;
+	@Autowired
+	private IJmtService jmtservice;
+	@Autowired
+	private ICodeService codeservice;
 	
 	@ApiOperation(value = "post 전체 보기", response = List.class)
 	@RequestMapping(value = "/posts", method = RequestMethod.GET)
@@ -203,11 +214,17 @@ public class PostController {
 		Postinfo postinfo = new Postinfo(commentpost.getCategoryid(),commentpost.getPostid());
 		List<Commentpost> posts;
 		if(commentpost.getCategoryid()==3) {
+			Code code = codeservice.getCode(commentpost.getPostid());
+			messageservice.addMessage(new Message(1,code.getMemberid(),"댓글 알림", "'"+code.getTitle()+"' 게시글에 댓글이 작성되었습니다."));
 			posts = postservice.getCommentCode(postinfo);
 		}else if(commentpost.getCategoryid()==4){
+			Jmt jmt = jmtservice.getJmt(new Jmt(commentpost.getPostid(), 0));
+			messageservice.addMessage(new Message(1,jmt.getMemberid(),"댓글 알림", "'"+jmt.getName()+"' 게시글에 댓글이 작성되었습니다."));
 			posts = postservice.getCommentJMT(postinfo);
 		}
 		else {
+			Post post = postservice.getPost(postinfo);
+			messageservice.addMessage(new Message(1,post.getMemberid(),"댓글 알림", "'"+post.getTitle()+"' 게시글에 댓글이 작성되었습니다."));
 			posts = postservice.getCommentPost(postinfo);
 		}
 		return new ResponseEntity<List<Commentpost>>(posts, HttpStatus.OK);
@@ -328,11 +345,13 @@ public class PostController {
 	public ResponseEntity<BoolResult> checkBoardCategoryAuth(@RequestBody Category request) throws Exception {
 		logger.info("1-------------checkBoardCategoryAuth-----------------------------" + new Date());
 		BoolResult nr=new BoolResult();
+		Category category = postservice.getBoardCategoryOne(request.getId());
 		if(request.getFlag()==1) {
-			Category category = postservice.getBoardCategoryOne(request.getId());
 			postservice.addBoardCategory(category);
+			messageservice.addMessage(new Message(1,category.getMemberid(),"게시판 개설 승인", "'"+category.getName()+"' 게시판 개설 요청이 승인되었습니다."));
 			nr.setName("인증 승인");
 		}else {
+			messageservice.addMessage(new Message(1,category.getMemberid(),"게시판 개설 승인", "'"+category.getName()+"' 게시판 개설 요청이 거절되었습니다."));
 			nr.setName("인증 거절");
 		}
 		postservice.deleteBoardCategoryAuth(request.getId());
