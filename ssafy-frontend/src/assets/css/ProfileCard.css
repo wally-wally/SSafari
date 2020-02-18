@@ -156,6 +156,26 @@
   left: -10%;
 }
 
+
+.skill-tags-mobile > span {
+  margin: 0 4px;
+  font-weight: 600;
+}
+
+.skill-tags-mobile > span:first-child {
+  margin-left: 0;
+  margin-right: 4px;
+}
+
+.skill-tags-mobile > span:last-child {
+  margin-left: 4px;
+  margin-right: 0;
+}
+
+.v-application a[class='mob-btn'] {
+  color: orange;
+}
+
 @keyframes rint {
   0% {
     left: -110%;

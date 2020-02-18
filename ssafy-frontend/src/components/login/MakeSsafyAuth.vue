@@ -3,25 +3,29 @@
 		<div v-if="currentMemberId !== null && auth === 1">
 			<div>
 				<div id="create-form-title">
-					<span id="form-title">SSAFY인 신청 관리</span>
+					<span id="form-title">SSAFY 회원 인증 신청 관리</span>
 				</div>
 				<hr class="title-headline">
 				<div v-for="ssafyRequest in ssafyRequests" :key="ssafyRequest.id">
 					<v-card class="mb-3">
-						<div v-if="selectedImage" max-width="85vw">
-							<img :src="selectedImage" alt="" width="80%" @click.stop="selectedImage = null">
-							<hr>
+						<div class="ssafyauth-img-wrapper d-inline">
+							<div v-if="selectedImage" max-width="85vw">
+								<img :src="selectedImage" alt="" width="70%" @click.stop="selectedImage = null">
+								<hr>
+							</div>
+							<v-img :src="ssafyRequest.img" width="200px" @click="zoom(ssafyRequest.img)"></v-img>
 						</div>
-						<v-img :src="ssafyRequest.img" width="300px" @click="zoom(ssafyRequest.img)"></v-img>
-						<v-card-title>
-							<h3>{{ssafyRequest.name}}</h3>
-						</v-card-title>
-						<v-card-title>
-							<h3>지역 : {{ssafyRequest.location}}</h3>
-						</v-card-title>
-						<v-card-subtitle>
-							<h3>{{ssafyRequest.unit}}기</h3>
-						</v-card-subtitle>
+						<div class="d-inline">
+							<v-card-title>
+								<h3>{{ssafyRequest.name}}</h3>
+							</v-card-title>
+							<v-card-title>
+								<h3>지역 : {{ssafyRequest.location}}</h3>
+							</v-card-title>
+							<v-card-subtitle>
+								<h3>{{ssafyRequest.unit}}기</h3>
+							</v-card-subtitle>
+						</div>
 						<v-btn class="mr-3" color="blue" @click="approveSsafy(ssafyRequest.memberid)">승인</v-btn>
 						<v-btn class="mr-3" color="red" @click="denySsafy(ssafyRequest.memberid)">거절</v-btn>
 					</v-card>
@@ -61,6 +65,7 @@
 
 <script>
 	import axios from 'axios'
+	import '@/assets/css/MakeSsafyAuth.css'
 	export default {
 		name: 'MakeSsafyAuth',
 		data() {
@@ -152,7 +157,3 @@
 		}
 	}
 </script>
-
-<style>
-
-</style>

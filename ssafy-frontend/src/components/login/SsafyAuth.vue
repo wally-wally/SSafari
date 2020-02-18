@@ -4,37 +4,40 @@
 			<div id="create-form-title">
 				<span id="form-title">SSAFY 인증 페이지</span>
 			</div>
-			<div>
+			<v-divider></v-divider>
+			<div class="upload-example">
 				<h3>아래와 같이 사진을 업로드해 주세요</h3>
-				<v-img width="500px" src="../../../public/img/authExample.jpg"></v-img>
+				<img class="upload-img-example" src="../../../public/img/authExample.jpg">
 				<h3>싸피 인증 관리자가 3일 이내에 인증 승인/거부를 결정합니다.</h3>
 			</div>
 			<hr class="title-headline">
-			<div class="title-top">
-				<div class="create-title">지역</div>
-				<div class="region-checkbox">
-					<v-container id="dropdown-region">
-						<v-select v-model="region" :items="regions" item-text="text" item-value="val" label="Choose Region"
-							color="#f7b157" target="#dropdown-region">
-						</v-select>
-					</v-container>
+			<div class="ml-0">
+				<div class="title-top">
+					<div class="create-title">지역</div>
+					<div class="region-checkbox">
+						<v-container class="py-0" id="dropdown-region">
+							<v-select v-model="region" :items="regions" item-text="text" item-value="val" label="Choose Region"
+								color="#f7b157" target="#dropdown-region">
+							</v-select>
+						</v-container>
+					</div>
 				</div>
-			</div>
-			<div class="title-top">
-				<div class="create-title">기수</div>
-				<div class="region-checkbox">
-					<v-container id="dropdown-region">
-						<v-select v-model="classSsafy" :items="classes" item-text="text" item-value="val" label="Choose class"
-							color="#f7b157" target="#dropdown-region">
-						</v-select>
-					</v-container>
+				<div class="title-top">
+					<div class="create-title">기수</div>
+					<div class="region-checkbox-2">
+						<v-container class="py-0" id="dropdown-region">
+							<v-select v-model="classSsafy" :items="classes" item-text="text" item-value="val" label="Choose class"
+								color="#f7b157" target="#dropdown-region">
+							</v-select>
+						</v-container>
+					</div>
 				</div>
 			</div>
 			<div>
-				<v-file-input :rules="rules" v-model="imgFile" label="File input" id="file" outlined dense
+				<v-file-input class="mx-2" :rules="rules" v-model="imgFile" label="File input" id="file" outlined dense
 					accept="image/png, image/jpeg, image/bmp"></v-file-input>
 			</div>
-			<v-btn class="mr-5" color="#f7b157" @click="create">인증 신청</v-btn>
+			<v-btn class="ml-3 mr-5" color="#f7b157" @click="create">인증 신청</v-btn>
 			<v-btn color="error" @click="back">돌아가기</v-btn>
 		</div>
 
@@ -49,6 +52,7 @@
 
 <script>
 	import axios from 'axios'
+	import '@/assets/css/SsafyAuth.css'
 
 	export default {
 		name: 'SsafyAuth',

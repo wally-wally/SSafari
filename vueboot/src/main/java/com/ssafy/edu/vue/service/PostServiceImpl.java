@@ -12,6 +12,7 @@ import com.ssafy.edu.vue.dto.CategoryPost;
 import com.ssafy.edu.vue.dto.Code;
 import com.ssafy.edu.vue.dto.Commentpost;
 import com.ssafy.edu.vue.dto.LocationFiltering;
+import com.ssafy.edu.vue.dto.Popular;
 import com.ssafy.edu.vue.dto.Post;
 import com.ssafy.edu.vue.dto.PostPaging;
 import com.ssafy.edu.vue.dto.Postinfo;
@@ -200,6 +201,18 @@ public class PostServiceImpl implements IPostService {
 	@Transactional(readOnly=true)
 	public int getPostCategory(int postid) {
 		return postdao.getPostCategory(postid);
+	}
+
+	@Override
+	@Transactional(readOnly=true)
+	public List<Post> getPopularComment(Popular pop) {
+		return postdao.getPopularComment(pop);
+	}
+
+	@Override
+	@Transactional(readOnly=true)
+	public List<Post> getPopularLikes(Popular pop) {
+		return postdao.getPopularLikes(pop);
 	}
 
 }
