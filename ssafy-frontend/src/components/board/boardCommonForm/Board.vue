@@ -8,7 +8,7 @@
  | {{board.title}}</div>
           <div style="font-size: 0.8em; min-width:130px;">
             <span>{{board.created_at.slice(2, 16)}} | {{board.username}}</span>
-            <span class="pl-3"><i class="far fa-heart" style="color: crimson;">{{ board.likes }}</i></span> <!-- 추후 '100'을 {{ like }}로 수정 -->
+            <span class="pl-3"><i class="far fa-heart" style="color: crimson;">{{ board.likes }}</i></span>
             <span class="pl-1"><i class="far fa-comments" style="color: skyblue;">{{ board.comments }}</i></span>
           </div>
         </div>
