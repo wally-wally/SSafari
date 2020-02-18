@@ -12,7 +12,7 @@
 				<div class="jmt-post-count">{{ postCnt }}</div>
 			</div>
 			<router-link v-if="this.$store.state.isLogin" :to="`/board/jmt/create`">
-				<v-btn class="mb-3" color="primary">맛집 후기 남기기</v-btn>
+				<div class="addButton mb-4" style="min-width:155px;font-size:0.85em">맛집 후기 남기기</div>
 			</router-link>
 			<v-layout>
 				<v-flex>

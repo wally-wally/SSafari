@@ -33,7 +33,7 @@
 			</div>
 			<div>
 				<div class="post-footer-annoymous d-inline col-4">
-					<v-checkbox v-model="anonymousStatus" label="익명" value="true" class="anonyCheck"></v-checkbox>
+					<v-checkbox v-model="anonymousStatus" label="익명" value="true" color="#ffc837" class="anonyCheck"></v-checkbox>
 				</div>
 			</div>
 			<v-btn v-if="updateFlag" class="mr-5" color="#f7b157" @click="update">수정</v-btn>
