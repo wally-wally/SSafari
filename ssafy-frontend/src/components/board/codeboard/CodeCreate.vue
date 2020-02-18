@@ -59,7 +59,7 @@ export default {
       title : '',
       items : [
         { text : 'Python', val : 'text/x-python'},
-        {text : 'Java', val : 'text/x-java'},
+        { text : 'Java', val : 'text/x-java'},
         { text : 'JavaScript', val : 'text/javascript'},
         { text : 'Html', val : 'text/html'},
         { text :'C++' , val : 'text/x-c++src'} ],
@@ -84,11 +84,11 @@ export default {
     getcode() {
         axios.get(`api/code/${this.id}`)
         .then(response => {
-        this.code = response.data.code
-        this.title = response.data.title
-        this.body = response.data.body
-        this.anonymousStatus = response.data.anonymous ? '익명' : null
-        this.type = response.data.lang
+        this.code = response.data.code.code
+        this.title = response.data.code.title
+        this.body = response.data.code.body
+        this.anonymousStatus = response.data.code.anonymous ? '익명' : null
+        this.type = response.data.code.lang
         })
     },
     onCmReady(cm) {
@@ -118,7 +118,7 @@ export default {
         axios.post('/api/code',data)
         .then(response =>{
         console.log(response)
-        router.push({ path: '/board/codereview/' })
+        router.push({ path: '/board/code/' })
 
         }).catch(error => {
           console.log(error)

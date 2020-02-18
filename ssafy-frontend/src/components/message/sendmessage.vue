@@ -12,12 +12,12 @@
           {{username}} 에게
           </div> 
             <v-form @submit.prevent="sendmessage()">
-              <v-text-field v-model="message.title" label="제목" required></v-text-field>
-              <v-textarea v-model="message.content" label="내용"  required/>
+              <v-text-field v-model="title" label="제목" required></v-text-field>
+              <v-textarea v-model="content" label="내용"  required/>
               <button type="submit" class="submit button">메세지</button>
             </v-form>
           <v-card-actions>
-            <button type="submit" class="close button" @click="modal">닫기</button>
+            <button class="close button" @click="modal">닫기</button>
           </v-card-actions>
         </div>
       </v-card>
@@ -36,24 +36,27 @@ export default {
     data() {
         return {
           send : false,
-          message : { 
-            title : '',
-            content : '',
-            toid : this.id,
-            fromid : this.$store.state.memberid
-          }
+          title : '',
+          content : '',
         }
     },
     methods : {
       modal() {
             this.send = !this.send  
-            this.message.title = ''
-            this.message.content = ''
+            this.title = ''
+            this.content = ''
         },
       sendmessage(){
         const chk = confirm('메시지 보내시겠습니까')
         if (chk){
-          axios.post('api/message' ,this.message )
+          const message = {
+            title : this.title,
+            content : this.content,
+            toid : this.id,
+            fromid : this.$store.state.memberid
+          }
+          console.log(message)
+          axios.post('api/message' ,message )
           .then(response => {
             console.log(response.data)
             this.modal()
