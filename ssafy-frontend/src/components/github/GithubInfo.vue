@@ -18,8 +18,9 @@
 					<img :src="profileImgUrl" alt="github-profile=image" id="img-2" style="margin-left: auto; margin-right: auto; display: block;">
 				</p>
 				<div class="github-name">
-					<p>{{ githubInformation.name }}</p>
-					<p>({{ githubid }})</p>
+					<p v-if="githubInformation.name === null">No Register Name</p>
+					<p v-else>{{ githubInformation.name }}</p>
+					<p @click="goGithub(githubid)" class="d-inline-block">(<span>{{ githubid }}</span>)</p>
 				</div>
 				<div class="github-info-summary">
 					<div class="github-info-summary-company">
@@ -230,6 +231,9 @@ export default {
 				githubInfoMenuTab.setAttribute('class', '')
 				githubReposMenuTab.setAttribute('class', 'on')
 			}
+		},
+		goGithub(idVal) {
+			window.open(`https://github.com/${idVal}`)
 		},
 		goBlog(url) {
 			if (url !== 'No blog') {
