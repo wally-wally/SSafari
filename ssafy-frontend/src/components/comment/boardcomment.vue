@@ -4,7 +4,7 @@
         <v-list three-line>
             <div v-for="comment in comments" :key="comment.id">
                 <comment @commetdel="commentdelete(comment)" :board="boardtype" :comment=comment />
-                <v-divider />
+                <v-divider style="margin:0"/>
             </div>
         </v-list>
         <v-form @submit.prevent="Createcomment" clas>

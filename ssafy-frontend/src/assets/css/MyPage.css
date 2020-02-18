@@ -7,24 +7,24 @@
 }
 
 .mypage .mypage-menu {
-  background-color: #F9F3ED;
+  background-color: #FFF;
   height: 100%;
-  min-width: 200px;
-
+  min-width: 230px;
+  border: 1px solid #d6d6d6;
 }
 
 .mypage-menu h2 {
   font-family: 'Gothic A1', sans-serif;
-  font-weight: bold;
-  color: #FF8008;
   text-transform: uppercase;
-  text-align: center;
-  margin-bottom: 25px;
+  margin-bottom: 23px;
+  text-align: left;
+  color:#60666c;
+  font-size: 24px;
 }
 
 .member-management-title,
 .mypost-title {
-  font-size: 18px;
+  font-size: 15px;
   font-weight: bold;
   padding-left: 14px;
   padding-bottom: 5px;
@@ -41,6 +41,7 @@ ul[class='mypost-menu'] > li {
   font-family: 'Nanum Gothic', sans-serif;
   list-style: none;
   text-decoration: none;
+  font-size: 13px;
   padding: 10px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   border-top: 1px solid rgba(225, 225, 225, 0.05);
@@ -65,7 +66,7 @@ ul[class='mypost-menu'] > li:hover {
 }
 
 .mypage-menu > .mypage-description {
-  font-size: 18px;
+  font-size: 15px;
   font-weight: bold;
   font-family: 'Nanum Gothic', sans-serif;
   padding-left: 14px;

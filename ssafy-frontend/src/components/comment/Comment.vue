@@ -1,18 +1,18 @@
 <template>
     <v-list-item>
         <v-list-item-content>
-            <v-list-item-title style="font-size:1.3rem;">
-                    <span v-if="comment.anonym" >익명</span>
-                    <span v-else>{{ comment.username }}</span>
-                    <small style="color:blue" v-if="comment.memberid === comment.writer">(작성자)</small>
+            <v-list-item-title>
+                    <span v-if="comment.anonym" style="font-size:1=0.7rem;font-weight:bold">익명</span>
+                    <span v-else style="font-size:1=0.7rem;font-weight:bold">{{ comment.username }}</span>
+                    <small style="color:#f7b157;font-size:13px;font-weight:bold" v-if="comment.memberid === comment.writer">&nbsp;작성자</small>
                     <sendmessage :username="comment.anonym ? '익명' : comment.username" :id="comment.memberid"/>
-                    <small style="font-size:0.7rem;">( {{comment.wdate}} )</small>
+                    <small style="font-size:0.7rem;">&nbsp; {{comment.wdate}} &nbsp;</small>
                     <span v-if="comment.memberid==$store.state.memberid" class="mt-2" style="float:right">
                         <i class="far fa-edit ml-5 edbtn" @click="commentupdate()" style="font-size:17px"></i>
                         <i class="far fa-trash-alt ml-2 edbtn" @click="commentdelete()" style="font-size:17px"></i>
                     </span>
             </v-list-item-title>
-            <v-list-item-content style="white-space: pre-line" v-if="!this.update">
+            <v-list-item-content style="white-space: pre-line;font-size:0.9rem;padding:3px 0" v-if="!this.update">
                 {{comment.content}}
             </v-list-item-content>
             <div v-if="this.update">

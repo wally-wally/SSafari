@@ -3,7 +3,7 @@
   <v-app-bar v-if="mobile()" app color="white lighten-4" tile>
     <div class="d-flex align-center">
       <router-link :to="{name: 'home'}" style="text-decoration: none; color: #f7b157;">
-        <v-toolbar-title style="font-size: 16px; padding-right: 10px;">SSavry Time</v-toolbar-title>
+        <v-toolbar-title style="font-size: 16px; padding-right: 10px;">SSafari</v-toolbar-title>
       </router-link> &nbsp; &nbsp;
       <span v-if="!isLogin" class="d-flex align-center">Welcome, Guest</span>
       <span v-else class="d-flex align-center">Welcome, {{$store.state.username}}</span>
@@ -23,7 +23,7 @@
 
   <v-app-bar v-else app :collapse="!collapseOnScroll" :collapse-on-scroll="collapseOnScroll" color="white" @click.stop="drawer = !drawer">
     <div class="d-flex align-center">
-      <a href="/" style="text-decoration: none; color: #f7b157;"> <v-toolbar-title>SSavry Time</v-toolbar-title></a>
+      <a href="/" style="text-decoration: none; color: #f7b157;"> <v-toolbar-title>SSafari</v-toolbar-title></a>
     </div>
     <v-spacer></v-spacer>
     <v-app-bar-nav-icon></v-app-bar-nav-icon>

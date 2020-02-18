@@ -1,15 +1,15 @@
 #create-form-title {
-  padding-bottom: 10px;
+  padding-bottom: 8px;
 }
 
 #create-form-title > #form-title {
-  font-size: 28px;
+  font-size: 18px;
   font-weight: 700;
   font-family: 'Gothic A1';
 }
 
 .upload-example {
-  padding-top: 15px;
+  padding-top: 23px;
 }
 
 .upload-example > h3 {
@@ -41,11 +41,13 @@
 
 @media (min-width: 959px) {
   .upload-example > h3 {
-    font-size: 23px;
+    font-size: 15px;
+    padding-bottom: 15px;
   }
   
   .upload-example > h3:last-child {
-    font-size: 20px;
+    font-size: 15px;
+    padding-top: 15px;
   }
 
   .upload-example > img[class='upload-img-example'] {

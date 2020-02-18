@@ -22,7 +22,7 @@
           <div class="img__text m--up">
             <h2>처음이신가요?</h2>
             <p>계정이 없으신가요?<br>
-              SSavry Time에 가입해 
+              SSafari에 가입해 
               SSafy인들과 커뮤니케이션 해보세요!</p>
           </div>
           <div class="img__text m--in">
