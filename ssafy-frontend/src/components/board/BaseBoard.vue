@@ -427,7 +427,7 @@
     .v-application p {
     margin-bottom: 0px; 
     }
-    textarea{
+    textarea {
     text-rendering: auto;
     word-spacing: normal;
     text-transform: none;

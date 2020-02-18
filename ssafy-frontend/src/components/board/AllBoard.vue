@@ -1,8 +1,14 @@
 <template>
-    <div class="row board-cards">
+    <v-container class="row board-cards">
         <div class="col-12 col-sm-6 board">
-            <v-card-title class="main-board-title">자유게시판</v-card-title>
-            <v-card-subtitle class="main-board-subtitle pb-1">{{ freeBoardLength }}개의 게시글 중 최근 5개</v-card-subtitle>
+            <div class="boarddiv">
+            <v-card-title class="main-board-title">자유게시판
+                <router-link class="moreboard" to="board/free">
+                <span>
+                    더보기
+                </span>
+                </router-link>
+            </v-card-title>
             <v-divider></v-divider>
             <table class="freeboard">
                 <thead>
@@ -16,10 +22,17 @@
                     </tr>
                 </tbody>
             </table>
+            </div>
         </div>
         <div class="col-12 col-sm-6 board">
-            <v-card-title class="main-board-title">취업게시판</v-card-title>
-            <v-card-subtitle class="main-board-subtitle pb-1">{{ jobBoardLength }}개의 게시글 중 최근 5개</v-card-subtitle>
+            <div class="boarddiv">
+            <v-card-title class="main-board-title">취업게시판
+                <router-link class="moreboard" to="board/job">
+                    <span>
+                        더보기
+                    </span>
+                </router-link>
+            </v-card-title>
             <v-divider></v-divider>
             <table class="jobboard">
                 <thead>
@@ -33,10 +46,18 @@
                     </tr>
                 </tbody>
             </table>
+            </div>
         </div>
         <div class="col-12 col-sm-6 board">
-            <v-card-title class="main-board-title">코드리뷰</v-card-title>
-            <v-card-subtitle class="main-board-subtitle pb-1">{{ codeBoardLength }}개의 게시글 중 최근 5개</v-card-subtitle>
+            <div class="boarddiv">
+
+            <v-card-title class="main-board-title">코드리뷰
+                <router-link class="moreboard" to="board/code">
+                <span>
+                    더보기
+                </span>
+                </router-link>
+            </v-card-title>
             <v-divider></v-divider>
             <table class="codeboard">
                 <thead>
@@ -50,10 +71,17 @@
                     </tr>
                 </tbody>
             </table>
+            </div>
         </div>
         <div class="col-12 col-sm-6 board">
-            <v-card-title class="main-board-title">주변맛집</v-card-title>
-            <v-card-subtitle class="main-board-subtitle pb-1">{{ jmtBoardLength }}개의 게시글 중 최근 5개</v-card-subtitle>
+            <div class="boarddiv">
+            <v-card-title class="main-board-title">주변맛집
+                <router-link class="moreboard" to="board/jmt">
+                <span>
+                    더보기
+                </span>
+                </router-link>
+            </v-card-title>
             <v-divider></v-divider>
             <table class="jmtboard">
                 <thead>
@@ -67,6 +95,7 @@
                     </tr>
                 </tbody>
             </table>
+            </div>
         </div>
         <!-- <div class="col-12 col-lg-6 boardlist">
             <p>자유게시판</p>
@@ -84,7 +113,7 @@
             <p>주변맛집</p>
             <BoardListAll :boards="jmtBoard" :boardType="'jmt'"/>
         </div> -->
-    </div>
+    </v-container>
 </template>
 
 <script>
@@ -103,13 +132,9 @@
                     { text: 'date', value: 'created_at' }
                 ],
                 freeBoard: [],
-                freeBoardLength: 0,
                 jobBoard: null,
-                jobBoardLength: 0,
                 codeBoard: null,
-                codeBoardLength: 0,
                 jmtBoard: null,
-                jmtBoardLength: 0
             }
         },
         mounted() {
@@ -124,7 +149,6 @@
                         })
                     })
                     this.freeBoard = mainPageBoards
-                    this.freeBoardLength = response.data.length
                 })
             axios.get(`api/posts/2`)
                 .then(response => {
@@ -137,7 +161,6 @@
                         })
                     })
                     this.jobBoard = mainPageBoards
-                    this.jobBoardLength = response.data.length
                 })
             axios.get(`api/codes`)
                 .then(response => {
@@ -150,7 +173,6 @@
                         })
                     })
                     this.codeBoard = mainPageBoards
-                    this.codeBoardLength = response.data.length
                 })
             axios.get(`api/jmts`)
                 .then(response => {
@@ -164,7 +186,6 @@
                         })
                     })
                     this.jmtBoard = mainPageBoards
-                    this.jmtBoardLength = response.data.length
                 })
         },
         methods: {
@@ -177,16 +198,9 @@
 
 <style>
     .board-cards {
-        width: 100%;
         text-align: center;
         display: flex;
         margin: 0 auto;
-    }
-
-    .board-cards > .board {
-        border : 1px solid black;
-        border-radius: 20px;
-        padding: 2px;
     }
     
     .main-board-title {
@@ -229,5 +243,9 @@
 
     table[class$='board'] > tbody > tr > td:last-child {
         font-size: 14px;
+    }
+    .moreboard{
+        margin-left:auto;
+        font-size:0.9rem
     }
 </style>
