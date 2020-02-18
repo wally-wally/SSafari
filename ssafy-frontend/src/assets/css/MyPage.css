@@ -105,6 +105,10 @@ ul[class='mypost-menu'] > li:hover {
   text-shadow: 4px 4px 6px lightgray;
 }
 
+#mypage-profile-image {
+  margin-bottom: 30px;
+}
+
 @media (min-width: 959px) {
   .mypage {
     display: flex;
