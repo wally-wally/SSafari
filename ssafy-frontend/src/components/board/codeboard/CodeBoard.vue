@@ -16,7 +16,9 @@
                 </div>
                 <div class="code-post-count">{{ codes.length }}</div>
             </div>
-            <router-link v-if="this.$store.state.isLogin" to="create"><v-btn class="mb-3" color="primary">코드 작성</v-btn></router-link>
+            <router-link v-if="this.$store.state.isLogin" to="create">
+                <div class="addButton mb-4" style="font-size:0.85em">코드 작성</div>
+            </router-link>
             <v-layout>
                 <v-flex>
                       <div v-for="code in codes" :key="code.id">
@@ -37,55 +39,7 @@
                 </v-flex>
             </v-layout>
         </div>
-        <div class="side-post-section" style="margin-left: 3%;">
-            <div class="popular-post">
-                <div class="popular-title pb-2 ma-2">실시간 인기 TOP3</div>
-                <div class="popular-post-list pt-2 ma-2">
-                    <div class="popular-element popular-1 d-block">
-                        <p>제목</p>
-                        <p>작성자</p>
-                    </div>
-                    <div class="popular-element popular-2 d-block">
-                        <p>제목</p>
-                        <p>작성자</p>
-                    </div>
-                    <div class="popular-element popular-3 d-block">
-                        <p>제목</p>
-                        <p>작성자</p>
-                    </div>
-                </div>
-            </div>
-            <div class="best-post">
-                <div class="best-title pb-2 ma-2">BEST 게시물</div>
-                <div class="best-post-list pt-2 ma-2">
-                    <div class="best-element best-1">
-                        <p class="d-block">제목</p>
-                        <p style="display: inline;">작성자</p>
-                        <p style="display: inline;"><i class="far fa-heart" style="float: right;">100</i></p>
-                    </div>
-                    <div class="best-element best-2 d-block">
-                        <p>제목</p>
-                        <p style="display: inline;">작성자</p>
-                        <p style="display: inline;"><i class="far fa-heart" style="float: right;">99</i></p>
-                    </div>
-                    <div class="best-element best-3 d-block">
-                        <p>제목</p>
-                        <p style="display: inline;">작성자</p>
-                        <p style="display: inline;"><i class="far fa-heart" style="float: right;">76</i></p>
-                    </div>
-                    <div class="best-element best-4 d-block">
-                        <p>제목</p>
-                        <p style="display: inline;">작성자</p>
-                        <p style="display: inline;"><i class="far fa-heart" style="float: right;">54</i></p>
-                    </div>
-                    <div class="best-element best-5 d-block">
-                        <p>제목</p>
-                       <p style="display: inline;">작성자</p>
-                        <p style="display: inline;"><i class="far fa-heart" style="float: right;">32</i></p>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <SidePost :categoryId="3" :locationId="0"/>
     </div>
 </template>
 
@@ -93,10 +47,13 @@
     import axios from 'axios'
     import router from '@/router.js'
     import BoardList from '@/components/board/boardCommonForm/BoardList'
+    import SidePost from '../SidePost'
+    
     export default {
         name: 'CodeBoard',
         components: {
             BoardList,
+            SidePost
         },
         // props: {
         //     category: { type: String },

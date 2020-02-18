@@ -1,0 +1,120 @@
+.myboardlist-t {
+  border-top: 3px solid #bcbcbc;
+  border-bottom: 3px solid #bcbcbc;
+}
+
+.myboardlist-table-col {
+  border-bottom: 0.4px solid #bcbcbc;
+}
+
+.myboardlist-table-row {
+  display: table-row;
+}
+
+.col-header {
+  display: table-cell;
+  padding: 10px 0;
+  background-color: #ECE8DC;
+}
+
+.col-header > p {
+  text-align: center;
+  font-weight: bold;
+  font-size: 19px;
+}
+
+.myboardlist-table-col {
+  display: table-cell;
+  padding: 8px 0;
+}
+
+.table-post-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+  white-space: pre;
+}
+
+.table-post-boardtype {
+  width: 16%;
+}
+
+.table-post-title {
+  width: 64%;
+}
+
+.table-post-created_at {
+  width: 20%;
+}
+
+.myboardlist-table-row-mobile {
+  padding: 10px;
+  font-size: 20px;
+  font-weight: 600;
+  border-bottom: 1px solid lightgray;
+  margin-bottom: 10px;
+  background-color: #ECE8DC;
+}
+
+.myboardlist-table-row-mobile > span:nth-child(2) {
+  font-size: 14px;
+  padding-left: 5px;
+}
+
+.table-mobile-1 {
+  font-size: 17px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+  white-space: pre;
+}
+
+.table-mobile-2 {
+  font-size: 16px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #bcbcbc;
+  margin-bottom: 10px;
+}
+
+.myboardlist-table-mobile > .myboardlist-table-row:last-child > .table-mobile-2 {
+  border-bottom: 0px;
+}
+
+.myboardlist-table-row:hover {
+  cursor: pointer;
+  background-color: #bcbcbc;
+}
+
+.myboardlist-table-row:first-child:hover {
+  cursor: auto;
+  background-color: #fff;
+}
+
+@media (min-width: 959px) {
+  .myboardlist-table {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+  }
+
+  .myboardlist-table-mobile {
+    display: none;
+  }
+}
+
+@media (max-width: 959px) {
+  .myboardlist-table {
+    display: none;
+  }
+
+  .myboardlist-table-mobile {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+  }
+}

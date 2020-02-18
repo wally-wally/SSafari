@@ -8,7 +8,8 @@
         <ul class="member-management-menu">
           <li @click="showMyPageSection(0)" class="user-edit"><i class="fas fa-user-edit"></i>회원정보 수정</li>
           <li @click="showMyPageSection(1)" class="change-password"><i class="fas fa-key"></i>비밀번호 변경</li>
-          <li @click="showMyPageSection(2)" class="ssafy-auth"><i class="fas fa-id-card-alt"></i>SSAFY 인증</li>
+          <li @click="showMyPageSection(2)" class="ssafy-auth" v-if="ssafyAuth === 1"><i class="fas fa-id-card-alt"></i>Admin Page</li>
+          <li @click="showMyPageSection(2)" class="ssafy-auth" v-else><i class="fas fa-id-card-alt"></i>SSAFY 인증</li>
           <li @click="showMyPageSection(3)" class="github-page"><i class="fab fa-github"></i>github 연동</li>
           <li @click="showMyPageSection(4)" class="gitlab-page"><i class="fab fa-gitlab"></i>gitlab 연동</li>
           <li @click="memberDropOut"><i class="fas fa-sign-out-alt"></i>회원탈퇴</li>
@@ -80,7 +81,27 @@
 
     <div class="d-block col-md-10 mypage-section">
       <div v-if="selectMenuItem === -1">
-        <v-card class="mx-auto" max-width="434" tile>
+        <div class="ma-8">
+        <p class="mypage-profile-img" style="text-align: center;">
+					<img :src="this.$store.state.img" alt="mypage-profile-img" id="mypage-profile-image" style="margin-left: auto; margin-right: auto; display: block; width: 250px; height: 250px;">
+				</p>
+        <table class="profile-table" style="margin: 0 auto; padding-top: 50px;">
+          <tr>
+            <td class="sort" style="padding: 5px 30px; border-right: 1.3px solid black; font-family: 'Noto Sans KR', sans-serif; font-size: 40px; font-weight: 600;">지역</td>
+            <td class="region-value" style="padding: 5px 30px; font-family: 'Nanum Gothic', sans-serif; font-size: 40px; font-weight: 600;">{{this.$store.state.locations[this.$store.state.locationid]}}</td>
+          </tr>
+          <tr>
+            <td class="py-2"></td>
+            <td class="py-2"></td>
+          </tr>
+          <tr>
+            <td class="sort" style="padding: 5px 30px; border-right: 1.3px solid black; font-family: 'Noto Sans KR', sans-serif; font-size: 40px; font-weight: 600;">기수</td>
+            <td v-if="this.$store.state.unit > 0" class="seires-value" style="padding: 5px 30px; font-family: 'Nanum Gothic', sans-serif; font-size: 40px; font-weight: 600;">{{this.$store.state.unit}}기</td>
+            <td v-else class="seires-value" style="padding: 5px 30px; font-family: 'Nanum Gothic', sans-serif; font-size: 40px; font-weight: 600;">싸피 미인증</td>
+          </tr>
+        </table>
+        </div>
+        <!-- <v-card class="mx-auto" max-width="434" tile>
           <v-img height="100%" src="https://cdn.vuetifyjs.com/images/cards/server-room.jpg">
             <v-row align="end" class="fill-height">
               <v-col align-self="start" class="pa-0" cols="12">
@@ -100,7 +121,7 @@
               </v-col>
             </v-row>
           </v-img>
-        </v-card>
+        </v-card> -->
       </div>
       <MemberModify v-if="smallMenu.indexOf(selectMenuItem) === 0"/>
       <PasswordModify v-if="smallMenu.indexOf(selectMenuItem) === 1"/>
@@ -175,7 +196,7 @@ export default {
         social: '',
         ssafyAuth: '',
         myPageStatus: null,
-        smallMenu: ['회원정보 수정', '비밀번호 변경', 'SSAFY 인증', 'github 연동', 'gitlab 연동', '회원탈퇴', '게시판', '스터디 모임', 'Likes'],
+        smallMenu: ['회원정보 수정', '비밀번호 변경', this.$store.state.auth === 1 ? 'Admin Page' : 'SSAFY 인증', 'github 연동', 'gitlab 연동', '회원탈퇴', '게시판', '스터디 모임', 'Likes'],
         selectMenuItem: -1,
         showMyPageDialog: false
       }
@@ -229,8 +250,12 @@ export default {
         //   userEditMenu.style.color = '#DD660A'
         //   userEditMenu.style.fontWeight = 'bold'
         // }
-        if (status === 3 && this.ssafyAuth === 2) {
-          alert('오 넌 싸피 아이디가 다 있구나!')
+        if (this.myPageStatus === 2) {
+          if (this.ssafyAuth === 2) {
+            alert('오 넌 싸피 아이디가 다 있구나!')
+          } else if (this.ssafyAuth === 3) {
+            alert('SSAFY 인증 대기 상태입니다.')
+          }
         }
       }
     },

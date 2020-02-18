@@ -185,5 +185,6 @@
 		position: relative;
 		width: 100%;
 		height: 80%;
+		font-style: 'Cute Font', cursive;
 	}
 </style>

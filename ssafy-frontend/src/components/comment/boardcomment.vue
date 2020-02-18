@@ -8,17 +8,11 @@
             </div>
         </v-list>
         <v-form @submit.prevent="Createcomment" clas>
-            <v-row class="form-group d-flex">
-                <v-col cols="7">
-                    <textarea rows="3" v-model="new_comment" class="commentinput" v-bind:readonly="!isLogin" v-bind:placeholder="check"></textarea>
-                </v-col>
-                <v-col cols="2">
-                    <v-checkbox v-model="anonymousStatus" label="익명" value="익명" class="annoyCheck"/>
-                </v-col>
-                <v-col cols="1">
-                    <v-btn type="submit" color="secondary" class="btn btn-info align-self-end mx-2 mb-1">등록</v-btn>
-                </v-col>
-            </v-row>
+                <textarea rows="2" v-model="new_comment" class="commentinput" v-bind:readonly="!isLogin" v-bind:placeholder="check"></textarea>
+                <div class="row justify-end mr-3">
+                    <v-checkbox dense hide-details="1" color="#ffc837" v-model="anonymousStatus" label="익명" value="익명" class="annoyCheck"/>
+                    <v-btn type="submit" style="height:30px;color:#4c4c4c;" class="ml-3 mb-2 submit-button" color="#d8d8d8" @click="create">작성</v-btn>
+                </div>
         </v-form>
     </v-container>
 </template>

@@ -12,7 +12,7 @@
 				<div class="jmt-post-count">{{ postCnt }}</div>
 			</div>
 			<router-link v-if="this.$store.state.isLogin" :to="`/board/jmt/create`">
-				<v-btn class="mb-3" color="primary">맛집 후기 남기기</v-btn>
+				<div class="addButton mb-4" style="min-width:155px;font-size:0.85em">맛집 후기 남기기</div>
 			</router-link>
 			<v-layout>
 				<v-flex>
@@ -34,55 +34,7 @@
 				</v-flex>
 			</v-layout>
 		</div>
-		<div class="side-post-section" style="margin-left: 3%;">
-			<div class="popular-post">
-				<div class="popular-title pb-2 ma-2">실시간 인기 TOP3</div>
-				<div class="popular-post-list pt-2 ma-2">
-					<div class="popular-element popular-1 d-block">
-						<p>제목</p>
-						<p>작성자</p>
-					</div>
-					<div class="popular-element popular-2 d-block">
-						<p>제목</p>
-						<p>작성자</p>
-					</div>
-					<div class="popular-element popular-3 d-block">
-						<p>제목</p>
-						<p>작성자</p>
-					</div>
-				</div>
-			</div>
-			<div class="best-post">
-				<div class="best-title pb-2 ma-2">BEST 게시물</div>
-				<div class="best-post-list pt-2 ma-2">
-					<div class="best-element best-1">
-						<p class="d-block">제목</p>
-						<p style="display: inline;">작성자</p>
-						<p style="display: inline;"><i class="far fa-heart" style="float: right;">100</i></p>
-					</div>
-					<div class="best-element best-2 d-block">
-						<p>제목</p>
-						<p style="display: inline;">작성자</p>
-						<p style="display: inline;"><i class="far fa-heart" style="float: right;">99</i></p>
-					</div>
-					<div class="best-element best-3 d-block">
-						<p>제목</p>
-						<p style="display: inline;">작성자</p>
-						<p style="display: inline;"><i class="far fa-heart" style="float: right;">76</i></p>
-					</div>
-					<div class="best-element best-4 d-block">
-						<p>제목</p>
-						<p style="display: inline;">작성자</p>
-						<p style="display: inline;"><i class="far fa-heart" style="float: right;">54</i></p>
-					</div>
-					<div class="best-element best-5 d-block">
-						<p>제목</p>
-						<p style="display: inline;">작성자</p>
-						<p style="display: inline;"><i class="far fa-heart" style="float: right;">32</i></p>
-					</div>
-				</div>
-			</div>
-		</div>
+		<SidePost :categoryId="4" :locationId="regionObject[selectRegion]"/>
 	</div>
 </template>
 
@@ -90,10 +42,13 @@
 	import axios from 'axios'
 	import router from '@/router.js'
 	import BoardList from '@/components/board/boardCommonForm/BoardList'
+	import SidePost from '../SidePost'
+
 	export default {
 		name: 'JmtBoard',
 		components: {
 			BoardList,
+			SidePost
 		},
 		// props: {
 		//     category: { type: String },
@@ -102,7 +57,8 @@
 			return {
 				postCnt: 0,
 				selectRegion: 'All', // deafult를 로그인한 유저의 지역으로 하고 싶으면 이 부분 수정
-				regions: ['All', 'Seoul', 'Daejeon', 'Gawngju', 'Gumi', 'etc'],
+				regionObject: {'All': 0, 'Seoul': 1, 'Daejeon': 2, 'Gumi': 3, 'Gwangju': 4, 'etc': 5},
+				regions: ['All', 'Seoul', 'Daejeon', 'Gumi', 'Gwangju', 'etc'],
 				restaurants: '',
 				showCreatePost: 0,
 				annoymousStatus: false,

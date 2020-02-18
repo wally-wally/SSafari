@@ -1,6 +1,6 @@
 <template>
   <v-card class="contMobile">
-    <div v-if="signFlag" class="formMobile">
+    <div v-if="signFlag" class="formMobile responsiveCard">
       <h2>로그인</h2>
       <v-form ref="form" v-model="valid" lazy-validation @submit.prevent="login">
         <label class="label">
@@ -20,8 +20,7 @@
       </v-card-actions>
     </div>
 
-    <div v-else class="contMobile">
-      <div class="formMobile sign-in">
+    <div v-else class="formMobile responsiveCard">
         <h2>회원가입</h2>
         <v-form v-model="signupvalid" @submit.prevent="signup" class="login-form" style="display: inline;">
           <label class="label">
@@ -47,7 +46,6 @@
         <v-card-actions>
           <button type="submit" class="close button" @click="close">닫기</button>
         </v-card-actions>
-      </div>
     </div>
   </v-card>
 </template>
@@ -251,7 +249,6 @@
     transition: transform 1.2s ease-in-out;
     transition: transform 1.2s ease-in-out, -webkit-transform 1.2s ease-in-out;
   }
-
   .subLabel {
     display: block;
     width: 260px;
@@ -259,11 +256,15 @@
     height: 50px;
     text-align: center;
   }
-
   .submit {
     margin-top: 20px;
     margin-bottom: 20px;
     background: #d4af7a;
     text-transform: uppercase;
   }
+  .responsiveCard {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+}
 </style>

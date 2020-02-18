@@ -35,7 +35,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         (select count(*) from commentpost where categoryid=p.categoryid and postid=p.postid) comments
 		from posts p, category r, members m
 		where r.id=p.categoryid and p.memberid=#{memberid} and p.memberid=m.memberid )
-        order by created_at
+        order by created_at desc
 	</select>
 	
 	<select id="getPostsPaging"
@@ -63,7 +63,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="keyword!=null">and title like #{keyword}</if>
 	</select>
 
-	<select id="getPost" parameterType="java.lang.Integer"
+	<select id="getPost" parameterType="com.ssafy.edu.vue.dto.Postinfo"
 		resultType="com.ssafy.edu.vue.dto.Post">
 		select p.postid postid, p.title title, p.body body, p.created_at created_at, p.memberid memberid,
 		p.categoryid categoryid, p.anonymous anonymous, p.locationid locationid, if(p.anonymous=1, 'https://user-images.githubusercontent.com/52685250/73902320-c72d6c00-48d8-11ea-82b4-eb9bfebfe9fb.png', m.img) img,
@@ -257,7 +257,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         	(select count(*) from likepost where categoryid=p.categoryid and postid=p.postid) likes,
         	(select count(*) from commentpost where categoryid=p.categoryid and postid=p.postid) comments
 			from posts p, category r, members m
-			where r.id=p.categoryid and p.memberid=m.memberid  and created_at>=#{format}
+			where r.id=p.categoryid and p.memberid=m.memberid  and created_at>=#{format} and p.categoryid=#{categoryid}
 			<if test="locationid!=0">and p.locationid=#{locationid}</if>
         	order by comments desc, created_at desc limit 3
 			</otherwise>
@@ -290,7 +290,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         	(select count(*) from likepost where categoryid=p.categoryid and postid=p.postid) likes,
         	(select count(*) from commentpost where categoryid=p.categoryid and postid=p.postid) comments
 			from posts p, category r, members m
-			where r.id=p.categoryid and p.memberid=m.memberid  and created_at>=#{format}
+			where r.id=p.categoryid and p.memberid=m.memberid  and created_at>=#{format} and p.categoryid=#{categoryid}
 			<if test="locationid!=0">and p.locationid=#{locationid}</if>
         	order by likes desc, created_at desc limit 5
 			</otherwise>

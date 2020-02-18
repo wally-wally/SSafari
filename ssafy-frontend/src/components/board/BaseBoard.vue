@@ -55,22 +55,13 @@
 2. 특정인이나 단체/지역을 비방하는 행위 
 3. 기타 현행법에 어긋나는 행위"></textarea>
                     </p>
-                    <div class="post-form-footer d-flex">
-                        <div class="post-form-footer-att-ann d-flex col-10">
-                            <!-- <div class="post-footer-attach d-inline col-8">
-                                <v-file-input :rules="rules" v-model="imgFile" label="File input" class="post-attach-file" outlined dense accept="image/png, image/jpeg, image/bmp"></v-file-input>
-                            </div> -->
-                            <div class="post-footer-annoymous d-inline col-4">
-                                <v-checkbox v-model="annoymousStatus" label="익명" value="익명" class="annoyCheck"></v-checkbox>
-                            </div>
-                        </div>
-                        <div class="post-form-submit d-inline col-2">
-                            <v-btn class="submit-button" color="primary" @click="create">작성</v-btn>
-                        </div> 
+                    <div class="row justify-end mr-3">
+                            <v-checkbox dense hide-details="1" color="#ffc837" v-model="annoymousStatus" label="익명" value="익명" class="annoyCheck"></v-checkbox>
+                            <v-btn style="height:30px;color:#4c4c4c;" class="ml-3 mb-2 submit-button" color="#ffc837" @click="create">작성</v-btn>
                     </div>
                 </div>
             </div>
-            <div v-else-if="this.selectRegion !== 'All'">
+            <div v-else-if="this.selectRegion !== '0'">
                 <div class="d-flex justify-space-between" id="writeArticleButton" style="padding:15px">
                     글을 작성하려면 로그인을 먼저 하세요.
                 </div>
@@ -87,55 +78,7 @@
                 </v-flex>
             </v-layout>
         </div>
-        <div class="side-post-section" style="margin-left: 3%;">
-            <div class="popular-post">
-                <div class="popular-title pb-2 ma-2">실시간 인기 TOP3</div>
-                <div class="popular-post-list pt-2 ma-2">
-                    <div class="popular-element popular-1 d-block">
-                        <p>제목</p>
-                        <p>작성자</p>
-                    </div>
-                    <div class="popular-element popular-2 d-block">
-                        <p>제목</p>
-                        <p>작성자</p>
-                    </div>
-                    <div class="popular-element popular-3 d-block">
-                        <p>제목</p>
-                        <p>작성자</p>
-                    </div>
-                </div>
-            </div>
-            <div class="best-post">
-                <div class="best-title pb-2 ma-2">BEST 게시물</div>
-                <div class="best-post-list pt-2 ma-2">
-                    <div class="best-element best-1">
-                        <p class="d-block">제목</p>
-                        <p style="display: inline;">작성자</p>
-                        <p style="display: inline;"><i class="far fa-heart" style="float: right;">100</i></p>
-                    </div>
-                    <div class="best-element best-2 d-block">
-                        <p>제목</p>
-                        <p style="display: inline;">작성자</p>
-                        <p style="display: inline;"><i class="far fa-heart" style="float: right;">99</i></p>
-                    </div>
-                    <div class="best-element best-3 d-block">
-                        <p>제목</p>
-                        <p style="display: inline;">작성자</p>
-                        <p style="display: inline;"><i class="far fa-heart" style="float: right;">76</i></p>
-                    </div>
-                    <div class="best-element best-4 d-block">
-                        <p>제목</p>
-                        <p style="display: inline;">작성자</p>
-                        <p style="display: inline;"><i class="far fa-heart" style="float: right;">54</i></p>
-                    </div>
-                    <div class="best-element best-5 d-block">
-                        <p>제목</p>
-                       <p style="display: inline;">작성자</p>
-                        <p style="display: inline;"><i class="far fa-heart" style="float: right;">32</i></p>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <SidePost :categoryId="pageData.categoryid" :locationId="0"/>
     </div>
 </template>
 
@@ -143,10 +86,13 @@
     import axios from 'axios'
     import router from '@/router.js'
     import BoardList from '@/components/board/boardCommonForm/BoardList'
+    import SidePost from './SidePost'
+
     export default {
         name: 'BaseBoard',
         components: {
             BoardList,
+            SidePost
         },
         props: {
             boardname: { type: String },
@@ -154,7 +100,7 @@
         data() {
             return {
                 regions : [
-                    {name : 'All' , val : 0},
+                    { name : 'All' , val : 0},
                     { name : 'Seoul' , val : 1},
                     { name : 'Daejeon' , val : 2},
                     { name : 'Gumi' , val : 3},
@@ -369,17 +315,14 @@
     }
 
     .post-footer-annoymous {
-        padding: 0 0 0 10px;
+        float: right;
+        margin-right: 15px;
     }
 
     .submit-button {
         float: right;
+        background-image: url(/images/new/container.articles.write.submit.png);
     }
-
-    .annoyCheck {
-        margin: 0;
-    }
-
     .popular-post,
     .best-post {
         margin-bottom: 18px;

@@ -5,12 +5,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="ssafy.message">
 	<select id="getMessages" parameterType="java.lang.Integer"
 		resultType="com.ssafy.edu.vue.dto.Message">
-		select id, fromid, username, toid, title, content, created_at, isread from message, members where toid=#{memberid} and memberid=fromid order by created_at desc
+		select id, fromid, if(fromid=1,'관리자',username) as username, toid, title, content, created_at, isread from message, members where toid=#{memberid} and memberid=fromid order by created_at desc
 	</select>
 	
 	<select id="getSendMessages" parameterType="java.lang.Integer"
 		resultType="com.ssafy.edu.vue.dto.Message">
-		select id, fromid, toid, username, title, content, created_at, isread from message, members where fromid=#{memberid} and memberid=toid order by created_at desc
+		select id, fromid, toid, if(toid=1,'관리자',username) as username, title, content, created_at, isread from message, members where fromid=#{memberid} and memberid=toid order by created_at desc
 	</select>
 
 	<select id="getMessage" parameterType="java.lang.Integer"
