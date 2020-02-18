@@ -70,6 +70,15 @@
           <v-list-item-title>STUDYGROUP</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
+      
+      <v-list-item v-if="isLogin" to="/message">
+        <v-list-item-icon>
+          <v-icon class="fas fa-sticky-note"></v-icon>
+        </v-list-item-icon>
+        <v-list-item-content>
+          <v-list-item-title>MESSAGE BOX</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
 
       <v-list-item v-if="isLogin" to="/mypage">
         <v-list-item-icon>

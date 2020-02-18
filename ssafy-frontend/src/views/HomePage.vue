@@ -84,8 +84,8 @@ export default {
       let sectionUpperHalfHeight = (viewportHeight - HeaderHeight) / 2
 
       // section top value
-      let portfolioSectionTop = document.querySelector('.portfolio-image').getBoundingClientRect().top
-      let postSectionTop = document.querySelector('.post-image').getBoundingClientRect().top
+      let portfolioSectionTop = document.querySelector('.post-image').getBoundingClientRect().top
+      let postSectionTop = document.querySelector('.portfolio-image').getBoundingClientRect().top
 
       if (postSectionTop - HeaderHeight <= sectionUpperHalfHeight) {
         postIcon.style.color = colorSet[0]

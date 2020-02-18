@@ -59,16 +59,16 @@
 				<div>
 					<div class="ssafy-request-board-title" style="font-size: 35px; font-family: 'Do Hyeon'; text-align: center;">게시판 신청 관리</div>
 					<hr class="title-headline">
-					
-					  <v-data-table
-							v-model="selectedBoardRequests"
-							:headers="headers"
-							:items="boardRequests"
-							:items-per-page="10"
-							show-select
-							class="elevation-1"
-						></v-data-table>
-						<div class="d-flex justify-space-between pt-3">
+							<v-data-table
+								v-model="selectedBoardRequests"
+								:headers="headers"
+								:items="boardRequests"
+								:items-per-page="10"
+								show-select
+								class="elevation-1"
+								style="width: 90%; margin: 0 auto;"
+							></v-data-table>
+						<div class="d-flex justify-space-between pt-3" style="margin: 0 5%;">
 							<span>👉선택된 항목에 대해 수행할 동작 선택</span>
 							<div>
 								<v-btn class="ml-3" color="blue" @click="approveBulletin(selectedBoardRequests)"><span style="color: white;">승인</span></v-btn> <!-- @click="approveBulletin(boardRequest.id)" -->
