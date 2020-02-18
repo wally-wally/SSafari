@@ -35,7 +35,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         (select count(*) from commentpost where categoryid=p.categoryid and postid=p.postid) comments
 		from posts p, category r, members m
 		where r.id=p.categoryid and p.memberid=#{memberid} and p.memberid=m.memberid )
-        order by created_at
+        order by created_at desc
 	</select>
 	
 	<select id="getPostsPaging"

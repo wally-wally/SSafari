@@ -87,6 +87,33 @@ public class PortfolioController {
 	@RequestMapping(value = "/portfolio", method = RequestMethod.PUT)
 	public ResponseEntity<BoolResult> updatePortfolio(@RequestBody Portfolio portfolio) throws Exception {
 		logger.info("1-------------updatePortfolio-----------------------------" + new Date());
+		Portfolio port = portfolioservice.getPortfolio(portfolio.getPortfolioid());
+		logger.info("2----updatePortfolio---" + portfolio);
+		if(portfolio.getTitle()==null || portfolio.getTitle().equals("")) {
+			portfolio.setTitle(port.getTitle());
+		}
+		if(portfolio.getBody()==null || portfolio.getBody().equals("")) {
+			portfolio.setBody(port.getBody());
+		}
+		if(portfolio.getImg()==null || portfolio.getImg().equals("")) {
+			portfolio.setImg(port.getImg());
+		}
+		if(portfolio.getCapacity()==0) {
+			portfolio.setCapacity(port.getCapacity());
+		}
+		if(portfolio.getStartdate()==null || portfolio.getStartdate().equals("")) {
+			portfolio.setStartdate(port.getStartdate());
+		}
+		if(portfolio.getEnddate()==null || portfolio.getEnddate().equals("")) {
+			portfolio.setEnddate(port.getEnddate());
+		}
+		if(portfolio.getPrice()==0) {
+			portfolio.setPrice(port.getPrice());
+		}
+		if(portfolio.getLocationid()==0) {
+			portfolio.setLocationid(port.getLocationid());
+		}
+		logger.info("3----updatePortfolio---" + portfolio);
 		portfolioservice.updatePortfolio(portfolio);
 		BoolResult nr=new BoolResult();
    		nr.setName("updatePortfolio");
