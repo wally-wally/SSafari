@@ -2,11 +2,37 @@
 	<v-flex justify-center>
 		<div v-if="currentMemberId !== null && auth === 1">
 			<div>
-				<div id="create-form-title">
-					<span id="form-title">SSAFY 회원 인증 신청 관리</span>
-				</div>
+				<div class="ssafy-request-auth-title" id="form-title">SSAFY 회원 인증 신청 관리</div>
 				<hr class="title-headline">
-				<div v-for="ssafyRequest in ssafyRequests" :key="ssafyRequest.id">
+				<div v-for="ssafyRequest in ssafyRequests" :key="ssafyRequest.id" style="width: 90%; margin: 0 auto;">
+					<div class="ssafy-request-img">
+
+							<v-dialog v-model="showRequestImage" max-width="1000px">
+								<v-card>
+									<p class="text-center" style="padding-top: 30px; padding-bottom: 6px;">
+										<img :src="selectedImage" alt="" width="85%" >
+									</p>
+									<v-card-actions>
+										<v-spacer></v-spacer>
+										<v-btn color="#f7b157" text @click="showRequestImage = false">CLOSE</v-btn>
+									</v-card-actions>
+								</v-card>
+							</v-dialog>
+
+							<hr>
+						<v-img :src="ssafyRequest.img" width="200px" @click="ssafyReqDialog(ssafyRequest.img)"></v-img>
+					</div>
+					<div class="ssafy-request-info">
+						<p>{{ ssafyRequest.name }}</p>
+						<p>{{ ssafyRequest.location }} | {{ ssafyRequest.unit }}기</p>
+					</div>
+					<div class="ssafy-request-btn">
+						<v-btn class="mr-3 d-block mt-4 mb-2" color="blue" @click="approveSsafy(ssafyRequest.memberid)"><span style="color: white;">승인</span></v-btn>
+						<v-btn class="mr-3" color="red" @click="denySsafy(ssafyRequest.memberid)"><span style="color: white;">거절</span></v-btn>
+					</div>
+					<v-divider class="divide-line"></v-divider>
+				</div>
+				<!-- <div v-for="ssafyRequest in ssafyRequests" :key="ssafyRequest.id">
 					<v-card class="mb-3">
 						<div class="ssafyauth-img-wrapper d-inline">
 							<div v-if="selectedImage" max-width="85vw">
@@ -29,13 +55,27 @@
 						<v-btn class="mr-3" color="blue" @click="approveSsafy(ssafyRequest.memberid)">승인</v-btn>
 						<v-btn class="mr-3" color="red" @click="denySsafy(ssafyRequest.memberid)">거절</v-btn>
 					</v-card>
-				</div>
+				</div> -->
 				<div>
-					<div id="create-form-title">
-						<span id="form-title">게시판 신청 관리</span>
-						<hr class="title-headline">
-					</div>
-					<div v-for="boardRequest in boardRequests" :key="boardRequest.id">
+					<div class="ssafy-request-board-title" style="font-size: 35px; font-family: 'Do Hyeon'; text-align: center;">게시판 신청 관리</div>
+					<hr class="title-headline">
+					
+					  <v-data-table
+							v-model="selectedBoardRequests"
+							:headers="headers"
+							:items="boardRequests"
+							:items-per-page="10"
+							show-select
+							class="elevation-1"
+						></v-data-table>
+						<div class="d-flex justify-space-between pt-3">
+							<span>👉선택된 항목에 대해 수행할 동작 선택</span>
+							<div>
+								<v-btn class="ml-3" color="blue" @click="approveBulletin(selectedBoardRequests)"><span style="color: white;">승인</span></v-btn> <!-- @click="approveBulletin(boardRequest.id)" -->
+								<v-btn class="ml-3" color="red" @click="denyBulletin(selectedBoardRequests)"><span style="color: white;">거절</span></v-btn> <!--  @click="denyBulletin(boardRequest.id)" -->
+							</div>
+						</div>
+					<!-- <div v-for="boardRequest in boardRequests" :key="boardRequest.id">
 						<v-card class="mb-3">
 							<v-card-title>
 								<h3>게시판 이름: {{boardRequest.name}}</h3>
@@ -49,10 +89,9 @@
 							<v-btn class="mr-3" color="blue" @click="approveBulletin(boardRequest.id)">승인</v-btn>
 							<v-btn class="mr-3" color="red" @click="denyBulletin(boardRequest.id)">거절</v-btn>
 						</v-card>
-					</div>
+					</div> -->
 				</div>
 			</div>
-			<v-btn color="error" @click="back">돌아가기</v-btn>
 		</div>
 		<div v-else class="mt-10">
 			<h1 style="text-align:center; color:red">접근 권한이 없습니다</h1>
@@ -74,7 +113,18 @@
 				ssafyRequests: [],
 				boardRequests: [],
 				selectedImage: null,
+				showRequestImage: false,
 				auth: '',
+				headers: [
+					{
+						text: '게시판 이름',
+						align: 'left',
+						value: 'name'
+					},
+					{ text: '게시판 설명', value: 'explanation' },
+					{ text: '신청자', value: 'username' }
+				],
+				selectedBoardRequests: []
 			}
 		},
 		mounted() {
@@ -87,9 +137,12 @@
 			back() {
 				this.$router.push('/mypage')
 			},
-			zoom(url) {
-				this.selectedImage = url;
+			ssafyReqDialog(imgUrl) {
+				this.showRequestImage = true
+				this.selectedImage = imgUrl
 			},
+			// zoom(url) {
+			// },
 			getSsafyRequest() {
 				axios.get('api/member/authrequest')
 					.then(response => {
@@ -128,32 +181,62 @@
 						})
 				}
 			},
-			approveBulletin(id) {
-				var confirmation = confirm("해당 게시판을 승인하시겠습니까?");
+			approveBulletin(reqs) {
+				let confirmation = confirm('해당 게시판들을 승인하시겠습니까?')
 				if (confirmation) {
-					var data = {
-						id: id,
-						flag: 1
-					}
-					axios.put('api/boardcategory/auth', data)
+					this.selectedBoardRequests.forEach(request => {
+						let sendData = {
+							id: request.id,
+							flag: 1
+						}
+						axios.put('api/boardcategory/auth', sendData)
+							.then(response => {
+								this.getBoardRequest()
+							})
+					})
+				}
+			},
+			denyBulletin(reqs) {
+				let confirmation = confirm('해당 게시판을 거절하시겠습니까?')
+				if (confirmation) {
+					this.selectedBoardRequests.forEach(request => {
+						let sendData = {
+							id: request.id,
+							flag: 0
+						}
+						axios.put('api/boardcategory/auth', sendData)
 						.then(response => {
 							this.getBoardRequest()
 						})
+					})
 				}
-			},
-			denyBulletin(id) {
-				var confirmation = confirm("해당 게시판을 거절하시겠습니까?");
-				if (confirmation) {
-					var data = {
-						id: id,
-						flag: 0
-					}
-					axios.put('api/boardcategory/auth', data)
-						.then(response => {
-							this.getBoardRequest()
-						})
-				}
-			},
+			}
+			// approveBulletin(id) {
+			// 	var confirmation = confirm("해당 게시판을 승인하시겠습니까?");
+			// 	if (confirmation) {
+			// 		var data = {
+			// 			id: id,
+			// 			flag: 1
+			// 		}
+			// 		axios.put('api/boardcategory/auth', data)
+			// 			.then(response => {
+			// 				this.getBoardRequest()
+			// 			})
+			// 	}
+			// },
+			// denyBulletin(id) {
+			// 	var confirmation = confirm("해당 게시판을 거절하시겠습니까?");
+			// 	if (confirmation) {
+			// 		var data = {
+			// 			id: id,
+			// 			flag: 0
+			// 		}
+			// 		axios.put('api/boardcategory/auth', data)
+			// 			.then(response => {
+			// 				this.getBoardRequest()
+			// 			})
+			// 	}
+			// },
 		}
 	}
 </script>
