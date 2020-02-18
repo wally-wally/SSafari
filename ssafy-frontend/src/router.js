@@ -18,7 +18,7 @@ import StudyGroupPage from './views/StudyGroupPage.vue'
 import StudyGroupindex from './components/studygroup/StudyGroupindex.vue'
 import StudyGroupDetail from './components/studygroup/StudyGroupDetail.vue'
 import CodeCreate from  './components/board/codeboard/CodeCreate.vue'
-
+import boardsearch from './components/board/boardCommonForm/boardsearch.vue'
 import StudyGroupCreateForm from './components/studygroup/StudyGroupCreateForm.vue'
 import UpdateForm from './components/etc/UpdateForm.vue'
 import MemberModify from '@/components/login/MemberModify.vue'
@@ -57,6 +57,8 @@ export default new Router({
 			name: 'board',
 			component: BoardPage,
 			children : [
+				{ path : 'search' , name:"boardsearch", component: boardsearch , props:true},
+				{ path : 'search/:q' , name:"boardsearch" , component: boardsearch , props:true},
 				{ path : 'create', component: BoardCreate, name: 'BoardCreate'},
 				{ path : '', component : AllBoard },
 				{ path : 'code', name:"code", component : CodeBoard,},
@@ -67,7 +69,7 @@ export default new Router({
 				{ path : 'jmt/create', name: 'jmtcreate', component: RestaurantCreateForm},
 				{ path : 'jmt/:id', name : "jmtdetail", component : RestaurantDetail , props : true},
 				{ path : ':boardname', component: BaseBoard, props:true},
-				{ path : ':boardname/:id' , component: BoardDetail, props:true}
+				{ path : ':boardname/:id' , component: BoardDetail, props:true},
 			]
 		},
 		{

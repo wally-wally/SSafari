@@ -2,21 +2,20 @@ a {
   text-decoration: none;
 }
 
+.col {
+  padding:3px 0px;
+}
 .subheader-top {
-  height: 160px;
   background-color: lightgray;
   padding: 10px;
-  margin-bottom: 15px;
+  padding-bottom : 0px;
+  margin-bottom: 5px;
 }
 
 .subheader-section:first-child {
   border-right: 1px solid black;
-  padding: 5px 10px 5px 5px;
 }
 
-.subheader-section:last-child {
-  padding: 5px 5px 5px 10px;
-}
 
 .subheader-section-title-1,
 .subheader-section-title-2 {
@@ -25,15 +24,6 @@ a {
   font-weight: bold;
 }
 
-.subheader-section-title-1 {
-  padding-bottom: 12px;
-}
-
-.subheader-section-title-2 {
-  padding-bottom: 10px;
-  display: flex;
-  justify-content: space-between;
-}
 
 .createBoardBtn {
   font-size: 15px;
@@ -47,26 +37,11 @@ a {
   box-shadow: 1px 1px 5px darkslategrey;
 }
 
-#notice-search {
-  font-size: 14px;
-  background-color: white;
-  border: 1.5px solid darkgray;
-  padding: 2px;
+i:hover{
+  cursor: pointer;
 }
 
-.custom-notices {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-}
-
-#custom-notice {
-  padding-right: 10px;
-}
-
-@media (max-width: 628px) {
+@media (max-width: 890px) {
   .subheader-section-title-1,
   .subheader-section-title-2 {
     font-size: 15px;
@@ -83,9 +58,10 @@ a {
   .subheader-section-title-2 > span:nth-child(2) > div {
     margin-top: 5px;
   }
+
 }
 
-@media (min-width: 520px) {
+@media (min-width: 890px) {
   .free-notice::after {
     content: ' 자유게시판';
   }
@@ -106,13 +82,9 @@ a {
     content: ' 주변맛집';
   }
 
-  .common-notice {
-    display: inline-block;
-  }
 }
 
-@media (max-width: 520px) {
-
+@media (max-width: 890px) {
   .common-notice {
     display: block;
   }

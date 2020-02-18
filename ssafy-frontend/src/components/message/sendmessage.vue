@@ -74,6 +74,7 @@ export default {
   padding: 0;
 }
 
+
 .messageicon:hover {
   cursor:pointer;
 }
