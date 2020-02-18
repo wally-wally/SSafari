@@ -83,21 +83,21 @@
       <div v-if="selectMenuItem === -1">
         <div class="ma-8">
         <p class="mypage-profile-img" style="text-align: center;">
-					<img :src="this.$store.state.img" alt="mypage-profile-img" id="mypage-profile-image" style="margin-left: auto; margin-right: auto; display: block; width: 250px; height: 250px;">
+					<img :src="this.$store.state.img" alt="mypage-profile-img" id="mypage-profile-image" style="margin-top: 80px;margin-left: auto; margin-right: auto; display: block; width: 180px; height: 180px;border-radius: 50%;">
 				</p>
-        <table class="profile-table" style="margin: 0 auto; padding-top: 50px;">
+        <table class="profile-table" style="margin: 0 auto; padding-top: 35px;">
           <tr>
-            <td class="sort" style="padding: 5px 30px; border-right: 1.3px solid black; font-family: 'Noto Sans KR', sans-serif; font-size: 40px; font-weight: 600;">지역</td>
-            <td class="region-value" style="padding: 5px 30px; font-family: 'Nanum Gothic', sans-serif; font-size: 40px; font-weight: 600;">{{this.$store.state.locations[this.$store.state.locationid]}}</td>
+            <td class="sort" style="padding: 5px 30px; border-right: 1.3px solid black; font-family: 'Noto Sans KR', sans-serif; font-size: 18px; font-weight: 600;">지역</td>
+            <td class="region-value" style="padding: 5px 30px; font-family: 'Nanum Gothic', sans-serif; font-size: 18px; font-weight: 600;">{{this.$store.state.locations[this.$store.state.locationid]}}</td>
           </tr>
           <tr>
             <td class="py-2"></td>
             <td class="py-2"></td>
           </tr>
           <tr>
-            <td class="sort" style="padding: 5px 30px; border-right: 1.3px solid black; font-family: 'Noto Sans KR', sans-serif; font-size: 40px; font-weight: 600;">기수</td>
+            <td class="sort" style="padding: 5px 30px; border-right: 1.3px solid black; font-family: 'Noto Sans KR', sans-serif; font-size: 18px; font-weight: 600;">기수</td>
             <td v-if="this.$store.state.unit > 0" class="seires-value" style="padding: 5px 30px; font-family: 'Nanum Gothic', sans-serif; font-size: 40px; font-weight: 600;">{{this.$store.state.unit}}기</td>
-            <td v-else class="seires-value" style="padding: 5px 30px; font-family: 'Nanum Gothic', sans-serif; font-size: 40px; font-weight: 600;">싸피 미인증</td>
+            <td v-else class="seires-value" style="padding: 5px 30px; font-family: 'Nanum Gothic', sans-serif; font-size: 18px; font-weight: 600;">싸피 미인증</td>
           </tr>
         </table>
         </div>

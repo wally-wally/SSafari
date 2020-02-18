@@ -1,8 +1,9 @@
 <template>
 	<div class="myboardlist-t">
-		<div class="myboardlist-table">
-			<div class="myboardlist-table-row">
-				<div class="myboardlist-table-col col-header table-post-boardtype">
+		<div class="myboardlist-table" style="padding-top:50px">
+			<div class="myboardlist-table-row" style="font-weight:bold; height:50px; font-size:17px;">
+				내가 작성한 게시물
+				<!-- <div class="myboardlist-table-col col-header table-post-boardtype">
 					<p>종류</p>
 				</div>
 				<div class="myboardlist-table-col col-header table-post-title">
@@ -10,7 +11,7 @@
 				</div>
 				<div class="myboardlist-table-col col-header table-post-created_at">
 					<p>작성일</p>
-				</div>
+				</div> -->
 			</div>
 			<div class="myboardlist-table-row" v-for="post in posts" :key="`${post.categoryid}-${post.postid}`" @click="goToBoardDetail(post.categoryid, post.postid)">
 				<div class="myboardlist-table-col table-post-boardtype"><p class="text-center">{{ post.categoryname }}</p></div>

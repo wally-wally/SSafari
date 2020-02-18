@@ -1,10 +1,9 @@
 .myboardlist-t {
-  border-top: 3px solid #bcbcbc;
-  border-bottom: 3px solid #bcbcbc;
+  border-bottom: 1px solid #bcbcbc;
 }
 
 .myboardlist-table-col {
-  border-bottom: 0.4px solid #bcbcbc;
+  border-top: 0.4px solid #bcbcbc;
 }
 
 .myboardlist-table-row {
@@ -20,12 +19,14 @@
 .col-header > p {
   text-align: center;
   font-weight: bold;
-  font-size: 19px;
+  font-size: 15px;
 }
 
 .myboardlist-table-col {
+  font-size:13.5px;
+  line-height: 18px;
   display: table-cell;
-  padding: 8px 0;
+  padding: 10px 0;
 }
 
 .table-post-title {
@@ -87,7 +88,7 @@
 
 .myboardlist-table-row:hover {
   cursor: pointer;
-  background-color: #bcbcbc;
+  background-color:#ededed;
 }
 
 .myboardlist-table-row:first-child:hover {

@@ -2,8 +2,8 @@
 	<div class="github">
 		<div v-if="githubid === ''">
 			<p class="text-center" style="font-size: 150px;"><i class="fab fa-github-alt"></i></p>
-			<p class="text-center pb-6" style="font-size: 30px; font-family: 'Noto Sans KR', sans-serif; font-weight: 600;">Github ID를 등록하지 않았습니다.</p>
-			<p class="text-center" style="font-size: 20px; font-family: 'Noto Sans KR', sans-serif;">좌측 '회원정보 수정'에서 Github ID를 등록해주세요.</p>
+			<p class="text-center pb-6" style="font-size: 28px; font-family: 'Noto Sans KR', sans-serif; font-weight: 600;">Github ID를 등록하지 않았습니다.</p>
+			<p class="text-center" style="font-size: 15px; font-family: 'Noto Sans KR', sans-serif;">좌측 '회원정보 수정'에서 Github ID를 등록해주세요.</p>
 			</div>
 
 		<div v-else>
