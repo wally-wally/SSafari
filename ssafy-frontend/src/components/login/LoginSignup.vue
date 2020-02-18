@@ -17,7 +17,6 @@
           <button type="submit" class="close button" @click="close">닫기</button>
         </v-card-actions>
       </div>
-
       <div class="sub-cont">
         <div class="img">
           <div class="img__text m--up">
