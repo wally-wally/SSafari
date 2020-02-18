@@ -7,6 +7,7 @@ import com.ssafy.edu.vue.dto.CategoryPost;
 import com.ssafy.edu.vue.dto.Code;
 import com.ssafy.edu.vue.dto.Commentpost;
 import com.ssafy.edu.vue.dto.LocationFiltering;
+import com.ssafy.edu.vue.dto.Popular;
 import com.ssafy.edu.vue.dto.Post;
 import com.ssafy.edu.vue.dto.PostPaging;
 import com.ssafy.edu.vue.dto.Postinfo;
@@ -73,5 +74,9 @@ public interface IPostService {
 	int getTotalPost(PostPaging postpaging);
 
 	int getPostCategory(int postid);
+
+	List<Post> getPopularComment(Popular pop);
+
+	List<Post> getPopularLikes(Popular pop);
 
 }

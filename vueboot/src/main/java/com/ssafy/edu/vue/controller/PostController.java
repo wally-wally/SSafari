@@ -1,5 +1,6 @@
 package com.ssafy.edu.vue.controller;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -27,6 +28,7 @@ import com.ssafy.edu.vue.dto.Code;
 import com.ssafy.edu.vue.dto.Commentpost;
 import com.ssafy.edu.vue.dto.LocationFiltering;
 import com.ssafy.edu.vue.dto.Member;
+import com.ssafy.edu.vue.dto.Popular;
 import com.ssafy.edu.vue.dto.Portfolio;
 import com.ssafy.edu.vue.dto.Post;
 import com.ssafy.edu.vue.dto.PostPaging;
@@ -175,7 +177,6 @@ public class PostController {
 	@RequestMapping(value = "/commentpost", method = RequestMethod.GET)
 	public ResponseEntity<List<Commentpost>> getCommentPost(@ModelAttribute Postinfo postinfo, HttpServletRequest rs) throws Exception {
 		logger.info("1-------------getCommentPost-----------------------------" + new Date());
-		logger.info("2--------"+postinfo);
 		int memberid = 0;
 		if(rs.getAttribute("loginMember")!=null) {
 			Member member = (Member) rs.getAttribute("loginMember");
@@ -198,7 +199,6 @@ public class PostController {
 	@RequestMapping(value = "/commentpost", method = RequestMethod.POST)
 	public ResponseEntity<List<Commentpost>> addCommentPost(@RequestBody Commentpost commentpost) throws Exception {
 		logger.info("1-------------addCommentPost-----------------------------" + new Date());
-		logger.info("2----"+commentpost);
 		postservice.addCommentPost(commentpost);
 		Postinfo postinfo = new Postinfo(commentpost.getCategoryid(),commentpost.getPostid());
 		List<Commentpost> posts;
@@ -291,8 +291,6 @@ public class PostController {
 	@RequestMapping(value = "/boardcategory", method = RequestMethod.POST)
 	public ResponseEntity<BoolResult> addBoardCategory(@RequestBody Category category, HttpServletRequest rs) throws Exception {
 		logger.info("1-------------addBoardCategory-----------------------------" + new Date());
-		logger.info("2------------" + category);
-		logger.info("3-----"+rs.getAttribute("loginMember"));
 		BoolResult nr=new BoolResult();
 		int loginid = 0;
 		if (rs.getAttribute("loginMember") != null) {
@@ -355,7 +353,6 @@ public class PostController {
 	@RequestMapping(value = "/posts/page", method = RequestMethod.GET)
 	public ResponseEntity<List<Post>> getPostsPaging(@ModelAttribute PostPaging postpaging, HttpServletRequest rs) throws Exception {
 		logger.info("1-------------getPostsPaging-----------------------------" + new Date());
-		logger.info("2-------------"+postpaging);
 		int memberid = 0;
 		if(rs.getAttribute("loginMember")!=null) {
 			Member member = (Member) rs.getAttribute("loginMember");
@@ -397,17 +394,39 @@ public class PostController {
 		return new ResponseEntity<Boolean>(nextpage, HttpStatus.OK);
 	}
 	
-//	@ApiOperation(value = "인기 게시글", response = List.class)
-//	@RequestMapping(value = "/popular", method = RequestMethod.GET)
-//	public ResponseEntity<Boolean> getPopularPost(HttpServletRequest rs) throws Exception {
-//		logger.info("1-------------getPopularPost-----------------------------" + new Date());
+	@ApiOperation(value = "인기 게시글 댓글 TOP3", response = List.class)
+	@RequestMapping(value = "/popular/comment", method = RequestMethod.GET)
+	public ResponseEntity<List<Post>> getPopularComment(@ModelAttribute Popular pop, HttpServletRequest rs) throws Exception {
+		logger.info("1-------------getPopularComment-----------------------------" + new Date());
 //		int memberid = 0;
 //		if(rs.getAttribute("loginMember")!=null) {
 //			Member member = (Member) rs.getAttribute("loginMember");
 //			memberid = member.getMemberid();
 //		}
-//		boolean nextpage = false;
-//		
-//		return new ResponseEntity<Boolean>(nextpage, HttpStatus.OK);
-//	}
+		java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("yyyy-MM-dd");
+ 		Calendar c = Calendar.getInstance();
+ 		c.set(Calendar.DAY_OF_WEEK,Calendar.SUNDAY);
+ 		pop.setFormat(formatter.format(c.getTime()));
+ 		List<Post> posts = postservice.getPopularComment(pop);
+ 		
+		return new ResponseEntity<List<Post>>(posts, HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "인기 게시글 좋아요 TOP5", response = List.class)
+	@RequestMapping(value = "/popular/likes", method = RequestMethod.GET)
+	public ResponseEntity<List<Post>> getPopularLikes(@ModelAttribute Popular pop, HttpServletRequest rs) throws Exception {
+		logger.info("1-------------getPopularLikes-----------------------------" + new Date());
+		int memberid = 0;
+		if(rs.getAttribute("loginMember")!=null) {
+			Member member = (Member) rs.getAttribute("loginMember");
+			memberid = member.getMemberid();
+		}
+		java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("yyyy-MM-dd");
+ 		Calendar c = Calendar.getInstance();
+ 		c.set(Calendar.DAY_OF_WEEK,Calendar.SUNDAY);
+ 		pop.setFormat(formatter.format(c.getTime()));
+ 		List<Post> posts = postservice.getPopularLikes(pop);
+ 		
+		return new ResponseEntity<List<Post>>(posts, HttpStatus.OK);
+	}
 }
