@@ -48,7 +48,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		startdate=#{startdate},
 		enddate=#{enddate},
 		price=#{price},
-		locationid=#{locationid}
+		locationid=#{locationid},
 		created_at=now()
 		where
 		portfolioid=#{portfolioid}
