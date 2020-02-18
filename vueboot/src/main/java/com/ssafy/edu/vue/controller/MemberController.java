@@ -30,10 +30,12 @@ import com.ssafy.edu.vue.dto.CheckSignUp;
 import com.ssafy.edu.vue.dto.Facebook;
 import com.ssafy.edu.vue.dto.LikePost;
 import com.ssafy.edu.vue.dto.Member;
+import com.ssafy.edu.vue.dto.Message;
 import com.ssafy.edu.vue.dto.Portfolio;
 import com.ssafy.edu.vue.help.BoolResult;
 import com.ssafy.edu.vue.service.IJwtService;
 import com.ssafy.edu.vue.service.IMemberService;
+import com.ssafy.edu.vue.service.IMessageService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -49,9 +51,10 @@ public class MemberController {
 
 	@Autowired
 	private IMemberService memberservice;
-
 	@Autowired
 	private IJwtService jwtService;
+	@Autowired
+	private IMessageService messageservice;
 
 	@ApiOperation(value = "member 전체 목록 보기", response = List.class)
 	@RequestMapping(value = "/memberlist", method = RequestMethod.GET)
@@ -314,9 +317,11 @@ public class MemberController {
 			memberservice.updateMemberAuth(new Member(request.getMemberid(),2));
 			AuthRequest ar = memberservice.getAuthRequest(request.getMemberid());
 			memberservice.updateLocationUnit(ar);
+			messageservice.addMessage(new Message(1,request.getMemberid(),"SSAFY 인증 승인","SSAFY 인증 요청이 승인되었습니다."));
 			nr.setName("인증 승인");
 		}else {
-			memberservice.updateMemberAuth(new Member(request.getMemberid(),4));			
+			memberservice.updateMemberAuth(new Member(request.getMemberid(),4));
+			messageservice.addMessage(new Message(1,request.getMemberid(),"SSAFY 인증 거절","SSAFY 인증 요청이 거절되었습니다."));
 			nr.setName("인증 거절");
 		}
 		memberservice.deleteAuthRequest(request.getMemberid());
