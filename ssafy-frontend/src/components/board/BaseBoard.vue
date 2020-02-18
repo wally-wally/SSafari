@@ -55,22 +55,13 @@
 2. 특정인이나 단체/지역을 비방하는 행위 
 3. 기타 현행법에 어긋나는 행위"></textarea>
                     </p>
-                    <div class="post-form-footer d-flex">
-                        <div class="post-form-footer-att-ann d-flex col-10">
-                            <!-- <div class="post-footer-attach d-inline col-8">
-                                <v-file-input :rules="rules" v-model="imgFile" label="File input" class="post-attach-file" outlined dense accept="image/png, image/jpeg, image/bmp"></v-file-input>
-                            </div> -->
-                            <div class="post-footer-annoymous d-inline col-4">
-                                <v-checkbox v-model="annoymousStatus" label="익명" value="익명" class="annoyCheck"></v-checkbox>
-                            </div>
-                        </div>
-                        <div class="post-form-submit d-inline col-2">
-                            <v-btn class="submit-button" color="primary" @click="create">작성</v-btn>
-                        </div> 
+                    <div class="row justify-end mr-3">
+                            <v-checkbox dense hide-details="1" color="#ffc837" v-model="annoymousStatus" label="익명" value="익명" class="annoyCheck"></v-checkbox>
+                            <v-btn style="height:30px;color:#4c4c4c;" class="ml-3 mb-2 submit-button" color="#ffc837" @click="create">작성</v-btn>
                     </div>
                 </div>
             </div>
-            <div v-else-if="this.selectRegion !== 'All'">
+            <div v-else-if="this.selectRegion !== '0'">
                 <div class="d-flex justify-space-between" id="writeArticleButton" style="padding:15px">
                     글을 작성하려면 로그인을 먼저 하세요.
                 </div>
@@ -87,7 +78,33 @@
                 </v-flex>
             </v-layout>
         </div>
-        <div class="side-post-section" style="margin-left: 3%;">
+
+        <div  class="card" style="margin-left: 3%;">
+            <div class="board">
+                <h3><a>실시간 인기 글</a></h3>
+
+                <a class="articleb" href="/393744/v/103502297">
+                <p class="titleb">오늘은 '약속의세대' 프로미된지 1년 되는 날!</p>
+                <p class="small">한스트했던 때가 엊그제 같은데 벌써 1년이 지났네요ㅠ<br>
+                오늘이 딱 1년 되는 날이에요!!!!!<br>
+                2019 새내기였던,<br>
+                물론 아직은 새내기인 프로미들</p>
+                <h4>자유게시판</h4>
+                <ul class="status"><li class="vote active">23</li><li class="comment active">0</li></ul><hr>
+                </a>
+
+                <a class="articleb" href="/412618/v/103421194"><p>오늘 오랜만에 사진 보다가 조금 놀랐다...<br>20학번 샌액희들 세대명이 ‘빛나는 세대’ 잖아!!<br>근데 20찜질방 프로그램 이름이 ‘네가 빛나</p>
+                <h4>새내기게시판</h4>
+                <ul class="status"><li class="vote active">15</li><li class="comment active">11</li></ul><hr>
+                </a>
+            </div>
+        </div>
+
+
+
+
+
+        <!-- <div class="side-post-section" style="margin-left: 3%;">
             <div class="popular-post">
                 <div class="popular-title pb-2 ma-2">실시간 인기 TOP3</div>
                 <div class="popular-post-list pt-2 ma-2">
@@ -135,7 +152,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 </template>
 
@@ -369,17 +386,14 @@
     }
 
     .post-footer-annoymous {
-        padding: 0 0 0 10px;
+        float: right;
+        margin-right: 15px;
     }
 
     .submit-button {
         float: right;
+        background-image: url(/images/new/container.articles.write.submit.png);
     }
-
-    .annoyCheck {
-        margin: 0;
-    }
-
     .popular-post,
     .best-post {
         margin-bottom: 18px;
@@ -450,5 +464,103 @@
     color: #a6a6a6;
     font-size: 14px;
     background: #f9f9f9
+    }
+    .card{
+        margin-bottom: 5px;
+        border: 1px solid #d6d6d6;
+        background-color: #f9f9f9;
+        display: block;
+        height: 100%;
+    }
+    div.card h3 {
+        padding: 10px;
+    }
+    div.card h3 > a {
+        color: #3744a5;
+        line-height: 20px;
+        font-size: 14px;
+        font-weight: bold;
+        letter-spacing: -1px;
+    }
+    div.board > a {
+        display: block;
+        padding: 10px;
+        border-top: 1px solid #e3e3e3;
+        color: #666;
+        text-decoration: none;
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    }
+    div.card > div.board > a.articleb > p.titleb {
+        height: 18px;
+        font-weight: bold;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        
+    }
+    div.card > div.board > a.articleb > p { 
+        margin-bottom: 5px;
+        line-height: 18px;
+        overflow: hidden;
+        color: #4c4c4c;
+        font-size: 13px;
+        display: block;
+    }
+    div.card > div.board > a.articleb > p.small {
+        height: 32px;
+        line-height: 16px;
+        color: #737373;
+        font-size: 12px;
+    }
+    div.card > div.board > a.articleb > h4 {
+        float: left;
+        margin-right: 10px;
+        height: 14px;
+        line-height: 14px;
+        color: #a6a6a6;
+        font-size: 11px;
+        font-weight: bold;
+        letter-spacing: 0;
+        display: block;
+        margin-block-start: 1.33em;
+        margin-block-end: 1.33em;
+        margin-inline-start: 0px;
+        margin-inline-end: 0px;
+    }
+    div.card > div.board > a.articleb > ul.status {
+        float: left;
+    }
+    ul {
+        display: block;
+        margin-block-start: 1em;
+        margin-block-end: 1em;
+        margin-inline-start: 0px;
+        margin-inline-end: 0px;
+        padding-inline-start: 40px;
+        list-style: none;
+    }
+    a.articleb > ul.status > li {
+        float: left;
+        margin-right: 5px;
+        padding-left: 15px;
+        height: 14px;
+        line-height: 14px;
+        font-size: 11px;
+        letter-spacing: 0;
+        background-repeat: no-repeat;
+        background-size: 12px 12px;
+        background-position: left center;
+    }
+    hr {
+        clear: both;
+        width: 100%;
+        height: 0;
+        border: 0;
+        display: block;
+        unicode-bidi: isolate;
+        margin-block-start: 0.5em;
+        margin-block-end: 0.5em;
+        margin-inline-start: auto;
+        margin-inline-end: auto;
+        overflow: hidden;
     }
 </style>
