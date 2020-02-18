@@ -89,15 +89,17 @@ import axios from 'axios'
     },
     methods: {
       changeRead() {
-        this.isRead = true
-        axios.get(`api/message/${this.id}`, {
-						headers: {
-							'access-token': this.$store.state.token
-						}
-					})
-          .then(response => {
+        if (this.opponentId === this.$store.state.memberid) {
+          this.isRead = true
+          axios.get(`api/message/${this.id}`, {
+              headers: {
+                'access-token': this.$store.state.token
+              }
+            })
+            .then(response => {
 
-          })
+            })
+        }
       }
     }
   }
