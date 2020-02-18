@@ -13,7 +13,6 @@
     </v-card-text>
     <v-card-subtitle>
       <div id="writter-date">
-        <p>{{date.slice(2)}}</p>
         <p>{{ username }}</p>
       </div>
     </v-card-subtitle>

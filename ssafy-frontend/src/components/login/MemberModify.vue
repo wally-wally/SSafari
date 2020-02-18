@@ -12,7 +12,7 @@
             <v-text-field v-model="githubId" label="Github ID"></v-text-field>
           </label>
         </div>
-        <v-file-input :rules="rules" v-model="imgFile" label="File input" id="file" outlined dense style="width: 65%; margin: 0 auto;" class="mb-10"
+        <v-file-input :rules="rules" v-model="imgFile" label="프로필 이미지" id="file" outlined dense style="width: 65%; margin: 0 auto;" class="mb-10"
                       accept="image/png, image/jpeg, image/bmp"></v-file-input>
         <button type="submit" class="submit button" @click="memberModify">회원 정보 수정</button>
       </v-col>

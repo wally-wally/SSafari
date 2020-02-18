@@ -1,16 +1,18 @@
 <template>
 	<v-flex justify-center>
-		<h1 style="text-align:center">카페/식당을 검색해 주세요</h1>
+		<h1 style="text-align:center" class="cuteFont">식당 or 카페를 검색해 주세요</h1>
 		<div class="map_wrap">
-			<div id="map" style="width:100%;height:100%;"></div>
-			<div id="menu_wrap" class="bg_white">
+			<div id="map" style="width:100%;height:95%;" justify-center></div>
+			<div id="menu_wrap" style="height:90%;" class="bg_white">
 				<div class="option">
 					<div>
 						<!-- <form onsubmit="searchPlaces(); return false;"> -->
-						카페 or 식당<v-text-field v-model="keyword" class="title-form" id="keyword" @keyup.enter.native="createMap">
+						<span>식당 or 카페</span>
+						<v-text-field v-model="keyword" class="title-form" id="keyword" @keyup.enter.native="createMap">
 						</v-text-field>
 						<br>
-						<button class="searchButton" style="background-color:red" type="submit" @click="createMap">검색하기</button>
+						<button class="searchButton" style="background-color:#f55f20" type="submit"
+							@click="createMap">검색하기</button>
 						<!-- </form> -->
 					</div>
 				</div>
@@ -18,25 +20,23 @@
 				<div id="pagination"></div>
 			</div>
 		</div>
-		<div class="center" justify-center>
-			<div>Name</div>
+		<div class="center">
+			<div class="cuteFont" style="font-size:1.5rem">식당 or 카페 이름</div>
 			<div class="title-top">
-				<textarea v-model="name" class="title-form" disabled></textarea>
+				<textarea v-model="name" class="blueTextarea cuteFont" style="font-size:1.3rem" disabled></textarea>
 			</div>
-			<div>location</div>
+			<div class="cuteFont" style="font-size:1.5rem">지역</div>
 			<div class="title-top">
-				<textarea v-model="location" class="title-form" disabled></textarea>
+				<textarea v-model="location" class="blueTextarea cuteFont" style="font-size:1.3rem" disabled></textarea>
 			</div>
-			<div>Content</div>
+			<div class="cuteFont" style="font-size:1.5rem">내용</div>
 			<div class="title-top">
-				<textarea v-model="content" id="create-content" name="content"></textarea>
+				<textarea v-model="content" class="blueTextarea" name="content" style="height:200px"></textarea>
 			</div>
 			<div>
-				<div class="post-footer-annoymous d-inline col-4">
-					<v-checkbox v-model="anonymousStatus" label="익명" value="true" color="#ffc837" class="anonyCheck"></v-checkbox>
-				</div>
+				<v-checkbox v-model="anonymousStatus" label="익명" value="true" color="#ffc837" class="anonyCheck cuteFont"></v-checkbox>
 			</div>
-			<v-btn v-if="updateFlag" class="mr-5" color="#f7b157" @click="update">수정</v-btn>
+			<v-btn v-if="updateFlag" class="mr-5 cuteFont" color="#f7b157" @click="update">수정</v-btn>
 			<v-btn v-else class="mr-5" color="#f7b157" @click="create">작성</v-btn>
 			<v-btn color="error" @click="goBack">취소</v-btn>
 		</div>
@@ -63,9 +63,9 @@
 				mapOptions: '',
 				dataArray: '',
 				index: '',
-				name: '지도에서 선택해 주세요!',
+				name: '지도에서 선택시 자동 입력',
 				locationid: '',
-				location: '지도에서 선택해 주세요!',
+				location: '지도에서 선택시 자동 입력',
 				content: '',
 				anonymousStatus: false,
 				updateFlag: false,
@@ -74,7 +74,7 @@
 					2: '대전',
 					3: '구미',
 					4: '광주',
-					5: '기차'
+					5: '기타'
 				},
 				id: ''
 			}
@@ -127,8 +127,8 @@
 				}
 				axios.put('api/jmt/', credentials)
 					.then(response => {
-							alert('글이 수정되었습니다.')
-							this.$router.push('/board/jmt/')
+						alert('글이 수정되었습니다.')
+						this.$router.push('/board/jmt/')
 					})
 			},
 			goBack() {
@@ -390,14 +390,14 @@
 		},
 	}
 </script>
-
 <style>
 	.map_wrap,
 	.map_wrap * {
 		margin: 0;
 		padding: 0;
-		font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;
-		font-size: 12px;
+		font-family: 'Cute Font', cursive;
+		font-size: 17px;
+		border-radius: 30px;
 	}
 
 	.map_wrap a,
@@ -414,19 +414,22 @@
 		height: 500px;
 	}
 
+	#map {
+		border-radius: 20px;
+		border: 2px solid #f8b763;
+	}
 	#menu_wrap {
 		position: absolute;
 		top: 0;
 		left: 0;
 		bottom: 0;
-		width: 45%;
+		width: 35%;
 		margin: 10px 0 30px 10px;
 		padding: 5px;
 		overflow-y: auto;
 		background: rgba(255, 255, 255, 0.7);
 		z-index: 1;
 		font-size: 12px;
-		border-radius: 10px;
 	}
 
 	.bg_white {
@@ -596,7 +599,26 @@
 		width: 100%;
 		height: 30px;
 		resize: none;
-		box-shadow: 5px 5px 7px grey;
+		/* box-shadow: 5px 5px 7px grey; */
+	}
+
+	.blueTextarea {
+		width: 800px;
+		border: none;
+		border-radius: 20px;
+		outline: none;
+		padding: 5px;
+		font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;
+		font-size: 1em;
+		color: #676767;
+		transition: border 0.5s;
+		-webkit-transition: border 0.5s;
+		-moz-transition: border 0.5s;
+		-o-transition: border 0.5s;
+		border: solid 2px #f8b763;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
 	}
 
 	.searchButton {
@@ -608,6 +630,10 @@
 		font-size: 15px;
 		cursor: pointer;
 		background-color: white;
+	}
+
+	.cuteFont {
+		font-family: 'Cute Font', cursive;
 	}
 
 	#content-form {
