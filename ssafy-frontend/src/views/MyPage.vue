@@ -26,21 +26,40 @@
         </ul>
       </div>
 
-      <div class="mypage-description">My Page 설명서</div>
+      <div class="mypage-description" @click.stop="showMyPageDialog = true">My Page 설명서</div>
+      <v-dialog v-model="showMyPageDialog" max-width="700">
+        <v-card>
+          <v-card-title>My Page Description</v-card-title>
+          <v-divider></v-divider>
+          <v-card-text>
+            <div class="mypage-description-section pt-5">
+              <ul>
+                <li>회원정보 수정 : 닉네임, Github ID, 프로필 사진 업로드</li>
+                <li>비밀번호 변경 : 새로운 비밀번호로 변경</li>
+                <li>SSAFY 인증</li>
+                <ul>
+                  <li>비SSAFY인 : SSAFY인 인증 페이지가 보여짐</li>
+                  <li>SSAFY인 : SSAFY인임을 알려주는 alert창 나옴</li>
+                  <li>관리자 : SSAFY인 인증을 신청한 내역들이 나옴</li>
+                </ul>
+                <li>github 연동 : '회원정보 수정'에서 Github ID를 등록한 후에 이용 가능, github 기본 정보와 repository 관련 내용을 볼 수 있음</li>
+                <li>gitlab 연동 : '회원정보 수정'에서 SSAFY Gitlab ID를 등록한 후에 이용가능, SSAFY gitlab에 생성된 내 repository 관련 내용을 볼 수 있음</li>
+                <li>회원탈퇴 : 클릭 시 정말로 회원탈퇴를 진행하는 것이 맞는지 확인하는 alert 창이 나옴</li>
+                <li>게시글 관리 : 게시판, 스터디 모임에 내가 작성한 게시글을 볼 수 있고 'Likes'는 내가 좋아요를 누른 게시글들을 볼 수 있음</li>
+              </ul>
+            </div>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="#f7b157" text @click="showMyPageDialog = false">
+              CLOSE
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
     </div>
 
-    <div class="d-none d-md-block col-md-10 mypage-section">
-      <MemberModify v-if="smallMenu.indexOf(selectMenuItem) === 0"/>
-      <PasswordModify v-if="smallMenu.indexOf(selectMenuItem) === 1"/>
-      <MakeSsafyAuth v-if="smallMenu.indexOf(selectMenuItem) === 2"/>
-      <GithubInfo v-if="smallMenu.indexOf(selectMenuItem) === 3" :githubid="githubid"/>
-      <MyBoardList v-if="smallMenu.indexOf(selectMenuItem) === 6"/>
-      <MyStudyGroupList v-if="smallMenu.indexOf(selectMenuItem) === 7"/>
-      <MyLikeList v-if="smallMenu.indexOf(selectMenuItem) === 8"/>
-    </div>
-
-    <!-- 태블릿, 모바일 사이즈일 때 mypage menu -->
-    <div class="mypage-menu-small">
+    <div class="d-block d-md-none mypage-menu-small">
       <div class="d-flex justify-space-between">
         <div class="mypage-menu-title d-inline">Select Menu</div>
         <div class="mypage-menu-select d-inline">
@@ -59,10 +78,34 @@
       </div>
     </div>
 
-    <div class="mypage-menu-small-show">
+    <div class="d-block col-md-10 mypage-section">
+      <div v-if="selectMenuItem === -1">
+        <v-card class="mx-auto" max-width="434" tile>
+          <v-img height="100%" src="https://cdn.vuetifyjs.com/images/cards/server-room.jpg">
+            <v-row align="end" class="fill-height">
+              <v-col align-self="start" class="pa-0" cols="12">
+                <v-avatar class="profile" color="grey" size="164" tile>
+                  <v-img :src="this.$store.state.img"></v-img>
+                </v-avatar>
+              </v-col>
+              <v-col class="py-0">
+                <v-list-item color="rgba(0, 0, 0, .4)" dark>
+                  <v-list-item-content>
+                    <v-list-item-title class="title">{{currentUsername}}</v-list-item-title>
+                    <v-list-item-subtitle>지역: {{this.$store.state.locations[this.$store.state.locationid]}}
+                    </v-list-item-subtitle>
+                    <v-list-item-subtitle>기수: {{this.$store.state.unit}}</v-list-item-subtitle>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-col>
+            </v-row>
+          </v-img>
+        </v-card>
+      </div>
       <MemberModify v-if="smallMenu.indexOf(selectMenuItem) === 0"/>
       <PasswordModify v-if="smallMenu.indexOf(selectMenuItem) === 1"/>
-      <MakeSsafyAuth v-if="smallMenu.indexOf(selectMenuItem) === 2"/>
+      <MakeSsafyAuth v-if="smallMenu.indexOf(selectMenuItem) === 2 && this.ssafyAuth === 1"/>
+      <SsafyAuth v-if="smallMenu.indexOf(selectMenuItem) === 2 && this.ssafyAuth === 4"/>
       <GithubInfo v-if="smallMenu.indexOf(selectMenuItem) === 3" :githubid="githubid"/>
       <MyBoardList v-if="smallMenu.indexOf(selectMenuItem) === 6"/>
       <MyStudyGroupList v-if="smallMenu.indexOf(selectMenuItem) === 7"/>
@@ -102,6 +145,7 @@ import axios from 'axios'
 import MemberModify from '../components/login/MemberModify'
 import PasswordModify from '../components/login/PasswordModify'
 import MakeSsafyAuth from '../components/login/MakeSsafyAuth'
+import SsafyAuth from '../components/login/SsafyAuth'
 import MyStudyGroupList from '../components/studygroup/MyStudyGroupList'
 import MyBoardList from '../components/board/MyPageBoard/MyBoardList'
 import MyLikeList from '../components/board/MyPageBoard/MyLikeList.vue'
@@ -115,6 +159,7 @@ export default {
       MemberModify,
       PasswordModify,
       MakeSsafyAuth,
+      SsafyAuth,
       MyStudyGroupList,
       MyBoardList,
       MyLikeList,
@@ -131,7 +176,8 @@ export default {
         ssafyAuth: '',
         myPageStatus: null,
         smallMenu: ['회원정보 수정', '비밀번호 변경', 'SSAFY 인증', 'github 연동', 'gitlab 연동', '회원탈퇴', '게시판', '스터디 모임', 'Likes'],
-        selectMenuItem: null
+        selectMenuItem: -1,
+        showMyPageDialog: false
       }
     },
     methods: {

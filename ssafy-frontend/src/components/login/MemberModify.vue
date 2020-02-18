@@ -1,6 +1,25 @@
 <template>
-  <div class="">
-    <h2>회원정보 수정</h2>
+  <v-container fluid>
+    <v-row>
+      <v-col cols="12">
+        <div class="mb-9">
+          <label class="label" style="width: 60%;">
+            <v-text-field v-model="nickname" label="닉네임"></v-text-field>
+          </label>
+        </div>
+        <div class="mb-12">
+          <label class="label" style="width: 60%;">
+            <v-text-field v-model="githubId" label="Github ID"></v-text-field>
+          </label>
+        </div>
+        <v-file-input :rules="rules" v-model="imgFile" label="File input" id="file" outlined dense style="width: 65%; margin: 0 auto;" class="mb-10"
+                      accept="image/png, image/jpeg, image/bmp"></v-file-input>
+        <button type="submit" class="submit button" @click="memberModify">회원 정보 수정</button>
+      </v-col>
+    </v-row>
+  </v-container>
+
+  <!-- <div class="">
     <v-form ref="form" lazy-validation @submit.prevent="">
       <label class="label">
         <v-text-field v-model="nickname" label="닉네임"></v-text-field>
@@ -15,7 +34,7 @@
     <v-card-actions>
       <button type="submit" class="close button" @click="back">뒤로 가기</button>
     </v-card-actions>
-  </div>
+  </div> -->
 </template>
 
 <script>
@@ -48,9 +67,9 @@
       }
     },
     methods: {
-      back() {
-        this.$router.push('/mypage')
-      },
+      // back() {
+      //   this.$router.push('/mypage')
+      // },
       memberModify() {
         if (this.imgFile === null) {
           var data = {

@@ -46,20 +46,20 @@
         <v-card-text class="text--primary">
           <div>{{ intro }}</div>
         </v-card-text>
+        <v-card-text class="text--primary main-skills-mobile">
+          <div class="main-skills-title" style="font-size: 19px; font-weight: 550; padding-bottom: 7px;">Main Skills</div>
+          <div class="skill-tags-mobile">
+            <v-chip v-for="i in this.skills.length" :key="i" :color="fontColor[skills[i - 1]]">{{ skills[i - 1] }}</v-chip>
+          </div>
+        </v-card-text>
 
         <v-card-actions>
-          <v-btn
-            color="orange"
-            text
-          >
-            Github
+          <v-btn color="orange" text>
+            <a class="mob-btn" :href="`${gitUrl}`" target="_blank">Github</a>
           </v-btn>
 
-          <v-btn
-            color="orange"
-            text
-          >
-            E-mail
+          <v-btn color="orange" text>
+            <a class="mob-btn" :href="`mailto:${email}`">E-mail</a>
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -114,13 +114,13 @@ export default {
 	data() {
 		return {
 			fontColor: {
-				'MySQL': 'primary',
-				'Spring': 'orange',
-				'HTML': 'blue',
-				'AWS': 'purple',
-				'Vue.js': 'green',
-				'CSS': 'pink',
-				'UI/UX': 'lime'
+				'MySQL': '#6D77D9',
+				'Spring': '#A5DC71',
+				'HTML': '#F48222',
+				'AWS': '#F19D3F',
+				'Vue.js': '#4FCD75',
+				'CSS': '#6E88F1',
+				'UI/UX': '#F16EB7'
 			}
 		}
 	},

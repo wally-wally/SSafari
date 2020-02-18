@@ -160,10 +160,13 @@
     import axios from 'axios'
     import router from '@/router.js'
     import BoardList from '@/components/board/boardCommonForm/BoardList'
+    import SidePost from './SidePost'
+
     export default {
         name: 'BaseBoard',
         components: {
             BoardList,
+            SidePost
         },
         props: {
             boardname: { type: String },
@@ -171,7 +174,7 @@
         data() {
             return {
                 regions : [
-                    {name : 'All' , val : 0},
+                    { name : 'All' , val : 0},
                     { name : 'Seoul' , val : 1},
                     { name : 'Daejeon' , val : 2},
                     { name : 'Gumi' , val : 3},
@@ -268,7 +271,7 @@
 
                 axios.get('api/posts/page', {params:this.pageData})
                     .then(response => {
-                        console.log(response)
+                        console.log(response, 87684597648957694857645986789)
                         this.boards = response.data
                         this.boardCount = this.boards.length
                     })

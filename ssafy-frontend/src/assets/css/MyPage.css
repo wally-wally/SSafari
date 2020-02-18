@@ -77,6 +77,15 @@ ul[class='mypost-menu'] > li:hover {
   cursor: pointer;
 }
 
+.mypage-description-section ul {
+  padding-left: 16px;
+}
+
+.mypage-description-section ul > li {
+  font-size: 14.5px;
+  padding-bottom: 6px;
+}
+
 .mypage-menu-small {
   height: 80px;
   background-color: #F9F3ED;
@@ -101,16 +110,13 @@ ul[class='mypost-menu'] > li:hover {
     display: flex;
   }
 
-  .mypage-menu-small,
-  .mypage-menu-small-show {
+  .mypage-menu-small {
     display: none;
   }
 }
 
 @media (max-width: 959px) {
-  .mypage,
-  .mypage-menu-small,
-  .mypage-menu-small-show {
+  .mypage {
     display: block;
   }
 }

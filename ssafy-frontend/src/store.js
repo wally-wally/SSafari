@@ -20,7 +20,7 @@ export default new Vuex.Store({
         categorys : {
             '1' : 'free',
             '2' : 'job',
-            '3' : 'codereview',
+            '3' : 'code',
             '4' : 'jmt'
          },
         region: {

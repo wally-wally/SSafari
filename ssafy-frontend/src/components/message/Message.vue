@@ -5,7 +5,7 @@
         <v-card-title class="headline">제목: {{ title }}</v-card-title>
         <v-card-text>
           상대: {{ opponent }}
-          <sendmessage :username="opponent" :id="opponentId"/>
+          <sendmessage :username="opponent" :id="opponentId" />
         </v-card-text>
         <v-divider></v-divider>
         <v-card-text>
@@ -22,11 +22,10 @@
     <div class="faq-section__qnas">
       <div class="qna animate">
         <div class="qna__q" style="display: flex; justify-content:space-between;">
-          <div class="post-list-title" style="margin-right: 15px;"><span style="color:#F67280">{{opponent}}</span> |
-            {{title}}</div>
-            <div v-if="isRead" style="color:red">
-              <b>읽었당</b>
-            </div>
+          <div class="post-list-title" style="margin-right: 15px;"><span style="color:#F67280">{{opponent}}</span> | {{title}}</div>
+          <div v-if="isRead" style="color:red">
+            <b>읽었당</b>
+          </div>
           <div style="font-size: 0.8em; min-width: 87px;">
             <span class="board-date"
               style="margin-left: 8px; border-left: 1px solid black; padding-left: 8px;">{{date.slice(2, 16)}}</span>
@@ -39,8 +38,8 @@
 </template>
 
 <script>
-import sendmessage from './sendmessage'
-import axios from 'axios'
+  import sendmessage from './sendmessage'
+  import axios from 'axios'
 
   export default {
     name: 'Message',
@@ -74,7 +73,7 @@ import axios from 'axios'
       },
       read: {
         type: Number
-      }
+      },
     },
     computed: {
       postYearMonth() {
@@ -89,15 +88,14 @@ import axios from 'axios'
     },
     methods: {
       changeRead() {
-        this.isRead = true
-        axios.get(`api/message/${this.id}`, {
-						headers: {
-							'access-token': this.$store.state.token
-						}
-					})
-          .then(response => {
-
-          })
+        if (this.opponentId === this.$store.state.memberid) {
+          this.isRead = true
+          axios.get(`api/message/${this.id}`, {
+              headers: {
+                'access-token': this.$store.state.token
+              }
+            })
+        }
       }
     }
   }
