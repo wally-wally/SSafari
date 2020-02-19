@@ -28,6 +28,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 	
 	<select id="checkUnread" parameterType="java.lang.Integer" resultType="java.lang.Integer">
-		select count(*) where toid=#{memberid} and isread=0
+		select count(*) from message where toid=#{memberid} and isread=0
 	</select>
 </mapper>
