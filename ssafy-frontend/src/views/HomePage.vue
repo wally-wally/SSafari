@@ -1,6 +1,30 @@
 <template>
   <div class="homepage-contents" id="main">
-    <div class="scroll-alert">Learn to share!<br>Share to Learn!</div>
+    <div class="scroll-alert">
+      <div class="container-box">
+        <div class="row">
+          <div class="col-12 col-md-6 short-page-intro">
+            <div class="page-title animated fadeInLeft">SSafari</div>
+            <div class="page-introduction-short">
+              <p class="pb-2 animated fadeInLeft">SSAFY Community Webpage made by Team A5.</p>
+              <p class="pb-5 animated fadeInLeft">A variety of Board, Study Group.</p>
+              <button type="button" class="team-intro-button animated jackInTheBox delay-2s" @click="goTeamIntro()">Team A5 Introduction</button>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="img-box">
+              <img src="../assets/images/ssafari_logo-02.png" class="ssafari-logo-one animated fadeInRight" alt="ssafari-logo--one-image">
+              <img src="../assets/images/ssafari_logo-03.png" class="ssafari-logo-two animated fadeInRight" alt="ssafari-logo-two-image">
+              <img src="../assets/images/blog.png" class="ssafari-logo-three animated zoomIn delay-1s" alt="ssafari-logo-three-image">
+              <img src="../assets/images/code.png" class="ssafari-logo-four animated zoomIn delay-1s" alt="ssafari-logo-four-image">
+              <img src="../assets/images/collaboration.png" class="ssafari-logo-five animated zoomIn delay-1s" alt="ssafari-logo-five-image">
+              <img src="../assets/images/laptop.png" class="ssafari-logo-six animated zoomIn delay-1s" alt="ssafari-logo-six-image">
+              <img src="../assets/images/speech_bubble.png" class="ssafari-logo-seven animated zoomIn delay-1s" alt="ssafari-logo-seven-image">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <section id="homepage-imgbanner"></section>
     <div class="container-fluid">
       <v-img class="post-image"
@@ -45,6 +69,7 @@ import StudyGroupListMain from '../components/studygroup/StudyGroupListMain'
 import BoardListMain from '../components/board/boardCommonForm/BoardListMain'
 import AllBoard from '../components/board/AllBoard'
 import '../assets/css/HomePage.css'
+import '../assets/css/animate.min.css'
 export default {
 	name: 'HomePage',
 	components: {
@@ -70,6 +95,9 @@ export default {
     },
     goAddPost: function() {
       this.$router.push('post/create')
+    },
+    goTeamIntro() {
+      this.$router.push('/teamintro')
     },
     fnMove(seq){
       var offset = $("#" + seq).offset();
