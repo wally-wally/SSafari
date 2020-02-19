@@ -12,7 +12,7 @@
 						<v-text-field v-model="password2" type="password" label="비밀번호 재확인"></v-text-field>
 					</label>
         </div>
-        <button type="submit" class="submit button" @click="passwordModify">비밀번호 수정</button>
+        <button type="submit" class="submit button" @click="passwordModify" style="background-color:#ffc837">비밀번호 수정</button>
       </v-col>
     </v-row>
   </v-container>

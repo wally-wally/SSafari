@@ -89,5 +89,6 @@ public interface IPostService {
 
 	int getPortfolioCount();
 
+	Category getBoardCategoryInfo(int id);
 
 }

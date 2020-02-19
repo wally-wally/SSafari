@@ -172,4 +172,8 @@ public class PostDaoImpl {
 	}
 
 
+	public Category getBoardCategoryInfo(int id) {
+		return sqlSession.selectOne(ns+"getBoardCategoryInfo",id);
+	}
+
 }

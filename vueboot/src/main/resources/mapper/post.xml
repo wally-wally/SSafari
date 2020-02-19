@@ -209,6 +209,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select id, name, explanation, memberid from category where id>=5
 	</select>
 	
+	<select id="getBoardCategoryInfo" parameterType="java.lang.Integer" resultType="com.ssafy.edu.vue.dto.Category">
+		select name, explanation from category where id=#{id}
+	</select>
+	
 	<select id="getBoardCategoryAuth"  resultType="com.ssafy.edu.vue.dto.Category">
 		select c.id, c.name, c.explanation, c.memberid, m.username from categoryauth c, members m 
 		where c.memberid=m.memberid

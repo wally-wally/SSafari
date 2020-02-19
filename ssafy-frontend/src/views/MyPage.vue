@@ -11,7 +11,6 @@
           <li @click="showMyPageSection(2)" class="ssafy-auth" v-if="ssafyAuth === 1"><i class="fas fa-id-card-alt"></i>Admin Page</li>
           <li @click="showMyPageSection(2)" class="ssafy-auth" v-else><i class="fas fa-id-card-alt"></i>SSAFY 인증</li>
           <li @click="showMyPageSection(3)" class="github-page"><i class="fab fa-github"></i>github 연동</li>
-          <li @click="showMyPageSection(4)" class="gitlab-page"><i class="fab fa-gitlab"></i>gitlab 연동</li>
           <li @click="memberDropOut"><i class="fas fa-sign-out-alt"></i>회원탈퇴</li>
         </ul>
       </div>
@@ -44,7 +43,6 @@
                   <li>관리자 : SSAFY인 인증을 신청한 내역들이 나옴</li>
                 </ul>
                 <li>github 연동 : '회원정보 수정'에서 Github ID를 등록한 후에 이용 가능, github 기본 정보와 repository 관련 내용을 볼 수 있음</li>
-                <li>gitlab 연동 : '회원정보 수정'에서 SSAFY Gitlab ID를 등록한 후에 이용가능, SSAFY gitlab에 생성된 내 repository 관련 내용을 볼 수 있음</li>
                 <li>회원탈퇴 : 클릭 시 정말로 회원탈퇴를 진행하는 것이 맞는지 확인하는 alert 창이 나옴</li>
                 <li>게시글 관리 : 게시판, 스터디 모임에 내가 작성한 게시글을 볼 수 있고 'Likes'는 내가 좋아요를 누른 게시글들을 볼 수 있음</li>
               </ul>
@@ -196,7 +194,7 @@ export default {
         social: '',
         ssafyAuth: '',
         myPageStatus: null,
-        smallMenu: ['회원정보 수정', '비밀번호 변경', this.$store.state.auth === 1 ? 'Admin Page' : 'SSAFY 인증', 'github 연동', 'gitlab 연동', '회원탈퇴', '게시판', '스터디 모임', 'Likes'],
+        smallMenu: ['회원정보 수정', '비밀번호 변경', this.$store.state.auth === 1 ? 'Admin Page' : 'SSAFY 인증', 'github 연동', '회원탈퇴', '게시판', '스터디 모임', 'Likes'],
         selectMenuItem: -1,
         showMyPageDialog: false
       }

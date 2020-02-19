@@ -247,4 +247,8 @@ public class PostServiceImpl implements IPostService {
 	}
 
 
+	public Category getBoardCategoryInfo(int id) {
+		return postdao.getBoardCategoryInfo(id);
+	}
+
 }
