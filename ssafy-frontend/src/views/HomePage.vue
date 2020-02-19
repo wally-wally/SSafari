@@ -13,8 +13,7 @@
           </div>
           <div class="col-12 col-md-6">
             <div class="img-box">
-              <img src="../assets/images/ssafari_logo-02.png" class="ssafari-logo-one animated fadeInRight" alt="ssafari-logo--one-image">
-              <img src="../assets/images/ssafari_logo-03.png" class="ssafari-logo-two animated fadeInRight" alt="ssafari-logo-two-image">
+              <img src="../assets/images/ssafari_logo-01.png" class="ssafari-logo-one animated fadeInRight" alt="ssafari-logo--one-image">
               <img src="../assets/images/blog.png" class="ssafari-logo-three animated zoomIn delay-1s" alt="ssafari-logo-three-image">
               <img src="../assets/images/code.png" class="ssafari-logo-four animated zoomIn delay-1s" alt="ssafari-logo-four-image">
               <img src="../assets/images/collaboration.png" class="ssafari-logo-five animated zoomIn delay-1s" alt="ssafari-logo-five-image">
@@ -30,11 +29,11 @@
       <v-img class="post-image"
              id="post"
              aspect-ratio="2.15">
-        <div class="post-contents">
+        <div class="post-contents mt-10">
           <div class="post-title">게시판</div>
           <div data-aos="fade-up" class="post-contents">
             <!-- <BoardListMain></BoardListMain> -->
-            <div>
+            <div class="mt-10">
               <AllBoard></AllBoard>
             </div>
           </div>
@@ -44,12 +43,12 @@
       <v-img class="portfolio-image"
              id="portfolio"
              aspect-ratio="2.15">
-        <div class="portfolio-contents">
+        <div class="portfolio-contents mt-10">
           <div class="portfolio-title">스터디 모임</div>
           <div class="button-box">
             <div class="addButton" @click="goAddStudyGroup">스터디 모집하기</div>
           </div>
-          <div data-aos="fade-up" class="portfolio-carousel">
+          <div data-aos="fade-up" class="portfolio-carousel mt-10">
             <StudyGroupListMain></StudyGroupListMain>
           </div>
         </div>
@@ -106,7 +105,7 @@ export default {
     sideBarColorChange:function() {
       // screen height variable
       let value = window.scrollY
-      section.style.clipPath = 'circle(' + value + 'px at center)'
+      section.style.clipPath = 'circle(' + value + 'px at 50% 70%)'
       let viewportHeight = document.documentElement.clientHeight
       let HeaderHeight = document.querySelector('Header').style.height.split('px')[0]
       let sectionUpperHalfHeight = (viewportHeight - HeaderHeight) / 2
