@@ -120,8 +120,7 @@
     display: none;
   }
 
-  .img-box > img:first-child,
-  .img-box > img:nth-child(2) {
+  .img-box > img:first-child {
     display: block;
   }
 
@@ -154,7 +153,8 @@
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
-  clip-path: circle(0px at center);
+  /* clip-path: circle(0px at center); */
+  clip-path: circle(0px at 50% 70%);
   opacity: 0.5;
   /* background-blend-mode: normal; */
 }
@@ -181,15 +181,14 @@
   line-height: 2;
 }
 
-.team-intro-text,
 .portfolio-title,
 .post-title {
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Noto Sans KR', sans-serif;
   font-weight: bold;
   color: rgb(124, 127, 136);
   text-align: left;
   vertical-align: middle;
-  padding: 10px 10px 0;
+  padding-top: 10px;
 }
 
 .intro-text-1 {
@@ -216,7 +215,7 @@
   .team-intro-text,
   .portfolio-title,
   .post-title {
-    font-size: 2.75em;
+    font-size: 2.1em;
   }
 
   .team-slogan {
@@ -239,7 +238,7 @@
 .intro-text-1,
 .portfolio-title,
 .post-title {
-  margin-left: 13%;
+  margin-left: 10%;
   display: inline;
 }
 

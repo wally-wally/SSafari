@@ -1,0 +1,15 @@
+.admin-wrapper {
+  border-bottom: 1px solid #bcbcbc;
+}
+
+.admin-table-col {
+  border-top: 0.4px solid #bcbcbc;
+  font-size:13.5px;
+  line-height: 18px;
+  padding: 12px 0;
+  display: table-cell;
+}
+
+.admin-table-row {
+  display: table-row;
+}

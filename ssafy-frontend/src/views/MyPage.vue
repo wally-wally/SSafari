@@ -8,10 +8,10 @@
         <ul class="member-management-menu">
           <li @click="showMyPageSection(0)" class="user-edit"><i class="fas fa-user-edit"></i>회원정보 수정</li>
           <li @click="showMyPageSection(1)" class="change-password"><i class="fas fa-key"></i>비밀번호 변경</li>
-          <li @click="showMyPageSection(2)" class="ssafy-auth" v-if="ssafyAuth === 1"><i class="fas fa-id-card-alt"></i>Admin Page</li>
+          <li @click="showMyPageSection(2)" class="ssafy-auth" v-if="ssafyAuth === 1"><i class="fas fa-id-card-alt"></i>SSAFY Admin</li>
           <li @click="showMyPageSection(2)" class="ssafy-auth" v-else><i class="fas fa-id-card-alt"></i>SSAFY 인증</li>
           <li @click="showMyPageSection(3)" class="github-page"><i class="fab fa-github"></i>github 연동</li>
-          <li @click="showMyPageSection(4)" class="gitlab-page"><i class="fab fa-gitlab"></i>gitlab 연동</li>
+          <!-- <li @click="showMyPageSection(4)" class="gitlab-page"><i class="fab fa-gitlab"></i>gitlab 연동</li> -->
           <li @click="memberDropOut"><i class="fas fa-sign-out-alt"></i>회원탈퇴</li>
         </ul>
       </div>
@@ -21,13 +21,14 @@
       <div class="mypost">
         <div class="mypost-title">게시글 관리</div>
         <ul class="mypost-menu">
-          <li @click="showMyPageSection(5)" class="myboard"><i class="fas fa-chalkboard"></i>게시판</li>
-          <li @click="showMyPageSection(6)" class="mystudygroup"><i class="fas fa-users"></i>스터디 모임</li>
-          <li @click="showMyPageSection(7)" class="mylikes"><i class="fas fa-heart"></i>Likes</li>
+          <li @click="showMyPageSection(4)" class="myboard"><i class="fas fa-chalkboard"></i>게시판</li>
+          <li @click="showMyPageSection(5)" class="mystudygroup"><i class="fas fa-users"></i>스터디 모임</li>
+          <li @click="showMyPageSection(6)" class="mylikes"><i class="fas fa-heart"></i>Likes</li>
         </ul>
       </div>
 
       <div class="mypage-description" @click.stop="showMyPageDialog = true">My Page 설명서</div>
+      <div @click="showMyPageSection(7)" class="admin-page" v-if="ssafyAuth === 1">Admin Page</div>
       <v-dialog v-model="showMyPageDialog" max-width="700">
         <v-card>
           <v-card-title>My Page Description</v-card-title>
@@ -44,7 +45,7 @@
                   <li>관리자 : SSAFY인 인증을 신청한 내역들이 나옴</li>
                 </ul>
                 <li>github 연동 : '회원정보 수정'에서 Github ID를 등록한 후에 이용 가능, github 기본 정보와 repository 관련 내용을 볼 수 있음</li>
-                <li>gitlab 연동 : '회원정보 수정'에서 SSAFY Gitlab ID를 등록한 후에 이용가능, SSAFY gitlab에 생성된 내 repository 관련 내용을 볼 수 있음</li>
+                <!-- <li>gitlab 연동 : '회원정보 수정'에서 SSAFY Gitlab ID를 등록한 후에 이용가능, SSAFY gitlab에 생성된 내 repository 관련 내용을 볼 수 있음</li> -->
                 <li>회원탈퇴 : 클릭 시 정말로 회원탈퇴를 진행하는 것이 맞는지 확인하는 alert 창이 나옴</li>
                 <li>게시글 관리 : 게시판, 스터디 모임에 내가 작성한 게시글을 볼 수 있고 'Likes'는 내가 좋아요를 누른 게시글들을 볼 수 있음</li>
               </ul>
@@ -128,9 +129,10 @@
       <MakeSsafyAuth v-if="smallMenu.indexOf(selectMenuItem) === 2 && this.ssafyAuth === 1"/>
       <SsafyAuth v-if="smallMenu.indexOf(selectMenuItem) === 2 && this.ssafyAuth === 4"/>
       <GithubInfo v-if="smallMenu.indexOf(selectMenuItem) === 3" :githubid="githubid"/>
-      <MyBoardList v-if="smallMenu.indexOf(selectMenuItem) === 6"/>
-      <MyStudyGroupList v-if="smallMenu.indexOf(selectMenuItem) === 7"/>
-      <MyLikeList v-if="smallMenu.indexOf(selectMenuItem) === 8"/>
+      <MyBoardList v-if="smallMenu.indexOf(selectMenuItem) === 5"/>
+      <MyStudyGroup v-if="smallMenu.indexOf(selectMenuItem) === 6"/>
+      <MyLikeList v-if="smallMenu.indexOf(selectMenuItem) === 7"/>
+      <AdminPage v-if="smallMenu.indexOf(selectMenuItem) === 8"/>
     </div>
   </div>
     <!-- <h1 v-if="ssafyAuth === 2">오 넌 싸피 아이디가 다 있구나!</h1>
@@ -167,11 +169,11 @@ import MemberModify from '../components/login/MemberModify'
 import PasswordModify from '../components/login/PasswordModify'
 import MakeSsafyAuth from '../components/login/MakeSsafyAuth'
 import SsafyAuth from '../components/login/SsafyAuth'
-import MyStudyGroupList from '../components/studygroup/MyStudyGroupList'
+import MyStudyGroup from '../components/studygroup/MyStudyGroup'
 import MyBoardList from '../components/board/MyPageBoard/MyBoardList'
-import MyLikeList from '../components/board/MyPageBoard/MyLikeList.vue'
+import MyLikeList from '../components/board/MyPageBoard/MyLikeList'
 import GithubInfo from '../components/github/GithubInfo'
-import MyStudyParticipated from '../components/studygroup/MyStudyParticipated'
+import AdminPage from '../components/login/AdminPage'
 import '@/assets/css/MyPage.css'
 
 export default {
@@ -181,10 +183,11 @@ export default {
       PasswordModify,
       MakeSsafyAuth,
       SsafyAuth,
-      MyStudyGroupList,
+      MyStudyGroup,
       MyBoardList,
       MyLikeList,
-      GithubInfo
+      GithubInfo,
+      AdminPage
     },
     data() {
       return {
@@ -196,9 +199,10 @@ export default {
         social: '',
         ssafyAuth: '',
         myPageStatus: null,
-        smallMenu: ['회원정보 수정', '비밀번호 변경', this.$store.state.auth === 1 ? 'Admin Page' : 'SSAFY 인증', 'github 연동', 'gitlab 연동', '회원탈퇴', '게시판', '스터디 모임', 'Likes'],
+        smallMenu: ['회원정보 수정', '비밀번호 변경', this.$store.state.auth === 1 ? 'SSAFY Admin' : 'SSAFY 인증', 'github 연동', '회원탈퇴', '게시판', '스터디 모임', 'Likes', 'Admin Page'],
         selectMenuItem: -1,
-        showMyPageDialog: false
+        showMyPageDialog: false,
+        showAdminPage: 0
       }
     },
     methods: {
@@ -225,18 +229,19 @@ export default {
       },
       showMyPageSection(status) {
         this.myPageStatus = status
-        this.selectMenuItem = this.smallMenu[status >= 5 ? status + 1 : status]
+        this.selectMenuItem = this.smallMenu[status >= 4 ? status + 1 : status]
         const userEditMenu = document.querySelector('.user-edit')
         const changePasswordMenu = document.querySelector('.change-password')
         const ssafyAuthMenu = document.querySelector('.ssafy-auth')
         const githubPageMenu = document.querySelector('.github-page')
-        const gitlabPageMenu = document.querySelector('.gitlab-page')
+        // const gitlabPageMenu = document.querySelector('.gitlab-page')
         const myBoardMenu = document.querySelector('.myboard')
         const myStudyGroupMenu = document.querySelector('.mystudygroup')
         const myLikesMenu = document.querySelector('.mylikes')
+        const adminPageMenu = document.querySelector('.admin-page')
         let menus = [
           userEditMenu, changePasswordMenu, ssafyAuthMenu, githubPageMenu,
-          gitlabPageMenu, myBoardMenu, myStudyGroupMenu, myLikesMenu
+          myBoardMenu, myStudyGroupMenu, myLikesMenu, adminPageMenu
         ]
         menus.forEach(menu => {
           menu.style.color = 'black'
@@ -271,7 +276,7 @@ export default {
         handler() {
           const menuIdx = this.smallMenu.indexOf(this.selectMenuItem)
           const adjustMenuIdx = menuIdx >= 5 ? menuIdx - 1 : menuIdx
-          if (menuIdx === 5) {
+          if (menuIdx === 4) {
             this.memberDropOut()
           } else {
             this.showMyPageSection(adjustMenuIdx)

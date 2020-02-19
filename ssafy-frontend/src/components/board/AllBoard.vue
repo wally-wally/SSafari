@@ -1,6 +1,6 @@
 <template>
-    <v-container class="row board-cards">
-        <div class="col-12 col-sm-6 board">
+    <div class="row board-cards">
+        <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 board">
             <div class="boarddiv">
             <v-card-title class="main-board-title">자유게시판
                 <router-link class="moreboard" to="board/free">
@@ -113,7 +113,7 @@
             <p>주변맛집</p>
             <BoardListAll :boards="jmtBoard" :boardType="'jmt'"/>
         </div> -->
-    </v-container>
+    </div>
 </template>
 
 <script>
@@ -200,7 +200,17 @@
     .board-cards {
         text-align: center;
         display: flex;
-        margin: 0 auto;
+        margin: 0 10%;
+    }
+
+    .board-cards > .board:first-child, 
+    .board-cards > .board:nth-child(3) {
+        padding: 3px 6px 6px 0;
+    }
+
+    .board-cards > .board:nth-child(2), 
+    .board-cards > .board:last-child {
+        padding: 3px 0 6px 6px;
     }
     
     .main-board-title {
