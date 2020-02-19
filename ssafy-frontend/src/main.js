@@ -7,7 +7,6 @@ import 'font-awesome/css/font-awesome.min.css'
 import VueCodemirror from 'vue-codemirror'
 import 'codemirror/lib/codemirror.css'
 import ECharts from 'vue-echarts'
-import VCalendar from 'v-calendar';
 
 import App from './App.vue'
 import router from './router'
@@ -34,7 +33,6 @@ Vue.use(VueCodemirror, /* {
 Vue.use(VueSimplemde)
 Vue.use(Vuetify)
 Vue.use(Vueperslides)
-Vue.use(VCalendar)
 Vue.use(AOS)
 AOS.init()
 
