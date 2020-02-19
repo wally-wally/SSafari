@@ -45,7 +45,6 @@ router.afterEach((to, from) => {
 	}).catch(error => {
 	  console.log(error)
   })
-  next();
 }
 })
 new Vue({

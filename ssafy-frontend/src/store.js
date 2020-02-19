@@ -101,6 +101,9 @@ export default new Vuex.Store({
       state.unit = jwtDecode(state.token)['access-Token'].unit
       state.locationid = jwtDecode(state.token)['access-Token'].locationid
   },
+  setunreadmsg(state,num) {
+    state.unreadmsg = num
+  }
 },
  actions : {
     // 첫번째 인자는 context (다양한)
@@ -108,9 +111,9 @@ export default new Vuex.Store({
     login(context, token) {
         // mutation 호출 -> commit
         context.commit('login',token)
-        axios.get(`api/message` , { headers : {'access-token' : store.state.token } })
+        axios.get(`api/message` , { headers : {'access-token' : token } })
         .then(response => {
-          store.state.unreadmsg = response.data
+          context.commit('setunreadmsg',response.data)
         }).catch(error => {
           console.log(error)
         })
