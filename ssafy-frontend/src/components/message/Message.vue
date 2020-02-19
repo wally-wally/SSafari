@@ -88,7 +88,7 @@
     },
     methods: {
       changeRead() {
-        if (this.opponentId !== this.$store.state.memberid) {
+        if (this.opponentId !== this.$store.state.memberid & this.boardType) {
           this.isRead = true
           axios.get(`api/message/${this.id}`, {
               headers: {

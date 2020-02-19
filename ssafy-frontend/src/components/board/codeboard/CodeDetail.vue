@@ -1,16 +1,6 @@
 <template>
 <v-container >
     <v-row>
-		<div v-if="this.$store.state.isLogin">
-			<v-btn v-if="!likeFlag" @click="clickLike" text icon color="#d3d3d3">
-				<v-icon>mdi-thumb-up</v-icon>
-				<h3>{{ count }}</h3>
-			</v-btn>
-			<v-btn v-else @click="clickLike" text icon color="deep-orange">
-				<v-icon>mdi-thumb-up</v-icon>
-				<h3>{{ count }}</h3>
-			</v-btn>
-		</div>
         <v-col cols="3">
             제목 : {{code.title}}
         </v-col>
@@ -41,7 +31,19 @@
         :options="showOptions"
         :value="code.code"
   ></codemirror>
+  		<div v-if="this.$store.state.isLogin" align="center">
+			<v-btn v-if="!likeFlag" @click="clickLike" text icon color="#d3d3d3">
+				<v-icon>mdi-thumb-up</v-icon>
+				<h3>{{ count }}</h3>
+			</v-btn>
+			<v-btn v-else @click="clickLike" text icon color="deep-orange">
+				<v-icon>mdi-thumb-up</v-icon>
+				<h3>{{ count }}</h3>
+			</v-btn>
+		</div>
+  <v-divider/>
     <boardcomment boardname="code" :postid="this.id" categoryid="3" boardtype="post"/>
+	
 </v-container>
 </template>
 
