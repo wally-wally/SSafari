@@ -26,6 +26,7 @@ import com.ssafy.edu.vue.dto.Category;
 import com.ssafy.edu.vue.dto.CategoryPost;
 import com.ssafy.edu.vue.dto.Code;
 import com.ssafy.edu.vue.dto.Commentpost;
+import com.ssafy.edu.vue.dto.InfoCount;
 import com.ssafy.edu.vue.dto.Jmt;
 import com.ssafy.edu.vue.dto.LocationFiltering;
 import com.ssafy.edu.vue.dto.Member;
@@ -447,5 +448,21 @@ public class PostController {
  		List<Post> posts = postservice.getPopularLikes(pop);
  		
 		return new ResponseEntity<List<Post>>(posts, HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "전체 회원수 / 게시글수 / 스터디수", response = List.class)
+	@RequestMapping(value = "/infocount", method = RequestMethod.GET)
+	public ResponseEntity<InfoCount> getInfoCount() throws Exception {
+		logger.info("1-------------getInfoCount-----------------------------" + new Date());
+		
+ 		int admin = postservice.getAdminCount();
+ 		int ssafy = postservice.getSsafyCount();
+ 		int user = postservice.getUserCount();
+ 		int post = postservice.getPostCount();
+ 		int study = postservice.getPortfolioCount();
+ 		
+ 		InfoCount infocount = new InfoCount(admin, ssafy, user, post,study);
+ 		
+		return new ResponseEntity<InfoCount>(infocount, HttpStatus.OK);
 	}
 }
