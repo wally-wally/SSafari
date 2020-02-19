@@ -1,8 +1,8 @@
 <template>
-  <v-div v-if="this.$store.state.isLogin && this.id !== this.$store.state.memberid" >
-    <v-div >
+  <div style="display:inline-block" v-if="this.$store.state.isLogin && this.id !== this.$store.state.memberid" >
+    <div >
       <i @click="modal" class="messageicon mx-2 far fa-envelope"></i>
-    </v-div>
+    </div>
     <v-dialog max-width="600px" v-if="send" v-model="send">
       <v-card class="messagecont pa-3">
         <div class="messageform">
@@ -22,7 +22,7 @@
         </div>
       </v-card>
     </v-dialog>
-</v-div>
+</div>
 </template>
 
 <script>

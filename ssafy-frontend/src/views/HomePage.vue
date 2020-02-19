@@ -33,8 +33,8 @@
     </div>
     <div id="mysidenav" class="sidenav">
       <i @click="fnMove('main')" class="fas fa-circle" id="main-icon" style="color: #f7b157;"></i><br>
-      <i @click="fnMove('portfolio')" class="fas fa-circle" id="portfolio-icon" style="color: lightgray;"></i><br>
-      <i @click="fnMove('post')" class="fas fa-circle" id="post-icon" style="color: lightgray;"></i><br>
+      <i @click="fnMove('post')" class="fas fa-circle" id="portfolio-icon" style="color: lightgray;"></i><br>
+      <i @click="fnMove('portfolio')" class="fas fa-circle" id="post-icon" style="color: lightgray;"></i><br>
     </div>
 
   </div>

@@ -5,7 +5,7 @@
         <v-card-title><span class="cuteFont" style="font-size:1.5em">제목: {{ title }}</span></v-card-title>
         <v-card-text class="cuteFont" style="font-size:1.3em">
           상대: {{ opponent }}
-          <sendmessage :username="opponent" :id="opponentId" />
+          <sendmessage v-if="opponentId !== 1" :username="opponent" :id="opponentId" />
         </v-card-text>
         <v-divider></v-divider>
         <v-card-text class="cuteFont" style="font-size:1.3em">
@@ -85,7 +85,8 @@
     },
     methods: {
       changeRead() {
-        if (this.opponentId === this.$store.state.memberid) {
+        console.log(this.opponentId, this.$store.state.memberid)
+        if (this.opponentId !== this.$store.state.memberid) {
           this.isRead = true
           console.log(123123123123)
           axios.get(`api/message/${this.id}`, {
