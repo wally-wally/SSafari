@@ -1,9 +1,9 @@
 <template>
 	<v-flex justify-center>
 		<h1 style="text-align:center" class="cuteFont">식당 or 카페를 검색해 주세요</h1>
-		<div class="map_wrap">
-			<div id="map" style="width:100%;height:95%;" justify-center></div>
-			<div id="menu_wrap" style="height:90%;" class="bg_white">
+		<div class="map_wrap" style="min-width:320px;">
+			<div id="map" class="responsiveCard" style="width:100%;height:95%; min-width:300px" justify-center></div>
+			<div id="menu_wrap" style="height:90%; min-width:300px" class="bg_white">
 				<div class="option">
 					<div>
 						<!-- <form onsubmit="searchPlaces(); return false;"> -->
@@ -21,15 +21,15 @@
 			</div>
 		</div>
 		<div class="center">
-			<div class="cuteFont" style="font-size:1.5rem">식당 or 카페 이름</div>
+			<div style="font-size:1.2rem">식당 or 카페 이름</div>
 			<div class="title-top">
-				<textarea v-model="name" class="blueTextarea cuteFont" style="font-size:1.3rem" disabled></textarea>
+				<textarea v-model="name" class="blueTextarea" style="font-size:1rem; text-align:center; height:2.3em" disabled></textarea>
 			</div>
-			<div class="cuteFont" style="font-size:1.5rem">지역</div>
+			<div style="font-size:1.2rem">지역</div>
 			<div class="title-top">
-				<textarea v-model="location" class="blueTextarea cuteFont" style="font-size:1.3rem" disabled></textarea>
+				<textarea v-model="location" class="blueTextarea" style="font-size:1rem; text-align:center; height:2.3em" disabled></textarea>
 			</div>
-			<div class="cuteFont" style="font-size:1.5rem">내용</div>
+			<div style="font-size:1.2rem">내용</div>
 			<div class="title-top">
 				<textarea v-model="content" class="blueTextarea" name="content" style="height:200px"></textarea>
 			</div>
@@ -395,7 +395,6 @@
 	.map_wrap * {
 		margin: 0;
 		padding: 0;
-		font-family: 'Cute Font', cursive;
 		font-size: 17px;
 		border-radius: 30px;
 	}
@@ -429,7 +428,7 @@
 		overflow-y: auto;
 		background: rgba(255, 255, 255, 0.7);
 		z-index: 1;
-		font-size: 12px;
+		font-size: 10px;
 	}
 
 	.bg_white {
@@ -630,10 +629,6 @@
 		font-size: 15px;
 		cursor: pointer;
 		background-color: white;
-	}
-
-	.cuteFont {
-		font-family: 'Cute Font', cursive;
 	}
 
 	#content-form {
