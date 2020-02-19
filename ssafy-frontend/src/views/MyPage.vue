@@ -96,7 +96,7 @@
           </tr>
           <tr>
             <td class="sort" style="padding: 5px 30px; border-right: 1.3px solid black; font-family: 'Noto Sans KR', sans-serif; font-size: 18px; font-weight: 600;">기수</td>
-            <td v-if="this.$store.state.unit > 0" class="seires-value" style="padding: 5px 30px; font-family: 'Nanum Gothic', sans-serif; font-size: 40px; font-weight: 600;">{{this.$store.state.unit}}기</td>
+            <td v-if="this.$store.state.unit > 0" class="seires-value" style="padding: 5px 30px; font-family: 'Nanum Gothic', sans-serif; font-size: 18px; font-weight: 600;">{{this.$store.state.unit}}기</td>
             <td v-else class="seires-value" style="padding: 5px 30px; font-family: 'Nanum Gothic', sans-serif; font-size: 18px; font-weight: 600;">싸피 미인증</td>
           </tr>
         </table>
