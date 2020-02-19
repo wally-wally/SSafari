@@ -2,8 +2,8 @@
     <div class="d-flex post-index">
         <div class="main-post-section">
             <div v-if="this.showCreatePost === 0" class="wrap" style="display:block;">
-                    <h1 style="display: block;letter-spacing: -1px;">게시판 이름</h1>
-                    <p style="display: block;">설명</p>
+                    <h1 style="display: block;letter-spacing: -1px;">{{category.name}}</h1>
+                    <p style="display: block;">{{category.explanation}}</p>
             </div>
             <div class="post-header">
                 <div class="region-checkbox">
@@ -104,6 +104,7 @@
         },
         data() {
             return {
+                category  : {},
                 regions : [
                     { name : 'All' , val : 0},
                     { name : 'Seoul' , val : 1},
@@ -145,6 +146,7 @@
             boardname() {
                 this.pageData.categoryid = (Number(this.boardname) >= 5) ?  Number(this.boardname) : Number(this.$store.state.category[this.boardname])
                 this.changePageIndex(0)
+                this.categorydetail()
             },
             selectRegion: {
                 handler() {
@@ -159,6 +161,12 @@
             this.currentMemberId = this.$store.state.memberid
         },
         methods: {
+            categorydetail() {
+                axios.get(`api/boardcategory/${this.pageData.categoryid}`)
+                .then(response=> {
+                    this.category = response.data
+                }).catch(error=>{console.log(error)})
+            },
             onPostCount(value) {
                 this.postCnt = value
             },
