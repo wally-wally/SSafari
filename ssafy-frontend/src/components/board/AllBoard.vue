@@ -177,7 +177,6 @@
             axios.get(`api/jmts`)
                 .then(response => {
                     let mainPageBoards = []
-                    console.log(response)
                     response.data.slice(0, 5).forEach(bdata => {
                         mainPageBoards.push({
                             'title': bdata.name,

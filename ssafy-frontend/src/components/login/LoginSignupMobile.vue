@@ -64,6 +64,7 @@
     },
     data() {
       return {
+        apiKey: '506786963606539',
         signFlag: '',
         signInUp: '',
         credentials: {
@@ -80,7 +81,10 @@
         loginvalid: true,
         loginfailcount: 0,
         loginDialog: false,
-        signUpUser: {},
+        signUpUser: {
+          email: '',
+          password: ''
+        },
         errormessage: {
           username: [],
           password: []
