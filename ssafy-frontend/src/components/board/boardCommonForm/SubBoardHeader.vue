@@ -38,7 +38,7 @@
           </div>
           <v-col align="center" v-if="i===2 && j ===boardrowcnt && $route.name!=='boardsearch'">
             <div>
-            <i @click="makesearchmodal" class="fas fa-plus"/>
+            <i @click="makesearchmodal" class="fas fa-plus" style="color:4c4c4c"/>
             <v-dialog max-width="600px" v-if="makesearch" v-model="makesearch">
               <v-card class="pa-3">
                   <div class="mb-4">
@@ -49,16 +49,17 @@
                   <router-link style="display:inline-block" :to="`/board/search/`">
                   <v-btn @click="makesearchmodal">전체 게시판 보기</v-btn><br>
                   </router-link>
+                  <span @click="makesearchmodal" style="float:right;color:4c4c4c;font-size:15px;cursor:pointer">닫기&nbsp;<i class="fas fa-times" style="font-size:20px;color:#ffc837;"></i></span>
                   </div>
                   <div id="notice-search-form">
                     <form @submit.prevent="search">
-                    <v-text-field placeholder="게시판을 검색합니다" style="display:inline-block;width:50%" class="ml-5" v-model="searchTitle" />
+                    <v-text-field placeholder="게시판을 검색합니다" style="display:inline-block;width:50%" class="ml-5" v-model="searchTitle" color="#ffc837"/>
                     <i @click="search" class="fas fa-search"></i>
                     </form>
               </div>
-                  <v-card-actions>
-                    <button class="close button" @click="makesearchmodal">닫기</button>
-                  </v-card-actions>
+                  <!-- <v-card-actions>
+                    <button class="close button" @click="makesearchmodal" style="background-color:#c62917">닫기</button>
+                  </v-card-actions> -->
                 </div>
               </v-card>
             </v-dialog>

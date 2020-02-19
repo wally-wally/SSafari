@@ -88,11 +88,15 @@
     },
     methods: {
       changeRead() {
-        if (this.boardType === 1) {
+        if (this.opponentId !== this.$store.state.memberid) {
           this.isRead = true
           axios.get(`api/message/${this.id}`, {
               headers: {
                 'access-token': this.$store.state.token
+              }
+            }).then(response=>{
+              if (!response.data.isread) {
+                this.$store.state.unreadmsg -= 1
               }
             })
         }

@@ -3,8 +3,8 @@
         <div class="col-12 col-sm-6 board">
             <div class="boarddiv">
             <v-card-title class="main-board-title">자유게시판
-                <router-link class="moreboard" to="board/free/">
-                <span>
+                <router-link class="moreboard" to="board/free">
+                <span style="color: #ff8008">
                     더보기
                 </span>
                 </router-link>
@@ -27,8 +27,8 @@
         <div class="col-12 col-sm-6 board">
             <div class="boarddiv">
             <v-card-title class="main-board-title">취업게시판
-                <router-link class="moreboard" to="board/job/">
-                    <span>
+                <router-link class="moreboard" to="board/job">
+                    <span style="color: #ff8008">
                         더보기
                     </span>
                 </router-link>
@@ -52,8 +52,8 @@
             <div class="boarddiv">
 
             <v-card-title class="main-board-title">코드리뷰
-                <router-link class="moreboard" to="board/code/">
-                <span>
+                <router-link class="moreboard" to="board/code">
+                <span style="color: #ff8008">
                     더보기
                 </span>
                 </router-link>
@@ -76,8 +76,8 @@
         <div class="col-12 col-sm-6 board">
             <div class="boarddiv">
             <v-card-title class="main-board-title">주변맛집
-                <router-link class="moreboard" to="board/jmt/">
-                <span>
+                <router-link class="moreboard" to="board/jmt">
+                <span style="color: #ff8008">
                     더보기
                 </span>
                 </router-link>

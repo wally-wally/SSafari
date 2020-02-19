@@ -10,7 +10,8 @@ Vue.use(Vuex)
 
 var tempgithubID = null
 export default new Vuex.Store({
-    state : {         
+    state : {       
+      unreadmsg : 0,  
         category : {
             'free' : '1',
             'job' : '2',
@@ -100,6 +101,9 @@ export default new Vuex.Store({
       state.unit = jwtDecode(state.token)['access-Token'].unit
       state.locationid = jwtDecode(state.token)['access-Token'].locationid
   },
+  setunreadmsg(state,num) {
+    state.unreadmsg = num
+  }
 },
  actions : {
     // 첫번째 인자는 context (다양한)
@@ -107,6 +111,12 @@ export default new Vuex.Store({
     login(context, token) {
         // mutation 호출 -> commit
         context.commit('login',token)
+        axios.get(`api/message` , { headers : {'access-token' : token } })
+        .then(response => {
+          context.commit('setunreadmsg',response.data)
+        }).catch(error => {
+          console.log(error)
+        })
     },
     logout(context) {
         context.commit('logout')

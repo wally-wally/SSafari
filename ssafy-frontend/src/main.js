@@ -39,7 +39,16 @@ Vue.use(AOS)
 AOS.init()
 
 Vue.component('v-chart', ECharts)
-
+router.afterEach((to, from) => {
+  if (store.state.isLogin){
+	axios.get(`api/message` , { headers : {'access-token' : store.state.token } })
+	.then(response => {
+	  store.state.unreadmsg = response.data
+	}).catch(error => {
+	  console.log(error)
+  })
+}
+})
 new Vue({
   router,
   store,
