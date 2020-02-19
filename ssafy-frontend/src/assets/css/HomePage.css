@@ -107,6 +107,43 @@
   bottom: 250px;
 }
 
+@media (max-width: 700px) {
+  .short-page-intro {
+    margin-top: -40px;
+  }
+
+  .img-box {
+    margin-top: 20px;
+  }
+
+  .img-box > img {
+    display: none;
+  }
+
+  .img-box > img:first-child,
+  .img-box > img:nth-child(2) {
+    display: block;
+  }
+
+  .img-box > img:first-child {
+    width: 500px;
+    height: 500px;
+    max-width: initial;
+    top: 20px;
+    left: -100px;
+    position: relatvie;
+  }
+
+  .img-box > img:nth-child(2) {
+    width: 580px;
+    height: 580px;
+    max-width: initial;
+    position: absolute;
+    left: -130px;
+    bottom: -48px;
+  }
+}
+
 #homepage-imgbanner {
   position: fixed;
   top: 0;

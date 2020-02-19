@@ -3,7 +3,7 @@
     <div class="scroll-alert">
       <div class="container-box">
         <div class="row">
-          <div class="col-md-6">
+          <div class="col-12 col-md-6 short-page-intro">
             <div class="page-title animated fadeInLeft">SSafari</div>
             <div class="page-introduction-short">
               <p class="pb-2 animated fadeInLeft">SSAFY Community Webpage made by Team A5.</p>
@@ -11,7 +11,7 @@
               <button type="button" class="team-intro-button animated jackInTheBox delay-2s" @click="goTeamIntro()">Team A5 Introduction</button>
             </div>
           </div>
-          <div class="col-md-6">
+          <div class="col-12 col-md-6">
             <div class="img-box">
               <img src="../assets/images/ssafari_logo-02.png" class="ssafari-logo-one animated fadeInRight" alt="ssafari-logo--one-image">
               <img src="../assets/images/ssafari_logo-03.png" class="ssafari-logo-two animated fadeInRight" alt="ssafari-logo-two-image">
