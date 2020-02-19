@@ -79,4 +79,6 @@ public interface IPostService {
 
 	List<Post> getPopularLikes(Popular pop);
 
+	Category getBoardCategoryInfo(int id);
+
 }
