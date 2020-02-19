@@ -85,13 +85,15 @@
     },
     methods: {
       changeRead() {
-        console.log(this.opponentId, this.$store.state.memberid)
         if (this.opponentId !== this.$store.state.memberid) {
           this.isRead = true
-          console.log(123123123123)
           axios.get(`api/message/${this.id}`, {
               headers: {
                 'access-token': this.$store.state.token
+              }
+            }).then(response=>{
+              if (!response.data.isread) {
+                this.$store.state.unreadmsg -= 1
               }
             })
         }
