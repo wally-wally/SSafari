@@ -301,4 +301,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</choose>
 	</select>
 	
+	<select id="getAdminCount" resultType="java.lang.Integer">
+		select count(*) from members where delflag=0 and auth=1
+	</select>
+	
+	<select id="getSsafyCount" resultType="java.lang.Integer">
+		select count(*) from members where delflag=0 and auth=2
+	</select>
+	
+	<select id="getUserCount"   resultType="java.lang.Integer">
+		select count(*) from members where delflag=0 and (auth=4 or auth=3)
+	</select>
+	
+	<select id="getPostCount"   resultType="java.lang.Integer">
+		select (select count(*) from posts)+(select count(*) from jmt)+(select count(*) from codereview) count
+	</select>
+	
+	<select id="getPortfolioCount"  resultType="java.lang.Integer">
+		SELECT count(*) FROM a5.portfolios
+	</select>
+	
+	
 </mapper>

@@ -22,6 +22,9 @@ public class Member implements Serializable {
 	private int unit;
 	private int social;
 	private String img;
+	private int postcount;
+	private int portfoliocount;
+	private int sugangcount;
 	private boolean signup;
 	private String message;
 	
@@ -120,6 +123,28 @@ public class Member implements Serializable {
 		this.signupdate = signupdate;
 		this.delflag = delflag;
 		this.auth = auth;
+	}
+
+
+
+	public Member(int memberid, String email, String name, String username, String signupdate, int auth,
+			String githubid, int locationid, int unit, int social, String img, int postcount, int portfoliocount,
+			int sugangcount) {
+		super();
+		this.memberid = memberid;
+		this.email = email;
+		this.name = name;
+		this.username = username;
+		this.signupdate = signupdate;
+		this.auth = auth;
+		this.githubid = githubid;
+		this.locationid = locationid;
+		this.unit = unit;
+		this.social = social;
+		this.img = img;
+		this.postcount = postcount;
+		this.portfoliocount = portfoliocount;
+		this.sugangcount = sugangcount;
 	}
 
 
@@ -308,12 +333,14 @@ public class Member implements Serializable {
 
 
 
+
 	@Override
 	public String toString() {
 		return "Member [memberid=" + memberid + ", email=" + email + ", password=" + password + ", name=" + name
 				+ ", username=" + username + ", signupdate=" + signupdate + ", delflag=" + delflag + ", auth=" + auth
 				+ ", githubid=" + githubid + ", locationid=" + locationid + ", unit=" + unit + ", social=" + social
-				+ ", signup=" + signup + ", message=" + message + "]";
+				+ ", img=" + img + ", postcount=" + postcount + ", portfoliocount=" + portfoliocount + ", sugangcount="
+				+ sugangcount + ", signup=" + signup + ", message=" + message + "]";
 	}
 
 
@@ -466,6 +493,42 @@ public class Member implements Serializable {
 
 	public void setSocial(int social) {
 		this.social = social;
+	}
+
+
+
+	public int getPostcount() {
+		return postcount;
+	}
+
+
+
+	public void setPostcount(int postcount) {
+		this.postcount = postcount;
+	}
+
+
+
+	public int getPortfoliocount() {
+		return portfoliocount;
+	}
+
+
+
+	public void setPortfoliocount(int portfoliocount) {
+		this.portfoliocount = portfoliocount;
+	}
+
+
+
+	public int getSugangcount() {
+		return sugangcount;
+	}
+
+
+
+	public void setSugangcount(int sugangcount) {
+		this.sugangcount = sugangcount;
 	}
 
 

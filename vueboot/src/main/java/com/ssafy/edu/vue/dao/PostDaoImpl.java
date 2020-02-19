@@ -151,6 +151,27 @@ public class PostDaoImpl {
 		return sqlSession.selectList(ns+"getPopularLikes",pop);
 	}
 
+	public int getAdminCount() {
+		return sqlSession.selectOne(ns+"getAdminCount");
+	}
+
+	public int getSsafyCount() {
+		return sqlSession.selectOne(ns+"getSsafyCount");
+	}
+
+	public int getUserCount() {
+		return sqlSession.selectOne(ns+"getUserCount");
+	}
+
+	public int getPostCount() {
+		return sqlSession.selectOne(ns+"getPostCount");
+	}
+
+	public int getPortfolioCount() {
+		return sqlSession.selectOne(ns+"getPortfolioCount");
+	}
+
+
 	public Category getBoardCategoryInfo(int id) {
 		return sqlSession.selectOne(ns+"getBoardCategoryInfo",id);
 	}

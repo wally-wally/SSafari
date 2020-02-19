@@ -11,7 +11,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="getMemberList" resultType="com.ssafy.edu.vue.dto.Member">
-		select memberid, email, name, username, signupdate, auth, githubid, locationid, unit, social, img from members where delflag=0 order by memberid
+		select memberid, email, name, username, signupdate, auth, githubid,
+		locationid, unit, social, img,
+		((select count(*) from jmt where memberid=m.memberid)+(select count(*) from
+		codereview where memberid=m.memberid)+
+		(select count(*) from posts where memberid=m.memberid)) postcount,
+		(select count(*) from portfolios where memberid=m.memberid) portfoliocount,
+		(select count(*) from sugang where memberid=m.memberid) sugangcount
+		from members m where delflag=0 order by memberid
 	</select>
 	
 	<select id="getMember" resultType="com.ssafy.edu.vue.dto.Member" parameterType="java.lang.Integer">
