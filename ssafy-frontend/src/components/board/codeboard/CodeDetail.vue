@@ -129,7 +129,7 @@ export default {
 					})
 			},
 			codedelete() {
-				const chk = confirm("진짜?")
+				const chk = confirm("게시글을 삭제하시겠습니까?")
 				if (chk) {
 					axios.delete(`api/code/${this.id}`)
 						.then(response => {
