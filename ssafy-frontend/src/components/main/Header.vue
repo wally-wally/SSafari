@@ -10,14 +10,17 @@
     </div>
 
     <v-spacer></v-spacer>
-    <v-btn v-if="mobile()" class="px-3" color="white" depressed tile to="/teamintro">팀 소개</v-btn>
-    <v-btn v-if="mobile()" class="px-3" color="white" depressed tile to="/board">게시판</v-btn>
-    <v-btn v-if="mobile()" class="px-3" color="white" depressed tile to="/studygroup">스터디 모임</v-btn>
-    <v-btn v-if="mobile() && isLogin" class="px-3" color="white" depressed tile to="/message">메세지함</v-btn>
-    <v-btn v-if="mobile() && isLogin" class="px-3" color="white" depressed tile to="/mypage">내 페이지</v-btn>
-    <v-btn v-if="mobile() && !isLogin" class="px-3" color="white" @click.stop="loginDialog = true" depressed tile>로그인</v-btn>
-    <v-btn v-if="mobile() && isLogin" class="px-3" color="white" depressed tile @click="$store.dispatch('logout')">로그아웃</v-btn>
-    <v-app-bar-nav-icon v-if="!mobile()" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+    <nav class="nav" style="text-decoration:none">
+      <router-link v-if="mobile()" to="/teamintro" class="nav-item" style="color:#000">팀 소개</router-link>
+      <router-link v-if="mobile()" to="/board" class="nav-item" style="color:#000">게시판</router-link>
+      <router-link v-if="mobile()" to="/studygroup" class="nav-item" style="color:#000">스터디 모임</router-link>
+      <router-link v-if="mobile() && isLogin" to="/message" class="nav-item" style="color:#000">메세지함</router-link>
+      <router-link v-if="mobile() && isLogin" to="/mypage" class="nav-item" style="color:#000">내 페이지</router-link>
+      <a v-if="mobile() && !isLogin" class="nav-item" @click.stop="loginDialog = true" style="color:#000">로그인</a>
+      <a v-if="mobile() && isLogin" class="nav-item" @click="$store.dispatch('logout')" style="color:#000">로그아웃</a>
+      <v-app-bar-nav-icon v-if="!mobile()" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+      <span class="nav-indicator"></span>
+    </nav>
   
   </v-app-bar>
 
@@ -126,7 +129,7 @@ import axios from 'axios'
 import LoginSignup from '@/components/login/LoginSignup.vue'
 import LoginSignupMobile from '@/components/login/LoginSignupMobile.vue'
 import { mapState } from 'vuex'
-
+import '../../assets/js/snake.js'
 export default {
   name: 'Header',
   components: {
@@ -156,3 +159,55 @@ export default {
   },
 };
 </script>
+
+<style>
+.nav{
+  display:inline-flex;
+  position:relative;
+  overflow:hidden;
+  max-width:100%;
+  background-color:white;
+  padding:0 20px;
+}
+.nav-item{
+  color: #83818c;
+  padding:20px;
+  text-decoration: none;
+  transition: 0.3s;
+  margin: 0 7px;
+  z-index: 1;
+  font-family: tahoma;
+  font-weight: 500;
+  position: relative;
+}
+.nav-item:before{
+  content:"";
+  position:absolute;
+  bottom: -7px;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  /* background-color: #dfe2ea; */
+  background-color: #ffc837;
+  border-radius: 8px 8px 0 0;
+  opacity: 0;
+  transition: 0.3s;
+}
+.nav-item:not(.is-active):hover:before{
+  opacity: 1;
+  bottom: 0;
+}
+.nav-item:not(.is-active):hover{
+  color: #333;
+}
+.nav-indicator{
+  position:absolute;
+  left:0;
+  bottom: 0;
+  height: 4px;
+  transition: 0.4s;
+  height: 5px;
+  z-index: 1;
+  border-radius: 8px 8px 0 0;
+}
+</style>
