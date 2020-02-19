@@ -13,8 +13,8 @@
               </div>
               <div>
                 <span class="headline">{{ portfolio.title }} <h6>{{ portfolio.created_at }} </h6>
-                  <v-btn class="mr-1" v-if="currentMemberId === portfolio.memberid" small color="warning" style="color:white"
-                    :to="{ path : `/studygroup/${portfolio.portfolioid}/update`}">수정</v-btn>
+                  <v-btn class="mr-1" v-if="currentMemberId === portfolio.memberid" small color="warning"
+                    style="color:white" :to="{ path : `/studygroup/${portfolio.portfolioid}/update`}">수정</v-btn>
                   <v-btn v-if="currentMemberId === portfolio.memberid || currentMemberAuth === 1" small color="error"
                     @click="deletePortfolio">삭제</v-btn>
                 </span>
@@ -23,6 +23,16 @@
             <v-spacer></v-spacer>
           </v-card-title>
           <v-img :src="portfolio.img" height="400px"></v-img>
+          <v-divider></v-divider>
+          <div justify="center">
+            <h4 style="text-align:center">일정</h4>
+					<v-date-picker no-title v-model="dates" @input="menu1=false" width="85%" range color="#F9A602"></v-date-picker>
+          </div>
+            <v-divider></v-divider>
+          <v-row justify="center">
+              <h4>지역 : {{ (portfolio.location == null) ? '미정' : portfolio.location }}</h4>
+          </v-row>
+          <v-divider></v-divider>
           <v-list>
             <v-list-item>
               <v-list-item-content>
@@ -74,11 +84,12 @@
     name: "PortfolioDetail",
     components: {
       boardcomment,
-      sendmessage
+      sendmessage,
     },
     data() {
       return {
         portfolio: [],
+        dates: [],
         comments: [],
         myapplicate: false,
         currentMemberId: null,
@@ -105,10 +116,10 @@
           })
       },
       getPortfolio() {
-        console.log(this.id)
         axios.get(`api/portfolio/${this.id}`)
           .then(response => {
             this.portfolio = response.data.portfolio
+            this.dates = [this.portfolio.enddate, this.portfolio.startdate]
             this.applicants = response.data.sugang
             this.checkmyapplicate()
           })
@@ -120,15 +131,18 @@
           })
       },
       deletePortfolio() {
-        axios.delete(`api/portfolio/${this.id}`)
-          .then(response => {
-            console.log(response.status)
-            if (response.status == 200) {
-              router.push({
-                path: '/studygroup'
-              })
-            }
-          })
+        const confirmation = confirm('삭제하시겠습니까?')
+        if (confirmation) {
+          axios.delete(`api/portfolio/${this.id}`)
+            .then(response => {
+              console.log(response.status)
+              if (response.status == 200) {
+                router.push({
+                  path: '/studygroup'
+                })
+              }
+            })
+        }
       },
       application() {
         const data = {

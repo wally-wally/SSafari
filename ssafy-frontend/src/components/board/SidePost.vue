@@ -36,10 +36,10 @@
 		name: 'SidePost',
 		props: {
 			categoryId: {
-				type: String
+				type: Number
 			},
 			locationId: {
-				type: String
+				type: Number
 			}
 		},
 		data() {
@@ -61,7 +61,6 @@
 						}
 					})
 					.then(response => {
-						console.log(response.data, 111)
 						this.popularComments = response.data
 					})
 			},
@@ -73,7 +72,6 @@
 						}
 					})
 					.then(response => {
-						console.log(response.data, 222)
 						this.popularLikes = response.data
 					})
 			}
@@ -94,7 +92,8 @@
 
 <style>
     .card{
-        margin-bottom: 5px;
+        margin-top:15px;
+        margin-bottom: 15px;
         border: 1px solid #d6d6d6;
         background-color: #f9f9f9;
         display: block;

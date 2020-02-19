@@ -215,4 +215,40 @@ public class PostServiceImpl implements IPostService {
 		return postdao.getPopularLikes(pop);
 	}
 
+	@Override
+	@Transactional(readOnly=true)
+	public int getAdminCount() {
+		return postdao.getAdminCount();
+	}
+
+	@Override
+	@Transactional(readOnly=true)
+	public int getSsafyCount() {
+		return postdao.getSsafyCount();
+	}
+
+	@Override
+	@Transactional(readOnly=true)
+	public int getUserCount() {
+		return postdao.getUserCount();
+	}
+
+	@Override
+	@Transactional(readOnly=true)
+	public int getPostCount() {
+		return postdao.getPostCount();
+	}
+
+
+	@Override
+	@Transactional(readOnly=true)
+	public int getPortfolioCount() {
+		return postdao.getPortfolioCount();
+	}
+
+
+	public Category getBoardCategoryInfo(int id) {
+		return postdao.getBoardCategoryInfo(id);
+	}
+
 }

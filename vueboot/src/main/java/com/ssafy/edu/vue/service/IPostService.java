@@ -79,4 +79,16 @@ public interface IPostService {
 
 	List<Post> getPopularLikes(Popular pop);
 
+	int getAdminCount();
+
+	int getSsafyCount();
+
+	int getUserCount();
+
+	int getPostCount();
+
+	int getPortfolioCount();
+
+	Category getBoardCategoryInfo(int id);
+
 }

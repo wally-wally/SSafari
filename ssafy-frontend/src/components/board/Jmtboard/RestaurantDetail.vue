@@ -4,15 +4,38 @@
 			<v-col cols="12" sm="8">
 				<v-card>
 					<v-card-title class="darken-1">
-						<div>
-							<div>
-								<v-avatar class="mr-5 mb-2">
-									<img :src="restaurant.img" alt="X">
-								</v-avatar><span>{{ restaurant.username }}</span>
+						<div class="ma-2" justify="center">
+							<img class="avatar" :src="restaurant.img" alt="X">
+							<div style="display:inline-block">
+							<span style="display:block">
+								{{ restaurant.username }}
 								<sendmessage :username="restaurant.username" :id="restaurant.memberid"/>
-							</div>
-							<div>
-								<span class="headline">{{ restaurant.name }}
+                  </span>
+                  <small style="display:inline-block">{{ restaurant.created_at }} </small>
+                </div>
+              </div>
+					</v-card-title>
+					<div class="ma-2 mb-5">
+						<div class="delrevise" v-if="this.$store.state.memberid === restaurant.memberid">
+							<v-btn v-if="memberid === restaurant.memberid" class="mr-1" small color="warning" style="white" @click="clickUpdate">수정</v-btn>
+							<v-btn v-if="memberid === restaurant.memberid" small color="error" @click="deleteRestaurant">삭제</v-btn>
+						</div>
+					</div>
+					<div class="map_wrap_detail">
+						<br>
+						<div id="map" style="width:100%;height:350px;"></div>
+						<h6>{{ restaurant.location }}
+						</h6>
+					</div>
+					<v-list>
+						<v-list-item>
+							<v-list-item-content>
+								{{ restaurant.body }}
+							</v-list-item-content>
+						</v-list-item>
+						        <v-spacer />
+
+						<div class="mt-5" align="center"  v-if="this.$store.state.isLogin">
 									<v-btn v-if="((!likeFlag) && isLogin)" @click="clickLike" text icon color="#d3d3d3">
 										<v-icon>mdi-thumb-up</v-icon>
 										<h3>{{ count }}</h3>
@@ -25,26 +48,7 @@
 										<v-icon>mdi-thumb-up</v-icon>
 										<h3>{{ count }}</h3>
 									</v-btn>
-									<h6>{{ restaurant.location }} | {{ restaurant.created_at}}
-									</h6>
-									<v-btn v-if="memberid === restaurant.memberid" class="mr-1" small color="warning" style="white" @click="clickUpdate">수정</v-btn>
-									<v-btn v-if="memberid === restaurant.memberid" small color="error" @click="deleteRestaurant">삭제
-									</v-btn>
-								</span>
-							</div>
 						</div>
-						<v-spacer></v-spacer>
-					</v-card-title>
-					<div class="map_wrap_detail">
-						<br>
-						<div id="map" style="width:100%;height:350px;"></div>
-					</div>
-					<v-list>
-						<v-list-item>
-							<v-list-item-content>
-								{{ restaurant.body }}
-							</v-list-item-content>
-						</v-list-item>
 						<v-divider></v-divider>
 						<v-row justify="center">
 							<v-col cols="12" sm="12">

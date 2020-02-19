@@ -5,7 +5,7 @@
         <v-card-title><span class="cuteFont" style="font-size:1.5em">제목: {{ title }}</span></v-card-title>
         <v-card-text class="cuteFont" style="font-size:1.3em">
           상대: {{ opponent }}
-          <sendmessage v-if="opponentId !== 1" :username="opponent" :id="opponentId" />
+          <sendmessage :username="opponent" :id="opponentId" />
         </v-card-text>
         <v-divider></v-divider>
         <v-card-text class="cuteFont" style="font-size:1.3em">
@@ -71,6 +71,9 @@
       read: {
         type: Number
       },
+      boardType: {
+        type: Number
+      }
     },
     computed: {
       postYearMonth() {
@@ -85,7 +88,7 @@
     },
     methods: {
       changeRead() {
-        if (this.opponentId !== this.$store.state.memberid) {
+        if (this.opponentId !== this.$store.state.memberid & this.boardType) {
           this.isRead = true
           axios.get(`api/message/${this.id}`, {
               headers: {

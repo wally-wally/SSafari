@@ -41,11 +41,10 @@
             <v-text-field v-model="signUpUser.username" type="text" label="닉네임" required class=""></v-text-field>
           </label>
           <p class="forgot-pass" @click="changeSignInUp" style="text-decoration:underline; cursor:pointer">로그인 하기</p>
+          <div v-if="this.message" style="text-align:center; color:red;">{{this.message}}</div>
           <button type="submit" class="submit button">회원가입</button>
         </v-form>
-        <v-card-actions>
           <button type="submit" class="close button" @click="close">닫기</button>
-        </v-card-actions>
     </div>
   </v-card>
 </template>
@@ -65,9 +64,13 @@
     },
     data() {
       return {
+        apiKey: '506786963606539',
         signFlag: '',
         signInUp: '',
-        credentials: {},
+        credentials: {
+          email: '',
+          password: ''
+        },
         minRules: [v => v.length >= 8 || 'Min 8 characters'],
         emailRules: [
           v => !!v || 'E-mail is required',
@@ -78,11 +81,15 @@
         loginvalid: true,
         loginfailcount: 0,
         loginDialog: false,
-        signUpUser: {},
+        signUpUser: {
+          email: '',
+          password: ''
+        },
         errormessage: {
           username: [],
           password: []
-        }
+        },
+        message: null
       }
     },
     mounted() {
@@ -182,16 +189,19 @@
         axios.post('api/member', this.signUpUser)
           .then((response) => {
             console.log(response)
-            this.errormessage = {
-              username: [],
-              password: []
-            }
-            if (response.status === 200) {
-              this.$emit('update');
-              this.signUpUser = {}
-              document.querySelector('.contMobile').classList.remove('s--signup');
-            }
-            // router.push({name:'home'})
+              if (response.data.signup) {
+                this.errormessage = {
+                  username: [],
+                  password: []
+                }
+                if (response.status === 200) {
+                  this.$emit('update');
+                  this.signUpUser = {}
+                  document.querySelector('.contMobile').classList.remove('s--signup');
+                }
+              } else {
+                this.message = response.data.message
+              }
           })
           .catch(error => {
             console.log(error)
