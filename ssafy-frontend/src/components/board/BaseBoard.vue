@@ -1,6 +1,10 @@
 <template>
     <div class="d-flex post-index">
         <div class="main-post-section">
+            <div v-if="this.showCreatePost === 0" class="wrap" style="display:block;">
+                    <h1 style="display: block;letter-spacing: -1px;">게시판 이름</h1>
+                    <p style="display: block;">설명</p>
+            </div>
             <div class="post-header">
                 <div class="region-checkbox">
                     <v-container id="dropdown-region">
@@ -28,7 +32,8 @@
                 <v-text-field class="pa-0 ma-0 search-board-keyword"
                     hide-details
                     single-line
-                    v-model="pageData.keyword">
+                    v-model="pageData.keyword"
+                    color="#ffc837">
                 </v-text-field>
                 <i class="fas fa-search" @click="changePageIndex(2)"></i>
             </div>
@@ -393,5 +398,8 @@
     color: #a6a6a6;
     font-size: 14px;
     background: #f9f9f9
+    }
+    div.wrap {
+    margin-top: 25px;
     }
 </style>

@@ -94,7 +94,8 @@
 
 <style>
     .card{
-        margin-bottom: 5px;
+        margin-top:15px;
+        margin-bottom: 15px;
         border: 1px solid #d6d6d6;
         background-color: #f9f9f9;
         display: block;

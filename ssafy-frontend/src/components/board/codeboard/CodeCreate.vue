@@ -8,6 +8,7 @@
         item-text="text"
         item-value="val"
         v-model="type"
+        color="#ffc837"
       ></v-select>
     </v-col>
     <v-spacer />
@@ -16,10 +17,10 @@
       </label>
     </v-col>
     <v-col cols="6">
-      <v-text-field col-8 v-model="title"></v-text-field>
+      <v-text-field col-8 v-model="title" color="#ffc837"></v-text-field>
     </v-col>
   </v-row>
-  <v-textarea v-model="body" id="" cols="80%" rows="5"></v-textarea>
+  <v-textarea v-model="body" id="" cols="80%" rows="5" color="#ffc837"></v-textarea>
   <codemirror ref="myCm"
               :value="code"
               :options="cmOptions"

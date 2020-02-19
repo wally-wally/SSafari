@@ -332,6 +332,14 @@ public class PostController {
 		return new ResponseEntity<List<Category>>(list, HttpStatus.OK);
 	}
 	
+	@ApiOperation(value = "post category 정보 (게시판 이름, 게시판 설명)", response = List.class)
+	@RequestMapping(value = "/boardcategory/{id}", method = RequestMethod.GET)
+	public ResponseEntity<Category> getBoardCategoryInfo(@PathVariable int id) throws Exception {
+		logger.info("1-------------getBoardCategoryInfo-----------------------------" + new Date());
+		Category category = postservice.getBoardCategoryInfo(id);
+		return new ResponseEntity<Category>(category, HttpStatus.OK);
+	}
+	
 	@ApiOperation(value = "post category 인증 요청 목록 (게시판 인증 요청 목록)", response = List.class)
 	@RequestMapping(value = "/boardcategory/auth", method = RequestMethod.GET)
 	public ResponseEntity<List<Category>> getBoardCategoryAuth() throws Exception {

@@ -215,4 +215,10 @@ public class PostServiceImpl implements IPostService {
 		return postdao.getPopularLikes(pop);
 	}
 
+	@Override
+	@Transactional(readOnly=true)
+	public Category getBoardCategoryInfo(int id) {
+		return postdao.getBoardCategoryInfo(id);
+	}
+
 }
