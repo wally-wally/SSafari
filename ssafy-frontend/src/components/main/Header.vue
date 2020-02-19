@@ -11,13 +11,13 @@
 
     <v-spacer></v-spacer>
     <nav class="nav" style="text-decoration:none">
-      <router-link v-if="mobile()" to="/teamintro" class="nav-item" style="color:#000">팀 소개</router-link>
-      <router-link v-if="mobile()" to="/board" class="nav-item" style="color:#000">게시판</router-link>
-      <router-link v-if="mobile()" to="/studygroup" class="nav-item" style="color:#000">스터디 모임</router-link>
-      <router-link v-if="mobile() && isLogin" to="/message" class="nav-item" style="color:#000"><i style="font-size:20px;" class="far fa-bell"></i><div class="unreadmsg"><p align="center" justify="center">{{this.$store.state.unreadmsg}}</p></div></router-link>
-      <router-link v-if="mobile() && isLogin" to="/mypage" class="nav-item" style="color:#000">내 페이지</router-link>
-      <a v-if="mobile() && !isLogin" class="nav-item" @click.stop="loginDialog = true" style="color:#000">로그인</a>
-      <a v-if="mobile() && isLogin" class="nav-item" @click="$store.dispatch('logout')" style="color:#000">로그아웃</a>
+      <router-link v-if="mobile()" to="/teamintro" class="nav-item d-flex align-center" style="color:#000;">팀 소개</router-link>
+      <router-link v-if="mobile()" to="/board" class="nav-item d-flex align-center" style="color:#000">게시판</router-link>
+      <router-link v-if="mobile()" to="/studygroup" class="nav-item d-flex align-center" style="color:#000">스터디 모임</router-link>
+      <router-link v-if="mobile() && isLogin" to="/message" class="nav-item d-flex align-center" style="color:#000"><i style="font-size:20px;" class="far fa-bell"></i><div class="unreadmsg"><p align="center" justify="center">{{this.$store.state.unreadmsg}}</p></div></router-link>
+      <router-link v-if="mobile() && isLogin" to="/mypage" class="nav-item d-flex align-center" style="color:#000">내 페이지</router-link>
+      <a v-if="mobile() && !isLogin" class="nav-item d-flex align-center" @click.stop="loginDialog = true" style="color:#000">로그인</a>
+      <a v-if="mobile() && isLogin" class="nav-item d-flex align-center" @click="$store.dispatch('logout')" style="color:#000">로그아웃</a>
       <v-app-bar-nav-icon v-if="!mobile()" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <span class="nav-indicator"></span>
     </nav>
@@ -165,12 +165,13 @@ export default {
   position:relative;
   overflow:hidden;
   max-width:100%;
+  height: 48px;
   background-color:white;
   padding:0 20px;
 }
 .nav-item{
   color: #83818c;
-  padding:20px;
+  padding:10px 20px;
   text-decoration: none;
   transition: 0.3s;
   margin: 0 7px;
