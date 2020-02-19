@@ -14,14 +14,13 @@
       <router-link v-if="mobile()" to="/teamintro" class="nav-item" style="color:#000">팀 소개</router-link>
       <router-link v-if="mobile()" to="/board" class="nav-item" style="color:#000">게시판</router-link>
       <router-link v-if="mobile()" to="/studygroup" class="nav-item" style="color:#000">스터디 모임</router-link>
-      <router-link v-if="mobile() && isLogin" to="/message" class="nav-item" style="color:#000">메세지함</router-link>
+      <router-link v-if="mobile() && isLogin" to="/message" class="nav-item" style="color:#000"><i style="font-size:20px;" class="far fa-bell"></i><div class="unreadmsg"><p align="center" justify="center">{{this.$store.state.unreadmsg}}</p></div></router-link>
       <router-link v-if="mobile() && isLogin" to="/mypage" class="nav-item" style="color:#000">내 페이지</router-link>
       <a v-if="mobile() && !isLogin" class="nav-item" @click.stop="loginDialog = true" style="color:#000">로그인</a>
       <a v-if="mobile() && isLogin" class="nav-item" @click="$store.dispatch('logout')" style="color:#000">로그아웃</a>
       <v-app-bar-nav-icon v-if="!mobile()" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <span class="nav-indicator"></span>
     </nav>
-  
   </v-app-bar>
 
   <v-app-bar v-else app :collapse="!collapseOnScroll" :collapse-on-scroll="collapseOnScroll" color="white" @click.stop="drawer = !drawer">
@@ -138,6 +137,7 @@ export default {
   },
   data() {
     return {
+      unreadmsgcnt : 0,
       drawer: null,
       collapseOnScroll: true,
       loginDialog: false,
@@ -159,7 +159,6 @@ export default {
   },
 };
 </script>
-
 <style>
 .nav{
   display:inline-flex;
@@ -209,5 +208,14 @@ export default {
   height: 5px;
   z-index: 1;
   border-radius: 8px 8px 0 0;
+.unreadmsg {
+  margin-top : -10px;
+  margin-left : -5px;
+  background-color : brown;
+  width : 15px;
+  height: 15px;
+  border-radius : 7.5px;
+  font-size : 5px;
+  color : white;
 }
 </style>

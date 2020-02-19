@@ -29,7 +29,7 @@ import MyPage from  './views/MyPage.vue'
 import store from './store'
 
 import MessageBoard from '@/components/message/MessageBoard.vue'
- 
+import axios from 'axios'
 import RestaurantCreateForm from '@/components/board/Jmtboard/RestaurantCreateForm.vue'
 import RestaurantDetail from '@/components/board/Jmtboard/RestaurantDetail.vue'
 
