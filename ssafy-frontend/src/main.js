@@ -7,7 +7,6 @@ import 'font-awesome/css/font-awesome.min.css'
 import VueCodemirror from 'vue-codemirror'
 import 'codemirror/lib/codemirror.css'
 import ECharts from 'vue-echarts'
-
 import App from './App.vue'
 import router from './router'
 import store from './store'
