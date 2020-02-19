@@ -27,7 +27,7 @@
 									</v-btn>
 									<h6>{{ restaurant.location }} | {{ restaurant.created_at}}
 									</h6>
-									<v-btn v-if="memberid === restaurant.memberid" class="mr-1" small color="green" @click="clickUpdate">수정</v-btn>
+									<v-btn v-if="memberid === restaurant.memberid" class="mr-1" small color="warning" style="white" @click="clickUpdate">수정</v-btn>
 									<v-btn v-if="memberid === restaurant.memberid" small color="error" @click="deleteRestaurant">삭제
 									</v-btn>
 								</span>

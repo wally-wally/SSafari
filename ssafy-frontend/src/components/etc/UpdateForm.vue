@@ -2,46 +2,48 @@
     <v-flex justify-center>
         <div v-if="this.$store.state.memberid === post.memberid">
             <div id="create-form-title">
-                <span id="form-title" v-if="this.$route.path === `/studygroup/${post.postid}/update`">Studygroup
-                    Form</span>
-                <span id="form-title" v-else>스터디그룹 모집 수정</span>
+                <span id="form-title" v-if="this.$route.path === `/studygroup/${post.postid}/update`">스터디그룹 모집 수정</span>
+                <span id="form-title" v-else>게시글 수정</span>
             </div>
             <hr class="title-headline">
             <div class="title-top">
                 <div class="create-title">Title</div>
                 <textarea v-model="post.title" id="title-form"></textarea>
             </div>
+            <div v-if="this.$route.path === `/studygroup/${post.postid}/update`">
 
-            <label for="capacity">스터디 모집 인원 : </label>
-            <input v-model="post.capacity" id="capacity" type="text">명<br>
-            <label for="location">스터디 지역 : </label>
-            <input v-model="post.location" class="my-3" id="location" type="text">
+                <label for="capacity">스터디 모집 인원 : </label>
+                <input v-model="post.capacity" id="capacity" type="text">명<br>
+                <label for="location">스터디 지역 : </label>
+                <input v-model="post.location" class="my-3" id="location" type="text">
 
-            <v-row>
-                <v-col cols="12" sm="6" md="4">
-                    <v-menu v-model="menu1" :close-on-content-click="false" :nudge-right="40"
-                        transition="scale-transition" offset-y min-width="290px">
-                        <template v-slot:activator="{ on }">
-                            <v-text-field v-model="post.startdate" label="스터디 시작일을 입력해 주세요" prepend-icon="event"
-                                readonly v-on="on">
-                            </v-text-field>
-                        </template>
-                        <v-date-picker no-title v-model="post.startdate" @input="menu1=false"></v-date-picker>
-                    </v-menu>
-                </v-col>
-                <v-col cols="12" sm="6" md="4">
-                    <v-menu v-model="menu2" :close-on-content-click="false" :nudge-right="40"
-                        transition="scale-transition" offset-y min-width="290px">
-                        <template v-slot:activator="{ on }">
-                            <v-text-field v-model="post.enddate" label="스터디 종료일을 입력해 주세요" prepend-icon="event" readonly
-                                v-on="on">
-                            </v-text-field>
-                        </template>
-                        <v-date-picker no-title v-model="post.enddate" @click.prevent="checkdate" @input="menu2=false">
-                        </v-date-picker>
-                    </v-menu>
-                </v-col>
-            </v-row>
+                <v-row>
+                    <v-col cols="12" sm="6" md="4">
+                        <v-menu v-model="menu1" :close-on-content-click="false" :nudge-right="40"
+                            transition="scale-transition" offset-y min-width="290px">
+                            <template v-slot:activator="{ on }">
+                                <v-text-field v-model="post.startdate" label="스터디 시작일을 입력해 주세요" prepend-icon="event"
+                                    readonly v-on="on">
+                                </v-text-field>
+                            </template>
+                            <v-date-picker no-title v-model="post.startdate" @input="menu1=false"></v-date-picker>
+                        </v-menu>
+                    </v-col>
+                    <v-col cols="12" sm="6" md="4">
+                        <v-menu v-model="menu2" :close-on-content-click="false" :nudge-right="40"
+                            transition="scale-transition" offset-y min-width="290px">
+                            <template v-slot:activator="{ on }">
+                                <v-text-field v-model="post.enddate" label="스터디 종료일을 입력해 주세요" prepend-icon="event"
+                                    readonly v-on="on">
+                                </v-text-field>
+                            </template>
+                            <v-date-picker no-title v-model="post.enddate" @click.prevent="checkdate"
+                                @input="menu2=false">
+                            </v-date-picker>
+                        </v-menu>
+                    </v-col>
+                </v-row>
+            </div>
 
             <textarea v-model="post.body" id="create-content" name="content"></textarea>
             <div v-if="this.$route.name === 'StudyGroupUpdate'">
@@ -50,7 +52,7 @@
             </div>
             <v-checkbox v-model="post.anonymous" label="익명" value="1" class="annoyCheck" />
 
-            <v-btn class="mr-5" color="primary" @click="update">수정</v-btn>
+            <v-btn class="mr-5" color="warning" @click="update">수정</v-btn>
             <v-btn color="error" @click="goBack()">취소</v-btn>
         </div>
         <div v-else>

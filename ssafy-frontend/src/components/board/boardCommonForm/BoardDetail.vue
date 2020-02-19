@@ -18,7 +18,7 @@
               <div class="ma-2 mt-5">
                 <div align="left" class="ml-3 headline">{{ post.title }}
                 <div class="delrevise" v-if="this.$store.state.memberid === post.memberid">
-                    <v-btn class="mr-1" small color="green"
+                    <v-btn class="mr-1" small color="warning" style="color:white"
                       :to="{ path : `/board/${this.boardname}/${post.postid}/update`}">수정</v-btn>
                     <v-btn @click="deletePost" small color="error">삭제</v-btn>
                   </div>
@@ -144,9 +144,11 @@
             axios.delete(`api/post/${this.id}`)
             .then(response => {
               if (response.status == 200) {
-                router.push({
-                  path: `/board/${(Number(this.boardname) >= 5) ?  this.boardname : this.$store.state.category[this.boardname]}`
-                })
+                var path = this.$route.path
+                var res = path.split('/')
+                res = res.splice(0, res.length - 1)
+                var routePath = res.join('/')
+                router.push(routePath)
               }
             })
         }
