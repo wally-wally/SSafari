@@ -208,6 +208,7 @@ export default {
   height: 5px;
   z-index: 1;
   border-radius: 8px 8px 0 0;
+}
 .unreadmsg {
   margin-top : -10px;
   margin-left : -5px;
