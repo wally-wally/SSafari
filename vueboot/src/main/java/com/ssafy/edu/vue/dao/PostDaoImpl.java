@@ -151,4 +151,8 @@ public class PostDaoImpl {
 		return sqlSession.selectList(ns+"getPopularLikes",pop);
 	}
 
+	public Category getBoardCategoryInfo(int id) {
+		return sqlSession.selectOne(ns+"getBoardCategoryInfo",id);
+	}
+
 }

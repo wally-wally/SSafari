@@ -1,6 +1,6 @@
 <template>
 <div>
-  <v-app-bar v-if="mobile()" app color="white lighten-4" tile>
+  <v-app-bar v-if="mobile()" app color="white lighten-4" tile style="height:67px">
     <div class="d-flex align-center">
       <router-link :to="{name: 'home'}" style="text-decoration: none; color: #f7b157;">
         <v-toolbar-title style="font-size: 16px; padding-right: 10px;">SSafari</v-toolbar-title>
@@ -151,7 +151,7 @@ export default {
       this.loginDialog = false
     },
     mobile() {
-      if (this.$vuetify.breakpoint.name === "xs") {
+      if (this.$vuetify.breakpoint.name === "xs"||this.$vuetify.breakpoint.name === "sm") {
         return false;
       }
       return true;
