@@ -1,17 +1,63 @@
 <template>
   <div class="admin-wrapper">
-    <div>
-
+    <div class="ssafari-user-data">
+      <h1 class="text-center mb-3" style="font-family: 'Gothic A1;"><strong>SSafari User Data</strong></h1>
+      <div class="row user-count-wrapper">
+        <div class="col-12 col-sm-6 col-md-3">
+          <div class="user-count-box mx-1 pa-3">
+            <p>전체 유저</p>
+            <p>{{ totalUserCount }}</p>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 col-md-3">
+          <div class="user-count-box mx-1 pa-3">
+            <p>SSAFY</p>
+            <p>{{ infoCountList.ssafy }}</p>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 col-md-3">
+          <div class="user-count-box mx-1 pa-3">
+            <p>일반 회원</p>
+            <p>{{ infoCountList.user }}</p>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 col-md-3">
+          <div class="user-count-box mx-1 pa-3">
+            <p>관리자</p>
+            <p>{{ infoCountList.admin }}</p>
+          </div>
+        </div>
+      </div>
     </div>
-    <hr>
-    <h1>전체 회원 명단</h1>
-    <v-data-table
-    v-model="selectedMember"
-    :headers="headers"
-    :items="memberList"
-    :items-per-page="10"
-    class="elevation-1">
-  </v-data-table>
+
+    <div class="ssafari-user-table">
+      <h1 class="text-center mb-3" style="font-family: 'Gothic A1;"><strong>전체 회원 명단</strong></h1>
+      <v-data-table
+      :headers="headers"
+      :items="memberList"
+      :items-per-page="10"
+      :single-expand="singleExpand"
+      :expanded.sync="expanded"
+      item-key="name"
+      show-expand
+      class="elevation-1">
+        <template v-slot:top>
+          <v-toolbar flat>
+            <v-spacer></v-spacer>
+            <v-switch v-model="singleExpand" label="Single expand" class="mt-2"></v-switch>
+          </v-toolbar>
+        </template>
+        <template v-slot:expanded-item="{ headers, item }">
+          <td :colspan="headers.length">
+            <div class="my-3">
+              <p>작성 게시글 수 : {{ item.postcount }}</p>
+              <p>작성 스터디모임 게시글 수 : {{ item.portfoliocount }}</p>
+              <p>신청한 스터디모임 수 : {{ item.sugangcount }}</p>
+            </div>
+          </td>
+        </template>
+      </v-data-table>
+    </div>
   </div>
 </template>
 
@@ -24,30 +70,25 @@ export default {
     return {
       memberList: [],
       headers: [
-        {
-          text: '이름',
-          align: 'left',
-          value: 'name'
-        },
-        { text: '닉네임', value: 'username' },
-        { text: '이메일', value: 'email' },
-        { text: '지역', value: 'locationid' },
-        { text: '기수', value: 'unit' },
-        { text: '가입일', value: 'signupdate' },
-        { text: '게시글수', value: 'postcount' },
-        { text: '스터디모임수', value: 'portfoliocount' },
-        { text: '신청스터디모임수', value: 'sugangcount' },
-      ]
+        { text: '이름', align: 'start', value: 'name' },
+        { text: '닉네임',  align: 'start', value: 'username' },
+        { text: '이메일',  align: 'start', value: 'email' },
+        { text: '지역',  align: 'start', value: 'locationid' },
+        { text: '기수',  align: 'start', value: 'unit' },
+        { text: '가입일',  align: 'start', value: 'signupdate' }
+      ],
+      infoCountList: [],
+      singleExpand: false
     }
   },
   mounted() {
     this.getMemberList()
+    this.getInfoCount()
   },
   methods: {
     getMemberList() {
       axios.get('api/memberlist')
         .then(response => {
-          // this.memberList = response.data
           const ssafyAuth = function(status) {
             if (status === 1) {
               return '관리자'
@@ -75,13 +116,17 @@ export default {
         })
     },
     getInfoCount() {
+      axios.get('api/infocount')
+        .then(response => {
+          this.infoCountList = response.data
+        })
     }
   },
-  // watch: {
-  //   showAdminPage() {
-  //     this.getMemberList()
-  //   }
-  // }
+  computed: {
+    totalUserCount: function() {
+      return this.infoCountList.admin + this.infoCountList.ssafy + this.infoCountList.user
+    }
+  }
 }
 </script>
 

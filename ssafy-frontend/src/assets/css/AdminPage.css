@@ -1,15 +1,36 @@
 .admin-wrapper {
-  border-bottom: 1px solid #bcbcbc;
+  margin: 0 10px;
 }
 
-.admin-table-col {
-  border-top: 0.4px solid #bcbcbc;
-  font-size:13.5px;
-  line-height: 18px;
-  padding: 12px 0;
-  display: table-cell;
+.ssafari-user-data {
+  padding-bottom: 30px;
+  margin-bottom: 30px;
+  border-bottom: 1px solid lightgray;
 }
 
-.admin-table-row {
-  display: table-row;
+.user-count-wrapper {
+  display: flex;
+  margin: 0 3%;
+}
+
+.user-count-wrapper .user-count-box {
+  border: 1px solid lightgray;
+  border-radius: 10px;
+  background: linear-gradient(138deg, rgba(170,170,170,0.40379901960784315) 0%, rgba(184,183,184,1) 100%);
+  box-shadow: 3px 3px 7px lightgray;
+}
+
+.user-count-wrapper .user-count-box p {
+  text-align: center;
+}
+
+.user-count-wrapper .user-count-box p:first-child {
+  font-size: 18px;
+  font-family: 'Nanum Gothic';
+}
+
+.user-count-wrapper .user-count-box p:last-child {
+  font-size: 50px;
+  font-family: 'QuickSand';
+  font-weight: 800;
 }
