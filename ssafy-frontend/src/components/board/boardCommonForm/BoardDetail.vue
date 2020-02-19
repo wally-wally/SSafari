@@ -3,19 +3,35 @@
     <v-row justify="center">
       <v-col cols="12" sm="8">
         <v-card>
-          <v-card-title class="darken-1">
-            <div>
-              <div>
-                <v-avatar class="mr-5 mb-2">
-                  <img :src="post.img" alt="X">
-                </v-avatar>
-                <span>{{ post.username }}
-                  <sendmessage :username="post.username" :id="post.memberid"/>
-                </span>
+          <v-card-title class="pb-0 darken-1">
+              <div class="ma-2 mb-5" justify="center">
+                  <img class="avatar" :src="post.img" alt="X">
+                <div style="display:inline-block">
+                  <span style="display:block">
+                    {{ post.username }}
+                    <sendmessage :username="post.username" :id="post.memberid"/>
+                  </span>
+                  <small style="display:inline-block">{{ post.created_at }} </small>
+                </div>
               </div>
-              <v-spacer></v-spacer>
-              <div class="my-2 mx-2">
-                <span class="headline">{{ post.title }}
+          </v-card-title>
+              <div class="ma-2 mt-5">
+                <div align="left" class="ml-3 headline">{{ post.title }}
+                <div class="delrevise" v-if="this.$store.state.memberid === post.memberid">
+                    <v-btn class="mr-1" small color="green"
+                      :to="{ path : `/board/${this.boardname}/${post.postid}/update`}">수정</v-btn>
+                    <v-btn @click="deletePost" small color="error">삭제</v-btn>
+                  </div>
+                </div>
+              </div>
+          <v-list>
+            <v-list-item>
+              <v-list-item-content class="ml-2 postcontent mb-5">
+                {{post.body}}
+              </v-list-item-content>
+            </v-list-item>
+            
+            <div class="mt-5" align="center">
                   <v-btn v-if="((!likeFlag) && isLogin && memberid)" @click="clickLike" text icon color="#d3d3d3">
                     <v-icon>mdi-thumb-up</v-icon>
                     <h3>{{ count }}</h3>
@@ -28,24 +44,8 @@
                     <v-icon>mdi-thumb-up</v-icon>
                     <h3>{{ count }}</h3>
                   </v-btn>
-                  <h6>{{ post.created_at }} </h6>
-                  <div v-if="this.$store.state.memberid === post.memberid">
-                    <v-btn class="mr-1" small color="green"
-                      :to="{ path : `/board/${this.boardname}/${post.postid}/update`}">수정</v-btn>
-                    <v-btn @click="deletePost" small color="error">삭제</v-btn>
-                  </div>
-                </span>
-              </div>
             </div>
-          </v-card-title>
-          <v-list>
-            <v-divider></v-divider>
-            <v-list-item>
-              <v-list-item-content style="white-space: pre-line">
-                {{post.body}}
-              </v-list-item-content>
-            </v-list-item>
-            <v-divider></v-divider>
+            <v-divider/>
             <v-col cols="12" sm="12">
               <boardcomment :categoryid="post.categoryid" :boardname="this.boardname" :postid="this.id"
                 boardtype="post" />
@@ -141,7 +141,7 @@
       },
       deletePost() {
         if (confirm('정말로 삭제하시겠습니까?')) {
-          axios.delete(`api/post/${this.id}`)
+            axios.delete(`api/post/${this.id}`)
             .then(response => {
               if (response.status == 200) {
                 router.push({
@@ -151,10 +151,29 @@
             })
         }
       }
+    },
+    watch : {
+      post() {
+        const body = document.querySelector('.postcontent').innerText;
+      }
     }
   }
 </script>
 
 <style>
-
+.postcontent{
+  white-space: pre-line
+}
+.avatar {
+  width:52px;
+  min-width:52px;
+  height:52px;
+  border-radius : 52px;
+  margin-right: 10px;
+}
+.delrevise{
+  display:inline-block;
+  float : right;  
+  margin-right: 20px;
+}
 </style>
