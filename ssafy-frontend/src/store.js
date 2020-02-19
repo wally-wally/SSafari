@@ -10,7 +10,8 @@ Vue.use(Vuex)
 
 var tempgithubID = null
 export default new Vuex.Store({
-    state : {         
+    state : {       
+      unreadmsg : 0,  
         category : {
             'free' : '1',
             'job' : '2',
@@ -107,6 +108,12 @@ export default new Vuex.Store({
     login(context, token) {
         // mutation 호출 -> commit
         context.commit('login',token)
+        axios.get(`api/message` , { headers : {'access-token' : store.state.token } })
+        .then(response => {
+          store.state.unreadmsg = response.data
+        }).catch(error => {
+          console.log(error)
+        })
     },
     logout(context) {
         context.commit('logout')

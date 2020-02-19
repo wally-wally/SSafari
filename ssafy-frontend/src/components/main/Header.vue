@@ -13,8 +13,8 @@
     <v-btn v-if="mobile()" class="px-3" color="white" depressed tile to="/teamintro">팀 소개</v-btn>
     <v-btn v-if="mobile()" class="px-3" color="white" depressed tile to="/board">게시판</v-btn>
     <v-btn v-if="mobile()" class="px-3" color="white" depressed tile to="/studygroup">스터디 모임</v-btn>
-    <v-btn v-if="mobile() && isLogin" class="px-3" color="white" depressed tile to="/message">메세지함</v-btn>
     <v-btn v-if="mobile() && isLogin" class="px-3" color="white" depressed tile to="/mypage">내 페이지</v-btn>
+    <v-btn v-if="mobile() && isLogin" class="px-3" color="white" depressed tile to="/message"><i style="font-size:20px;" class="far fa-bell"></i><div class="unreadmsg"><p align="center" justify="center">{{this.$store.state.unreadmsg}}</p></div></v-btn>
     <v-btn v-if="mobile() && !isLogin" class="px-3" color="white" @click.stop="loginDialog = true" depressed tile>로그인</v-btn>
     <v-btn v-if="mobile() && isLogin" class="px-3" color="white" depressed tile @click="$store.dispatch('logout')">로그아웃</v-btn>
     <v-app-bar-nav-icon v-if="!mobile()" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
@@ -135,6 +135,7 @@ export default {
   },
   data() {
     return {
+      unreadmsgcnt : 0,
       drawer: null,
       collapseOnScroll: true,
       loginDialog: false,
@@ -156,3 +157,15 @@ export default {
   },
 };
 </script>
+<style>
+.unreadmsg {
+  margin-top : -10px;
+  margin-left : -5px;
+  background-color : brown;
+  width : 15px;
+  height: 15px;
+  border-radius : 7.5px;
+  font-size : 5px;
+  color : white;
+}
+</style>
