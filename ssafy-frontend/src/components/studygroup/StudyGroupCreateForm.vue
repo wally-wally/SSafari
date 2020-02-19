@@ -10,7 +10,7 @@
 				<textarea v-model="title" id="title-form"></textarea>
 			</div>
 			<label for="capacity">스터디 모집 인원 : </label>
-			<input v-model="capacity" id="capacity" type="text">명<br>
+			<input v-model="capacity" id="capacity" type="number">명<br>
 			<label for="location">스터디 지역 : </label>
 			<input v-model="location" class="my-3" id="location" type="text">
 
@@ -32,13 +32,13 @@
 							<v-text-field v-model="enddate" label="스터디 종료일을 입력해 주세요" prepend-icon="event" readonly v-on="on">
 							</v-text-field>
 						</template>
-						<v-date-picker no-title v-model="enddate" @click.prevent="checkdate" @input="menu2=false"></v-date-picker>
+						<v-date-picker no-title v-model="enddate" :min="startdate" @click.prevent="checkdate" @input="menu2=false"></v-date-picker>
 					</v-menu>
 				</v-col>
 			</v-row>
 
 			<textarea v-model="content" id="create-content" name="content"></textarea>
-			<v-file-input :rules="rules" v-model="imgFile" label="File input" id="file" outlined dense
+			<v-file-input :rules="rules" v-model="imgFile" label="스터디를 설명하는 이미지를 업로드해주세요(필수)" id="file" outlined dense
 				accept="image/png, image/jpeg, image/bmp"></v-file-input>
 			<!-- <input type="file" name="file" id="file"><br> -->
 			<!-- <button type="submit">작성</button> -->

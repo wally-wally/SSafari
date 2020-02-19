@@ -6,11 +6,11 @@
                 <v-divider style="margin:0"/>
             </div>
         </v-list>
-        <v-form @submit.prevent="Createcomment" clas>
+        <v-form @submit.prevent="Createcomment">
                 <textarea rows="2" v-model="new_comment" class="commentinput" v-bind:readonly="!isLogin" v-bind:placeholder="check"></textarea>
                 <div class="row justify-end mr-3">
                     <v-checkbox dense hide-details="1" color="#ffc837" v-model="anonymousStatus" label="익명" value="익명" class="annoyCheck"/>
-                    <v-btn type="submit" style="height:30px;color:#4c4c4c;" class="ml-3 mb-2 submit-button" color="#d8d8d8" @click="create">작성</v-btn>
+                    <v-btn type="submit" style="height:30px;color:#4c4c4c;" class="ml-3 mb-2 submit-button" color="#d8d8d8">작성</v-btn>
                 </div>
         </v-form>
     </v-container>
@@ -65,7 +65,6 @@ export default {
             const data = {'postid':this.postid, 'categoryid' : (Number(this.boardname) >= 5) ?  this.boardname : this.$store.state.category[this.boardname] }
                 axios.get(`api/commentpost/`, {params : data})
                     .then(response => {
-                        console.log(response)
                     this.comments = response.data
                     }).catch(error=> {
                     console.log(error)
@@ -81,7 +80,6 @@ export default {
             }
             data['categoryid'] = this.categoryid
             data[`${this.boardtype}id`] = this.postid
-            console.log(data)
             axios.post(`api/comment${this.boardtype}`,data)
                 .then(response => {
                     this.comments = response.data

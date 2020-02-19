@@ -36,10 +36,10 @@
 		name: 'SidePost',
 		props: {
 			categoryId: {
-				type: String
+				type: Number
 			},
 			locationId: {
-				type: String
+				type: Number
 			}
 		},
 		data() {
@@ -61,7 +61,6 @@
 						}
 					})
 					.then(response => {
-						console.log(response.data, 111)
 						this.popularComments = response.data
 					})
 			},
@@ -73,7 +72,6 @@
 						}
 					})
 					.then(response => {
-						console.log(response.data, 222)
 						this.popularLikes = response.data
 					})
 			}

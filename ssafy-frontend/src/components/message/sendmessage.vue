@@ -47,7 +47,7 @@ export default {
             this.content = ''
         },
       sendmessage(){
-        const chk = confirm('메시지 보내시겠습니까')
+        const chk = confirm('메시지를 전송하시겠습니까?')
         if (chk){
           const message = {
             title : this.title,
@@ -55,10 +55,8 @@ export default {
             toid : this.id,
             fromid : this.$store.state.memberid
           }
-          console.log(message)
           axios.post('api/message' ,message )
           .then(response => {
-            console.log(response.data)
             this.modal()
           })
         }

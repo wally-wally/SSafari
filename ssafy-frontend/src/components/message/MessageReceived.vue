@@ -9,7 +9,8 @@
 				:opponent="receivedMessages[i - 1].username"
                 :opponentId="receivedMessages[i - 1].fromid"
                 :id="receivedMessages[i - 1].id"
-                :read="receivedMessages[i - 1].isread">
+                :read="receivedMessages[i - 1].isread"
+				:boardType=1>
 			</Message>
 		</v-flex>
 		<v-flex xs12 text-xs-center round my-5 v-if="loadMore">
