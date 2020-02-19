@@ -1,6 +1,5 @@
 <template>
     <v-container>
-        <h3> {{ boardtype }} 댓글 </h3>
         <v-list three-line>
             <div v-for="comment in comments" :key="comment.id">
                 <comment @commetdel="commentdelete(comment)" :board="boardtype" :comment=comment />
