@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import VueSession from 'vue-session'
 import jwtDecode from 'jwt-decode'
 import axios from 'axios'
+import router from './router'
 
 Vue.use(VueSession)
 
@@ -76,7 +77,7 @@ export default new Vuex.Store({
             state.img = null
             state.unit = null
             state.locationid = null
-            window.location.replace('http://localhost:8080/')
+            router.go('/')
         }
     },
     dropout(state){

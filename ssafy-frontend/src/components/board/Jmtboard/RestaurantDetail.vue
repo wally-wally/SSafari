@@ -24,8 +24,10 @@
 					<div class="map_wrap_detail">
 						<br>
 						<div id="map" style="width:100%;height:350px;"></div>
+						<div class="mt-3 mr-5" align="right">
 						<h6>{{ restaurant.location }}
 						</h6>
+						</div>
 					</div>
 					<v-list>
 						<v-list-item>
