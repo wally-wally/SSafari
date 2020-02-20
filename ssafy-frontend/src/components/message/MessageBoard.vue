@@ -1,13 +1,13 @@
 <template>
 	<div class="mt-5">
 		<div v-if="currentMemberId !== null">
-			<v-btn @click="changeMessageFlag(true)" class="mx-3">받은 메세지함</v-btn>
-			<v-btn @click="changeMessageFlag(false)">보낸 메세지함</v-btn>
-			<v-container v-if="messageFlag">
-				<MessageReceived/>
-			</v-container>
-			<v-container v-else>
-				<MessageSent/>
+			<v-container>
+				<div class="mb-6">
+					<v-btn @click="changeMessageFlag(true)" class="mx-3">받은 메세지함</v-btn>
+					<v-btn @click="changeMessageFlag(false)" class="mx-3">보낸 메세지함</v-btn>
+				</div>
+				<MessageReceived v-if="messageFlag"/>
+				<MessageSent v-else/>
 			</v-container>
 		</div>
 		<div v-else class="mt-10">
