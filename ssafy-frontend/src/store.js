@@ -142,59 +142,6 @@ export default new Vuex.Store({
                     'access-token' : state.token,
                 }
             }
-        },
-        githubReposInfo(state) {
-            let myGithubID = tempgithubID
-            let githubBaseUrl = `https://api.github.com/users/${myGithubID}`
-            let reposArray = []
-            axios.get(`${githubBaseUrl}/repos`)
-              .then(response => {
-                const githubReposData = response.data
-                githubReposData.forEach(function(data) {
-                  let repoInfo = {
-                    'name': data.name,
-                    'starCount': data['stargazers_count'],
-                    'reposUrl': data['html_url'],
-                    'cloneUrl': data['clone_url'],
-                    'description': data['description']
-                  }
-                  axios.get(`https://api.github.com/repos/${myGithubID}/${repoInfo['name']}/languages`)
-                    .then(res => {
-                      // make vue-chartjs
-                      let langs = res.data
-                      console.log(langs)
-                      let chartData = {
-                        labels: [],
-                        datasets: []
-                      }
-                      if (Object.keys(langs).length !== 0) {
-                        function langSum(obj) {
-                          return Object.keys(obj).reduce((sum, key) => sum + obj[key], 0)
-                        }
-                        let langSumValue = langSum(langs)
-                        let flagIdx = 0
-                        for (let lang in langs) {
-                          if (flagIdx === 3) { break }
-                          chartData.labels.push(lang)
-                          chartData.datasets.push({
-                            label: `${lang}`,
-                            background: '#f87979',
-                            pointBackgroundColor: 'white',
-                            borderWidth: 1,
-                            pointBorderColor: '#249ebf',
-                            data: [`${((langs[lang] / langSumValue) * 100).toFixed(2)}`]
-                          })
-                          flagIdx += 1
-                        }
-                      }
-                        repoInfo['reposChart'] = chartData
-                    })
-                  reposArray.push(repoInfo)
-                })
-                console.log(reposArray)
-              })
-              .catch(error => console.log(error))
-            return reposArray
-          }
+        }
     }
 })

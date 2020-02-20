@@ -56,7 +56,9 @@
 						<v-btn class="mr-3" color="red" @click="denySsafy(ssafyRequest.memberid)">거절</v-btn>
 					</v-card>
 				</div> -->
-				<div>
+				
+				<!-- 이 부분이 게시판 신청 관리 -->
+				<!-- <div>
 					<div class="ssafy-request-board-title" style="font-size: 35px; font-family: 'Do Hyeon'; text-align: center;">게시판 신청 관리</div>
 					<hr class="title-headline">
 							<v-data-table
@@ -71,10 +73,14 @@
 						<div class="d-flex justify-space-between pt-3" style="margin: 0 5%;">
 							<span>👉선택된 항목에 대해 수행할 동작 선택</span>
 							<div>
-								<v-btn class="ml-3" color="blue" @click="approveBulletin(selectedBoardRequests)"><span style="color: white;">승인</span></v-btn> <!-- @click="approveBulletin(boardRequest.id)" -->
-								<v-btn class="ml-3" color="red" @click="denyBulletin(selectedBoardRequests)"><span style="color: white;">거절</span></v-btn> <!--  @click="denyBulletin(boardRequest.id)" -->
+								<v-btn class="ml-3" color="blue" @click="approveBulletin(selectedBoardRequests)"><span style="color: white;">승인</span></v-btn>
+								<v-btn class="ml-3" color="red" @click="denyBulletin(selectedBoardRequests)"><span style="color: white;">거절</span></v-btn>
 							</div>
 						</div>
+				</div> -->
+
+
+
 					<!-- <div v-for="boardRequest in boardRequests" :key="boardRequest.id">
 						<v-card class="mb-3">
 							<v-card-title>
@@ -90,7 +96,6 @@
 							<v-btn class="mr-3" color="red" @click="denyBulletin(boardRequest.id)">거절</v-btn>
 						</v-card>
 					</div> -->
-				</div>
 			</div>
 		</div>
 		<div v-else class="mt-10">
@@ -149,12 +154,12 @@
 						this.ssafyRequests = response.data
 					})
 			},
-			getBoardRequest() {
-				axios.get('api/boardcategory/auth')
-					.then(response => {
-						this.boardRequests = response.data
-					})
-			},
+			// getBoardRequest() {
+			// 	axios.get('api/boardcategory/auth')
+			// 		.then(response => {
+			// 			this.boardRequests = response.data
+			// 		})
+			// },
 			approveSsafy(memberid) {
 				var confirmation = confirm("해당 사람을 싸피인으로 인증해주시겠습니까?");
 				if (confirmation) {
@@ -181,36 +186,40 @@
 						})
 				}
 			},
-			approveBulletin(reqs) {
-				let confirmation = confirm('해당 게시판들을 승인하시겠습니까?')
-				if (confirmation) {
-					this.selectedBoardRequests.forEach(request => {
-						let sendData = {
-							id: request.id,
-							flag: 1
-						}
-						axios.put('api/boardcategory/auth', sendData)
-							.then(response => {
-								this.getBoardRequest()
-							})
-					})
-				}
-			},
-			denyBulletin(reqs) {
-				let confirmation = confirm('해당 게시판을 거절하시겠습니까?')
-				if (confirmation) {
-					this.selectedBoardRequests.forEach(request => {
-						let sendData = {
-							id: request.id,
-							flag: 0
-						}
-						axios.put('api/boardcategory/auth', sendData)
-						.then(response => {
-							this.getBoardRequest()
-						})
-					})
-				}
-			}
+			// approveBulletin(reqs) {
+			// 	let confirmation = confirm('해당 게시판들을 승인하시겠습니까?')
+			// 	if (confirmation) {
+			// 		this.selectedBoardRequests.forEach(request => {
+			// 			let sendData = {
+			// 				id: request.id,
+			// 				flag: 1
+			// 			}
+			// 			axios.put('api/boardcategory/auth', sendData)
+			// 				.then(response => {
+			// 					this.getBoardRequest()
+			// 				})
+			// 		})
+			// 	}
+			// },
+			// denyBulletin(reqs) {
+			// 	let confirmation = confirm('해당 게시판을 거절하시겠습니까?')
+			// 	if (confirmation) {
+			// 		this.selectedBoardRequests.forEach(request => {
+			// 			let sendData = {
+			// 				id: request.id,
+			// 				flag: 0
+			// 			}
+			// 			axios.put('api/boardcategory/auth', sendData)
+			// 			.then(response => {
+			// 				this.getBoardRequest()
+			// 			})
+			// 		})
+			// 	}
+			// }
+
+
+
+
 			// approveBulletin(id) {
 			// 	var confirmation = confirm("해당 게시판을 승인하시겠습니까?");
 			// 	if (confirmation) {
