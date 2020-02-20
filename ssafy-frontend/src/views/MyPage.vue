@@ -11,7 +11,7 @@
           <li @click="showMyPageSection(2)" class="ssafy-auth" v-if="ssafyAuth === 1"><i class="fas fa-id-card-alt"></i>SSAFY Admin</li>
           <li @click="showMyPageSection(2)" class="ssafy-auth" v-else><i class="fas fa-id-card-alt"></i>SSAFY 인증</li>
           <li @click="showMyPageSection(3)" class="github-page"><i class="fab fa-github"></i>github 연동</li>
-          <li @click="memberDropOut"><i class="fas fa-sign-out-alt"></i>회원탈퇴</li>
+          <li @click="showMyPageSection(4)" class="dropout-page"><i class="fas fa-sign-out-alt"></i>회원탈퇴</li>
         </ul>
       </div>
 
@@ -20,14 +20,14 @@
       <div class="mypost">
         <div class="mypost-title">게시글 관리</div>
         <ul class="mypost-menu">
-          <li @click="showMyPageSection(4)" class="myboard"><i class="fas fa-chalkboard"></i>게시판</li>
-          <li @click="showMyPageSection(5)" class="mystudygroup"><i class="fas fa-users"></i>스터디 모임</li>
-          <li @click="showMyPageSection(6)" class="mylikes"><i class="fas fa-heart"></i>Likes</li>
+          <li @click="showMyPageSection(5)" class="myboard"><i class="fas fa-chalkboard"></i>게시판</li>
+          <li @click="showMyPageSection(6)" class="mystudygroup"><i class="fas fa-users"></i>스터디 모임</li>
+          <li @click="showMyPageSection(7)" class="mylikes"><i class="fas fa-heart"></i>Likes</li>
         </ul>
       </div>
 
       <div class="mypage-description" @click.stop="showMyPageDialog = true">My Page 설명서</div>
-      <div @click="showMyPageSection(7)" class="admin-page" v-if="ssafyAuth === 1">Admin Page</div>
+      <div @click="showMyPageSection(8)" class="admin-page" v-if="ssafyAuth === 1">Admin Page</div>
       <v-dialog v-model="showMyPageDialog" max-width="700">
         <v-card>
           <v-card-title>My Page Description</v-card-title>
@@ -127,6 +127,7 @@
       <MakeSsafyAuth v-if="smallMenu.indexOf(selectMenuItem) === 2 && this.ssafyAuth === 1"/>
       <SsafyAuth v-if="smallMenu.indexOf(selectMenuItem) === 2 && this.ssafyAuth === 4"/>
       <GithubInfo v-if="smallMenu.indexOf(selectMenuItem) === 3" :githubid="githubid"/>
+      <DropOut v-if="smallMenu.indexOf(selectMenuItem) === 4"/>
       <MyBoardList v-if="smallMenu.indexOf(selectMenuItem) === 5"/>
       <MyStudyGroup v-if="smallMenu.indexOf(selectMenuItem) === 6"/>
       <MyLikeList v-if="smallMenu.indexOf(selectMenuItem) === 7"/>
@@ -172,6 +173,7 @@ import MyBoardList from '../components/board/MyPageBoard/MyBoardList'
 import MyLikeList from '../components/board/MyPageBoard/MyLikeList'
 import GithubInfo from '../components/github/GithubInfo'
 import AdminPage from '../components/login/AdminPage'
+import DropOut from '../components/login/DropOut'
 import '@/assets/css/MyPage.css'
 
 export default {
@@ -185,7 +187,8 @@ export default {
       MyBoardList,
       MyLikeList,
       GithubInfo,
-      AdminPage
+      AdminPage,
+      DropOut
     },
     data() {
       return {
@@ -195,30 +198,30 @@ export default {
         githubid: this.$store.getters.user.githubid,
         token: '',
         social: '',
-        ssafyAuth: '',
+        ssafyAuth: this.$store.state.auth,
         myPageStatus: null,
-        smallMenu: ['회원정보 수정', '비밀번호 변경', this.$store.state.auth === 1 ? 'SSAFY Admin' : 'SSAFY 인증', 'github 연동', '회원탈퇴', '게시판', '스터디 모임', 'Likes', 'Admin Page'],
+        smallMenu: [],
         selectMenuItem: -1,
         showMyPageDialog: false,
         showAdminPage: 0
       }
     },
     methods: {
-      memberDropOut() {
-        var confirmation = confirm("회원 탈퇴 하시겠습니까?");
-        if(confirmation){
-          var data = {
-            memberid : this.$store.state.memberid,
-          }
-          var token = this.$store.state.token
-          axios.delete(`api/member/${this.$store.state.memberid}`, {headers: {'access-token' : token}})
-            .then(response => {
-              console.log(response)
-            })
-          this.$store.dispatch('dropout')
-          this.$router.push('/')
-        }
-      },
+      // memberDropOut() {
+      //   var confirmation = confirm("회원 탈퇴 하시겠습니까?");
+      //   if(confirmation){
+      //     var data = {
+      //       memberid : this.$store.state.memberid,
+      //     }
+      //     var token = this.$store.state.token
+      //     axios.delete(`api/member/${this.$store.state.memberid}`, {headers: {'access-token' : token}})
+      //       .then(response => {
+      //         console.log(response)
+      //       })
+      //     this.$store.dispatch('dropout')
+      //     this.$router.push('/')
+      //   }
+      // },
       postshow() {
         this.showpost = !this.showpost
       },
@@ -227,20 +230,23 @@ export default {
       },
       showMyPageSection(status) {
         this.myPageStatus = status
-        this.selectMenuItem = this.smallMenu[status >= 4 ? status + 1 : status]
+        this.selectMenuItem = this.smallMenu[status]
         const userEditMenu = document.querySelector('.user-edit')
         const changePasswordMenu = document.querySelector('.change-password')
         const ssafyAuthMenu = document.querySelector('.ssafy-auth')
         const githubPageMenu = document.querySelector('.github-page')
-        // const gitlabPageMenu = document.querySelector('.gitlab-page')
+        const dropoutPageMenu = document.querySelector('.dropout-page')
         const myBoardMenu = document.querySelector('.myboard')
         const myStudyGroupMenu = document.querySelector('.mystudygroup')
         const myLikesMenu = document.querySelector('.mylikes')
         const adminPageMenu = document.querySelector('.admin-page')
         let menus = [
-          userEditMenu, changePasswordMenu, ssafyAuthMenu, githubPageMenu,
-          myBoardMenu, myStudyGroupMenu, myLikesMenu, adminPageMenu
+          userEditMenu, changePasswordMenu, ssafyAuthMenu, githubPageMenu, dropoutPageMenu,
+          myBoardMenu, myStudyGroupMenu, myLikesMenu
         ]
+        if (this.$store.state.auth === 1) {
+          menus.push(adminPageMenu)
+        }
         menus.forEach(menu => {
           menu.style.color = 'black'
           menu.style.fontWeight = '100'
@@ -253,13 +259,13 @@ export default {
         //   userEditMenu.style.color = '#DD660A'
         //   userEditMenu.style.fontWeight = 'bold'
         // }
-        if (this.myPageStatus === 2) {
-          if (this.ssafyAuth === 2) {
-            alert('오 넌 싸피 아이디가 다 있구나!')
-          } else if (this.ssafyAuth === 3) {
-            alert('SSAFY 인증 대기 상태입니다.')
-          }
-        }
+        // if (this.myPageStatus === 2) {
+        //   if (this.ssafyAuth === 2) {
+        //     alert('오 넌 싸피 아이디가 다 있구나!')
+        //   } else if (this.ssafyAuth === 3) {
+        //     alert('SSAFY 인증 대기 상태입니다.')
+        //   }
+        // }
       }
     },
     mounted() {
@@ -268,17 +274,18 @@ export default {
       }
       // this.social = this.$store.state.social
       this.ssafyAuth = this.$store.state.auth
+      if (this.ssafyAuth === 1) {
+        this.smallMenu = ['회원정보 수정', '비밀번호 변경', 'SSAFY Admin', 'github 연동', '회원탈퇴', '게시판', '스터디 모임', 'Likes', 'Admin Page']
+      } else {
+        this.smallMenu = ['회원정보 수정', '비밀번호 변경', 'SSAFY 인증', 'github 연동', '회원탈퇴', '게시판', '스터디 모임', 'Likes']
+      }
     },
     watch: {
       selectMenuItem: {
         handler() {
           const menuIdx = this.smallMenu.indexOf(this.selectMenuItem)
-          const adjustMenuIdx = menuIdx >= 5 ? menuIdx - 1 : menuIdx
-          if (menuIdx === 4) {
-            this.memberDropOut()
-          } else {
-            this.showMyPageSection(adjustMenuIdx)
-          }
+          console.log(menuIdx)
+          this.showMyPageSection(menuIdx)
         }
       }
     }

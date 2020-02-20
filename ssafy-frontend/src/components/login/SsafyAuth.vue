@@ -1,45 +1,53 @@
 <template>
 	<v-flex justify-center>
 		<div v-if="currentMemberId !== null">
-			<div id="create-form-title">
-				<span id="form-title">SSAFY 인증 페이지</span>
-			</div>
-			<v-divider></v-divider>
-			<div class="upload-example">
-				<h3><i class="fas fa-exclamation-circle" style="color:#ff8008"></i>&nbsp;아래와 같이 사진을 업로드해 주세요</h3>
-				<img class="upload-img-example" src="../../../public/img/authExample.jpg">
-				<h3>싸피 인증 관리자가 3일 이내에 인증 승인/거부를 결정합니다.</h3>
-			</div>
-			<hr class="title-headline">
-			<div class="ml-0">
-				<div class="title-top">
-					<div class="create-title pt-2" style="font-size:14px">지역</div>
-					<div class="region-checkbox">
-						<v-container class="py-0" id="dropdown-region">
-							<v-select v-model="region" :items="regions" item-text="text" item-value="val" label="Choose Region"
-								color="#f7b157" target="#dropdown-region">
-							</v-select>
-						</v-container>
+			<div v-if="this.$store.state.auth === 4">
+				<div id="create-form-title">
+					<span id="form-title">SSAFY 인증 페이지</span>
+				</div>
+				<v-divider></v-divider>
+				<div class="upload-example">
+					<h3><i class="fas fa-exclamation-circle" style="color:#ff8008"></i>&nbsp;아래와 같이 사진을 업로드해 주세요</h3>
+					<img class="upload-img-example" src="../../../public/img/authExample.jpg">
+					<h3>싸피 인증 관리자가 3일 이내에 인증 승인/거부를 결정합니다.</h3>
+				</div>
+				<hr class="title-headline">
+				<div class="ml-0">
+					<div class="title-top">
+						<div class="create-title pt-2" style="font-size:14px">지역</div>
+						<div class="region-checkbox">
+							<v-container class="py-0" id="dropdown-region">
+								<v-select v-model="region" :items="regions" item-text="text" item-value="val" label="Choose Region"
+									color="#f7b157" target="#dropdown-region">
+								</v-select>
+							</v-container>
+						</div>
+					</div>
+					<div class="title-top">
+						<div class="create-title pt-2" style="font-size:14px">기수</div>
+						<div class="region-checkbox-2">
+							<v-container class="py-0" id="dropdown-region">
+								<v-select v-model="classSsafy" :items="classes" item-text="text" item-value="val" label="Choose class"
+									color="#f7b157" target="#dropdown-region">
+								</v-select>
+							</v-container>
+						</div>
 					</div>
 				</div>
-				<div class="title-top">
-					<div class="create-title pt-2" style="font-size:14px">기수</div>
-					<div class="region-checkbox-2">
-						<v-container class="py-0" id="dropdown-region">
-							<v-select v-model="classSsafy" :items="classes" item-text="text" item-value="val" label="Choose class"
-								color="#f7b157" target="#dropdown-region">
-							</v-select>
-						</v-container>
-					</div>
+				<div>
+					<v-file-input class="mx-2" :rules="rules" v-model="imgFile" label="File input" id="file" outlined dense
+						accept="image/png, image/jpeg, image/bmp" color="#ffc837"></v-file-input>
+				</div>
+				<div style="text-align:center">
+					<v-btn class="ml-3 mr-5" color="#f5f5f5" @click="create">인증 신청</v-btn>
+					<v-btn color="f5f5f5" @click="back">돌아가기</v-btn>
 				</div>
 			</div>
-			<div>
-				<v-file-input class="mx-2" :rules="rules" v-model="imgFile" label="File input" id="file" outlined dense
-					accept="image/png, image/jpeg, image/bmp" color="#ffc837"></v-file-input>
+			<div v-else-if="this.$store.state.auth === 3">
+				SSAFY 인증 대기 상태입니다.
 			</div>
-			<div style="text-align:center">
-				<v-btn class="ml-3 mr-5" color="#f5f5f5" @click="create">인증 신청</v-btn>
-				<v-btn color="f5f5f5" @click="back">돌아가기</v-btn>
+			<div v-else>
+				SSAFY 인증 회원 입니다.
 			</div>
 		</div>
 

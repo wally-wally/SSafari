@@ -1,17 +1,8 @@
 <template>
-	<div class="myboardlist-t">
+	<!-- <div class="myboardlist-t">
 		<div class="myboardlist-table" style="padding-top:50px">
 			<div class="myboardlist-table-row" style="font-weight:bold; height:50px; font-size:17px;">
 				내가 작성한 게시물
-				<!-- <div class="myboardlist-table-col col-header table-post-boardtype">
-					<p>종류</p>
-				</div>
-				<div class="myboardlist-table-col col-header table-post-title">
-					<p>제목</p>
-				</div>
-				<div class="myboardlist-table-col col-header table-post-created_at">
-					<p>작성일</p>
-				</div> -->
 			</div>
 			<div class="myboardlist-table-row" v-for="post in posts" :key="`${post.categoryid}-${post.postid}`" @click="goToBoardDetail(post.categoryid, post.postid)">
 				<div class="myboardlist-table-col table-post-boardtype"><p class="text-center">{{ post.categoryname }}</p></div>
@@ -29,16 +20,23 @@
 				<div class="table-mobile-2">{{ post.created_at.slice(2, 16) }}</div>
 			</div>
 		</div>
-	</div>
-		<!-- <v-data-table
+	</div> -->
+	<div>
+		<h1 class="my-5 text-center" style="font-family: 'Noto Sans KR';">내가 작성한 게시글 리스트</h1>
+		<v-data-table
 			v-model="selectedPostsList"
 			:headers="myPostheaders"
 			:items="posts"
 			:items-per-page="10"
-			:single-select="true"
-			show-select
+			item-key="postid"
 			class="elevation-1">
-		</v-data-table> -->
+			<template v-slot:item.action="{ item }">
+				<v-icon small class="mr-2" @click="goToBoardDetail(item.categoryid, item.postid)">
+					edit
+				</v-icon>
+			</template>
+		</v-data-table>
+	</div>
 		<!-- <div class="mt-3" style="float: right;"> -->
 			<!-- <span>선택한 게시글로 이동하기</span> -->
 			<!-- <v-btn class="ml-3" color="blue" @click="goToBoardDetail(selectedPostsList[0].categoryid, selectedPostsList[0].postid)"><span style="color: white;">MOVE</span></v-btn>  -->
@@ -89,7 +87,10 @@ export default {
 					value: 'categoryname'
 				},
 				{ text: '제목', value: 'title' },
-				{ text: '작성일', value: 'created_at' }
+				{ text: '작성일', value: 'created_at' },
+				{ text: '좋아요 수', value: 'likes' },
+				{ text: '댓글 수', value: 'comments' },
+				{ text: '게시글 상세보기', value: 'action', sortable: false }
 			],
 			selectedPostsList: []
 		}
@@ -105,6 +106,7 @@ export default {
 			axios.get(`api/postlist/${ this.$store.getters.user.memberid }`)
 				.then( response => {
 					this.posts = response.data
+					console.log(this.posts)
 					// console.log(response.data)
 					// response.data.forEach(postData => {
 					// 	this.posts.push({
