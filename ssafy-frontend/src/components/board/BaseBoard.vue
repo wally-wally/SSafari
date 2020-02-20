@@ -20,15 +20,9 @@
                         </v-select>
                     </v-container>
                 </div>
-                <div class="post-count">{{ boardCount }}</div>
             </div>
+            
             <div class="d-flex justify-space-between pb-4">
-                <v-flex>
-                    <v-btn class="board-go-first" v-if="pageData.page >= 3" @click="changePageIndex(0)">처음</v-btn>
-                    <v-btn class="board-go-prev" v-if="pageData.page >= 2" @click="changePageIndex(-1)">이전</v-btn>
-                    <v-btn class="board-go-next" v-if="pagniationStatus" @click="changePageIndex(1)">다음</v-btn> <!-- v-if="pagniationStatus" -->
-                    {{ pageData.page }}[page]
-                </v-flex>
                 <v-text-field class="pa-0 ma-0 search-board-keyword"
                     hide-details
                     single-line
@@ -82,8 +76,13 @@
                     <BoardList :boardname="boardname" :boards="boards"></BoardList>
                 </v-flex>
             </v-layout>
+            <div align="center" class="mt-3 mb-5">
+                <i class="v-icon mdi mdi-chevron-left" @click="changePageIndex(-1)" :class="{icondeactive:(this.pageData.page >= 2) ? 0: 1}"></i>
+                <span class="mx-5">{{ pageData.page }}</span>
+                <i class="v-icon mdi mdi-chevron-right" @click="changePageIndex(1)" :class="{icondeactive:!this.pagniationStatus}"></i>
+            </div>
         </div>
-        <SidePost :categoryId="pageData.categoryid" :locationId="0"/>
+        <SidePost v-if="mobile()" :categoryId="pageData.categoryid" :locationId="0"/>
     </div>
 </template>
 
@@ -147,6 +146,9 @@
                 this.pageData.categoryid = (Number(this.boardname) >= 5) ?  Number(this.boardname) : Number(this.$store.state.category[this.boardname])
                 this.changePageIndex(0)
                 this.categorydetail()
+                this.showCreatePost = 0
+                this.title = ''
+                this.content = ''
             },
             selectRegion: {
                 handler() {
@@ -161,14 +163,17 @@
             this.currentMemberId = this.$store.state.memberid
         },
         methods: {
+            mobile() {
+                if (this.$vuetify.breakpoint.name === "xs"||this.$vuetify.breakpoint.name === "sm") {
+                    return false;
+                }
+                return true;
+                },
             categorydetail() {
                 axios.get(`api/boardcategory/${this.pageData.categoryid}`)
                 .then(response=> {
                     this.category = response.data
                 }).catch(error=>{console.log(error)})
-            },
-            onPostCount(value) {
-                this.postCnt = value
             },
             hideInitPostForm() {
                 this.showCreatePost = 1
@@ -192,10 +197,12 @@
             changePageIndex(status) {
                 if (status === 0) {
                     this.pageData.page = 1
-                } else if (status === -1) {
+                } else if (status === -1 ) {
                     this.pageData.page = this.pageData.page - 1 === 0 ? 1 : this.pageData.page - 1
-                } else if (status === 1) {
+                } else if (status === 1 && this.pagniationStatus) {
                     this.pageData.page += 1
+                } else if (status === 1) {
+
                 } else {
                     if (this.pageData.keyword) {
                         this.pageData.page =1
@@ -234,10 +241,6 @@
         font-weight: bold;
         font-family: 'Noto Sans KR', sans-serif;
         line-height: 4.6;
-    }
-
-    .post-count::after {
-        content: '개의 게시글';
     }
 
     .main-post-section {
@@ -408,5 +411,11 @@
     }
     div.wrap {
     margin-top: 25px;
+    }
+    .icondeactive {
+        color : #d6d6d6;
+    }
+    .icondeactive:hover {
+        cursor : default;
     }
 </style>

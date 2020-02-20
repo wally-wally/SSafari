@@ -152,7 +152,7 @@
     }
     .faq-section__qnas .animate2 .qna__q {
       font-size: 15px;
-      padding-top: 13px;
+      padding-top: 10px;
     }
   }
 </style>
