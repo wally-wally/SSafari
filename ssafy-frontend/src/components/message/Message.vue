@@ -1,6 +1,6 @@
 <template>
   <div class="post-wrapper" @click.stop="dialog = true" @click="changeRead">
-    <v-dialog v-model="dialog" max-width="500px">
+    <v-dialog v-model="dialog" max-width="700px">
       <v-card>
         <v-card-title><span class="cuteFont" style="font-size:1.5em">제목: {{ title }}</span></v-card-title>
         <v-card-text class="cuteFont" style="font-size:1.3em">
@@ -107,6 +107,9 @@
 
 <style>
 .readColor{
-  background-color: #FFF4C6;
+  background-color: rgb(228, 242, 250);
+}
+.readColor:hover {
+  background-color :  rgb(179, 227, 255);
 }
 </style>

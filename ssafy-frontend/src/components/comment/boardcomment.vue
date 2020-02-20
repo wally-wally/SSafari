@@ -108,8 +108,11 @@ export default {
 <style>
 .commentinput {
     width: 100%;
+    height: 50px;
     background-color:white;
     margin-top:2rem;
+    resize: none;
+    border: 1px solid lightgray;
 }
 /* input, textarea {
     background: #fff;

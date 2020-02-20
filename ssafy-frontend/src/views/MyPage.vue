@@ -7,7 +7,7 @@
         <div class="member-management-title">회원관리</div>
         <ul class="member-management-menu">
           <li @click="showMyPageSection(0)" class="user-edit"><i class="fas fa-user-edit"></i>회원정보 수정</li>
-          <li v-if="this.$store.state.auth === 1" @click="showMyPageSection(1)" class="change-password"><i class="fas fa-key"></i>비밀번호 변경</li>
+          <li @click="showMyPageSection(1)" class="change-password"><i class="fas fa-key"></i>비밀번호 변경</li>
           <li @click="showMyPageSection(2)" class="ssafy-auth" v-if="ssafyAuth === 1"><i class="fas fa-id-card-alt"></i>SSAFY Admin</li>
           <li @click="showMyPageSection(2)" class="ssafy-auth" v-else><i class="fas fa-id-card-alt"></i>SSAFY 인증</li>
           <li @click="showMyPageSection(3)" class="github-page"><i class="fab fa-github"></i>github 연동</li>
@@ -123,9 +123,9 @@
         </v-card> -->
       </div>
       <MemberModify v-if="smallMenu.indexOf(selectMenuItem) === 0"/>
-      <PasswordModify v-if="smallMenu.indexOf(selectMenuItem) === 1 && this.$store.state.auth === 0"/>
+      <PasswordModify v-if="smallMenu.indexOf(selectMenuItem) === 1"/>
       <MakeSsafyAuth v-if="smallMenu.indexOf(selectMenuItem) === 2 && this.ssafyAuth === 1"/>
-      <SsafyAuth v-if="smallMenu.indexOf(selectMenuItem) === 2 && this.ssafyAuth === 4"/>
+      <SsafyAuth v-if="smallMenu.indexOf(selectMenuItem) === 2"/>
       <GithubInfo v-if="smallMenu.indexOf(selectMenuItem) === 3" :githubid="githubid"/>
       <DropOut v-if="smallMenu.indexOf(selectMenuItem) === 4"/>
       <MyBoardList v-if="smallMenu.indexOf(selectMenuItem) === 5"/>

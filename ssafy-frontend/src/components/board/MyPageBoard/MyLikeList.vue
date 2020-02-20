@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<h1 class="my-5 text-center" style="font-family: 'Noto Sans KR';">내가 '좋아요' 누른 게시글 리스트</h1>
+		<h1 class="mt-2 mb-5 text-center" style="font-family: 'Noto Sans KR';">내가 '좋아요' 누른 게시글 리스트</h1>
 		<v-data-table
 			:headers="likeHeaders"
 			:items="likes"
