@@ -27,7 +27,7 @@
       </div>
 
       <div class="mypage-description" @click.stop="showMyPageDialog = true">My Page 설명서</div>
-      <div @click="showMyPageSection(8)" class="admin-page" v-if="ssafyAuth === 1">Admin Page</div>
+      <div @click="showMyPageSection(8)" class="admin-page" v-if="ssafyAuth === 1" style="font-weight: bold;">Admin Page</div>
       <v-dialog v-model="showMyPageDialog" max-width="700">
         <v-card>
           <v-card-title>My Page Description</v-card-title>
@@ -39,12 +39,12 @@
                 <li>비밀번호 변경 : 새로운 비밀번호로 변경</li>
                 <li>SSAFY 인증</li>
                 <ul>
-                  <li>비SSAFY인 : SSAFY인 인증 페이지가 보여짐</li>
-                  <li>SSAFY인 : SSAFY인임을 알려주는 alert창 나옴</li>
+                  <li>비SSAFY인 : SSAFY인 인증 페이지가 보여지고 신청하면 관리자의 승인을 기다리라는 페이지가 보여짐</li>
+                  <li>SSAFY인 : SSAFY인으로 승인 됐다는 문구가 적힌 페이지가 보여짐</li>
                   <li>관리자 : SSAFY인 인증을 신청한 내역들이 나옴</li>
                 </ul>
                 <li>github 연동 : '회원정보 수정'에서 Github ID를 등록한 후에 이용 가능, github 기본 정보와 repository 관련 내용을 볼 수 있음</li>
-                <li>회원탈퇴 : 클릭 시 정말로 회원탈퇴를 진행하는 것이 맞는지 확인하는 alert 창이 나옴</li>
+                <li>회원탈퇴 : 클릭 시 정말로 회원탈퇴를 진행하는 것이 맞는지 확인하는 페이지가 나옴</li>
                 <li>게시글 관리 : 게시판, 스터디 모임에 내가 작성한 게시글을 볼 수 있고 'Likes'는 내가 좋아요를 누른 게시글들을 볼 수 있음</li>
               </ul>
             </div>
