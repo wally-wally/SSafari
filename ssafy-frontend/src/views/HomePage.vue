@@ -30,7 +30,8 @@
              id="post"
              aspect-ratio="2.15">
         <div class="post-contents mt-10">
-          <div class="post-title">게시판</div>
+          <div class="separator"></div>
+          <div class="post-title section-title">게시판</div>
           <div data-aos="fade-up" class="post-contents">
             <!-- <BoardListMain></BoardListMain> -->
             <div class="mt-10">
@@ -44,9 +45,10 @@
              id="portfolio"
              aspect-ratio="2.15">
         <div class="portfolio-contents mt-10">
-          <div class="portfolio-title">스터디 모임</div>
+          <div class="separator"></div>
+          <div class="portfolio-title section-title">스터디 모임</div>
           <div class="button-box">
-            <div class="addButton" @click="goAddStudyGroup">스터디 모집하기</div>
+            <div class="addButton section-btn" @click="goAddStudyGroup">스터디 모집하기</div>
           </div>
           <div data-aos="fade-up" class="portfolio-carousel mt-10">
             <StudyGroupListMain></StudyGroupListMain>
@@ -128,3 +130,17 @@ export default {
 	},
 }
 </script>
+<style>
+.separator {
+	width: 70px;
+	height: 1.5px;
+	background-color: #222222;
+	margin: 25px;
+  margin-left: 10%;
+	margin-bottom: 10px;
+}
+.section-title {
+    color: #231f20;
+    text-align: center;
+}
+</style>

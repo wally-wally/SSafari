@@ -360,7 +360,7 @@ public class PostController {
 			messageservice.addMessage(new Message(1,category.getMemberid(),"게시판 개설 승인", "'"+category.getName()+"' 게시판 개설 요청이 승인되었습니다."));
 			nr.setName("인증 승인");
 		}else {
-			messageservice.addMessage(new Message(1,category.getMemberid(),"게시판 개설 승인", "'"+category.getName()+"' 게시판 개설 요청이 거절되었습니다."));
+			messageservice.addMessage(new Message(1,category.getMemberid(),"게시판 개설 거절", "'"+category.getName()+"' 게시판 개설 요청이 거절되었습니다."));
 			nr.setName("인증 거절");
 		}
 		postservice.deleteBoardCategoryAuth(request.getId());
