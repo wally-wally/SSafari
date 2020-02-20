@@ -26,7 +26,7 @@
                         </v-select>
 			</div>
 			<v-row>
-				<v-col cols="12" sm="6" md="4">
+				<div class="col-6">
 					<v-menu v-model="menu1" :close-on-content-click="false" :nudge-right="40" transition="scale-transition"
 						offset-y min-width="290px">
 						<template v-slot:activator="{ on }">
@@ -35,8 +35,8 @@
 						</template>
 						<v-date-picker no-title color="#f7b157" v-model="startdate" @input="menu1=false"></v-date-picker>
 					</v-menu>
-				</v-col>
-				<v-col cols="12" sm="6" md="4">
+				</div>
+				<div class="col-6">
 					<v-menu v-model="menu2" :close-on-content-click="false" :nudge-right="40" transition="scale-transition"
 						offset-y min-width="290px">
 						<template v-slot:activator="{ on }">
@@ -45,7 +45,7 @@
 						</template>
 						<v-date-picker no-title color="#f7b157" v-model="enddate" :min="startdate" @click.prevent="checkdate" @input="menu2=false"></v-date-picker>
 					</v-menu>
-				</v-col>
+				</div>
 			</v-row>
 
 			<textarea v-model="content" id="create-content" name="content" style="box-shadow: 0px 0px; border: 1px solid lightgray; border-radius: 6px;"></textarea>

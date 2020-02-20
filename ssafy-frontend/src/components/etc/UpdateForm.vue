@@ -28,7 +28,7 @@
                         </v-select>
 			</div>
 				<v-row>
-					<v-col cols="12" sm="6" md="4">
+					<div class="col-6">
 						<v-menu v-model="menu1" :close-on-content-click="false" :nudge-right="40" transition="scale-transition"
 							offset-y min-width="290px">
 							<template v-slot:activator="{ on }">
@@ -37,8 +37,8 @@
 							</template>
 							<v-date-picker no-title v-model="post.startdate" @input="menu1=false"></v-date-picker>
 						</v-menu>
-					</v-col>
-					<v-col cols="12" sm="6" md="4">
+					</div>
+					<div class="col-6">
 						<v-menu v-model="menu2" :close-on-content-click="false" :nudge-right="40" transition="scale-transition"
 							offset-y min-width="290px">
 							<template v-slot:activator="{ on }">
@@ -48,7 +48,7 @@
 							<v-date-picker no-title v-model="post.enddate" @click.prevent="checkdate" @input="menu2=false">
 							</v-date-picker>
 						</v-menu>
-					</v-col>
+					</div>
 				</v-row>
 			</div>
 

@@ -24,19 +24,17 @@
         <div class="qna__q" style="display: flex; justify-content:space-between;" :class="{readColor: isRead}">
           <div class="row">
             <div class="col col-2">
-              <span class="ml-5" style="color:#ecafb4;">{{opponent}}</span>
+              <span class="ml-2" style="color:#ecafb4;">{{opponent}}</span>
             </div>
             <div class="col col-8">
               {{title}}
             </div>
-          <div class="col col-2" style="font-size: 0.8em; min-width: 87px;">
-            <span class="board-date"
-              style="margin-left: 4px; padding-left: 4px;">{{date.slice(2, 16)}}</span>
+          <div class="col col-2" style="font-size: 0.8em;">
+            <span class="board-date">{{date.slice(2, 16)}}</span>
           </div>
           </div>
           </div>
         </div>
-      </div>
     </div>
   </div>
 </template>
