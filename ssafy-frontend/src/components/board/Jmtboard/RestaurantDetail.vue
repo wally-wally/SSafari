@@ -2,6 +2,10 @@
 	<v-container>
 		<v-row v-if="!updateFlag" justify="center">
 			<v-col cols="12" sm="8">
+			<div class="mb-5 wrap" style="display:block;">
+				<h1 style="display: block;letter-spacing: -1px;">{{category.name}}</h1>
+				<p style="display: block;">{{category.explanation}}</p>
+            </div>
 				<v-card>
 					<v-card-title class="darken-1">
 						<div class="ma-2" justify="center">
@@ -85,6 +89,7 @@
 		},
 		data() {
 			return {
+				category :{},
 				comments: [],
 				restaurant: {},
 				likeFlag: false,
@@ -182,7 +187,11 @@
 			if (token) {
 				this.isLogin = true
 			}
-		}
+			axios.get(`api/boardcategory/4`)
+			.then(response=> {
+				this.category = response.data
+			}).catch(error=>{console.log(error)})
+			}
 	}
 </script>
 <style>

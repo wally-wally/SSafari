@@ -2,7 +2,7 @@
   <v-layout mt-3 row wrap>
     <v-flex v-for="board in this.boards"  :key="board.postid" style="width: 100%;height:80px;"> <!-- col-12 sm6 md3 -->
 	<router-link :to="`/board/${boardname}/${board.postid}`">
-	  <Board 
+	  <Board
 	  	:board='board'>
 	  </Board>
 	  </router-link>

@@ -20,16 +20,17 @@
                         </v-select>
                     </v-container>
                 </div>
-            </div>
-            
-            <div class="d-flex justify-space-between pb-4">
-                <v-text-field class="pa-0 ma-0 search-board-keyword"
+            <div class="mt-4" style="display:inline-block;">
+                <v-text-field style="display:inline-block" class="pa-0 ma-0 search-board-keyword"
                     hide-details
                     single-line
                     v-model="pageData.keyword"
-                    color="#ffc837">
+                    color="#ffc837"
+                    placeholder="검색어를 입력해주세요"
+                    >
                 </v-text-field>
                 <i class="fas fa-search" @click="changePageIndex(2)"></i>
+            </div>
             </div>
             <div v-if="currentMemberId !== null && this.selectRegion !== 'All'" class="create-post">
                 <div v-if="this.showCreatePost === 0" id="writeArticleButton" class="d-flex justify-space-between" style="padding:15px" @click="hideInitPostForm">
@@ -73,7 +74,7 @@
             <v-layout>
                 <v-flex>
                     <!-- @showPostCount="onPostCount" :limits="5" :load-more="true" -->
-                    <BoardList :boardname="boardname" :boards="boards"></BoardList>
+                    <BoardList :category="category" :boardname="boardname" :boards="boards"></BoardList>
                 </v-flex>
             </v-layout>
             <div align="center" class="mt-3 mb-5">
@@ -159,6 +160,7 @@
             }
         },
         mounted() {
+            this.categorydetail()
             this.changePageIndex(0)
             this.currentMemberId = this.$store.state.memberid
         },
@@ -307,6 +309,9 @@
         width: 100%;
         padding-bottom: 5px;
         border-bottom: 2px solid lightgray;
+        font-size : 16px;
+        height: 300px;
+
     }
 
     .post-form-title{
@@ -317,6 +322,7 @@
         font-size: 16px;
         font-weight: bold;
     }
+textarea { font-size: 180px; }
 
     .post-form-contents {
         height: 300px;
@@ -385,7 +391,7 @@
     .v-application p {
     margin-bottom: 0px; 
     }
-    textarea {
+    textarea::placeholder {
     text-rendering: auto;
     word-spacing: normal;
     text-transform: none;
@@ -401,6 +407,24 @@
     white-space: pre-wrap;
     overflow-wrap: break-word;
     font: 400 13.3333px Arial;
+    }
+
+    textarea {
+    text-rendering: auto;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: start;
+    -webkit-appearance: textarea;
+    background-color: -internal-light-dark-color(white, black);
+    -webkit-rtl-ordering: logical;
+    flex-direction: column;
+    cursor: text;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    font: 400 20px Arial;
     }
 
     #writeArticleButton {

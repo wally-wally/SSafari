@@ -2,6 +2,10 @@
   <v-container>
     <v-row justify="center">
       <v-col cols="12" sm="8">
+    <div class="wrap mb-5" style="display:block;">
+      <h1 style="display: block;letter-spacing: -1px;">{{category.name}}</h1>
+      <p style="display: block;">{{category.explanation}}</p>
+    </div>
         <v-card>
           <v-card-title class="pb-0 darken-1">
               <div class="ma-2 mb-5" justify="center">
@@ -71,11 +75,12 @@
     },
     data() {
       return {
+        category : {},
         post: [],
         comments: [],
         likeFlag: false,
 				updateFlag: false,
-        isLogin: false,
+        isLogin: this.$store.state.isLogin,
         memberid: null,
         categoryid: '',
         count: 0,
@@ -92,10 +97,6 @@
     mounted() {
       this.getPost()
 			this.memberid = this.$store.state.memberid
-			var token = this.$store.state.token
-			if (token) {
-				this.isLogin = true
-      }
       if (this.boardname == 'free'){
         this.categoryid = '1'
       } else if(this.boardname == 'job'){
@@ -103,8 +104,15 @@
       } else {
         this.categoryid = this.boardname
       }
+      this.categorydetail() 
     },
     methods: {
+      categorydetail() {
+        axios.get(`api/boardcategory/${this.categoryid}`)
+        .then(response=> {
+            this.category = response.data
+        }).catch(error=>{console.log(error)})
+      },
 			clickUpdate() {
 				this.updateFlag = true
 			},
