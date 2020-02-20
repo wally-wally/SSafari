@@ -1,6 +1,6 @@
 <template>
 	<v-layout mt-5 row wrap style="margin: 20px;">
-		<h1>보낸 메세지함</h1>
+		<h1 class="mb-3" style="font-family: 'Noto Sans KR'; font-weight: bold;">보낸 메세지함</h1>
 		<v-flex v-for="i in this.showMessagesCount" :key="i" style="width: 100%;">
 			<!-- col-12 sm6 md3 -->
 			<Message :date="sentMessages[i - 1].created_at" 
