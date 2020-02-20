@@ -1,6 +1,10 @@
 <template>
     <div class="d-flex post-index">
         <div class="main-post-section">
+            <div v-if="this.showCreatePost === 0" class="wrap" style="display:block;">
+                <h1 style="display: block;letter-spacing: -1px;">{{category.name}}</h1>
+                <p style="display: block;">{{category.explanation}}</p>
+            </div>
             <div class="post-header">
                 <div class="lang-checkbox">
                     <v-container id="dropdown-lang">
@@ -60,6 +64,7 @@
         // },
         data() {
             return {
+                category : {},
                 codes : [],
                 selectLanguage: 'All', // deafult를 로그인한 유저의 지역으로 하고 싶으면 이 부분 수정
                 languages: ['All', 'Python', 'Java', 'JavaScript', 'HTML', 'C++'],
@@ -88,10 +93,17 @@
             })
         },
         mounted() {
+            this.categorydetail()
             this.getcodes()
             this.currentMemberId = this.$store.state.memberid
         },
         methods: {
+            categorydetail() {
+                axios.get(`api/boardcategory/3`)
+                .then(response=> {
+                    this.category = response.data
+                }).catch(error=>{console.log(error)})
+            },
             getcodes() {
                 axios.get('api/codes')
                 .then(response => {

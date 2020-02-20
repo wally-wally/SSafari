@@ -1,6 +1,10 @@
 <template>
 	<div class="d-flex post-index">
 		<div class="main-post-section">
+			<div class="wrap" style="display:block;">
+				<h1 style="display: block;letter-spacing: -1px;">{{category.name}}</h1>
+				<p style="display: block;">{{category.explanation}}</p>
+            </div>
 			<div class="post-header">
 				<div class="region-checkbox">
 					<v-container id="dropdown-region">
@@ -55,6 +59,7 @@
 		// },
 		data() {
 			return {
+				category : {},
 				postCnt: 0,
 				selectRegion: 'All', // deafult를 로그인한 유저의 지역으로 하고 싶으면 이 부분 수정
 				regionObject: {'All': 0, 'Seoul': 1, 'Daejeon': 2, 'Gumi': 3, 'Gwangju': 4, 'etc': 5},
@@ -85,10 +90,18 @@
 			})
 		},
 		mounted() {
+			this.categorydetail()
+
 			this.currentMemberId = this.$store.state.memberid
 			this.getRestaurants()
 		},
 		methods: {
+			categorydetail() {
+                axios.get(`api/boardcategory/4`)
+                .then(response=> {
+                    this.category = response.data
+                }).catch(error=>{console.log(error)})
+            },
 			getRestaurants() {
 				axios.get('api/jmts')
 				.then(response => {
