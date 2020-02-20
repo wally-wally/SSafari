@@ -2,13 +2,13 @@
   <div class="post-wrapper" @click.stop="dialog = true" @click="changeRead">
     <v-dialog v-model="dialog" max-width="700px">
       <v-card>
-        <v-card-title><span class="cuteFont" style="font-size:1.5em">제목: {{ title }}</span></v-card-title>
-        <v-card-text class="cuteFont" style="font-size:1.3em">
-          상대: {{ opponent }}
+        <v-card-title><span class="cuteFont" style="font-size:1.5em">{{ title }}</span></v-card-title>
+        <v-card-text align="right" class="cuteFont" style="font-size:1.3em">
+          {{ opponent }}
           <sendmessage :username="opponent" :id="opponentId" />
         </v-card-text>
         <v-divider></v-divider>
-        <v-card-text class="cuteFont" style="font-size:1.3em">
+        <v-card-text class="cuteFont mt-4" style="font-size:1.3em">
           {{ content }}
         </v-card-text>
         <v-card-actions>
@@ -22,11 +22,18 @@
     <div class="faq-section__qnas">
       <div class="qna animate">
         <div class="qna__q" style="display: flex; justify-content:space-between;" :class="{readColor: isRead}">
-          <div class="post-list-title" style="margin-right: 15px;"><span style="color:#ecafb4; display:inline-block; width: 100px;"><h3><b>{{opponent}}</b></h3></span> <span style="display:inline-block; width: 100px;">{{title}}</span>
-          </div>
-          <div style="font-size: 0.8em; min-width: 87px;">
+          <div class="row">
+            <div class="col col-2">
+              <span class="ml-5" style="color:#ecafb4;">{{opponent}}</span>
+            </div>
+            <div class="col col-8">
+              {{title}}
+            </div>
+          <div class="col col-2" style="font-size: 0.8em; min-width: 87px;">
             <span class="board-date"
               style="margin-left: 4px; padding-left: 4px;">{{date.slice(2, 16)}}</span>
+          </div>
+          </div>
           </div>
         </div>
       </div>
@@ -107,9 +114,9 @@
 
 <style>
 .readColor{
-  background-color: rgb(228, 242, 250);
+  background-color: rgb(237, 242, 253);
 }
 .readColor:hover {
-  background-color :  rgb(179, 227, 255);
+  background-color :  rgb(211, 225, 255);
 }
 </style>
