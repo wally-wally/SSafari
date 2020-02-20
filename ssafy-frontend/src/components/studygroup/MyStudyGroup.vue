@@ -1,8 +1,8 @@
 <template>
   <div class="mystudygroup-mypage-list">
-    <h1 class="pl-4">등록한 스터디 모임</h1>
+    <div class="mt-2 mb-5 text-center" style="font-size: 30px; font-weight: bold;">등록한 스터디 모임</div>
     <MyStudyGroupList/>
-    <h1 class="mt-10 pl-4">신청한 스터디 모임</h1>
+    <div class="mt-2 mb-5 text-center" style="font-size: 30px; font-weight: bold;">신청한 스터디 모임</div>
     <MyStudyParticipated/>
   </div>
 </template>

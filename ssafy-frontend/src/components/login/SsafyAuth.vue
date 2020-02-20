@@ -44,10 +44,14 @@
 				</div>
 			</div>
 			<div v-else-if="this.$store.state.auth === 3">
-				SSAFY 인증 대기 상태입니다.
+				<p class="text-center" style="font-size: 150px;"><i class="far fa-pause-circle"></i></p>
+				<p class="text-center pb-6" style="font-size: 28px; font-family: 'Noto Sans KR', sans-serif; font-weight: 600;">SSAFY 인증 대기 상태입니다.</p>
+				<p class="text-center" style="font-size: 15px; font-family: 'Noto Sans KR', sans-serif;">관리자의 승인을 받을 때까지 기다려주세요.</p>
+				<p class="text-center" style="font-size: 15px; font-family: 'Noto Sans KR', sans-serif;">승인이 거절되면 'SSAFY 인증 페이지'로 바뀝니다.</p>
 			</div>
-			<div v-else>
-				SSAFY 인증 회원 입니다.
+			<div v-else-if="this.$store.state.auth === 2">
+				<p class="text-center" style="font-size: 150px;"><i class="far fa-play-circle"></i></p>
+				<p class="text-center pb-6" style="font-size: 28px; font-family: 'Noto Sans KR', sans-serif; font-weight: 600;">SSAFY 인증 회원입니다.</p>
 			</div>
 		</div>
 

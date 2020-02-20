@@ -2,7 +2,7 @@
 	<v-flex justify-center>
 		<div v-if="currentMemberId !== null && auth === 1">
 			<div>
-				<div class="ssafy-request-auth-title" id="form-title">SSAFY 회원 인증 신청 관리</div>
+				<div class="ssafy-request-auth-title mt-2 mb-5" id="form-title">SSAFY 회원 인증 신청 관리</div>
 				<hr class="title-headline">
 				<div v-for="ssafyRequest in ssafyRequests" :key="ssafyRequest.id" style="width: 90%; margin: 0 auto;">
 					<div class="ssafy-request-img">

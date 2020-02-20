@@ -7,37 +7,37 @@
 			<hr class="title-headline">
 			<div class="title-top">
 				<div class="create-title">Title</div>
-				<textarea v-model="title" id="title-form"></textarea>
+				<textarea v-model="title" id="title-form" style="border: 1px solid lightgray; border-radius: 6px; box-shadow: 0px 0px;"></textarea>
 			</div>
 			<label for="capacity">스터디 모집 인원 : </label>
-			<input v-model="capacity" id="capacity" type="number">명<br>
+			<input v-model="capacity" id="capacity" type="number" style="border: 1px solid lightgray; border-radius: 6px;" class="mr-1">명<br>
 			<label for="location">스터디 지역 : </label>
-			<input v-model="location" class="my-3" id="location" type="text">
+			<input v-model="location" class="my-3" id="location" type="text" style="border: 1px solid lightgray; border-radius: 6px;">
 
 			<v-row>
 				<v-col cols="12" sm="6" md="4">
 					<v-menu v-model="menu1" :close-on-content-click="false" :nudge-right="40" transition="scale-transition"
 						offset-y min-width="290px">
 						<template v-slot:activator="{ on }">
-							<v-text-field v-model="startdate" label="스터디 시작일을 입력해 주세요" prepend-icon="event" readonly v-on="on">
+							<v-text-field color="#f7b157" v-model="startdate" label="스터디 시작일을 입력해 주세요" prepend-icon="event" readonly v-on="on">
 							</v-text-field>
 						</template>
-						<v-date-picker no-title v-model="startdate" @input="menu1=false"></v-date-picker>
+						<v-date-picker no-title color="#f7b157" v-model="startdate" @input="menu1=false"></v-date-picker>
 					</v-menu>
 				</v-col>
 				<v-col cols="12" sm="6" md="4">
 					<v-menu v-model="menu2" :close-on-content-click="false" :nudge-right="40" transition="scale-transition"
 						offset-y min-width="290px">
 						<template v-slot:activator="{ on }">
-							<v-text-field v-model="enddate" label="스터디 종료일을 입력해 주세요" prepend-icon="event" readonly v-on="on">
+							<v-text-field color="#f7b157" v-model="enddate" label="스터디 종료일을 입력해 주세요" prepend-icon="event" readonly v-on="on">
 							</v-text-field>
 						</template>
-						<v-date-picker no-title v-model="enddate" :min="startdate" @click.prevent="checkdate" @input="menu2=false"></v-date-picker>
+						<v-date-picker no-title color="#f7b157" v-model="enddate" :min="startdate" @click.prevent="checkdate" @input="menu2=false"></v-date-picker>
 					</v-menu>
 				</v-col>
 			</v-row>
 
-			<textarea v-model="content" id="create-content" name="content"></textarea>
+			<textarea v-model="content" id="create-content" name="content" style="box-shadow: 0px 0px; border: 1px solid lightgray; border-radius: 6px;"></textarea>
 			<v-file-input :rules="rules" v-model="imgFile" label="스터디를 설명하는 이미지를 업로드해주세요(필수)" id="file" outlined dense
 				accept="image/png, image/jpeg, image/bmp"></v-file-input>
 			<!-- <input type="file" name="file" id="file"><br> -->
@@ -200,7 +200,7 @@
 		width: 100%;
 		height: 300px;
 		resize: none;
-		border: 1px solid black;
+		border: 1px solid lightgray;
 		box-shadow: 5px 5px 7px grey;
 		margin-bottom: 20px;
 	}

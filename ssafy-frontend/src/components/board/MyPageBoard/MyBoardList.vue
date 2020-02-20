@@ -22,7 +22,7 @@
 		</div>
 	</div> -->
 	<div>
-		<h1 class="my-5 text-center" style="font-family: 'Noto Sans KR';">내가 작성한 게시글 리스트</h1>
+		<h1 class="mt-2 mb-5 text-center" style="font-family: 'Noto Sans KR';">내가 작성한 게시글 리스트</h1>
 		<v-data-table
 			v-model="selectedPostsList"
 			:headers="myPostheaders"

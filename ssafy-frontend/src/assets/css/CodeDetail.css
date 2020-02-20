@@ -1,0 +1,16 @@
+.code-detail-header-1 .code-title {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.code-detail-header-2 > div {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.code-detail-content .code-body {
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  box-shadow: 1px 1px 4px #424242;
+  padding: 10px;
+}

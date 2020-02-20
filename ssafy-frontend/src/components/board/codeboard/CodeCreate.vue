@@ -13,14 +13,13 @@
     </v-col>
     <v-spacer />
     <v-col cols="1">
-      <label col-1> 제목 : 
-      </label>
+      <label col-1> 제목 :</label>
     </v-col>
     <v-col cols="6">
       <v-text-field col-8 v-model="title" color="#ffc837"></v-text-field>
     </v-col>
   </v-row>
-  <v-textarea v-model="body" id="" cols="80%" rows="5" color="#ffc837"></v-textarea>
+  <textarea class="code-textarea" v-model="body" placeholder="내용을 입력하세요." rows="6" color="#ffc837"></textarea>
   <codemirror ref="myCm"
               :value="code"
               :options="cmOptions"
@@ -28,8 +27,10 @@
               @focus="onCmFocus"
               @input="onCmCodeChange">
   </codemirror>
-  <v-checkbox v-model="anonymousStatus" label="익명" value="익명" class="annoyCheck"/>
-  <button @click="codecreate()">작성하기</button>
+  <div class="d-flex justify-end mt-3">
+    <v-checkbox v-model="anonymousStatus" label="익명" value="익명" class="annoyCheck"/>
+    <v-btn class="ml-4" color="#f7b157" small @click="codecreate()">작성하기</v-btn>
+  </div>
 </v-container>
 
 </template>
@@ -151,5 +152,9 @@ export default {
 </script>
 
 <style>
-
+  .code-textarea {
+    width: 100%;
+    resize: none;
+    border: 1px solid lightgray;
+  }
 </style>
