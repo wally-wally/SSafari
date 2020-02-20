@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="top-navbar">
   <v-app-bar v-if="mobile()" app color="white lighten-4" tile style="height:67px">
     <div class="d-flex align-center">
       <router-link :to="{name: 'home'}" style="text-decoration: none; color: #f7b157;">
@@ -11,7 +11,6 @@
 
     <v-spacer></v-spacer>
     <nav class="nav" style="text-decoration:none">
-      <router-link v-if="mobile()" to="/teamintro" class="nav-item d-flex align-center" style="color:#000;">팀 소개</router-link>
       <router-link v-if="mobile()" to="/board" class="nav-item d-flex align-center" style="color:#000">게시판</router-link>
       <router-link v-if="mobile()" to="/studygroup" class="nav-item d-flex align-center" style="color:#000">스터디 모임</router-link>
       <router-link v-if="mobile() && isLogin" to="/message" class="nav-item d-flex align-center" style="color:#000"><i style="font-size:20px;" class="far fa-bell"></i><div class="unreadmsg"><p align="center" justify="center">{{this.$store.state.unreadmsg}}</p></div></router-link>
@@ -23,15 +22,22 @@
     </nav>
   </v-app-bar>
 
-  <v-app-bar v-else app :collapse="!collapseOnScroll" :collapse-on-scroll="collapseOnScroll" color="white" @click.stop="drawer = !drawer">
-    <div class="d-flex align-center">
-      <a href="/" style="text-decoration: none; color: #f7b157;"> <v-toolbar-title>SSafari</v-toolbar-title></a>
-    </div>
-    <v-spacer></v-spacer>
-    <v-app-bar-nav-icon></v-app-bar-nav-icon>
-  </v-app-bar>
-
-  <!-- <v-icon v-else @click.stop="drawer = !drawer"></v-icon> -->
+  <v-speed-dial v-else v-model="fab" :bottom="true" :right="true" fixed>
+    <template v-slot:activator>
+      <v-btn v-model="fab" color="#ff8008" dark fab @click="drawer = !drawer">
+        <v-icon class="fas fa-ellipsis-h"></v-icon>
+      </v-btn>
+    </template>
+    <!-- <v-btn fab dark small color="green"><v-icon>home</v-icon></v-btn>
+    <v-btn fab dark small color="green"><v-icon>event</v-icon></v-btn>
+    <v-btn fab dark small color="green"><v-icon>dashboard</v-icon></v-btn>
+    <v-btn fab dark small color="green"><v-icon class="fas fa-sticky-note"></v-icon></v-btn>
+    <v-btn fab dark small color="green"><v-icon class="fas fa-envelope"></v-icon></v-btn>
+    <v-btn fab dark small color="green"><v-icon class="fas fas fa-user"></v-icon></v-btn>
+    <v-btn fab dark small color="green"><v-icon class="fas fa-sign-in-alt"></v-icon></v-btn>
+    <v-btn fab dark small color="green"><v-icon class="fas fa-sign-out-alt"></v-icon></v-btn> -->
+  </v-speed-dial>
+        <!-- 임시 복구 2 -->
   <v-navigation-drawer v-model="drawer" absolute temporary class="v-navigation-drawer--fixed">
     <v-divider></v-divider>
 
@@ -75,10 +81,10 @@
       
       <v-list-item v-if="isLogin" to="/message">
         <v-list-item-icon>
-          <v-icon class="fas fa-sticky-note"></v-icon>
+          <v-icon class="fas fa-envelope"></v-icon>
         </v-list-item-icon>
         <v-list-item-content>
-          <v-list-item-title>MESSAGE BOX</v-list-item-title>
+          <v-list-item-title>MESSAGE BOX{{ this.$store.state.unreadmsg > 0 ? `(${this.$store.state.unreadmsg})` : ''}}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
 
@@ -113,6 +119,17 @@
 
   </v-navigation-drawer>
 
+  <!-- 임시 복구 1 -->
+  <!-- <v-app-bar v-else app :collapse="!collapseOnScroll" :collapse-on-scroll="collapseOnScroll" color="white" @click.stop="drawer = !drawer">
+    <div class="d-flex align-center">
+      <a href="/" style="text-decoration: none; color: #f7b157;"> <v-toolbar-title>SSafari</v-toolbar-title></a>
+    </div>
+    <v-spacer></v-spacer>
+    <v-app-bar-nav-icon></v-app-bar-nav-icon>
+  </v-app-bar> -->
+
+  <!-- <v-icon v-else @click.stop="drawer = !drawer"></v-icon> -->
+
   <v-dialog v-if="mobile() && loginDialog" v-model="loginDialog" max-width="900px">
     <LoginSignup v-on:update="changeLoginDialog"/>
   </v-dialog>
@@ -138,9 +155,10 @@ export default {
   data() {
     return {
       unreadmsgcnt : 0,
-      drawer: null,
+      drawer: false,
       collapseOnScroll: true,
       loginDialog: false,
+      fab: true,
     };
   },
   computed : {
@@ -219,5 +237,14 @@ export default {
   border-radius : 7.5px;
   font-size : 5px;
   color : white;
+}
+
+.top-navbar .v-speed-dial {
+  z-index:4;
+}
+
+.top-navbar .v-btn--floating {
+  position: relative;
+  z-index:4;
 }
 </style>
