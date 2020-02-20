@@ -143,7 +143,6 @@
 								this.post['img'] = imgLink
 							})
 					}
-					console.log(this.post)
 					axios.put('api/portfolio', this.post)
 						.then(response => {
 							if (response.status === 200) {

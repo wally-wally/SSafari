@@ -26,7 +26,7 @@
           <v-divider></v-divider>
           <div justify="center">
             <h4 style="text-align:center">일정</h4>
-					<v-date-picker no-title v-model="dates" @input="menu1=false" width="85%" range color="#F9A602"></v-date-picker>
+					<v-date-picker no-title v-model="dates" @input="menu1=false" width="85%" :range="true" color="#F9A602"></v-date-picker>
           </div>
             <v-divider></v-divider>
           <v-row justify="center">
