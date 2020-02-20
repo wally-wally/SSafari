@@ -19,9 +19,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.edu.vue.dto.Commentportfolio;
+import com.ssafy.edu.vue.dto.Member;
+import com.ssafy.edu.vue.dto.Message;
 import com.ssafy.edu.vue.dto.Portfolio;
 import com.ssafy.edu.vue.dto.Sugang;
 import com.ssafy.edu.vue.help.BoolResult;
+import com.ssafy.edu.vue.service.IMemberService;
+import com.ssafy.edu.vue.service.IMessageService;
 import com.ssafy.edu.vue.service.IPortfolioService;
 
 import io.swagger.annotations.Api;
@@ -38,6 +42,10 @@ public class PortfolioController {
 
 	@Autowired
 	private IPortfolioService portfolioservice;
+	@Autowired
+	private IMessageService messageservice;
+	@Autowired
+	private IMemberService memberservice;
 	
 	@ApiOperation(value = "portfolio 전체 보기", response = List.class)
 	@RequestMapping(value = "/portfolios", method = RequestMethod.GET)
@@ -148,6 +156,8 @@ public class PortfolioController {
 		logger.info("1-------------addCommentPortfolio-----------------------------" + new Date());
 		portfolioservice.addCommentPortfolio(commentportfolio);
 		List<Commentportfolio> portfolios = portfolioservice.getCommentPortfolio(commentportfolio.getPortfolioid());
+		Portfolio portfolio = portfolioservice.getPortfolio(commentportfolio.getPortfolioid());
+		messageservice.addMessage(new Message(1,portfolio.getMemberid(),"댓글 알림", "'"+portfolio.getTitle()+"' 스터디 모집글에 댓글이 작성되었습니다."));
 		return new ResponseEntity<List<Commentportfolio>>(portfolios, HttpStatus.OK);
 	}
 	
@@ -174,6 +184,9 @@ public class PortfolioController {
 	public ResponseEntity<BoolResult> registerSugang(@RequestBody Sugang sugang) throws Exception {
 		logger.info("1-------------registerSugang-----------------------------" + new Date());
 		portfolioservice.registerSugang(sugang);
+		Portfolio portfolio = portfolioservice.getPortfolio(sugang.getPortfolioid());
+		Member member = memberservice.getMember(sugang.getMemberid());
+		messageservice.addMessage(new Message(1,portfolio.getMemberid(),"스터디 신청", "'"+member.getUsername()+"'님이 '"+portfolio.getTitle()+"' 스터디를 신청하였습니다."));
 		BoolResult nr=new BoolResult();
    		nr.setName("registerSugang");
    		nr.setState("succ");

@@ -102,7 +102,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 	
 	<select id="getMemberLikePost" parameterType="java.lang.Integer" resultType="com.ssafy.edu.vue.dto.LikePost">
-		( select j.id postid, j.name title, (4) as categoryid, r.name categoryname, j.memberid, m.username, j.anonymous, j.created_at 
+		select * from ( select j.id postid, j.name title, (4) as categoryid, r.name categoryname, j.memberid, m.username, j.anonymous, j.created_at 
 		from jmt j, likepost l, category r, members m
 		where l.categoryid=4 and j.id=l.postid and l.memberid=#{memberid} and r.id=l.categoryid and j.memberid=m.memberid
 		union
@@ -112,7 +112,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		union
 		select p.postid postid, p.title, l.categoryid, r.name categoryname, p.memberid, m.username,p.anonymous, p.created_at 
 		from posts p, likepost l, category r, members m
-		where p.categoryid=l.categoryid and p.postid=l.postid and l.memberid=#{memberid} and r.id=l.categoryid and p.memberid=m.memberid ) 
+		where p.categoryid=l.categoryid and p.postid=l.postid and l.memberid=#{memberid} and r.id=l.categoryid and p.memberid=m.memberid ) as tb
 		order by created_at
 	</select>
 	
