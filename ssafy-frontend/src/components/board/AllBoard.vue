@@ -3,7 +3,7 @@
         <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 board">
             <div class="boarddiv">
             <v-card-title class="main-board-title">자유게시판
-                <router-link class="moreboard" to="board/free">
+                <router-link class="moreboard" to="board/free/">
                 <span style="color: #ff8008">
                     더보기
                 </span>
@@ -27,7 +27,7 @@
         <div class="col-12 col-sm-6 board">
             <div class="boarddiv">
             <v-card-title class="main-board-title">취업게시판
-                <router-link class="moreboard" to="board/job">
+                <router-link class="moreboard" to="board/job/">
                     <span style="color: #ff8008">
                         더보기
                     </span>
@@ -52,7 +52,7 @@
             <div class="boarddiv">
 
             <v-card-title class="main-board-title">코드리뷰
-                <router-link class="moreboard" to="board/code">
+                <router-link class="moreboard" to="board/code/">
                 <span style="color: #ff8008">
                     더보기
                 </span>
@@ -76,7 +76,7 @@
         <div class="col-12 col-sm-6 board">
             <div class="boarddiv">
             <v-card-title class="main-board-title">주변맛집
-                <router-link class="moreboard" to="board/jmt">
+                <router-link class="moreboard" to="board/jmt/">
                 <span style="color: #ff8008">
                     더보기
                 </span>
@@ -189,7 +189,7 @@
         },
         methods: {
             goBoardDetail(boardType, boardID) {
-                this.$router.push(`/board/${boardType}/${boardID}`)
+                this.$router.push(`/board/${boardType}/${boardID}/`)
             }
         }
     }

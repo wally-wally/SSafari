@@ -43,7 +43,7 @@
                 </v-flex>
             </v-layout>
         </div>
-        <SidePost :categoryId="3" :locationId="0"/>
+        <SidePost v-if="this.mobile()" :categoryId="3" :locationId="0"/>
     </div>
 </template>
 
@@ -98,6 +98,12 @@
             this.currentMemberId = this.$store.state.memberid
         },
         methods: {
+            mobile() {
+                if (this.$vuetify.breakpoint.name === "xs"||this.$vuetify.breakpoint.name === "sm") {
+                    return false;
+                }
+                return true;
+                },
             categorydetail() {
                 axios.get(`api/boardcategory/3`)
                 .then(response=> {

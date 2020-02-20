@@ -1,9 +1,9 @@
 <template>
 <v-container style="width: 50%">
 	<v-flex justify-center>
-		<div v-if="this.$store.state.memberid === post.memberid">
+		<div v-if="this.$store.state.memberid">
 			<div id="create-form-title">
-				<span id="form-title" v-if="this.$route.path === `/studygroup/${post.postid}/update`">스터디그룹 모집 수정</span>
+				<span id="form-title" v-if="this.$route.name === 'StudyGroupUpdate'">스터디그룹 모집 수정</span>
 				<span id="form-title" v-else>게시글 수정</span>
 			</div>
 			<hr class="title-headline">
@@ -15,9 +15,18 @@
 
 				<label for="capacity">스터디 모집 인원 : </label>
 				<input v-model="post.capacity" id="capacity" type="text">명<br>
-				<label for="location">스터디 지역 : </label>
-				<input v-model="post.location" class="my-3" id="location" type="text">
-
+			<div class="mt-3"><label for="location">스터디 지역 : </label>
+                        <v-select
+							style="display:inline-block;width:30%"
+                            :items="regions"
+                            item-text="name"
+                            item-value="val"
+                            color="#f7b157"
+                            target="#dropdown-region"
+                            v-model="post.locationid"
+                            >
+                        </v-select>
+			</div>
 				<v-row>
 					<v-col cols="12" sm="6" md="4">
 						<v-menu v-model="menu1" :close-on-content-click="false" :nudge-right="40" transition="scale-transition"
@@ -71,6 +80,12 @@
 		name: 'UpdateForm',
 		data() {
 			return {
+				regions : [
+                    { name : 'Seoul' , val : 1},
+                    { name : 'Daejeon' , val : 2},
+                    { name : 'Gumi' , val : 3},
+                    { name : 'Gawngju', val : 4}
+                ],
 				post: {},
 				imgFile: null,
 				from: null,
@@ -129,6 +144,7 @@
 				}
 			},
 			update() {
+				if (this.$store.state.memberid === this.post.memberid){
 				if (this.$route.name === 'StudyGroupUpdate') {
 					if (this.imgFile) {
 						const formData = new FormData()
@@ -161,6 +177,7 @@
 							}
 						})
 				}
+			}
 			}
 		}
 	}
