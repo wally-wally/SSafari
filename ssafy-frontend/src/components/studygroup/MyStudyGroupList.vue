@@ -1,20 +1,22 @@
 <template>
-  <div mt-5 class="d-flex">
+  <div mt-5>
 		<div v-if="this.portfolios.length === 0" class="ma-10 text-center" style="font-family: 'Nanum Gothic', sans-serif; font-weight: bold;">
 			등록한 스터디모임 게시글이 없습니다.
 		</div>
-    <div v-else v-for="i in this.showPortfoliosCount" :key="i" class="col-12 col-sm-6 col-lg-4 col-xl-3 pa-2">
-	  <router-link :to="`/studygroup/${portfolios[i - 1].portfolioid}`">
-      <StudyGroup class="ma-3"
-			:date="portfolios[i - 1].created_at.toString()"
-			:title="portfolios[i - 1].title"
-			:body="portfolios[i - 1].body"
-			:imgSrc="portfolios[i - 1].img"
-			:username="portfolios[i - 1].username"
-			:memberid="portfolios[i - 1].memberid"
-      ></StudyGroup>
-	  </router-link>
-    </div>
+		<div v-else class="row">
+			<div v-for="i in this.showPortfoliosCount" :key="i" class="col-12 col-sm-6 col-lg-4 col-xl-3 pa-2">
+			<router-link :to="`/studygroup/${portfolios[i - 1].portfolioid}`">
+				<StudyGroup class="ma-3"
+				:date="portfolios[i - 1].created_at.toString()"
+				:title="portfolios[i - 1].title"
+				:body="portfolios[i - 1].body"
+				:imgSrc="portfolios[i - 1].img"
+				:username="portfolios[i - 1].username"
+				:memberid="portfolios[i - 1].memberid"
+				></StudyGroup>
+			</router-link>
+			</div>
+		</div>
 
     <v-flex xs12 text-xs-center round my-5>
       <v-btn v-if="this.portfolios.length > 4 && this.morePortfoliosIcon" color="#f7b157" dark v-on:click="loadMorePortfolios"><v-icon size="25" class="mr-2">fa-plus</v-icon> 더 보기</v-btn>&nbsp; &nbsp;

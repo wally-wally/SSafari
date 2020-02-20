@@ -240,11 +240,11 @@ export default {
 }
 
 .top-navbar .v-speed-dial {
-  z-index:4;
+  z-index:2;
 }
 
 .top-navbar .v-btn--floating {
   position: relative;
-  z-index:4;
+  z-index:2;
 }
 </style>
