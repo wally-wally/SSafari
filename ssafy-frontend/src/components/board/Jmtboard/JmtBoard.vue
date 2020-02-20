@@ -38,7 +38,7 @@
 				</v-flex>
 			</v-layout>
 		</div>
-		<SidePost :categoryId="4" :locationId="regionObject[selectRegion]"/>
+		<SidePost v-if="this.mobile()" :categoryId="4" :locationId="regionObject[selectRegion]"/>
 	</div>
 </template>
 
@@ -96,6 +96,12 @@
 			this.getRestaurants()
 		},
 		methods: {
+			mobile(){
+                if (this.$vuetify.breakpoint.name === "xs"||this.$vuetify.breakpoint.name === "sm") {
+                    return false;
+                }
+                return true;
+                },
 			categorydetail() {
                 axios.get(`api/boardcategory/4`)
                 .then(response=> {

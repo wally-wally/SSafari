@@ -1,9 +1,10 @@
 <template>
-  <div mt-5 class="d-flex">
+  <div mt-5 >
 		<div v-if="this.portfolios.length === 0" class="ma-10 text-center" style="font-family: 'Nanum Gothic', sans-serif; font-weight: bold;">
 			신청한 스터디모임이 없습니다.
 		</div>
-    <div v-else v-for="i in this.showPortfoliosCount" :key="i" class="col-12 col-sm-6 col-lg-4 col-xl-3 pa-2">
+	<div v-else class="row">
+    <div v-for="i in this.showPortfoliosCount" :key="i" class="col-12 col-sm-6 col-lg-4 col-xl-3 pa-2">
 	  <router-link :to="`/studygroup/${portfolios[i - 1].portfolioid}`">
       <StudyGroup class="ma-3"
 			:date="portfolios[i - 1].created_at.toString()"
@@ -15,11 +16,12 @@
       ></StudyGroup>
 	  </router-link>
     </div>
-		
-    <v-flex xs12 text-xs-center round my-5>
+	</div>
+	<hr>
+    <div xs12 text-xs-center round my-5>
       <v-btn v-if="this.portfolios.length > 4 && this.morePortfoliosIcon" color="#f7b157" dark v-on:click="loadMorePortfolios"><v-icon size="25" class="mr-2">fa-plus</v-icon> 더 보기</v-btn>&nbsp; &nbsp;
 			<v-btn v-if="this.hidePortfoliosIcon" color="red" dark v-on:click="hidePortfolios"><v-icon size="25" class="mr-2">fa-minus</v-icon> 숨기기</v-btn>
-		</v-flex>
+	</div>
   </div>
 </template>
 <script>

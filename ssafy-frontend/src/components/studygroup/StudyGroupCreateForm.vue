@@ -1,19 +1,30 @@
 <template>
 	<v-flex justify-center>
-		<div v-if="currentMemberId !== null">
+		<div v-if="this.$store.state.memberid">
 			<div id="create-form-title">
 				<span id="form-title">스터디 등록 페이지</span>
 			</div>
 			<hr class="title-headline">
-			<div class="title-top">
+			<div class="title-top mb-5">
 				<div class="create-title">Title</div>
 				<textarea v-model="title" id="title-form" style="border: 1px solid lightgray; border-radius: 6px; box-shadow: 0px 0px;"></textarea>
 			</div>
+			<div class="mt-5">
 			<label for="capacity">스터디 모집 인원 : </label>
-			<input v-model="capacity" id="capacity" type="number" style="border: 1px solid lightgray; border-radius: 6px;" class="mr-1">명<br>
-			<label for="location">스터디 지역 : </label>
-			<input v-model="location" class="my-3" id="location" type="text" style="border: 1px solid lightgray; border-radius: 6px;">
-
+			<input v-model="capacity" id="capacity" type="number" min="1" style="border: 1px solid lightgray; border-radius: 6px;" class="mr-1">명<br>
+			</div>	
+			<div class="mt-3"><label for="location">스터디 지역 : </label>
+                        <v-select
+							style="display:inline-block;width:30%"
+                            :items="regions"
+                            item-text="name"
+                            item-value="val"
+                            color="#f7b157"
+                            target="#dropdown-region"
+                            v-model="location"
+                            >
+                        </v-select>
+			</div>
 			<v-row>
 				<v-col cols="12" sm="6" md="4">
 					<v-menu v-model="menu1" :close-on-content-click="false" :nudge-right="40" transition="scale-transition"
@@ -61,6 +72,12 @@
 	export default {
 		data() {
 			return {
+				regions : [
+                    { name : 'Seoul' , val : 1},
+                    { name : 'Daejeon' , val : 2},
+                    { name : 'Gumi' , val : 3},
+                    { name : 'Gawngju', val : 4}
+                ],
 				currentMemberId: null,
 				title: '',
 				content: '',
@@ -72,6 +89,7 @@
 				enddate: '',
 				imgFile: null,
 				from: null,
+				message : '',
 				rules: [
 					function (value) {
 						if (value) {
@@ -112,6 +130,13 @@
 			},
 			create() {
 				const formData = new FormData()
+				if (!this.location){
+					this.message = '지역을 설정해 주세요'
+				} else if (!this.enddate) {
+					this.message = '마감일을 설정해 주세요'
+				} else if (!this.imgFile) {
+					this.message = '이미지를 필수로 입력해주세요'
+				} else {
 				formData.append('image', this.imgFile)
 				axios.post('https://api.imgur.com/3/image', formData, {
 						headers: {
@@ -119,16 +144,14 @@
 						}
 					})
 					.then(response => {
-						console.log(response.data.data)
 						var imgLink = response.data.data.link
-
 						var portfolioData = {
 							title: this.title,
 							body: this.content,
 							memberid: this.$store.state.memberid,
 							img: imgLink,
 							capacity: this.capacity,
-							location: this.location,
+							locationid: this.location,
 							startdate: this.startdate,
 							enddate: this.enddate,
 						}
@@ -144,6 +167,7 @@
 					.catch(error => {
 						console.log(error)
 					})
+				}
 			}
 		}
 	}

@@ -30,7 +30,7 @@
           </div>
             <v-divider></v-divider>
           <v-row justify="center">
-              <h4>지역 : {{ (portfolio.location == null) ? '미정' : portfolio.location }}</h4>
+              <h4>지역 : {{ (portfolio.locationid == null) ? '미정' : this.$store.state.locations[portfolio.locationid] }}</h4>
           </v-row>
           <v-divider></v-divider>
           <v-list>
