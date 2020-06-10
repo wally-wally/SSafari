@@ -102,9 +102,3 @@ $ npm run serve
 #### 백엔드
 
 백엔드 로컬 환경 구축이 끝났다면 통합 java IDE에서 Run 해주세요.
-
-
-
-### 5. 배포 URL
-
-- [https://i02b101.p.ssafy.io/](https://i02b101.p.ssafy.io/)
