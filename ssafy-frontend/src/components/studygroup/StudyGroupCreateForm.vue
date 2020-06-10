@@ -14,16 +14,16 @@
 			<input v-model="capacity" id="capacity" type="number" min="1" style="border: 1px solid lightgray; border-radius: 6px;" class="mr-1">명<br>
 			</div>	
 			<div class="mt-3"><label for="location">스터디 지역 : </label>
-                        <v-select
-							style="display:inline-block;width:30%"
-                            :items="regions"
-                            item-text="name"
-                            item-value="val"
-                            color="#f7b157"
-                            target="#dropdown-region"
-                            v-model="location"
-                            >
-                        </v-select>
+			<v-select
+				style="display:inline-block;width:30%"
+				:items="regions"
+				item-text="name"
+				item-value="val"
+				color="#f7b157"
+				target="#dropdown-region"
+				v-model="location"
+			>
+			</v-select>
 			</div>
 			<v-row>
 				<div class="col-6">
@@ -51,8 +51,6 @@
 			<textarea v-model="content" id="create-content" name="content" style="box-shadow: 0px 0px; border: 1px solid lightgray; border-radius: 6px;"></textarea>
 			<v-file-input :rules="rules" v-model="imgFile" label="스터디를 설명하는 이미지를 업로드해주세요(필수)" id="file" outlined dense
 				accept="image/png, image/jpeg, image/bmp"></v-file-input>
-			<!-- <input type="file" name="file" id="file"><br> -->
-			<!-- <button type="submit">작성</button> -->
 			<v-btn class="mr-5" color="#f7b157" @click="create">작성</v-btn>
 			<v-btn color="error" @click="goBack()">취소</v-btn>
 		</div>
@@ -66,166 +64,158 @@
 </template>
 
 <script>
-	import axios from 'axios'
-	import router from '@/router.js'
+import axios from 'axios'
+import router from '@/router.js'
 
-	export default {
-		data() {
-			return {
-				regions : [
-                    { name : 'Seoul' , val : 1},
-                    { name : 'Daejeon' , val : 2},
-                    { name : 'Gumi' , val : 3},
-                    { name : 'Gawngju', val : 4}
-                ],
-				currentMemberId: null,
-				title: '',
-				content: '',
-				capacity: '',
-				location: '',
-				menu1: false,
-				menu2: false,
-				startdate: new Date().toISOString().substr(0, 10),
-				enddate: '',
-				imgFile: null,
-				from: null,
-				message : '',
-				rules: [
-					function (value) {
-						if (value) {
-							const extension = value.name.toString().split('.')[1]
-							extension = extension.toLowerCase()
-							if (!(extension === 'jpg' || extension === 'png' || extension === 'bmp')) {
-								// const fileValue = document.querySelector('#file')
-								alert("Please upload image file.(available jpg, png, bmp flie)")
-								document.querySelector('#file').value = '' // 실질적인 경로로 잡힌 파일 삭제
-								const filename = document.querySelector('.v-file-input__text')
-								filename.innerText = '' // html 문서에서 보이는 파일 이름도 삭제
-							}
-							return true
-						}else{
-							return ''
+export default {
+	data() {
+		return {
+			regions: [
+				{ name : 'Seoul' , val : 1},
+				{ name : 'Daejeon' , val : 2},
+				{ name : 'Gumi' , val : 3},
+				{ name : 'Gawngju', val : 4}
+			],
+			currentMemberId: null,
+			title: '',
+			content: '',
+			capacity: '',
+			location: '',
+			menu1: false,
+			menu2: false,
+			startdate: new Date().toISOString().substr(0, 10),
+			enddate: '',
+			imgFile: null,
+			from: null,
+			message : '',
+			rules: [
+				function (value) {
+					if (value) {
+						const extension = value.name.toString().split('.')[1]
+						extension = extension.toLowerCase()
+						if (!(extension === 'jpg' || extension === 'png' || extension === 'bmp')) {
+							alert("Please upload image file.(available jpg, png, bmp flie)")
+							document.querySelector('#file').value = ''
+							const filename = document.querySelector('.v-file-input__text')
+							filename.innerText = ''
 						}
+						return true
+					} else {
+						return ''
 					}
-					// value => value.name. || "Upload Image must have image extension(jpg, png, bmp)."
-				]
-			}
-		},
-		beforeRouteEnter(to, from, next) {
-			next((vm) => {
-				vm.from = from;
-			});
-		},
-		mounted() {
-			this.currentMemberId = this.$store.state.memberid
-		},
-		methods: {
-			goBack() {
-				const formTitle = document.querySelector('#form-title')
-				this.$router.push('/studygroup')
-			},
-			checkdate() {
-				console.log(this.startdate)
-				console.log(this.enddate)
-			},
-			create() {
-				const formData = new FormData()
-				if (!this.location){
-					this.message = '지역을 설정해 주세요'
-				} else if (!this.enddate) {
-					this.message = '마감일을 설정해 주세요'
-				} else if (!this.imgFile) {
-					this.message = '이미지를 필수로 입력해주세요'
-				} else {
-				formData.append('image', this.imgFile)
-				axios.post('https://api.imgur.com/3/image', formData, {
-						headers: {
-							Authorization: 'Client-ID 347364b9fa38df3'
-						}
-					})
-					.then(response => {
-						var imgLink = response.data.data.link
-						var portfolioData = {
-							title: this.title,
-							body: this.content,
-							memberid: this.$store.state.memberid,
-							img: imgLink,
-							capacity: this.capacity,
-							locationid: this.location,
-							startdate: this.startdate,
-							enddate: this.enddate,
-						}
-						console.log(portfolioData)
-
-						axios.post('api/portfolio', portfolioData)
-							.then(response => {
-								if (response.status === 200) {
-									this.$router.push('/studygroup')
-								}
-							})
-					})
-					.catch(error => {
-						console.log(error)
-					})
 				}
+			]
+		}
+	},
+	beforeRouteEnter(to, from, next) {
+		next((vm) => {
+			vm.from = from;
+		});
+	},
+	mounted() {
+		this.currentMemberId = this.$store.state.memberid
+	},
+	methods: {
+		goBack() {
+			const formTitle = document.querySelector('#form-title')
+			this.$router.push('/studygroup')
+		},
+		create() {
+			const formData = new FormData()
+			if (!this.location){
+				this.message = '지역을 설정해 주세요'
+			} else if (!this.enddate) {
+				this.message = '마감일을 설정해 주세요'
+			} else if (!this.imgFile) {
+				this.message = '이미지를 필수로 입력해주세요'
+			} else {
+			formData.append('image', this.imgFile)
+			axios.post('https://api.imgur.com/3/image', formData, {
+					headers: {
+						Authorization: `Client-ID ${process.env.VUE_APP_IMGUR_APK_KEY}`
+					}
+				})
+				.then(response => {
+					var imgLink = response.data.data.link
+					var portfolioData = {
+						title: this.title,
+						body: this.content,
+						memberid: this.$store.state.memberid,
+						img: imgLink,
+						capacity: this.capacity,
+						locationid: this.location,
+						startdate: this.startdate,
+						enddate: this.enddate,
+					}
+					axios.post('api/portfolio', portfolioData)
+						.then(response => {
+							if (response.status === 200) {
+								this.$router.push('/studygroup')
+							}
+						})
+				})
+				.catch(error => {
+					console.log(error)
+				})
 			}
 		}
 	}
+}
 </script>
 
 <style>
-	#create-form-title {
-		font-size: 2em;
-		font-family: 'Do Hyeon', sans-serif;
-		text-align: center;
-		padding-top: 6px;
-		padding-bottom: 10px;
-	}
+#create-form-title {
+	font-size: 2em;
+	font-family: 'Do Hyeon', sans-serif;
+	text-align: center;
+	padding-top: 6px;
+	padding-bottom: 10px;
+}
 
-	.title-headline {
-		border: none;
-		border: 1px dashed lightgrey;
-		margin-bottom: 20px;
-	}
+.title-headline {
+	border: none;
+	border: 1px dashed lightgrey;
+	margin-bottom: 20px;
+}
 
-	.title-top {
-		display: flex;
-		margin-bottom: 20px;
-	}
+.title-top {
+	display: flex;
+	margin-bottom: 20px;
+}
 
+.create-title {
+	font-size: 20px;
+	font-weight: bold;
+	text-align: center;
+	width: 15%;
+}
+
+@media (min-width: 555px) and (max-width: 880px) {
 	.create-title {
-		font-size: 20px;
-		font-weight: bold;
-		text-align: center;
-		width: 15%;
+		width: 10%;
 	}
+}
 
-	@media (min-width: 555px) and (max-width: 880px) {
-		.create-title {
-			width: 10%;
-		}
+@media (min-width: 881px) {
+	.create-title {
+		width: 6%;
 	}
+}
 
-	@media (min-width: 881px) {
-		.create-title {
-			width: 6%;
-		}
-	}
+#title-form {
+	border: 1px solid black;
+	width: 100%;
+	height: 30px;
+	resize: none;
+	box-shadow: 5px 5px 7px grey;
+}
 
-	#title-form {
-		border: 1px solid black;
-		width: 100%;
-		height: 30px;
-		resize: none;
-		box-shadow: 5px 5px 7px grey;
-	}
-
-	#create-content {
-		width: 100%;
-		height: 300px;
-		resize: none;
-		border: 1px solid lightgray;
-		box-shadow: 5px 5px 7px grey;
-		margin-bottom: 20px;
-	}
+#create-content {
+	width: 100%;
+	height: 300px;
+	resize: none;
+	border: 1px solid lightgray;
+	box-shadow: 5px 5px 7px grey;
+	margin-bottom: 20px;
+}
 </style>

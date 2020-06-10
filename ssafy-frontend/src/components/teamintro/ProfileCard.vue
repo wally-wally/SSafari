@@ -65,46 +65,6 @@
       </v-card>
     </div>
   </div> 
-
-  <!-- <v-card
-    :loading="loading"
-    class="mx-auto my-12 profile-card"
-    max-width="300">
-    <v-img
-      height="250"
-      :src="imgSrc"
-    ></v-img>
-    <v-card-title><strong class="profile-name">{{ name }}</strong></v-card-title>
-
-    <v-card-text>
-
-      <div class="my-4 subtitle-1 black--text">
-        {{ position }}
-      </div>
-
-      <div> {{ intro }}</div>
-    </v-card-text>
-
-    <v-divider class="mx-4"></v-divider>
-
-    <v-card-title>Main Skills</v-card-title>
-
-    <v-card-text class="skills">
-        <v-chip v-for="i in this.skills.length" :key="i" class="ma-1" :color="fontColor[skills[i - 1]]">{{ skills[i - 1] }}</v-chip>
-    </v-card-text>
-
-    <v-card-actions>
-
-    <div class="sns-button">
-      <a class="btn" :href="`${gitUrl}`" target="_blank">
-        <i class="fab fa-github"></i>
-      </a>
-      <a class="btn" :href="`mailto:${email}`">
-        <i class="fas fa-envelope-square"></i>
-      </a>
-    </div>
-    </v-card-actions>
-  </v-card> -->
 </template>
 
 <script>

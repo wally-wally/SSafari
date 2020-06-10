@@ -111,16 +111,14 @@ export default {
 	},
 	components: {
 		'v-chart': ECharts
-		// GithubService
 	},
 	mounted() {
-		axios.get(`https://api.github.com/users/${this.githubid}`) // ${this.$store.getters.githubid}
+		axios.get(`https://api.github.com/users/${this.githubid}`)
 			.then(response => {
 				const githubData = response.data
-				console.log(githubData)
 				this.profileImgUrl = githubData['avatar_url']
 				this.githubInformation = {
-					githubID: this.githubid, // this.$store.getters.githubid
+					githubID: this.githubid,
 					name: githubData.name,
 					company: githubData.company === null ? 'No company' : githubData.company,
 					blog: githubData.blog === '' ? 'No blog' : githubData.blog,
@@ -137,8 +135,6 @@ export default {
 		axios.get(`https://api.github.com/users/${this.githubid}/repos`)
 			.then(response => {
 				const githubReposData = response.data
-				console.log('------------')
-				console.log(githubReposData)
 				githubReposData.forEach(function(data) {
 					let repoInfo = {
 						'name': data.name,
@@ -169,12 +165,12 @@ export default {
 								backgroundColor: '#fff',
 								legend: {
 									bottom: 5,
-									data: [] // *
+									data: []
 								},
 								dataset: {
 									source: [
-										['Language'], // *
-										[''] // *
+										['Language'],
+										['']
 									]
 								},
 								xAxis: {
@@ -209,7 +205,6 @@ export default {
 						})
 					reposArray.push(repoInfo)
 				})
-				console.log(reposArray)
 			})
 			.catch(error => console.log(error))
 		this.githubReposInfo = reposArray
@@ -265,18 +260,6 @@ export default {
 		async getGithubInfo(userName) {
 			if(response.status !== 200) { return }
 		},
-		// loadMoreRepos() {
-		// 	let adjustCount = this.showReposCount + 6 < this.repositories.length ? this.showReposCount + 6 : this.repositories.length
-		// 	this.showReposCount = adjustCount
-		// 	this.moreReposIcon = adjustCount < this.repositories.length ? true : false
-		// 	this.hideReposIcon = true
-		// },
-		// hideRepos() {
-		// 	let adjustCount2 = this.showReposCount - 6 > 6 ? this.showReposCount - 6 : 6
-		// 	this.showReposCount = adjustCount2
-		// 	this.hideReposIcon = adjustCount2 === 6 ? false : true
-		// 	this.moreReposIcon = true
-		// }
 	}
 }
 </script>

@@ -22,14 +22,7 @@ Vue.prototype.$EventBus = new Vue();
 Vue.config.productionTip = false
 
 axios.defaults.baseURL = 'https://i02b101.p.ssafy.io/ssafyvue'
-//axios.defaults.baseURL = 'http://192.168.31.110:8197/ssafyvue'
-// 모든 요청에 추가할 헤더 설정
-// axios.defaults.headers.common['Authorization'] = 'something'
-// GET 요청에 추가할 헤더 설정
-Vue.use(VueCodemirror, /* { 
-  options: { theme: 'base16-dark', ... },
-  events: ['scroll', ...]
-} */)
+Vue.use(VueCodemirror)
 Vue.use(VueSimplemde)
 Vue.use(Vuetify)
 Vue.use(Vueperslides)

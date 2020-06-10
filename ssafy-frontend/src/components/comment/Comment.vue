@@ -78,15 +78,17 @@ export default {
 </script>
 
 <style>
-    .edbtn{
-        color:gray;
-    }
-    .edbtn:hover{
-        color: #ffc837;
-        cursor: pointer;
-    }
-    .commentchkbox{
-        display : inline-block;
-        font-size: 12px !important
-    }
+.edbtn{
+    color:gray;
+}
+
+.edbtn:hover{
+    color: #ffc837;
+    cursor: pointer;
+}
+
+.commentchkbox{
+    display : inline-block;
+    font-size: 12px !important
+}
 </style>

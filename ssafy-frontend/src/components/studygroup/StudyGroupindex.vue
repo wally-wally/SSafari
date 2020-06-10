@@ -1,7 +1,6 @@
 <template>
     <div>
         <div class="portfolio-header" style="padding: 0 2%;">
-            <!-- <span class="portfolio-count">{{ portfolioCnt }}개의 스터디모집 게시글</span> -->
             <div style="width: 60%;">
                 <v-autocomplete
                     v-model="searchStudyGroupKeyword"
@@ -23,7 +22,7 @@
         </div>
         <v-layout>
             <v-flex>
-                <StudyGroupList :studyGroups="studyGroups"></StudyGroupList> <!-- @showPortfolioCount="onPortfolioCount" -->
+                <StudyGroupList :studyGroups="studyGroups"></StudyGroupList>
             </v-flex>
         </v-layout>
     </div>
@@ -76,15 +75,15 @@ export default {
 </script>
 
 <style>
-    .portfolio-header {
-        display: flex;
-        justify-content: space-between;
-    }
+.portfolio-header {
+    display: flex;
+    justify-content: space-between;
+}
 
-    .portfolio-count {
-        font-size: 1.2em;
-        font-weight: bold;
-        font-family: 'Noto Sans KR', sans-serif;
-        line-height: 4;
-    }
+.portfolio-count {
+    font-size: 1.2em;
+    font-weight: bold;
+    font-family: 'Noto Sans KR', sans-serif;
+    line-height: 4;
+}
 </style>

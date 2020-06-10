@@ -82,34 +82,34 @@ export default {
 </script>
 
 <style>
-	.profiles {
-		display: flex;
-		flex-wrap: wrap;
-	  justify-content: center;
-		align-items: center;
-		margin: 15px 0;
-	}
-	
-	.team-introduction-title-tag {
-		font-family: 'Julius Sans One', sans-serif;
-		font-size: 2.5em;
-		text-shadow: 3px 3px 4px darkgrey;
-		text-align: center;
-		padding-top: 10px;
-		animation-name: letter-gather;
-		animation-duration: 2s;
-		animation-iteration-count: 1;
-	}
+.profiles {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+	margin: 15px 0;
+}
 
-	@keyframes letter-gather {
-		from {
-			letter-spacing: 3px;
-		}
-		50% {
-			letter-spacing: 5px;
-		}
-		to {
-			letter-spacing: auto;
-		}
+.team-introduction-title-tag {
+	font-family: 'Julius Sans One', sans-serif;
+	font-size: 2.5em;
+	text-shadow: 3px 3px 4px darkgrey;
+	text-align: center;
+	padding-top: 10px;
+	animation-name: letter-gather;
+	animation-duration: 2s;
+	animation-iteration-count: 1;
+}
+
+@keyframes letter-gather {
+	from {
+		letter-spacing: 3px;
 	}
+	50% {
+		letter-spacing: 5px;
+	}
+	to {
+		letter-spacing: auto;
+	}
+}
 </style>

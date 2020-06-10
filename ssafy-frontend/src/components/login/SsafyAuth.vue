@@ -54,7 +54,6 @@
 				<p class="text-center pb-6" style="font-size: 28px; font-family: 'Noto Sans KR', sans-serif; font-weight: 600;">SSAFY 인증 회원입니다.</p>
 			</div>
 		</div>
-
 		<div v-else class="mt-10">
 			<h1 style="text-align:center; color:red">접근 권한이 없습니다</h1>
 			<v-btn :to="{ name: 'home'}" style="margin:0 auto; display:block; width: 300px;" class="red white--text">
@@ -65,112 +64,105 @@
 </template>
 
 <script>
-	import axios from 'axios'
-	import '@/assets/css/SsafyAuth.css'
+import axios from 'axios'
+import '@/assets/css/SsafyAuth.css'
 
-	export default {
-		name: 'SsafyAuth',
-		data() {
-			return {
-				currentMemberId: '',
-				region: '',
-				classSsafy: '',
-				regions: [{
-						text: 'Seoul',
-						val: 1
-					},
-					{
-						text: 'Daejeon',
-						val: 2
-					},
-					{
-						text: 'Gumi',
-						val: 3
-					},
-					{
-						text: 'Gwangju',
-						val: 4
-					}
-				],
-				classes: [{
-						text: '1기',
-						val: 1
-					},
-					{
-						text: '2기',
-						val: 2
-					},
-					{
-						text: '3기',
-						val: 3
-					},
-				],
-				imgFile: null,
-				rules: [
-					function (value) {
-						var extension = value.name.toString().split('.')[1]
-						extension = extension.toLowerCase()
-						if (!(extension === 'jpg' || extension === 'png' || extension === 'bmp')) {
-							alert("Please upload image file.(available jpg, png, bmp flie)")
-							document.querySelector('#file').value = ''
-							const filename = document.querySelector('.v-file-input__text')
-							filename.innerText = ''
-						}
-					}
-				]
-			}
-		},
-		mounted() {
-			this.currentMemberId = this.$store.state.memberid
-		},
-		methods: {
-			back() {
-				this.$router.push('/mypage')
-			},
-			create() {
-				if (this.region == null || this.classSsafy == null) {
-					alert('지역과 기수를 입력해주세요!')
-					return
+export default {
+	name: 'SsafyAuth',
+	data() {
+		return {
+			currentMemberId: '',
+			region: '',
+			classSsafy: '',
+			regions: [{
+					text: 'Seoul',
+					val: 1
+				},
+				{
+					text: 'Daejeon',
+					val: 2
+				},
+				{
+					text: 'Gumi',
+					val: 3
+				},
+				{
+					text: 'Gwangju',
+					val: 4
 				}
-				const formData = new FormData()
-				formData.append('image', this.imgFile)
-				axios.post('https://api.imgur.com/3/image', formData, {
-						headers: {
-							Authorization: 'Client-ID 347364b9fa38df3'
-						}
-					})
-					.then(response => {
-						console.log(response.data.data)
-						var imgLink = response.data.data.link
-						var ssafyAuthData = {
-							img: imgLink,
-							locationid: this.region,
-							unit: this.classSsafy
-						}
-						var token = this.$store.state.token
-						console.log(token)
-						console.log('----------------------')
-						axios.post('api/member/authrequest', ssafyAuthData, {
-								headers: {
-									'access-token': token
-								}
-							})
-							.then(response => {
-								if (response.status === 200) {
-									alert('싸피 인증 신청이 완료되었습니다!')
-									this.$store.state.auth = 3
-									this.$router.push('/mypage')
-								}
-							})
-					})
-					.catch(error => {
-						console.log(error)
-					})
+			],
+			classes: [{
+					text: '1기',
+					val: 1
+				},
+				{
+					text: '2기',
+					val: 2
+				},
+				{
+					text: '3기',
+					val: 3
+				},
+			],
+			imgFile: null,
+			rules: [
+				function (value) {
+					var extension = value.name.toString().split('.')[1]
+					extension = extension.toLowerCase()
+					if (!(extension === 'jpg' || extension === 'png' || extension === 'bmp')) {
+						alert("Please upload image file.(available jpg, png, bmp flie)")
+						document.querySelector('#file').value = ''
+						const filename = document.querySelector('.v-file-input__text')
+						filename.innerText = ''
+					}
+				}
+			]
+		}
+	},
+	mounted() {
+		this.currentMemberId = this.$store.state.memberid
+	},
+	methods: {
+		back() {
+			this.$router.push('/mypage')
+		},
+		create() {
+			if (this.region == null || this.classSsafy == null) {
+				alert('지역과 기수를 입력해주세요!')
+				return
 			}
+			const formData = new FormData()
+			formData.append('image', this.imgFile)
+			axios.post('https://api.imgur.com/3/image', formData, {
+					headers: {
+						Authorization: 'Client-ID 347364b9fa38df3'
+					}
+				})
+				.then(response => {
+					var imgLink = response.data.data.link
+					var ssafyAuthData = {
+						img: imgLink,
+						locationid: this.region,
+						unit: this.classSsafy
+					}
+					var token = this.$store.state.token
+					axios.post('api/member/authrequest', ssafyAuthData, {
+							headers: {
+								'access-token': token
+							}
+						})
+						.then(response => {
+							if (response.status === 200) {
+								alert('싸피 인증 신청이 완료되었습니다!')
+								this.$store.state.auth = 3
+								this.$router.push('/mypage')
+							}
+						})
+				})
+				.catch(error => {
+					console.log(error)
+				})
 		}
 	}
+}
 </script>
-
-<style>
-
-</style>

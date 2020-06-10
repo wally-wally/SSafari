@@ -15,11 +15,13 @@
         </v-form>
     </v-container>
 </template>
+
 <script>
 import axios from 'axios'
 import Comment from '../comment/Comment'
 import router from '@/router.js'
-import { mapState} from 'vuex'
+import { mapState } from 'vuex'
+
 export default {
     name : 'boardcomment',
     props : {
@@ -114,14 +116,7 @@ export default {
     resize: none;
     border: 1px solid lightgray;
 }
-/* input, textarea {
-    background: #fff;
-    border: none;
-    -webkit-box-shadow: 0px 1px 4px 2px rgba(0,0,0,0.16);
-    -moz-box-shadow: 0px 1px 4px 2px rgba(0,0,0,0.16);
-    box-shadow: 0px 1px 4px 2px rgba(0,0,0,0.16);
-    border-radius: 15px;
-}  */
+
 footer button.btn {
     display: flex;
     padding-left: 20px;

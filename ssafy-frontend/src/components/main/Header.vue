@@ -28,21 +28,10 @@
         <v-icon class="fas fa-ellipsis-h"></v-icon>
       </v-btn>
     </template>
-    <!-- <v-btn fab dark small color="green"><v-icon>home</v-icon></v-btn>
-    <v-btn fab dark small color="green"><v-icon>event</v-icon></v-btn>
-    <v-btn fab dark small color="green"><v-icon>dashboard</v-icon></v-btn>
-    <v-btn fab dark small color="green"><v-icon class="fas fa-sticky-note"></v-icon></v-btn>
-    <v-btn fab dark small color="green"><v-icon class="fas fa-envelope"></v-icon></v-btn>
-    <v-btn fab dark small color="green"><v-icon class="fas fas fa-user"></v-icon></v-btn>
-    <v-btn fab dark small color="green"><v-icon class="fas fa-sign-in-alt"></v-icon></v-btn>
-    <v-btn fab dark small color="green"><v-icon class="fas fa-sign-out-alt"></v-icon></v-btn> -->
   </v-speed-dial>
-        <!-- 임시 복구 2 -->
   <v-navigation-drawer v-model="drawer" absolute temporary class="v-navigation-drawer--fixed">
     <v-divider></v-divider>
-
     <v-list dense>
-
       <v-list-item class="pb-3">
         <v-list-item-content>
           <v-list-item-title v-if="!isLogin">Welcome, Guest</v-list-item-title>
@@ -114,21 +103,8 @@
           <v-list-item-title>LOGOUT</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-
     </v-list>
-
   </v-navigation-drawer>
-
-  <!-- 임시 복구 1 -->
-  <!-- <v-app-bar v-else app :collapse="!collapseOnScroll" :collapse-on-scroll="collapseOnScroll" color="white" @click.stop="drawer = !drawer">
-    <div class="d-flex align-center">
-      <a href="/" style="text-decoration: none; color: #f7b157;"> <v-toolbar-title>SSafari</v-toolbar-title></a>
-    </div>
-    <v-spacer></v-spacer>
-    <v-app-bar-nav-icon></v-app-bar-nav-icon>
-  </v-app-bar> -->
-
-  <!-- <v-icon v-else @click.stop="drawer = !drawer"></v-icon> -->
 
   <v-dialog v-if="mobile() && loginDialog" v-model="loginDialog" max-width="900px">
     <LoginSignup v-on:update="changeLoginDialog"/>
@@ -146,6 +122,7 @@ import LoginSignup from '@/components/login/LoginSignup.vue'
 import LoginSignupMobile from '@/components/login/LoginSignupMobile.vue'
 import { mapState } from 'vuex'
 import '../../assets/js/snake.js'
+
 export default {
   name: 'Header',
   components: {
@@ -177,6 +154,7 @@ export default {
   },
 };
 </script>
+
 <style>
 .nav{
   display:inline-flex;
@@ -187,6 +165,7 @@ export default {
   background-color:white;
   padding:0 20px;
 }
+
 .nav-item{
   color: #83818c;
   padding:10px 20px;
@@ -198,6 +177,7 @@ export default {
   font-weight: 500;
   position: relative;
 }
+
 .nav-item:before{
   content:"";
   position:absolute;
@@ -205,19 +185,21 @@ export default {
   left: 0;
   width: 100%;
   height: 5px;
-  /* background-color: #dfe2ea; */
   background-color: #ffc837;
   border-radius: 8px 8px 0 0;
   opacity: 0;
   transition: 0.3s;
 }
+
 .nav-item:not(.is-active):hover:before{
   opacity: 1;
   bottom: 0;
 }
+
 .nav-item:not(.is-active):hover{
   color: #333;
 }
+
 .nav-indicator{
   position:absolute;
   left:0;
@@ -228,6 +210,7 @@ export default {
   z-index: 1;
   border-radius: 8px 8px 0 0;
 }
+
 .unreadmsg {
   margin-top : -10px;
   margin-left : -5px;

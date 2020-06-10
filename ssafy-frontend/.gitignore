@@ -11,3 +11,7 @@ yarn-error.log
 *.njsproj
 *.sln
 .vscode
+
+.env
+.env.local
+.env.development

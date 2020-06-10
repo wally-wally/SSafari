@@ -20,32 +20,28 @@
 </template>
 
 <script>
-	import MessageReceived from './MessageReceived'
-	import MessageSent from './MessageSent'
+import MessageReceived from './MessageReceived'
+import MessageSent from './MessageSent'
 
-	export default {
-		name: 'MessageBoard',
-		components: {
-			MessageReceived,
-			MessageSent
-		},
-		data() {
-			return {
-				messageFlag: true,
-				currentMemberId: null
-			}
-		},
-		mounted() {
-			this.currentMemberId = this.$store.state.memberid
-		},
-		methods: {
-			changeMessageFlag(flag) {
-				this.messageFlag = flag
-			}
+export default {
+	name: 'MessageBoard',
+	components: {
+		MessageReceived,
+		MessageSent
+	},
+	data() {
+		return {
+			messageFlag: true,
+			currentMemberId: null
+		}
+	},
+	mounted() {
+		this.currentMemberId = this.$store.state.memberid
+	},
+	methods: {
+		changeMessageFlag(flag) {
+			this.messageFlag = flag
 		}
 	}
+}
 </script>
-
-<style>
-
-</style>

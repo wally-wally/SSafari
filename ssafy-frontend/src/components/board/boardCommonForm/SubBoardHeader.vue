@@ -41,25 +41,22 @@
             <i @click="makesearchmodal" class="fas fa-plus" style="color:4c4c4c"/>
             <v-dialog max-width="600px" v-if="makesearch" v-model="makesearch">
               <v-card class="pa-3">
-                  <div class="mb-4">
+                <div class="mb-4">
                   <div class="ma-5">
-                  <router-link style="display:inline-block" :to="{name : 'BoardCreate'}" :style="{ color: '#60666C'}">
-                    <v-btn class="mr-3" v-if="ssafyAuth === 2 || ssafyAuth === 1" @click="makesearchmodal">게시판 만들기</v-btn><br>
-                  </router-link>
-                  <router-link style="display:inline-block" :to="`/board/search/`">
-                  <v-btn @click="makesearchmodal">전체 게시판 보기</v-btn><br>
-                  </router-link>
-                  <span @click="makesearchmodal" style="float:right;color:4c4c4c;font-size:15px;cursor:pointer">닫기&nbsp;<i class="fas fa-times" style="font-size:20px;color:#ffc837;"></i></span>
+                    <router-link style="display:inline-block" :to="{name : 'BoardCreate'}" :style="{ color: '#60666C'}">
+                      <v-btn class="mr-3" v-if="ssafyAuth === 2 || ssafyAuth === 1" @click="makesearchmodal">게시판 만들기</v-btn><br>
+                    </router-link>
+                    <router-link style="display:inline-block" :to="`/board/search/`">
+                      <v-btn @click="makesearchmodal">전체 게시판 보기</v-btn><br>
+                    </router-link>
+                    <span @click="makesearchmodal" style="float:right;color:4c4c4c;font-size:15px;cursor:pointer">닫기&nbsp;<i class="fas fa-times" style="font-size:20px;color:#ffc837;"></i></span>
                   </div>
                   <div id="notice-search-form">
                     <form @submit.prevent="search">
-                    <v-text-field placeholder="게시판을 검색합니다" style="display:inline-block;width:50%" class="ml-5" v-model="searchTitle" color="#ffc837"/>
-                    <i @click="search" class="fas fa-search"></i>
+                      <v-text-field placeholder="게시판을 검색합니다" style="display:inline-block;width:50%" class="ml-5" v-model="searchTitle" color="#ffc837"/>
+                      <i @click="search" class="fas fa-search"></i>
                     </form>
-              </div>
-                  <!-- <v-card-actions>
-                    <button class="close button" @click="makesearchmodal" style="background-color:#c62917">닫기</button>
-                  </v-card-actions> -->
+                  </div>
                 </div>
               </v-card>
             </v-dialog>
@@ -68,26 +65,6 @@
         </v-col>
       </v-row>
     </div>
-    <!-- <div class="notice-kind">
-      <router-link to="/board/free/">
-        <span class="free-notice"><i class="fas fa-chalkboard"></i></span>
-      </router-link>
-      <router-link to="/board/job/">
-        <span class="job-notice"><i class="fas fa-user-tie"></i></span>
-      </router-link>
-      <router-link to="/board/codereview/">
-        <span class="code-notice"><i class="fas fa-code"></i></span>
-      </router-link>
-      <router-link to="/board/jmt/">
-        <span class="restaurant-notice"><i class="fas fa-utensils"></i></span>
-      </router-link>
-      <div v-for="board in boards" :key="board.id" class="mx-1">
-        <router-link :to="`/board/${board.id}/`">
-          <i class="fas fa-chalkboard">{{ board.name }}</i>
-        </router-link>
-      </div>
-      <v-btn v-if="ssafyAuth === 2 || ssafyAuth === 1" :to="{name : 'BoardCreate'}">게시판 추가 하기</v-btn>
-    </div> -->
   </div>
 </template>
 

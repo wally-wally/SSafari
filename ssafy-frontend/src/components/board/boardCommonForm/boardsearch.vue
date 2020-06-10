@@ -25,6 +25,7 @@
 
 <script>
 import axios from 'axios'
+
 export default {
     name : 'searchboard',
     props : {
@@ -72,15 +73,17 @@ export default {
 </script>
 
 <style>
-    .boarddetail:hover {
-        border-radius: 10px;
+.boarddetail:hover {
+    border-radius: 10px;
     box-shadow: 1px 1px 3px darkslategrey;
     background-color : #f5f5ff;
-    }
-    .boarddetail div{
-        color : rgba(0,0,0,.87) ;
-    }
-    .searchicon:hover {
-        cursor: pointer;
-    }
+}
+
+.boarddetail div{
+    color : rgba(0,0,0,.87) ;
+}
+
+.searchicon:hover {
+    cursor: pointer;
+}
 </style>

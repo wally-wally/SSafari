@@ -1,40 +1,39 @@
 <template>
-<v-container >
-  <v-row align="center">
-    <v-col cols="3">
-      <v-select
-        label="CodeType"
-        :items="items"
-        item-text="text"
-        item-value="val"
-        v-model="type"
-        color="#ffc837"
-      ></v-select>
-    </v-col>
-    <v-spacer />
-    <v-col cols="1">
-      <label col-1> 제목 :</label>
-    </v-col>
-    <v-col cols="6">
-      <v-text-field col-8 v-model="title" color="#ffc837"></v-text-field>
-    </v-col>
-  </v-row>
-  <textarea class="code-textarea" v-model="body" placeholder="내용을 입력하세요." rows="6" color="#ffc837"></textarea>
-  <codemirror ref="myCm"
-              :value="code"
-              :options="cmOptions"
-              @ready="onCmReady"
-              @focus="onCmFocus"
-              @input="onCmCodeChange">
-  </codemirror>
-  <div class="d-flex justify-end mt-3">
-    <v-checkbox v-model="anonymousStatus" label="익명" value="익명" class="annoyCheck"/>
-    <v-btn class="ml-4" color="#f7b157" small @click="codecreate()">작성하기</v-btn>
-  </div>
-</v-container>
-
+  <v-container >
+    <v-row align="center">
+      <v-col cols="3">
+        <v-select
+          label="CodeType"
+          :items="items"
+          item-text="text"
+          item-value="val"
+          v-model="type"
+          color="#ffc837"
+        ></v-select>
+      </v-col>
+      <v-spacer />
+      <v-col cols="1">
+        <label col-1> 제목 :</label>
+      </v-col>
+      <v-col cols="6">
+        <v-text-field col-8 v-model="title" color="#ffc837"></v-text-field>
+      </v-col>
+    </v-row>
+    <textarea class="code-textarea" v-model="body" placeholder="내용을 입력하세요." rows="6" color="#ffc837"></textarea>
+    <codemirror
+      ref="myCm"
+      :value="code"
+      :options="cmOptions"
+      @ready="onCmReady"
+      @focus="onCmFocus"
+      @input="onCmCodeChange"
+    ></codemirror>
+    <div class="d-flex justify-end mt-3">
+      <v-checkbox v-model="anonymousStatus" label="익명" value="익명" class="annoyCheck"/>
+      <v-btn class="ml-4" color="#f7b157" small @click="codecreate()">작성하기</v-btn>
+    </div>
+  </v-container>
 </template>
-
 
 <script>
 import router from '@/router'
@@ -46,6 +45,7 @@ import 'codemirror/mode/xml/xml.js'
 import 'codemirror/mode/javascript/javascript.js'
 import 'codemirror/theme/base16-dark.css'
 import 'codemirror/mode/python/python.js'
+
 export default {
   components: {
     codemirror
@@ -70,8 +70,6 @@ export default {
       cmOptions: {
         tabSize: 4,
         mode: 'text/x-python',
-        // mode: '',
-        // theme: 'base16-dark',
         lineNumbers: true,
         line: true,
       }
@@ -95,18 +93,14 @@ export default {
     },
     onCmReady(cm) {
       cm.options.mode = this.type
-      console.log('the editor is readied!', cm)
     },
     onCmFocus(cm) {
       cm.options.mode = this.type
-      console.log(cm.options.mode)
     },
     onCmCodeChange(newCode) {
-      console.log('this is new code', newCode)
       this.code = newCode
     },
     codecreate() {
-      console.log(this.$route.name)
       const formData = new FormData()
       const data = {
         'title' : this.title,
@@ -118,23 +112,21 @@ export default {
       }
       if (this.$route.name==="codecreate"){
         axios.post('/api/code',data)
-        .then(response =>{
-        console.log(response)
-        router.push({ path: '/board/code/' })
-
-        }).catch(error => {
-          console.log(error)
-        })
-      } else if(this.$route.name ==="codeedit"){
+          .then(response =>{
+            router.push({ path: '/board/code/' })
+          })
+          .catch(error => {
+            console.log(error)
+          })
+      } else if (this.$route.name ==="codeedit") {
         data['id'] = this.id
-        console.log(data)
         axios.put(`/api/code`,data)
-        .then(response =>{
-        console.log(response)
-        router.push({ path: `/board/code/${this.id}` })
-        }).catch(error => {
-          console.log(error)
-        })
+          .then(response =>{
+            router.push({ path: `/board/code/${this.id}` })
+          })
+          .catch(error => {
+            console.log(error)
+          })
       }
     },
   },

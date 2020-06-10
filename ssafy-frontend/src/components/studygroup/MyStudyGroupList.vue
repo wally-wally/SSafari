@@ -54,9 +54,8 @@ export default {
 				.then(response => {
 					this.portfolios = response.data
 					this.showPortfoliosCount = (this.portfolios.length >= 4) ? 4 : this.portfolios.length 
-				}).catch(error =>
-				console.log(error)
-				)
+				})
+				.catch(error => console.log(error))
 		},
 		loadMorePortfolios() {
 			let adjustCount = this.showPortfoliosCount + 4 < this.portfolios.length ? this.showPortfoliosCount + 4 : this.portfolios.length

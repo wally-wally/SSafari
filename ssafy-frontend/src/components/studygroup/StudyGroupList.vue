@@ -3,12 +3,12 @@
     <div v-for="i in this.showPortfoliosCount" :key="i" class="col-12 col-sm-6 col-lg-4 col-xl-3">
 	  <router-link :to="`/studygroup/${studyGroups[i - 1].portfolioid}`">
       <StudyGroup class="ma-3"
-								:date="studyGroups[i - 1].created_at.toString()"
-								:title="studyGroups[i - 1].title"
-								:body="studyGroups[i - 1].body"
-								:imgSrc="studyGroups[i - 1].img"
-								:username="studyGroups[i - 1].username"
-								:memberid="studyGroups[i - 1].memberid"
+				:date="studyGroups[i - 1].created_at.toString()"
+				:title="studyGroups[i - 1].title"
+				:body="studyGroups[i - 1].body"
+				:imgSrc="studyGroups[i - 1].img"
+				:username="studyGroups[i - 1].username"
+				:memberid="studyGroups[i - 1].memberid"
       ></StudyGroup>
 	  </router-link>
     </div>
@@ -25,6 +25,9 @@ import axios from 'axios'
 
 export default {
 	name: 'StudyGroupList',
+	components: {
+		StudyGroup
+	},
 	props: {
 		studyGroups: {type: Array}	
 	},
@@ -34,9 +37,6 @@ export default {
 			morePortfoliosIcon : true,
 			hidePortfoliosIcon : false
 		}
-	},
-	components: {
-		StudyGroup
 	},
 	mounted() {
 		this.showPortfoliosCount = (this.studyGroups.length >= 6) ? 6 : this.studyGroups.length

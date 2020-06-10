@@ -29,47 +29,42 @@ export default {
     imgSrc: {type: String},
     username: {type: String},
     memberid: {type: Number}
-	},
-	data() {
-		return {
-			//
-		}
 	}
 }
 </script>
 <style>
-  #portfolio-card:hover {
-    transition-duration: 0.4s;
-    box-shadow: 0px 0px 7px rebeccapurple;
-  }
+#portfolio-card:hover {
+  transition-duration: 0.4s;
+  box-shadow: 0px 0px 7px rebeccapurple;
+}
 
-  #title {
-    font-size: 1.3rem;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 1; /* number of lines to show */
-    -webkit-box-orient: vertical;
-  }
+#title {
+  font-size: 1.3rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* number of lines to show */
+  -webkit-box-orient: vertical;
+}
 
-  #card-content {
-    font-family: 'Noto Sans KR', sans-serif;
-    white-space: normal;
-		line-height: 1.3;
-		height: 3.9em;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 3; /* number of lines to show */
-    -webkit-box-orient: vertical;
-  }
+#card-content {
+  font-family: 'Noto Sans KR', sans-serif;
+  white-space: normal;
+  line-height: 1.3;
+  height: 3.9em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* number of lines to show */
+  -webkit-box-orient: vertical;
+}
 
-  #writter-date {
-    display: flex;
-    justify-content: space-between;
-  }
+#writter-date {
+  display: flex;
+  justify-content: space-between;
+}
 
-  #writter-date > p {
-    display: inline;
-  }
+#writter-date > p {
+  display: inline;
+}
 </style>

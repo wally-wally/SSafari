@@ -33,14 +33,12 @@
           <div class="separator"></div>
           <div class="post-title section-title">게시판</div>
           <div data-aos="fade-up" class="post-contents">
-            <!-- <BoardListMain></BoardListMain> -->
             <div class="mt-10">
               <AllBoard></AllBoard>
             </div>
           </div>
         </div>
       </v-img>
-
       <v-img class="portfolio-image"
              id="portfolio"
              aspect-ratio="2.15">
@@ -130,6 +128,7 @@ export default {
 	},
 }
 </script>
+
 <style>
 .separator {
 	width: 70px;
@@ -140,7 +139,7 @@ export default {
 	margin-bottom: 10px;
 }
 .section-title {
-    color: #231f20;
-    text-align: center;
+  color: #231f20;
+  text-align: center;
 }
 </style>

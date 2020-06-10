@@ -2,10 +2,10 @@
   <v-container>
     <v-row justify="center">
       <v-col cols="12" sm="8">
-    <div class="wrap mb-5" style="display:block;">
-      <h1 style="display: block;letter-spacing: -1px;">{{category.name}}</h1>
-      <p style="display: block;">{{category.explanation}}</p>
-    </div>
+        <div class="wrap mb-5" style="display:block;">
+          <h1 style="display: block;letter-spacing: -1px;">{{category.name}}</h1>
+          <p style="display: block;">{{category.explanation}}</p>
+        </div>
         <v-card>
           <v-card-title class="pb-0 darken-1">
               <div class="ma-2 mb-5" justify="center">
@@ -19,35 +19,34 @@
                 </div>
               </div>
           </v-card-title>
-              <div class="ma-2 mt-5">
-                <div align="left" class="ml-3 headline">{{ post.title }}
-                <div class="delrevise" v-if="this.$store.state.memberid === post.memberid">
-                    <v-btn class="mr-1" small color="warning" style="color:white"
-                      :to="{ path : `/board/${this.boardname}/${post.postid}/update`}">수정</v-btn>
-                    <v-btn @click="deletePost" small color="error">삭제</v-btn>
-                  </div>
-                </div>
+          <div class="ma-2 mt-5">
+            <div align="left" class="ml-3 headline">{{ post.title }}
+            <div class="delrevise" v-if="this.$store.state.memberid === post.memberid">
+                <v-btn class="mr-1" small color="warning" style="color:white"
+                  :to="{ path : `/board/${this.boardname}/${post.postid}/update`}">수정</v-btn>
+                <v-btn @click="deletePost" small color="error">삭제</v-btn>
               </div>
+            </div>
+          </div>
           <v-list>
             <v-list-item>
               <v-list-item-content class="ml-2 postcontent mb-5">
                 {{post.body}}
               </v-list-item-content>
             </v-list-item>
-            
             <div class="mt-5" align="center">
-                  <v-btn v-if="((!likeFlag) && isLogin && memberid)" @click="clickLike" text icon color="#d3d3d3">
-                    <v-icon>mdi-thumb-up</v-icon>
-                    <h3>{{ count }}</h3>
-                  </v-btn>
-                  <v-btn v-if="((likeFlag) && isLogin)" @click="clickLike" text icon color="deep-orange">
-                    <v-icon>mdi-thumb-up</v-icon>
-                    <h3>{{ count }}</h3>
-                  </v-btn>
-                  <v-btn v-if="!isLogin" text icon disable>
-                    <v-icon>mdi-thumb-up</v-icon>
-                    <h3>{{ count }}</h3>
-                  </v-btn>
+              <v-btn v-if="((!likeFlag) && isLogin && memberid)" @click="clickLike" text icon color="#d3d3d3">
+                <v-icon>mdi-thumb-up</v-icon>
+                <h3>{{ count }}</h3>
+              </v-btn>
+              <v-btn v-if="((likeFlag) && isLogin)" @click="clickLike" text icon color="deep-orange">
+                <v-icon>mdi-thumb-up</v-icon>
+                <h3>{{ count }}</h3>
+              </v-btn>
+              <v-btn v-if="!isLogin" text icon disable>
+                <v-icon>mdi-thumb-up</v-icon>
+                <h3>{{ count }}</h3>
+              </v-btn>
             </div>
             <v-divider/>
             <v-col cols="12" sm="12">
@@ -62,118 +61,119 @@
 </template>
 
 <script>
-  import sendmessage from '../../message/sendmessage'
-  import axios from 'axios'
-  import boardcomment from '@/components/comment/boardcomment.vue'
-  import router from '@/router.js'
+import sendmessage from '../../message/sendmessage'
+import axios from 'axios'
+import boardcomment from '@/components/comment/boardcomment.vue'
+import router from '@/router.js'
 
-  export default {
-    name: "BoardDetail",
-    components: {
-      boardcomment,
-      sendmessage
+export default {
+  name: "BoardDetail",
+  components: {
+    boardcomment,
+    sendmessage
+  },
+  data() {
+    return {
+      category : {},
+      post: [],
+      comments: [],
+      likeFlag: false,
+      updateFlag: false,
+      isLogin: this.$store.state.isLogin,
+      memberid: null,
+      categoryid: '',
+      count: 0,
+    }
+  },
+  props: {
+    boardname: {
+      type: String
     },
-    data() {
-      return {
-        category : {},
-        post: [],
-        comments: [],
-        likeFlag: false,
-				updateFlag: false,
-        isLogin: this.$store.state.isLogin,
-        memberid: null,
-        categoryid: '',
-        count: 0,
+    id: {
+      type: String
+    },
+  },
+  mounted() {
+    this.getPost()
+    this.memberid = this.$store.state.memberid
+    if (this.boardname == 'free'){
+      this.categoryid = '1'
+    } else if(this.boardname == 'job'){
+      this.categoryid = '2'
+    } else {
+      this.categoryid = this.boardname
+    }
+    this.categorydetail() 
+  },
+  methods: {
+    categorydetail() {
+      axios.get(`api/boardcategory/${this.categoryid}`)
+      .then(response=> {
+          this.category = response.data
+      }).catch(error=>{console.log(error)})
+    },
+    clickUpdate() {
+      this.updateFlag = true
+    },
+    clickLike() {
+      this.likeFlag = !this.likeFlag
+      var data = {
+        postid: this.post.postid,
+        memberid: this.memberid,
+        categoryid: this.categoryid
       }
-    },
-    props: {
-      boardname: {
-        type: String
-      },
-      id: {
-        type: String
-      },
-    },
-    mounted() {
-      this.getPost()
-			this.memberid = this.$store.state.memberid
-      if (this.boardname == 'free'){
-        this.categoryid = '1'
-      } else if(this.boardname == 'job'){
-        this.categoryid = '2'
-      } else {
-        this.categoryid = this.boardname
-      }
-      this.categorydetail() 
-    },
-    methods: {
-      categorydetail() {
-        axios.get(`api/boardcategory/${this.categoryid}`)
-        .then(response=> {
-            this.category = response.data
-        }).catch(error=>{console.log(error)})
-      },
-			clickUpdate() {
-				this.updateFlag = true
-			},
-			clickLike() {
-				this.likeFlag = !this.likeFlag
-				var data = {
-					postid: this.post.postid,
-					memberid: this.memberid,
-					categoryid: this.categoryid
-				}
-				if (this.likeFlag) {
-          this.count += 1
-					axios.post('api/likepost', data)
-						.then(response => {
-							console.log(response)
-						})
-				} else {
-					this.count -= 1
-					axios.delete('api/likepost', {
-							data: data
-						})
-						.then(response => {
-							console.log(response)
-						})
-				}
-			},
-      getPost() {
-        axios.get(`api/post/${this.id}`, { headers: { 'access-token': this.$store.state.token }})
+      if (this.likeFlag) {
+        this.count += 1
+        axios.post('api/likepost', data)
           .then(response => {
-            this.post = response.data.post
-            this.count = response.data.count
-            this.likeFlag = (response.data.flag === 0) ? false : true
+            console.log(response)
           })
-      },
-      deletePost() {
-        if (confirm('정말로 삭제하시겠습니까?')) {
-            axios.delete(`api/post/${this.id}`)
-            .then(response => {
-              if (response.status == 200) {
-                var path = this.$route.path
-                var res = path.split('/')
-                res = res.splice(0, res.length - 1)
-                var routePath = res.join('/')
-                router.push(routePath)
-              }
-            })
-        }
+      } else {
+        this.count -= 1
+        axios.delete('api/likepost', {
+            data: data
+          })
+          .then(response => {
+            console.log(response)
+          })
       }
     },
-    watch : {
-      post() {
-        const body = document.querySelector('.postcontent').innerText;
+    getPost() {
+      axios.get(`api/post/${this.id}`, { headers: { 'access-token': this.$store.state.token }})
+        .then(response => {
+          this.post = response.data.post
+          this.count = response.data.count
+          this.likeFlag = (response.data.flag === 0) ? false : true
+        })
+    },
+    deletePost() {
+      if (confirm('정말로 삭제하시겠습니까?')) {
+        axios.delete(`api/post/${this.id}`)
+        .then(response => {
+          if (response.status == 200) {
+            var path = this.$route.path
+            var res = path.split('/')
+            res = res.splice(0, res.length - 1)
+            var routePath = res.join('/')
+            router.push(routePath)
+          }
+        })
       }
     }
+  },
+  watch : {
+    post() {
+      const body = document.querySelector('.postcontent').innerText;
+    }
   }
+}
 </script>
 
 <style>
 .postcontent{
   white-space: pre-line
 }
+
 .avatar {
   width:52px;
   min-width:52px;
@@ -181,6 +181,7 @@
   border-radius : 52px;
   margin-right: 10px;
 }
+
 .delrevise{
   display:inline-block;
   float : right;  

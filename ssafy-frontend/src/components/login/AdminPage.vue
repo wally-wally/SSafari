@@ -1,6 +1,5 @@
 <template>
   <div class="admin-wrapper">
-
     <nav class="admin-nav">
       <ul>
         <li @click="showAdminSection(0)"><span class="on" id="admin-user-menu">User Management</span></li>
@@ -37,7 +36,6 @@
           </div>
         </div>
       </div>
-
       <div class="ssafari-user-table">
         <h1 class="text-center mb-3 mt-3" style="font-family: 'Gothic A1;"><strong>전체 회원 명단</strong></h1>
         <v-text-field
@@ -83,43 +81,27 @@
         </v-data-table>
       </div>
     </div>
-
     <div v-else>
       <div>
-					<div class="ssafy-request-board-title mt-5" style="font-size: 30px; font-family: 'Gothic A1'; text-align: center; font-weight: bold;">게시판 신청 관리</div>
-					<hr class="title-headline">
-							<v-data-table
-								v-model="selectedBoardRequests"
-								:headers="boardHeaders"
-								:items="boardRequests"
-								:items-per-page="10"
-								show-select
-								class="elevation-1"
-								style="width: 90%; margin: 0 auto;"
-							></v-data-table>
-						<div class="d-flex justify-space-between pt-3" style="margin: 0 5%;">
-							<span>👉선택된 항목에 대해 수행할 동작 선택</span>
-							<div>
-								<v-btn class="ml-3" color="blue" @click="approveBulletin(selectedBoardRequests)"><span style="color: white;">승인</span></v-btn> <!-- @click="approveBulletin(boardRequest.id)" -->
-								<v-btn class="ml-3" color="red" @click="denyBulletin(selectedBoardRequests)"><span style="color: white;">거절</span></v-btn> <!--  @click="denyBulletin(boardRequest.id)" -->
-							</div>
-						</div>
-					<!-- <div v-for="boardRequest in boardRequests" :key="boardRequest.id">
-						<v-card class="mb-3">
-							<v-card-title>
-								<h3>게시판 이름: {{boardRequest.name}}</h3>
-							</v-card-title>
-							<v-card-title>
-								<h3>신청자 : {{boardRequest.username}}</h3>
-							</v-card-title>
-							<v-card-title>
-								<h3>게시판 설명 : {{boardRequest.explanation}}</h3>
-							</v-card-title>
-							<v-btn class="mr-3" color="blue" @click="approveBulletin(boardRequest.id)">승인</v-btn>
-							<v-btn class="mr-3" color="red" @click="denyBulletin(boardRequest.id)">거절</v-btn>
-						</v-card>
-					</div> -->
-				</div>
+        <div class="ssafy-request-board-title mt-5" style="font-size: 30px; font-family: 'Gothic A1'; text-align: center; font-weight: bold;">게시판 신청 관리</div>
+        <hr class="title-headline">
+        <v-data-table
+          v-model="selectedBoardRequests"
+          :headers="boardHeaders"
+          :items="boardRequests"
+          :items-per-page="10"
+          show-select
+          class="elevation-1"
+          style="width: 90%; margin: 0 auto;"
+        ></v-data-table>
+        <div class="d-flex justify-space-between pt-3" style="margin: 0 5%;">
+          <span>👉선택된 항목에 대해 수행할 동작 선택</span>
+          <div>
+            <v-btn class="ml-3" color="blue" @click="approveBulletin(selectedBoardRequests)"><span style="color: white;">승인</span></v-btn> <!-- @click="approveBulletin(boardRequest.id)" -->
+            <v-btn class="ml-3" color="red" @click="denyBulletin(selectedBoardRequests)"><span style="color: white;">거절</span></v-btn> <!--  @click="denyBulletin(boardRequest.id)" -->
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -127,6 +109,7 @@
 <script>
 import '@/assets/css/AdminPage.css'
 import axios from 'axios'
+
 export default {
   name: 'AdminPage',
   data() {
@@ -179,7 +162,6 @@ export default {
               return '일반'
             }
           }
-          console.log(response.data)
           response.data.forEach(memberData => {
             this.memberList.push({
               memberid: memberData.memberid,
@@ -272,7 +254,3 @@ export default {
   }
 }
 </script>
-
-<style>
-
-</style>

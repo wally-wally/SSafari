@@ -40,74 +40,74 @@
 </template>
 
 <script>
-  import sendmessage from './sendmessage'
-  import axios from 'axios'
+import sendmessage from './sendmessage'
+import axios from 'axios'
 
-  export default {
-    name: 'Message',
-    data() {
-      return {
-        dialog: false,
-        isRead: this.read
-      }
+export default {
+  name: 'Message',
+  data() {
+    return {
+      dialog: false,
+      isRead: this.read
+    }
+  },
+  components: {
+    sendmessage
+  },
+  props: {
+    id: {
+      type: Number
     },
-    components: {
-      sendmessage
+    date: {
+      type: String
     },
-    props: {
-      id: {
-        type: Number
-      },
-      date: {
-        type: String
-      },
-      title: {
-        type: String
-      },
-      content: {
-        type: String
-      },
-      opponent: {
-        type: String
-      },
-      opponentId: {
-        type: Number
-      },
-      read: {
-        type: Number
-      },
-      boardType: {
-        type: Number
-      }
+    title: {
+      type: String
     },
-    computed: {
-      postYearMonth() {
-        let date = new Date(this.date)
-        let formatedMonth = date.getMonth() + 1 < 9 ? '0' : ''
-        return `${date.getFullYear()}-${formatedMonth}${date.getMonth()+1}`
-      },
-      postDay() {
-        let date = new Date(this.date)
-        return date.getDate()
-      }
+    content: {
+      type: String
     },
-    methods: {
-      changeRead() {
-        if (this.opponentId !== this.$store.state.memberid & this.boardType) {
-          this.isRead = true
-          axios.get(`api/message/${this.id}`, {
-              headers: {
-                'access-token': this.$store.state.token
-              }
-            }).then(response=>{
-              if (!response.data.isread) {
-                this.$store.state.unreadmsg -= 1
-              }
-            })
-        }
+    opponent: {
+      type: String
+    },
+    opponentId: {
+      type: Number
+    },
+    read: {
+      type: Number
+    },
+    boardType: {
+      type: Number
+    }
+  },
+  computed: {
+    postYearMonth() {
+      let date = new Date(this.date)
+      let formatedMonth = date.getMonth() + 1 < 9 ? '0' : ''
+      return `${date.getFullYear()}-${formatedMonth}${date.getMonth()+1}`
+    },
+    postDay() {
+      let date = new Date(this.date)
+      return date.getDate()
+    }
+  },
+  methods: {
+    changeRead() {
+      if (this.opponentId !== this.$store.state.memberid & this.boardType) {
+        this.isRead = true
+        axios.get(`api/message/${this.id}`, {
+            headers: {
+              'access-token': this.$store.state.token
+            }
+          }).then(response => {
+            if (!response.data.isread) {
+              this.$store.state.unreadmsg -= 1
+            }
+          })
       }
     }
   }
+}
 </script>
 
 <style>

@@ -11,7 +11,6 @@
         1200: { visibleSlides: 2, slideMultiple: 2, slideRatio: 1 / 2},
         800: { visibleSlides: 1, slideMultiple: 1, slideRatio: 1 / 1 }
         }">
-
       <vueper-slide v-for="i in this.showPortfoliosCount" :key="i"
                     class="vueper-img-slide"
                     style="background: #fff;">
@@ -36,12 +35,11 @@
           <div class="carousel-img-tag">
           </div>
         </template>
-
       </vueper-slide>
-
     </vueper-slides>
   </div>
 </template>
+
 <script>
 import StudyGroup from '@/components/studygroup/StudyGroup'
 import axios from 'axios'

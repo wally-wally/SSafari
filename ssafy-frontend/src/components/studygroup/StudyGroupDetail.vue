@@ -75,104 +75,101 @@
 </template>
 
 <script>
-  import axios from 'axios'
-  import boardcomment from '@/components/comment/boardcomment.vue'
-  import sendmessage from '../message/sendmessage'
-  import router from '@/router.js'
+import axios from 'axios'
+import boardcomment from '@/components/comment/boardcomment.vue'
+import sendmessage from '../message/sendmessage'
+import router from '@/router.js'
 
-  export default {
-    name: "PortfolioDetail",
-    components: {
-      boardcomment,
-      sendmessage,
+export default {
+  name: "PortfolioDetail",
+  components: {
+    boardcomment,
+    sendmessage,
+  },
+  data() {
+    return {
+      portfolio: [],
+      dates: [],
+      comments: [],
+      myapplicate: false,
+      currentMemberId: null,
+      currentMemberAuth: '',
+      applicants: [],
+    }
+  },
+  props: {
+    id: {
+      type: String
     },
-    data() {
-      return {
-        portfolio: [],
-        dates: [],
-        comments: [],
-        myapplicate: false,
-        currentMemberId: null,
-        currentMemberAuth: '',
-        applicants: [],
+  },
+  mounted() {
+    this.currentMemberId = this.$store.state.memberid
+    this.currentMemberAuth = this.$store.getters.auth
+    this.getPortfolio()
+    this.getPortfolioComment()
+  },
+  methods: {
+    checkmyapplicate() {
+      axios.get(`api/sugang?portfolioid=${this.portfolio.portfolioid}&memberid=${this.currentMemberId}`)
+        .then(response => {
+          this.myapplicate = response.data
+        })
+    },
+    getPortfolio() {
+      axios.get(`api/portfolio/${this.id}`)
+        .then(response => {
+          this.portfolio = response.data.portfolio
+          this.dates = [this.portfolio.enddate, this.portfolio.startdate]
+          this.applicants = response.data.sugang
+          this.checkmyapplicate()
+        })
+    },
+    getPortfolioComment() {
+      axios.get(`api/commentportfolio/${this.id}`)
+        .then(response => {
+          this.comments = response.data
+        })
+    },
+    deletePortfolio() {
+      const confirmation = confirm('삭제하시겠습니까?')
+      if (confirmation) {
+        axios.delete(`api/portfolio/${this.id}`)
+          .then(response => {
+            if (response.status == 200) {
+              router.push({
+                path: '/studygroup'
+              })
+            }
+          })
       }
     },
-    props: {
-      id: {
-        type: String
-      },
-    },
-    mounted() {
-      this.currentMemberId = this.$store.state.memberid
-      this.currentMemberAuth = this.$store.getters.auth
-      this.getPortfolio()
-      this.getPortfolioComment()
-    },
-    methods: {
-      checkmyapplicate() {
-        axios.get(`api/sugang?portfolioid=${this.portfolio.portfolioid}&memberid=${this.currentMemberId}`)
+    application() {
+      const data = {
+        memberid: this.currentMemberId,
+        portfolioid: this.portfolio.portfolioid
+      }
+      if (!this.myapplicate) {
+        this.portfolio.applicant += 1
+        this.myapplicate = true
+        axios.post(`api/sugang`, data)
           .then(response => {
-            this.myapplicate = response.data
+            console.log(response.data)
+          }).catch(error => {
+            console.log(error)
           })
-      },
-      getPortfolio() {
-        axios.get(`api/portfolio/${this.id}`)
+      } else {
+        this.myapplicate = false
+        this.portfolio.applicant -= 1
+        axios.delete(`api/sugang`, {
+            'data': data
+          })
           .then(response => {
-            this.portfolio = response.data.portfolio
-            this.dates = [this.portfolio.enddate, this.portfolio.startdate]
-            this.applicants = response.data.sugang
-            this.checkmyapplicate()
+            console.log(response.data)
+          }).catch(error => {
+            console.log(error)
           })
-      },
-      getPortfolioComment() {
-        axios.get(`api/commentportfolio/${this.id}`)
-          .then(response => {
-            this.comments = response.data
-          })
-      },
-      deletePortfolio() {
-        const confirmation = confirm('삭제하시겠습니까?')
-        if (confirmation) {
-          axios.delete(`api/portfolio/${this.id}`)
-            .then(response => {
-              console.log(response.status)
-              if (response.status == 200) {
-                router.push({
-                  path: '/studygroup'
-                })
-              }
-            })
-        }
-      },
-      application() {
-        const data = {
-          memberid: this.currentMemberId,
-          portfolioid: this.portfolio.portfolioid
-        }
-        if (!this.myapplicate) {
-          console.log('수강')
-          this.portfolio.applicant += 1
-          this.myapplicate = true
-          axios.post(`api/sugang`, data)
-            .then(response => {
-              console.log(response.data)
-            }).catch(error => {
-              console.log(error)
-            })
-        } else {
-          console.log('수강취소')
-          this.myapplicate = false
-          this.portfolio.applicant -= 1
-          axios.delete(`api/sugang`, {
-              'data': data
-            })
-            .then(response => {
-              console.log(response.data)
-            }).catch(error => {
-              console.log(error)
-            })
-        }
       }
     }
   }
+}
 </script>

@@ -1,6 +1,6 @@
 <template>
   <v-layout mt-3 row wrap>
-    <v-flex v-for="board in this.boards"  :key="board.postid" style="width: 100%;height:80px;"> <!-- col-12 sm6 md3 -->
+    <v-flex v-for="board in this.boards"  :key="board.postid" style="width: 100%;height:80px;">
 	<router-link :to="`/board/${boardname}/${board.postid}`">
 	  <Board
 	  	:board='board'>
@@ -9,6 +9,7 @@
     </v-flex>
   </v-layout>
 </template>
+
 <script>
 import Board from '@/components/board/boardCommonForm/Board'
 import axios from 'axios'
@@ -30,7 +31,7 @@ export default {
 </script>
 
 <style>
-	.loadMoreIconSection {
-		margin-left: 10px;
-	}
+.loadMoreIconSection {
+	margin-left: 10px;
+}
 </style>

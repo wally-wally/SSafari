@@ -28,53 +28,50 @@
 <script>
 import axios from 'axios'
 export default {
-    name : 'sendmessage',
-    props : {
-      id : {type : Number},
-      username : {type : String},
+  name : 'sendmessage',
+  props : {
+    id : {type : Number},
+    username : {type : String},
+  },
+  data() {
+    return {
+      send : false,
+      title : '',
+      content : '',
+    }
+  },
+  methods : {
+    modal() {
+      this.send = !this.send  
+      this.title = ''
+      this.content = ''
     },
-    data() {
-        return {
-          send : false,
-          title : '',
-          content : '',
+    sendmessage(){
+      const chk = confirm('메시지를 전송하시겠습니까?')
+      if (chk) {
+        const message = {
+          title : this.title,
+          content : this.content,
+          toid : this.id,
+          fromid : this.$store.state.memberid
         }
-    },
-    methods : {
-      modal() {
-            this.send = !this.send  
-            this.title = ''
-            this.content = ''
-        },
-      sendmessage(){
-        const chk = confirm('메시지를 전송하시겠습니까?')
-        if (chk){
-          const message = {
-            title : this.title,
-            content : this.content,
-            toid : this.id,
-            fromid : this.$store.state.memberid
-          }
-          axios.post('api/message' ,message )
-          .then(response => {
-            this.modal()
-          })
-        }
+        axios.post('api/message' ,message )
+        .then(response => {
+          this.modal()
+        })
       }
     }
+  }
 }
 </script>
 
 <style scoped> 
-
 *, *:before, *:after {
   margin: 0;
   padding: 0;
 }
 
-
 .messageicon:hover {
   cursor:pointer;
 }
-
 </style>

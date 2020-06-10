@@ -27,39 +27,40 @@ export default {
 	},
 }
 </script>
+
 <style>
-  .text-shadow {
-    text-shadow: 0 0 15px rgb(255,255,255);
-  }
+.text-shadow {
+  text-shadow: 0 0 15px rgb(255,255,255);
+}
 
+.banner-img {
+  height: 300px;
+  animation: banner;
+  animation-duration: 2.5s;
+}
+
+@media (min-width: 600px) and (max-width: 959px) {
   .banner-img {
-    height: 300px;
-    animation: banner;
-    animation-duration: 2.5s;
+    height: 240px;
   }
+}
 
-  @media (min-width: 600px) and (max-width: 959px) {
-    .banner-img {
-      height: 240px;
-    }
+@media (max-width: 599px) {
+  .banner-img {
+    height: 180px;
   }
+}
 
-  @media (max-width: 599px) {
-    .banner-img {
-      height: 180px;
-    }
+@keyframes banner {
+  0% {
+    padding-bottom: 50px;
   }
-
-  @keyframes banner {
-    0% {
-      padding-bottom: 50px;
-    }
-    50% {
-      padding-bottom: 0px;
-      letter-spacing: 10px;
-    }
-    100% {
-      letter-spacing: auto;
-    }
+  50% {
+    padding-bottom: 0px;
+    letter-spacing: 10px;
   }
+  100% {
+    letter-spacing: auto;
+  }
+}
 </style>

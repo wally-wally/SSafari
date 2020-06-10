@@ -2,10 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import HomePage from './views/HomePage.vue'
 import TeamIntro from './views/TeamIntro.vue'
-
-// Board(게시판) import 구문
 import BoardPage from './views/BoardPage.vue'
-
 import AllBoard from './components/board/AllBoard.vue'
 import BoardDetail from './components/board/boardCommonForm/BoardDetail.vue'
 import BoardCreate from '@/components/board/boardCommonForm/BoardCreate.vue'
@@ -13,7 +10,6 @@ import BaseBoard from './components/board/BaseBoard.vue'
 import CodeBoard from './components/board/codeboard/CodeBoard.vue'
 import JmtBoard from './components/board/Jmtboard/JmtBoard.vue'
 import CodeDetail from './components/board/codeboard/CodeDetail.vue'
-// StudyGroup(스터디 모임) import 구문
 import StudyGroupPage from './views/StudyGroupPage.vue'
 import StudyGroupindex from './components/studygroup/StudyGroupindex.vue'
 import StudyGroupDetail from './components/studygroup/StudyGroupDetail.vue'
@@ -26,23 +22,13 @@ import PasswordModify from '@/components/login/PasswordModify.vue'
 import SsafyAuth from '@/components/login/SsafyAuth.vue'
 import MakeSsafyAuth from '@/components/login/MakeSsafyAuth.vue'
 import MyPage from  './views/MyPage.vue'
-import store from './store'
 
 import MessageBoard from '@/components/message/MessageBoard.vue'
-import axios from 'axios'
 import RestaurantCreateForm from '@/components/board/Jmtboard/RestaurantCreateForm.vue'
 import RestaurantDetail from '@/components/board/Jmtboard/RestaurantDetail.vue'
 
 Vue.use(Router)
 
-const rejectAuthUser = (to, from, next) => {
-	if(store.state.isLogin === true) {
-		alert('이미 로그인 하였습니다.')
-		next('/')
-	}else {
-		next('/login')
-	}
-}
 export default new Router({
   mode: 'history',
   base: process.env.BASE_URL,

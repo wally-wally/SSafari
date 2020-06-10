@@ -4,7 +4,6 @@
       <div style="line-height:1.2em;font-size:1.2em; font-family: 'Nanum Gothic Coding';" slot="text">스터디 모임</div>
     </ImgBanner>
     <v-container>
-      <!-- StudyGroup -->
       <router-view>
       </router-view>
     </v-container>

@@ -1,9 +1,7 @@
 <template>
   <div>
     <SubBoardHeader/>
-      <!-- Board -->
-      <router-view>
-      </router-view>
+    <router-view></router-view>
   </div>
 </template>
 

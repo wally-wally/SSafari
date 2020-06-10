@@ -19,43 +19,38 @@
 </template>
 
 <script>
-	import axios from 'axios'
+import axios from 'axios'
 
-	export default {
-		name: 'PasswordModify',
-		data() {
-			return {
-				minRules: [v => v.length >= 8 || 'Min 8 characters'],
-				password1: '',
-				password2: ''
-			}
+export default {
+	name: 'PasswordModify',
+	data() {
+		return {
+			minRules: [v => v.length >= 8 || 'Min 8 characters'],
+			password1: '',
+			password2: ''
+		}
+	},
+	methods: {
+		back() {
+			this.$router.push('/mypage')
 		},
-		methods: {
-			back() {
-				this.$router.push('/mypage')
-			},
-			passwordModify() {
-				if (this.password1.length >= 8) {
-					if (this.password1 !== this.password2) {
-						alert('두 비밀번호가 다릅니다.')
-					} else {
-						var data = {
-							password: this.password1,
-							memberid: this.$store.state.memberid
-						}
-						axios.put('api/member/password', data)
-							.then(response => {
-								console.log(response)
-								alert('비밀번호가 변경되었습니다.')
-								this.$router.push('/mypage')
-							})
+		passwordModify() {
+			if (this.password1.length >= 8) {
+				if (this.password1 !== this.password2) {
+					alert('두 비밀번호가 다릅니다.')
+				} else {
+					var data = {
+						password: this.password1,
+						memberid: this.$store.state.memberid
 					}
+					axios.put('api/member/password', data)
+						.then(response => {
+							alert('비밀번호가 변경되었습니다.')
+							this.$router.push('/mypage')
+						})
 				}
 			}
 		}
 	}
+}
 </script>
-
-<style>
-
-</style>
