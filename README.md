@@ -34,9 +34,9 @@
 
 :round_pushpin: <b>Deploy</b> : `Nginx`, `AWS EC2`
 
-:pushpin: <b>Using API</b> : `Facebook Login API`, `Kakao Map API`, `Github API`, `Imgur API`
+:round_pushpin: ​<b>Using API</b> : `Facebook Login API`, `Kakao Map API`, `Github API`, `Imgur API`
 
-:round_pushpin: <b>Development Enviornment</b> : Windows 10, Node.js 12 or higher, Vue CLI 4 or higher
+:round_pushpin: <b>Development Enviornment</b> : Windows 10, Node.js 10 or higher, Vue CLI 3 or higher
 
 :round_pushpin: <b>Using Editor</b> : Visual Studio Code
 
@@ -46,8 +46,8 @@
 
 :heavy_check_mark: <b>Requirement</b>
 
-- `Node.js` : 12 or higher
-- `Vue CLI` : 4.0 or higher
+- `Node.js` : 10 or higher
+- `Vue CLI` : 3.0 or higher
 
 :heavy_check_mark: <b>Installation</b>
 
